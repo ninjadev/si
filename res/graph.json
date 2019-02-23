@@ -10,11 +10,24 @@
     "id": "sceneSwitcherNode",
     "type": "SceneSwitcherNode",
     "connected": {
-      "A": "SpinningCube.render"
+      "A": "SpinningCube.render",
+      "B": "HexFlight.render",
+      "C": "HexFlightMainScene.render"
     }
   },
   {
     "id": "SpinningCube",
     "type": "spinningCube"
+  },
+  {
+    "id": "HexFlight",
+    "type": "HexFlightNode",
+    "options": {
+      "shader": "HexFlight"
+    }
+  },
+  {
+    "id": "HexFlightMainScene",
+    "type": "hexFlightMainScene"
   }
 ]
