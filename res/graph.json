@@ -10,11 +10,21 @@
     "id": "sceneSwitcherNode",
     "type": "SceneSwitcherNode",
     "connected": {
-      "A": "SpinningCube.render"
+      "A": "SpinningCube.render",
+      "B": "lines.render",
+      "C": "blobbobob.render"
     }
   },
   {
     "id": "SpinningCube",
     "type": "spinningCube"
+  },
+  {
+    "id": "lines",
+    "type": "lines"
+  },
+  {
+    "id": "blobbobob",
+    "type": "blobbobob"
   }
 ]
