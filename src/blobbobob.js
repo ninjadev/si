@@ -58,9 +58,9 @@
           const x = amplitude * Math.sin(i / steps * Math.PI * 2);
           const y = amplitude * Math.cos(i / steps * Math.PI * 2);
           if(i === 0) {
-          this.ctx.moveTo(x, y);
+            this.ctx.moveTo(x, y);
           } else {
-          this.ctx.lineTo(x, y);
+            this.ctx.lineTo(x, y);
           }
         }
         this.ctx.fill();
