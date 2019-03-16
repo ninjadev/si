@@ -33,7 +33,7 @@
 
       if(this.twists > 100) {
         this.sign *= -1;
-        this.twists = 0;
+        this.twists = -100;
       }
     }
 
