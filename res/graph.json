@@ -11,8 +11,11 @@
     "type": "SceneSwitcherNode",
     "connected": {
       "A": "SpinningCube.render",
-      "B": "HexFlight.render",
-      "C": "HexFlightMainScene.render"
+      "B": "lines.render",
+      "C": "blobbobob.render",
+      "D": "cubobbobob.render",
+      "E": "pathy.render",
+      "F": "HexFlightMainScene.render"
     }
   },
   {
@@ -29,5 +32,21 @@
   {
     "id": "HexFlightMainScene",
     "type": "hexFlightMainScene"
+  },
+  {
+    "id": "lines",
+    "type": "lines"
+  },
+  {
+    "id": "blobbobob",
+    "type": "blobbobob"
+  },
+  {
+    "id": "cubobbobob",
+    "type": "cubobbobob"
+  },
+  {
+    "id": "pathy",
+    "type": "pathy"
   }
 ]
