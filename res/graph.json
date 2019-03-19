@@ -13,7 +13,8 @@
       "A": "SpinningCube.render",
       "B": "lines.render",
       "C": "blobbobob.render",
-      "D": "cubobbobob.render"
+      "D": "cubobbobob.render",
+      "E": "pathy.render"
     }
   },
   {
@@ -31,5 +32,9 @@
   {
     "id": "cubobbobob",
     "type": "cubobbobob"
+  },
+  {
+    "id": "pathy",
+    "type": "pathy"
   }
 ]
