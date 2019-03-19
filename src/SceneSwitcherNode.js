@@ -22,6 +22,7 @@
       this.inputs.C.enabled = false;
       this.inputs.D.enabled = false;
       this.inputs.E.enabled = false;
+      this.inputs.F.enabled = false;
 
       let selectedScene;
       if (BEAN < 48 * 4) {
