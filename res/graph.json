@@ -18,7 +18,8 @@
       "F": "sirpathrick.render",
       "G": "boxes.render",
       "H": "HexFlightMainScene.render",
-      "I": "bands.render"
+      "I": "bands.render",
+      "J": "spirals.render"
     }
   },
   {
@@ -63,5 +64,9 @@
   {
     "id": "bands",
     "type": "bands"
+  },
+  {
+    "id": "spirals",
+    "type": "spirals"
   }
 ]
