@@ -10,7 +10,7 @@
     "id": "sceneSwitcherNode",
     "type": "SceneSwitcherNode",
     "connected": {
-      "A": "SpinningCube.render",
+      "A": "moose.render",
       "B": "lines.render",
       "C": "blobbobob.render",
       "D": "cubobbobob.render",
@@ -19,10 +19,6 @@
       "G": "boxes.render",
       "H": "HexFlightMainScene.render"
     }
-  },
-  {
-    "id": "SpinningCube",
-    "type": "spinningCube"
   },
   {
     "id": "HexFlight",
@@ -58,5 +54,9 @@
   {
     "id": "boxes",
     "type": "boxes"
+  },
+  {
+    "id": "moose",
+    "type": "moose"
   }
 ]
