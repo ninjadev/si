@@ -17,7 +17,8 @@
       "E": "pathy.render",
       "F": "sirpathrick.render",
       "G": "boxes.render",
-      "H": "HexFlightMainScene.render"
+      "H": "HexFlightMainScene.render",
+      "I": "bands.render"
     }
   },
   {
@@ -58,5 +59,9 @@
   {
     "id": "moose",
     "type": "moose"
+  },
+  {
+    "id": "bands",
+    "type": "bands"
   }
 ]
