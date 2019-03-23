@@ -15,7 +15,8 @@
       "C": "blobbobob.render",
       "D": "cubobbobob.render",
       "E": "pathy.render",
-      "F": "HexFlightMainScene.render"
+      "F": "sirpathrick.render",
+      "G": "HexFlightMainScene.render"
     }
   },
   {
@@ -48,5 +49,9 @@
   {
     "id": "pathy",
     "type": "pathy"
+  },
+  {
+    "id": "sirpathrick",
+    "type": "sirpathrick"
   }
 ]
