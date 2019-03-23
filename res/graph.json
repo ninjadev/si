@@ -16,7 +16,8 @@
       "D": "cubobbobob.render",
       "E": "pathy.render",
       "F": "sirpathrick.render",
-      "G": "HexFlightMainScene.render"
+      "G": "boxes.render",
+      "H": "HexFlightMainScene.render"
     }
   },
   {
@@ -53,5 +54,9 @@
   {
     "id": "sirpathrick",
     "type": "sirpathrick"
+  },
+  {
+    "id": "boxes",
+    "type": "boxes"
   }
 ]
