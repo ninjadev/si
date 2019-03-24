@@ -66,11 +66,15 @@
       var LONGDIST = 50;
 
       this.camera.position.z = -(frame - 6030) / 5;
-      var camerapandist = 10;
+      var dvz = -1/5;
+      var camerapandist = 5;
       var camerapanangler = 1.4;
       this.camera.position.y = -camerapandist * (0.5 * Math.sin(frame/50) + 0.5);
+      var dvy = -0.01 * camerapandist * Math.cos(frame / 50);
 
-      this.camera.rotation.x = -this.camera.position.y/ camerapandist / camerapanangler;
+
+      //this.camera.rotation.x = -this.camera.position.y/ camerapandist / camerapanangler;
+      this.camera.rotation.x = -Math.tan(dvy/dvz) / 1.5;
                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                         
       for (var i = 0; i < this.planeCount; i++) {
         this.planes[i].material.uniforms.frame.value = 0.2 * frame + i * 100;
