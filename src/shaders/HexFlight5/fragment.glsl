@@ -4,13 +4,14 @@ uniform float visibility;
 uniform float r_in;
 uniform float g_in;
 uniform float b_in;
+uniform float seed;
 uniform sampler2D tDiffuse;
 
 varying vec2 vUv;
 
 
 // The following 4 functions are based on this super awesome tutorial on hexagon tiling
-// by The Art of Code aka BigWiIgs: https://www.youtube.com/watch?v=VmrIDyYiJBA&t=23s
+// by The Art of Code aka BigWiIgs: https://www.youtube.com/watch?v=VmrIDyYiJBA
 #define R3 1.732051
 
 vec4 HexCoords(vec2 uv) {
@@ -72,8 +73,21 @@ vec3 color_gen(vec2 uv) {
 
 void main() {
     vec2 uv = (vUv - .5) * vec2(16./9., 1.);
-    vec4 hu = HexCoords(uv * 8.);
-    float color = Hexagon(hu.xy, GetSize(hu.zw, 1.0/*this one is fun*/), vec2(0));
+    vec4 hu = HexCoords(uv * 35.);
+    float color = Hexagon(hu.xy, GetSize(hu.zw, seed), vec2(0));
+    vec2 offs = vec2(1,0);
+    color += Hexagon(hu.xy-offs, GetSize(hu.zw+offs, seed), offs);
+    color += Hexagon(hu.xy+offs, GetSize(hu.zw-offs, seed), -offs);
+    offs = vec2(.5,.8725);
+    color += Hexagon(hu.xy-offs, GetSize(hu.zw+offs, seed), offs);
+    color += Hexagon(hu.xy+offs, GetSize(hu.zw-offs, seed), -offs);
+    offs = vec2(-.5,.8725);
+    color += Hexagon(hu.xy-offs, GetSize(hu.zw+offs, seed), offs);
+    color += Hexagon(hu.xy+offs, GetSize(hu.zw-offs, seed), -offs);
+
+    //color /= 3.;
+
+
 
     gl_FragColor = vec4(color * color_gen(uv), color * visibility);
 }
