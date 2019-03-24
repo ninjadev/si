@@ -18,12 +18,13 @@
       "F": "didyousayess.render",
       "G": "sirpathrick.render",
       "H": "boxes.render",
-      "I": "HexFlightMainScene.render",
-      "J": "bands.render",
-      "K": "spirals.render",
-      "L": "diagonals.render",
-      "M": "tubes.render",
-      "N": "diamond.render"
+      "I": "floats.render",
+      "J": "HexFlightMainScene.render",
+      "K": "bands.render",
+      "L": "spirals.render",
+      "M": "diagonals.render",
+      "N": "tubes.render",
+      "O": "diamond.render"
     }
   },
   {
@@ -88,5 +89,9 @@
   {
     "id": "diagonals",
     "type": "diagonals"
+  },
+  {
+    "id": "floats",
+    "type": "floats"
   }
 ]
