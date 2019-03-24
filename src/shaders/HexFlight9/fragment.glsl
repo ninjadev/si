@@ -5,6 +5,7 @@ uniform float r_in;
 uniform float g_in;
 uniform float b_in;
 uniform float seed;
+uniform float seed2;
 uniform sampler2D tDiffuse;
 
 varying vec2 vUv;
