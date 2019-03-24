@@ -20,7 +20,8 @@
       "H": "HexFlightMainScene.render",
       "I": "bands.render",
       "J": "spirals.render",
-      "K": "tubes.render"
+      "K": "tubes.render",
+      "L": "diamond.render"
     }
   },
   {
@@ -73,5 +74,9 @@
   {
     "id": "tubes",
     "type": "tubes"
+  },
+  {
+    "id": "diamond",
+    "type": "diamond"
   }
 ]
