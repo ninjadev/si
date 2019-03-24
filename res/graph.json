@@ -19,7 +19,8 @@
       "G": "boxes.render",
       "H": "HexFlightMainScene.render",
       "I": "bands.render",
-      "J": "spirals.render"
+      "J": "spirals.render",
+      "K": "tubes.render"
     }
   },
   {
@@ -68,5 +69,9 @@
   {
     "id": "spirals",
     "type": "spirals"
+  },
+  {
+    "id": "tubes",
+    "type": "tubes"
   }
 ]
