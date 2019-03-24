@@ -17,6 +17,14 @@ float linearStep(float x, float edgeSize) {
     return 1. - clamp((abs(x) - 1. + edgeSize) / edgeSize, 0., 1.);
 }
 
+float linecap(float x, float y, float xPivot, float edgeSize) {
+    float cX = (x - xPivot) * 1. * totalLength;
+    float cY = y / (1. + edgeSize);
+    float cLen = pow(cX * cX + cY * cY, .5);
+    float circle = linearStep(cLen, 0.1);
+    return circle;
+}
+
 void main() {
 
     vec2 uv = vUv;
@@ -45,16 +53,14 @@ void main() {
     amount *= edge;
 
     amount *= step(drawStart, uv.x);
+    amount *= (1. - step(drawEnd, uv.x));
 
-    float cX = (uv.x - drawEnd) * 400.;
-    float cY = uv.y;
-    float cLen = pow(cX * cX + cY * cY, .5);
-    float r = .5;
-    float circle = linearStep(cLen, 0.1);
+    float startCircle = linecap(uv.x, uv.y, drawStart, edgeSize);
+    float endCircle = linecap(uv.x, uv.y, drawEnd, edgeSize);
 
-
-
-    amount *= 1. - step(drawEnd, uv.x) + step(drawEnd, uv.x) * circle;
+    amount = amount +
+        (1. - step(drawStart, uv.x)) * startCircle * edge +
+        step(drawEnd, uv.x) * endCircle * edge;
     float color = rand(uv) * 0.1;
     vec3 foreground = vec3(color);
     vec3 background = vec3(color);
