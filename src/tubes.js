@@ -63,7 +63,7 @@
 
       for (let i = 0; i < this.dots.length; i++) {
         const dot = this.dots[i];
-        dot.scale.setScalar(easeOut(0, 1, (frame - 8300 + i * 3) / 100));
+        dot.scale.setScalar(easeOut(0, 1, (frame - 7900 + i * 3) / 100));
       }
 
       for (let i = 0; i < this.lines.length; i++) {
