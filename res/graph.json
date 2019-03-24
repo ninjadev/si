@@ -21,8 +21,9 @@
       "I": "HexFlightMainScene.render",
       "J": "bands.render",
       "K": "spirals.render",
-      "L": "tubes.render",
-      "M": "diamond.render"
+      "L": "diagonals.render",
+      "M": "tubes.render",
+      "N": "diamond.render"
     }
   },
   {
@@ -83,5 +84,9 @@
   {
     "id": "didyousayess",
     "type": "didyousayess"
+  },
+  {
+    "id": "diagonals",
+    "type": "diagonals"
   }
 ]
