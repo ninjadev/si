@@ -53,7 +53,7 @@ float Hexagon(vec2 uv, float r, vec2 offs) {
 
     d = smoothstep(.06, .02, abs(d));
     
-    d += smoothstep(.1, .09, abs(r-.5))*(sin(0. /60.));
+    d += smoothstep(.1, .09, abs(r-.5))*(sin(seed2 /60.));
 
     return d;
 }

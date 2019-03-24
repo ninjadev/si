@@ -3,20 +3,32 @@
 
     spawnPlanes() {
       this.planes = [];
-      this.planeCount = 12;
-      this.planeDistance = 20;
-      this.planeShaders = [ new THREE.ShaderMaterial(SHADERS.HexFlight),
+      this.planeCount = 16;
+      this.planeDistance = 15;
+      this.planeShaders = [ new THREE.ShaderMaterial(SHADERS.HexSolid),
+                            new THREE.ShaderMaterial(SHADERS.HexFlight),
                             new THREE.ShaderMaterial(SHADERS.HexFlight2),
                             new THREE.ShaderMaterial(SHADERS.HexFlight3),
+                            new THREE.ShaderMaterial(SHADERS.HexSolid2),
                             new THREE.ShaderMaterial(SHADERS.HexFlight4),
                             new THREE.ShaderMaterial(SHADERS.HexFlight5),
                             new THREE.ShaderMaterial(SHADERS.HexFlight6),
+                            new THREE.ShaderMaterial(SHADERS.HexSolid3),
                             new THREE.ShaderMaterial(SHADERS.HexFlight7),
                             new THREE.ShaderMaterial(SHADERS.HexFlight8),
                             new THREE.ShaderMaterial(SHADERS.HexFlight9),
+                            new THREE.ShaderMaterial(SHADERS.HexSolid4),
                             new THREE.ShaderMaterial(SHADERS.HexFlight10),
                             new THREE.ShaderMaterial(SHADERS.HexFlight11),
                             new THREE.ShaderMaterial(SHADERS.HexFlight12),
+                            new THREE.ShaderMaterial(SHADERS.HexSolid5),
+                            new THREE.ShaderMaterial(SHADERS.HexSolid6),
+                            new THREE.ShaderMaterial(SHADERS.HexSolid7),
+                            new THREE.ShaderMaterial(SHADERS.HexSolid8),
+                            new THREE.ShaderMaterial(SHADERS.HexSolid9),
+                            new THREE.ShaderMaterial(SHADERS.HexSolid10),
+                            new THREE.ShaderMaterial(SHADERS.HexSolid11),
+                            new THREE.ShaderMaterial(SHADERS.HexSolid12),
                           ];
       for(var i = 0; i < this.planeCount; i++) {
         var tmp = new THREE.Mesh(new THREE.BoxGeometry(100, 100, 1),
@@ -53,8 +65,13 @@
       var SHORTDIST = 20;
       var LONGDIST = 50;
 
-      this.camera.position.z = -(frame - 6030) / 10;
+      this.camera.position.z = -(frame - 6030) / 5;
+      var camerapandist = 10;
+      var camerapanangler = 1.4;
+      this.camera.position.y = -camerapandist * (0.5 * Math.sin(frame/50) + 0.5);
 
+      this.camera.rotation.x = -this.camera.position.y/ camerapandist / camerapanangler;
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        
       for (var i = 0; i < this.planeCount; i++) {
         this.planes[i].material.uniforms.frame.value = 0.2 * frame + i * 100;
         var distance = this.planes[i].position.distanceTo(this.camera.position) - 3;
@@ -66,12 +83,18 @@
         } else {
           layer_visibility = 1;
         }
-        this.planes[i].material.uniforms.visibility.value = layer_visibility;
-        this.planes[i].material.uniforms.r_in.value = 0.6 + 0.2 * Math.sin(frame / 100. + i);
+        if (i%4 == 0) {
+          // Controll for visibility on every 4 layers which should be the solid ones.
+          this.planes[i].material.uniforms.visibility.value = layer_visibility * 1;  
+        } else {
+          this.planes[i].material.uniforms.visibility.value = layer_visibility;
+        }
+        this.planes[i].material.uniforms.r_in.value = 0.8 + 0.24 * Math.sin(frame / 100. + i * Math.PI / 2);
         this.planes[i].material.uniforms.g_in.value = 0.6 + 0.2 * Math.sin(frame / 70. + i);
         this.planes[i].material.uniforms.b_in.value = 0.45 + 0.2 * Math.sin(frame / 20. + i);
 
-        this.planes[i].material.uniforms.seed.value = (frame / 20000);
+        this.planes[i].material.uniforms.seed.value = (frame / 15000);
+        this.planes[i].material.uniforms.seed2.value = (frame / 200);
 
         this.planes[i].position.z = -(((this.camera.position.z + i * this.planeDistance) % (this.planeDistance * this.planeCount)) + 1  * this.planeDistance);
       }
