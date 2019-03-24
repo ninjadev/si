@@ -1,9 +1,9 @@
 uniform float frame;
-uniform sampler2D tDiffuse;
 uniform float drawStart;
 uniform float drawEnd;
 uniform float id;
 uniform float wobbliness;
+uniform float totalLength;
 
 varying vec2 vUv;
 
@@ -23,14 +23,16 @@ void main() {
 
     uv.y = uv.y * 4. - 2.;
 
+    float humanizeX = uv.x * totalLength / 100.;
+
     float scale = .5;
 
-    float thicknessWobble = 0.3 * sin(uv.x * 94. + id * 4.) + 0.2 * cos(uv.x * 43. + 23. + id * 5.) + 0.25 * sin(uv.x * 74. + 32. + id * 6.);
+    float thicknessWobble = 0.3 * sin(humanizeX * 94. + id * 4.) + 0.2 * cos(humanizeX * 43. + 23. + id * 5.) + 0.25 * sin(humanizeX * 74. + 32. + id * 6.);
     thicknessWobble *= wobbliness * 0.25;
 
     scale = scale * (1. + thicknessWobble);
 
-    float offset = 0.3 * sin(uv.x * 99. + id) + 0.2 * cos(uv.x * 87. + 23. + id * 2.) + 0.25 * sin(uv.x * 54. + 32. + id * 3.);
+    float offset = 0.3 * sin(humanizeX * 99. + id) + 0.2 * cos(humanizeX * 87. + 23. + id * 2.) + 0.25 * sin(humanizeX * 54. + 32. + id * 3.);
 
     offset *= wobbliness;
 
