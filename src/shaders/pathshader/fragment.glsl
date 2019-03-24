@@ -7,8 +7,14 @@ uniform float wobbliness;
 
 varying vec2 vUv;
 
+#define PI 3.141592653589793
+
 float rand(vec2 co){
     return fract(sin(dot(co.xy, vec2(12.9898,78.233))) * 43758.5453);
+}
+
+float linearStep(float x, float edgeSize) {
+    return 1. - clamp((abs(x) - 1. + edgeSize) / edgeSize, 0., 1.);
 }
 
 void main() {
@@ -33,11 +39,20 @@ void main() {
 
     float amount = 1.;
     float edgeSize = .2;
-    float edge = 1. - clamp((abs(uv.y) - 1. + edgeSize) / edgeSize, 0., 1.);
+    float edge = linearStep(abs(uv.y), edgeSize);
     amount *= edge;
 
     amount *= step(drawStart, uv.x);
-    amount *= 1. - step(drawEnd, uv.x);
+
+    float cX = (uv.x - drawEnd) * 400.;
+    float cY = uv.y;
+    float cLen = pow(cX * cX + cY * cY, .5);
+    float r = .5;
+    float circle = linearStep(cLen, 0.1);
+
+
+
+    amount *= 1. - step(drawEnd, uv.x) + step(drawEnd, uv.x) * circle;
     float color = rand(uv) * 0.1;
     vec3 foreground = vec3(color);
     vec3 background = vec3(color);
