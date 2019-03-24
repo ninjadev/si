@@ -53,7 +53,7 @@
       var SHORTDIST = 20;
       var LONGDIST = 50;
 
-      this.camera.position.z = -(frame - 7800) / 10;
+      this.camera.position.z = -(frame - 6030) / 10;
 
       for (var i = 0; i < this.planeCount; i++) {
         this.planes[i].material.uniforms.frame.value = 0.2 * frame + i * 100;
