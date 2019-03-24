@@ -15,13 +15,14 @@
       "C": "blobbobob.render",
       "D": "cubobbobob.render",
       "E": "pathy.render",
-      "F": "sirpathrick.render",
-      "G": "boxes.render",
-      "H": "HexFlightMainScene.render",
-      "I": "bands.render",
-      "J": "spirals.render",
-      "K": "tubes.render",
-      "L": "diamond.render"
+      "F": "didyousayess.render",
+      "G": "sirpathrick.render",
+      "H": "boxes.render",
+      "I": "HexFlightMainScene.render",
+      "J": "bands.render",
+      "K": "spirals.render",
+      "L": "tubes.render",
+      "M": "diamond.render"
     }
   },
   {
@@ -78,5 +79,9 @@
   {
     "id": "diamond",
     "type": "diamond"
+  },
+  {
+    "id": "didyousayess",
+    "type": "didyousayess"
   }
 ]
