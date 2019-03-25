@@ -26,11 +26,11 @@
       const localRandom = window.Random(1234);
 
       for (let i = 0; i < 15; i++) {
-        for (let j = 0; j < 80; j++) {
+        for (let j = 0; j < 110; j++) {
           const path = new Path();
-          const offset = 4; //+ ((localRandom() * 2) | 0);
-          const x = -170 + j * offset;
-          const y = -400 + i * 40 + j * offset;
+          const offset = j * 3 + (localRandom() * 2 | 0);
+          const x = -170 + offset;
+          const y = -400 + i * 40 + offset;
           path.lineTo(x, y);
           path.lineTo(x + 10, y - 10);
           const line = path.toObject3D();
@@ -64,7 +64,7 @@
       for (let i = 0; i < this.ticks.length; i++) {
         const path = this.ticks[i].path;
         path.material.uniforms.drawStart.value = 0;
-        path.material.uniforms.drawEnd.value = lerp(0, 1, (frame - startFrame - i * 5) / (100 - i * 3));
+        path.material.uniforms.drawEnd.value = lerp(0, 1, (frame - startFrame - 90 - i / 10) / 20);
         path.material.uniforms.wobbliness.value = 1;
       }
     }
