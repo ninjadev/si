@@ -24,7 +24,8 @@
       "L": "spirals.render",
       "M": "diagonals.render",
       "N": "tubes.render",
-      "O": "diamond.render"
+      "O": "diamond.render",
+      "P": "stairs.render"
     }
   },
   {
@@ -93,5 +94,9 @@
   {
     "id": "floats",
     "type": "floats"
+  },
+  {
+    "id": "stairs",
+    "type": "stairs"
   }
 ]
