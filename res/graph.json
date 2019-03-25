@@ -22,6 +22,7 @@
       "J": "HexFlightMainScene.render",
       "K": "bands.render",
       "L": "spirals.render",
+      "L2": "cross.render",
       "M": "diagonals.render",
       "N": "tubes.render",
       "O": "diamond.render",
@@ -98,5 +99,9 @@
   {
     "id": "stairs",
     "type": "stairs"
+  },
+  {
+    "id": "cross",
+    "type": "cross"
   }
 ]
