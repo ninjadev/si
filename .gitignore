@@ -3,3 +3,5 @@ gen/
 .*.swp
 .DS_STORE
 .idea
+node_modules
+.vscode
