@@ -1,4 +1,14 @@
 (function(global) {
+    function Circle(params) {
+      const circle = new Path({debug:false});
+      for (let i = 0; i <= params.segments; i++) {
+        const x = Math.sin((i / params.segments) * 2 * Math.PI) * params.radius * Math.sin(params.rotateX);
+        const y = Math.cos((i / params.segments) * 2 * Math.PI) * params.radius * Math.cos(params.rotateY);
+        circle.lineTo(x, y);
+      }
+      return circle
+    }
+
   class moose extends NIN.THREENode {
     constructor(id, options) {
       super(id, {
@@ -9,17 +19,6 @@
       });
 
       const tracks = [
-        /*
-        {coords: [[-300,-169],[300,169]], offset: [0, 0]},
-        {coords: [[300,-169],[-300,169]], offset: [0, 0]},
-
-        {coords: [[-300,-169],[300,169]], offset: [0, 10]},
-        {coords: [[300,-169],[-300,169]], offset: [0, 10]},
-
-        {coords: [[-300,-169],[300,169]], offset: [0, -10]},
-        {coords: [[300,-169],[-300,169]], offset: [0, -10]},
-        */
-
         {
           coords: [
             [-10,-70],[-10,-50],[-30,-50],[-10,-20],[-30,-20],[-10,10],[-25,10],
@@ -55,20 +54,7 @@
 
       ];
 
-      this.lines = [];
-
-      for (const track of tracks) {
-        const path = new Path({debug: false});
-        for (const [x, y] of track.coords) {
-          path.lineTo(x, y);
-        }
-        const line = path.toObject3D();
-        this.lines.push(line);
-        this.scene.add(line);
-        line.position.x = track.offset[0];
-        line.position.y = track.offset[1];
-        line.path = path;
-      }
+      this.circles = [];
 
       this.camera.position.z = 200;
 
@@ -81,11 +67,33 @@
 
     update(frame) {
       super.update(frame);
-      for (let i = 0; i < this.lines.length; i++) {
-        const path = this.lines[i].path;
-        path.material.uniforms.drawStart.value = 0;
-        path.material.uniforms.drawEnd.value =  2 * Math.sin(frame / 100 - i * 0.01) + 0.5 + 0.5 * Math.sin(i);
-        path.material.uniforms.wobbliness.value = 1;
+
+      const startFrame = 0;
+
+      for (let circle of this.circles) {
+        this.scene.remove(circle);
+      }
+
+      this.circles = [];
+
+      for (let [x, y] of [[-90, 40], [0, 40], [90, 40], [-45, -40], [45, -40]]) {
+        const params = {
+          segments: 40,
+          radius: 40 + lerp(150, 0, (frame - startFrame) / 60) + lerp(20, 0, (frame - startFrame) / 600),
+          rotateX: Math.PI / 2 + (frame / 360),
+          rotateY: Math.sin((frame + x) / 120) * Math.PI,
+        };
+
+        const circle = Circle(params).toObject3D();
+        circle.position.set(x - 1, y - 1, 0);
+        this.circles.push(circle);
+        const circleShadow = Circle(params).toObject3D();
+        circleShadow.position.set(x + 1, y + 2, 0);
+        this.circles.push(circleShadow);
+      }
+
+      for (let circle of this.circles) {
+        this.scene.add(circle);
       }
     }
   }
