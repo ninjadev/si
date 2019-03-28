@@ -12,7 +12,8 @@
     "connected": {
       "A": "moose.render",
       "B": "lines.render",
-      "C": "blobbobob.render",
+      "C": "ZentangleVisionShader.render",
+      "C2": "blobbobob.render",
       "D": "cubobbobob.render",
       "E": "pathy.render",
       "F": "didyousayess.render",
@@ -39,6 +40,26 @@
   {
     "id": "HexFlightMainScene",
     "type": "hexFlightMainScene"
+  },
+  {
+    "id": "ZentangleVision",
+    "type": "zentangleVision"
+  },
+  {
+    "id": "ZentangleVisionShader",
+    "type": "ZentangleVisionShaderNode",
+    "options": {
+      "shader": "ZentangleVisionShader"
+    },
+    "connected": {
+      "three_scene": "ZentangleVision.render",
+      "bgzigzag": "lines.render",
+      "bgrightarrow": "lines.render",
+      "bgpink": "lines.render",
+      "bgblue": "lines.render",
+      "bgpants": "lines.render",
+      "squiggles": "lines.render"
+    }
   },
   {
     "id": "lines",
