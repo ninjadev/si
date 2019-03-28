@@ -1,26 +1,18 @@
 (function(global) {
-  class ZentangleVisionShaderNode extends NIN.ShaderNode {
+  class NorwayShaderNode extends NIN.ShaderNode {
     constructor(id, options) {
       options.inputs = {
-         three_scene: new NIN.TextureInput(),
-         bgzigzag: new NIN.TextureInput(),
-         bgrightarrow: new NIN.TextureInput(),
-         bgpink: new NIN.TextureInput(),
-         bgblue: new NIN.TextureInput(),
-         bgpants: new NIN.TextureInput(),
-         squiggles: new NIN.TextureInput(),
+         input_scene: new NIN.TextureInput(),
       }
       super(id, options);
 
-      this.test = Loader.loadTexture('res/test_train.jpg');
-
-      this.map_image = Loader.loadTexture('res/zentangles/norge.png');
-      this.z1 = Loader.loadTexture('res/zentangles/z1.jpg');
-      this.z2 = Loader.loadTexture('res/zentangles/z2.png');
-      this.z3 = Loader.loadTexture('res/zentangles/z3.png');
-      this.z4 = Loader.loadTexture('res/zentangles/z4.png');
-      this.z5 = Loader.loadTexture('res/zentangles/z5.png');
-      this.z6 = Loader.loadTexture('res/zentangles/z6.png');
+      this.map_image = Loader.loadTexture('res/map/norge.png');
+      this.z1 = Loader.loadTexture('res/map/z1.jpg');
+      this.z2 = Loader.loadTexture('res/map/z2.png');
+      this.z3 = Loader.loadTexture('res/map/z3.png');
+      this.z4 = Loader.loadTexture('res/map/z4.png');
+      this.z5 = Loader.loadTexture('res/map/z5.png');
+      this.z6 = Loader.loadTexture('res/map/z6.png');
     }
 
     update(frame) {
@@ -34,7 +26,7 @@
       
       //this.uniforms.tDiffuse.value = this.inputs.three_scene.getValue();
       this.uniforms.tDiffuse.value = this.map_image;
-      this.uniforms.z1.value = this.z2;
+      this.uniforms.z1.value = this.inputs.input_scene.getValue();
       this.uniforms.z2.value = this.z3;
       this.uniforms.z3.value = this.z4;
       this.uniforms.z4.value = this.z5;
@@ -44,5 +36,5 @@
     }
   }
 
-  global.ZentangleVisionShaderNode = ZentangleVisionShaderNode;
+  global.NorwayShaderNode = NorwayShaderNode;
 })(this);

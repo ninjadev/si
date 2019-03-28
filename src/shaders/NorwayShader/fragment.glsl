@@ -8,7 +8,7 @@ uniform sampler2D z5;
 uniform sampler2D z6;
 
 #define number_of_zs 6
-#define EDGE_WIDTH 0.00001
+#define EDGE_WIDTH 0.0001
 
 varying vec2 vUv;
 
@@ -30,34 +30,34 @@ void main() {
 
     float intensity = color.r * 0.2126 + color.g * 0.7152 + color.b * 0.0722;
     intensity /= 2.; 
-    vec4 zentangled_color;
+    vec4 output_color;
     if (intensity < 1./6.)
     {
-      zentangled_color = texture2D(z1, vUv);
+      output_color = texture2D(z1, vUv);
     }
     else if (intensity < 2./6.)
     {
-      zentangled_color = texture2D(z2, vUv);
+      output_color = texture2D(z2, vUv);
     }
     else if (intensity < 3./6.)
     {
-      zentangled_color = texture2D(z3, vUv);
+      output_color = texture2D(z3, vUv);
     }
     else if (intensity < 4./6.)
     {
-      zentangled_color = texture2D(z4, vUv);
+      output_color = texture2D(z4, vUv);
     }
     else if (intensity < 5./6.)
     {
-      zentangled_color = texture2D(z5, vUv);
+      output_color = texture2D(z5, vUv);
     }
     else
     {
-      zentangled_color = texture2D(z6, vUv);
+      output_color = texture2D(z6, vUv);
     }
-    zentangled_color = vec4(zentangled_color.r - red * 1000.,
-                            zentangled_color.g - green * 1000., 
-                            zentangled_color.b - blue * 1000., 
+    output_color = vec4(output_color.r - red * 1000.,
+                            output_color.g - green * 1000., 
+                            output_color.b - blue * 1000., 
                             1.0);
-    gl_FragColor = zentangled_color;
+    gl_FragColor = output_color;
 }

@@ -12,7 +12,7 @@
     "connected": {
       "A": "moose.render",
       "B": "lines.render",
-      "C": "ZentangleVisionShader.render",
+      "C": "NorwayShader.render",
       "C2": "blobbobob.render",
       "D": "cubobbobob.render",
       "E": "pathy.render",
@@ -42,23 +42,13 @@
     "type": "hexFlightMainScene"
   },
   {
-    "id": "ZentangleVision",
-    "type": "zentangleVision"
-  },
-  {
-    "id": "ZentangleVisionShader",
-    "type": "ZentangleVisionShaderNode",
+    "id": "NorwayShader",
+    "type": "NorwayShaderNode",
     "options": {
-      "shader": "ZentangleVisionShader"
+      "shader": "NorwayShader"
     },
     "connected": {
-      "three_scene": "ZentangleVision.render",
-      "bgzigzag": "lines.render",
-      "bgrightarrow": "lines.render",
-      "bgpink": "lines.render",
-      "bgblue": "lines.render",
-      "bgpants": "lines.render",
-      "squiggles": "lines.render"
+      "input_scene": "lines.render"
     }
   },
   {
