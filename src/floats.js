@@ -47,7 +47,7 @@
       for (let i = 0; i < this.lines.length; i++) {
         const path = this.lines[i].path;
         path.material.uniforms.drawStart.value = 0;
-        path.material.uniforms.drawEnd.value = lerp(0, 1, (frame - startFrame - i * 5) / (150 - i * 2));
+        path.material.uniforms.drawEnd.value = lerp(0, 1, (frame - startFrame - i * 3) / (60 - i));
         path.material.uniforms.wobbliness.value = 1;
       }
     }
