@@ -29,6 +29,19 @@
         {rotation: -1.7, x: -50, y: -60},
         {rotation: .1, x: -100, y: 0},
         {rotation: -.5, x: -50, y: 100},
+        {rotation: 0.3, x: 70, y: 120},
+        {rotation: Math.PI / 2, x: 0, y: 90},
+        {rotation: Math.PI, x: -110, y: 0},
+        {rotation: 1, x: 0, y: -80},
+        {rotation: -1, x: 0, y: -80},
+        {rotation: -.3, x: -80, y: 0},
+        {rotation: .7, x: 110, y: 0},
+        {rotation: -.4, x: 10, y: -50},
+        {rotation: .6, x: 130, y: 0},
+        {rotation: .6, x: -110, y: 0},
+        {rotation: 1.4, x: 0, y: 90},
+        {rotation: 1.2, x: 0, y: -40},
+        {rotation: 1.9, x: 0, y: -40},
       ];
 
       const localRandom = window.Random(100);
@@ -58,7 +71,7 @@
 
         //const color = new THREE.Color(localRandom(), localRandom, 0.5);
         const drape = new THREE.Mesh(
-          new THREE.BoxGeometry(width, 600, 2),
+          new THREE.BoxGeometry(width - 1, 600, 2),
           new THREE.MeshBasicMaterial());
         drape.position.z = -1;
 
@@ -84,7 +97,7 @@
     update(frame) {
       super.update(frame);
 
-      const startFrame = 6582;
+      const startFrame = 6582 - 60;
 
       for (let i = 0; i < this.bands.length; i++) {
         for (const line of this.bands[i]) {
