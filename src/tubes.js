@@ -61,6 +61,8 @@
     update(frame) {
       super.update(frame);
 
+      const startFrame = FRAME_FOR_BEAN(48 * 29);
+
       for (let i = 0; i < this.dots.length; i++) {
         const dot = this.dots[i];
         dot.scale.setScalar(easeOut(0, 1, (frame - 7900 + i * 3) / 100));
@@ -68,8 +70,8 @@
 
       for (let i = 0; i < this.lines.length; i++) {
         const path = this.lines[i].path;
-        path.material.uniforms.drawStart.value = 0;
-        path.material.uniforms.drawEnd.value =  2 * Math.sin(frame / 100 - i * 0.01) + 0.5 + 0.5 * Math.sin(i);
+        path.material.uniforms.drawStart.value = lerp(0.3, 0, (frame - startFrame - i) / 20);
+        path.material.uniforms.drawEnd.value = lerp(0.3, 1, (frame - startFrame - i) / 80);
         path.material.uniforms.wobbliness.value = 1;
       }
     }
