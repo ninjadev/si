@@ -10,6 +10,7 @@
           D: new NIN.TextureInput(),
           E: new NIN.TextureInput(),
           F: new NIN.TextureInput(),
+          Gintro: new NIN.TextureInput(),
           G: new NIN.TextureInput(),
           H: new NIN.TextureInput(),
           I: new NIN.TextureInput(),
@@ -36,6 +37,7 @@
       this.inputs.D.enabled = false;
       this.inputs.E.enabled = false;
       this.inputs.F.enabled = false;
+      this.inputs.Gintro.enabled = false;
       this.inputs.G.enabled = false;
       this.inputs.H.enabled = false;
       this.inputs.I.enabled = false;
@@ -63,6 +65,8 @@
         selectedScene = this.inputs.E;
       } else if (BEAN < 48 * 18) {
         selectedScene = this.inputs.F;
+      } else  if (BEAN < 48 * 18 + 12) {
+        selectedScene = this.inputs.Gintro;
       } else  if (BEAN < 48 * 20) {
         selectedScene = this.inputs.G;
       } else  if (BEAN < 48 * 21) {
