@@ -97,23 +97,23 @@
     update(frame) {
       super.update(frame);
 
-      const startFrame = 6582 - 60;
+      const startFrame = 6582;
 
       for (let i = 0; i < this.bands.length; i++) {
         for (const line of this.bands[i]) {
           const path = line.path;
           path.material.uniforms.drawStart.value = 0;
-          path.material.uniforms.drawEnd.value = lerp(0, 1, (frame - startFrame - i * 5) / 300);
+          path.material.uniforms.drawEnd.value = lerp(0, 1, (frame - startFrame - 300 + i * 15) / 300);
           path.material.uniforms.wobbliness.value = 1;
         }
         const drape = this.drapes[i];
         //drape.position.y = clamp(-50, 0, -600 + 1200 * Math.sin(frame / 100 - i * 0.01) + 300 + 300 * Math.sin(i));
-        drape.position.y = lerp(-600, 0, (frame - startFrame - i * 5) / 300);
+        drape.position.y = lerp(-600, 0, (frame - startFrame - 300 + i * 15) / 300);
       }
 
-      this.camera.position.z = easeIn(350, 150, (frame - startFrame) / 600);
-      this.camera.position.y = lerp(0, 40, (frame - startFrame) / 600);
-      this.camera.rotation.z = easeIn(0, -.2, (frame - startFrame) / 650);
+      this.camera.position.z = easeIn(400, 120, (frame - startFrame) / 650);
+      this.camera.position.y = lerp(0, 40, (frame - startFrame) / 650);
+      this.camera.rotation.z = easeIn(0, -.2, (frame - startFrame) / 700);
     }
   }
 
