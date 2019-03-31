@@ -12,6 +12,7 @@
     "connected": {
       "A": "moose.render",
       "B": "gems.render",
+      "B2": "Yoga.render",
       "C": "NorwayShader.render",
       "C2": "blobbobob.render",
       "D": "cubobbobob.render",
@@ -116,5 +117,9 @@
   {
     "id": "gems",
     "type": "gems"
+  },
+  {
+    "id": "Yoga",
+    "type": "yoga"
   }
 ]
