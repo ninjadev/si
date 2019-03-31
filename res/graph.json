@@ -47,14 +47,7 @@
     "type": "NorwayShaderNode",
     "options": {
       "shader": "NorwayShader"
-    },
-    "connected": {
-      "input_scene": "lines.render"
     }
-  },
-  {
-    "id": "lines",
-    "type": "lines"
   },
   {
     "id": "blobbobob",
