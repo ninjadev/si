@@ -62,6 +62,35 @@
         line.path = path;
       }
 
+      function makeCurve(radius, x, y) {
+        const curve = [];
+        for (let i = 3; i < 17; i++) {
+          const angle = Math.PI / 2 - i * Math.PI / 2 / 20;
+          curve.push([
+            x + radius * Math.cos(angle),
+            y + radius * Math.sin(angle),
+          ]);
+        }
+        return curve;
+      }
+
+      const wifilinetracks = [
+        makeCurve(5, 10, 60),
+        makeCurve(10, 10, 60),
+        makeCurve(15, 10, 60),
+      ];
+      this.wifilines = [];
+      for (const track of wifilinetracks) {
+        const path = new Path();
+        for (const [x, y] of track) {
+          path.lineTo(x, y);
+        }
+        const line = path.toObject3D();
+        this.wifilines.push(line);
+        this.scene.add(line);
+        line.path = path;
+      }
+
       this.camera.position.z = 200;
 
       this.wall = new THREE.Mesh(
@@ -79,6 +108,13 @@
         const path = this.lines[i].path;
         path.material.uniforms.drawStart.value = 0;
         path.material.uniforms.drawEnd.value = lerp(0, 1, (frame - startFrame - i * 10) / 100);
+        path.material.uniforms.wobbliness.value = 1;
+      }
+
+      for (let i = 0; i < this.wifilines.length; i++) {
+        const path = this.wifilines[i].path;
+        path.material.uniforms.drawStart.value = clamp(0, Math.sin(frame / 50 + i * 5), 1);
+        path.material.uniforms.drawEnd.value = clamp(0, Math.sin(frame / 100 + i * 5), 1);
         path.material.uniforms.wobbliness.value = 1;
       }
 
