@@ -40,11 +40,11 @@
       const tracks = [
         {
           coords: curve,
-          offset: [0, -150],
+          offset: [0, -150, 25],
         },
-        ...makeTree([0, 20]),
-        ...makeTree([-80, 10]),
-        ...makeTree([80, 10]),
+        ...makeTree([0, 12, 0]),
+        ...makeTree([-80, 10, 20]),
+        ...makeTree([80, 10, 30]),
       ];
 
       this.lines = [];
@@ -57,8 +57,7 @@
         const line = path.toObject3D();
         this.lines.push(line);
         this.scene.add(line);
-        line.position.x = track.offset[0];
-        line.position.y = track.offset[1];
+        line.position.set(...track.offset);
         line.path = path;
       }
 
