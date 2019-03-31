@@ -17,7 +17,8 @@
       "D": "cubobbobob.render",
       "E": "pathy.render",
       "F": "didyousayess.render",
-      "G": "sirpathrick.render",
+      "Gintro": "sirpathrick.render",
+      "G": "trees.render",
       "H": "boxes.render",
       "I": "floats.render",
       "J": "HexFlightMainScene.render",
@@ -70,6 +71,10 @@
   {
     "id": "sirpathrick",
     "type": "sirpathrick"
+  },
+  {
+    "id": "trees",
+    "type": "trees"
   },
   {
     "id": "boxes",

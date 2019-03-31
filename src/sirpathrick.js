@@ -10,7 +10,6 @@
       });
 
       const tracks = [
-        /*
         {coords: [[-300,-169],[300,169]], offset: [0, 0]},
         {coords: [[300,-169],[-300,169]], offset: [0, 0]},
 
@@ -19,41 +18,6 @@
 
         {coords: [[-300,-169],[300,169]], offset: [0, -10]},
         {coords: [[300,-169],[-300,169]], offset: [0, -10]},
-        */
-
-        {
-          coords: [
-            [-10,-70],[-10,-50],[-30,-50],[-10,-20],[-30,-20],[-10,10],[-25,10],
-            [0,50],
-            [25,10],[10,10],[30,-20],[10,-20],[30,-50],[10,-50],[10,-70]],
-          offset: [-80, 0],
-        },
-
-        {
-          coords: [[25,10],[-25,10],[0,50],[25,10]],
-          offset: [0, 10],
-        },
-        {
-          coords: [[10,10],[30,-20],[-30,-20],[-10,10]],
-          offset: [0, 10],
-        },
-        {
-          coords: [[10,-20],[30,-50],[-30,-50],[-10,-20]],
-          offset: [0, 10],
-        },
-        {
-          coords: [[10,-50],[10,-70],[-10,-70],[-10,-50]],
-          offset: [0, 10],
-        },
-
-        {
-          coords: [
-            [-10,-70],[-10,-50],[-30,-50],[-10,-20],[-30,-20],[-10,10],[-25,10],
-            [0,50],
-            [25,10],[10,10],[30,-20],[10,-20],[30,-50],[10,-50],[10,-70]],
-          offset: [80, 0],
-        },
-
       ];
 
       this.lines = [];
@@ -82,10 +46,12 @@
 
     update(frame) {
       super.update(frame);
+
+      const startFrame = FRAME_FOR_BEAN(48 * 18);
       for (let i = 0; i < this.lines.length; i++) {
         const path = this.lines[i].path;
         path.material.uniforms.drawStart.value = 0;
-        path.material.uniforms.drawEnd.value =  2 * Math.sin(frame / 100 - i * 0.01) + 0.5 + 0.5 * Math.sin(i);
+        path.material.uniforms.drawEnd.value =  lerp(0, 1, (frame - startFrame) / 50);
         path.material.uniforms.wobbliness.value = 1;
       }
     }
