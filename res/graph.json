@@ -11,7 +11,7 @@
     "type": "SceneSwitcherNode",
     "connected": {
       "A": "moose.render",
-      "B": "lines.render",
+      "B": "gems.render",
       "C": "NorwayShader.render",
       "C2": "blobbobob.render",
       "D": "cubobbobob.render",
@@ -119,5 +119,9 @@
   {
     "id": "cross",
     "type": "cross"
+  },
+  {
+    "id": "gems",
+    "type": "gems"
   }
 ]
