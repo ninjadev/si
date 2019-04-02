@@ -11,25 +11,25 @@
     "type": "SceneSwitcherNode",
     "connected": {
       "A": "moose.render",
-      "B": "gems.render",
-      "B2": "Yoga.render",
+      "B": "patterns.render",
+      "B2": "patterns.render",
       "C": "NorwayShader.render",
       "C2": "blobbobob.render",
       "D": "cubobbobob.render",
-      "E": "pathy.render",
-      "F": "didyousayess.render",
-      "Gintro": "sirpathrick.render",
+      "E": "patterns.render",
+      "F": "patterns.render",
+      "Gintro": "patterns.render",
       "G": "trees.render",
-      "H": "boxes.render",
-      "I": "floats.render",
+      "H": "patterns.render",
+      "I": "patterns.render",
       "J": "HexFlightMainScene.render",
       "K": "bands.render",
-      "L": "spirals.render",
-      "L2": "cross.render",
-      "M": "diagonals.render",
-      "N": "tubes.render",
-      "O": "diamond.render",
-      "P": "stairs.render"
+      "L": "patterns.render",
+      "L2": "patterns.render",
+      "M": "patterns.render",
+      "N": "patterns.render",
+      "O": "patterns.render",
+      "P": "patterns.render"
     }
   },
   {
@@ -121,5 +121,24 @@
   {
     "id": "Yoga",
     "type": "yoga"
+  },
+  {
+    "id": "patterns",
+    "type": "patterns",
+    "connected": {
+      "A": "gems.render",
+      "B": "pathy.render",
+      "C": "didyousayess.render",
+      "D": "sirpathrick.render",
+      "E": "boxes.render",
+      "F": "floats.render",
+      "G": "spirals.render",
+      "H": "cross.render",
+      "I": "diagonals.render",
+      "J": "tubes.render",
+      "K": "diamond.render",
+      "L": "stairs.render",
+      "M": "Yoga.render"
+    }
   }
 ]
