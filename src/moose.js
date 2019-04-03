@@ -63,6 +63,46 @@
         new THREE.MeshBasicMaterial({color: 0xffffff}));
       this.scene.add(this.wall);
       this.wall.position.z = -100;
+
+      const commodoreColors = [
+        '#e72c2f',
+        '#ed6948',
+        '#fdce1f',
+        '#53b74c',
+        '#03a6ee',
+      ];
+
+      this.commodoreLines = [];
+      for (let [i, color] of commodoreColors.entries()) {
+        color = new THREE.Color(color);
+        color = new THREE.Vector3(color.r, color.g, color.b);
+        let path = new Path({
+          directionSize: 5,
+          color,
+        });
+        path.lineTo(-150 - i * 7, 40 + i * -3);
+        path.lineTo(180 - i * 7, 40 + i * -3);
+        let obj = path.toObject3D();
+        obj.path = path;
+        this.commodoreLines.push(obj);
+        this.scene.add(obj);
+      }
+
+      this.commodoreLines2 = [];
+      for (let [i, color] of commodoreColors.entries()) {
+        color = new THREE.Color(color);
+        color = new THREE.Vector3(color.r, color.g, color.b);
+        let path = new Path({
+          directionSize: 5,
+          color,
+        });
+        path.lineTo(150 + i * 7, -40 + i * -3);
+        path.lineTo(-180 + i * 7, -40 + i * -3);
+        let obj = path.toObject3D();
+        obj.path = path;
+        this.commodoreLines2.push(obj);
+        this.scene.add(obj);
+      }
     }
 
     update(frame) {
@@ -94,6 +134,24 @@
 
       for (let circle of this.circles) {
         this.scene.add(circle);
+      }
+
+      const startOfStart = 100;
+      const startOfEnd = 400;
+      const speed = 80;
+
+      for (let commodore of this.commodoreLines) {
+        const path = commodore.path;
+        path.material.uniforms.drawStart.value = lerp(0, 1, (frame - startOfEnd) / speed);
+        path.material.uniforms.drawEnd.value =  lerp(0, 1, (frame - startOfStart) / speed);
+        path.material.uniforms.wobbliness.value = Math.sin(frame / 4) / 4 + 0.75;
+      }
+
+      for (let commodore of this.commodoreLines2) {
+        const path = commodore.path;
+        path.material.uniforms.drawStart.value = lerp(0, 1, (frame - startOfEnd) / speed);
+        path.material.uniforms.drawEnd.value =  lerp(0, 1, (frame - startOfStart) / speed);
+        path.material.uniforms.wobbliness.value = Math.sin(frame / 4) / 4 + 0.75;
       }
     }
   }

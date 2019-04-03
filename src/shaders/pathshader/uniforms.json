@@ -6,5 +6,6 @@
     "drawStart": { "type": "f", "value": 0.0 },
     "width": { "type": "f", "value": 1.0 },
     "drawEnd": { "type": "f", "value": 1.0 },
-    "totalLength": { "type": "f", "value": 1.0 }
+    "totalLength": { "type": "f", "value": 1.0 },
+    "color": { "value": [0.0, 0.0, 0.0]}
 }
