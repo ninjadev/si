@@ -26,10 +26,10 @@
       "K": "patterns.render",
       "L": "patterns.render",
       "L2": "patterns.render",
-      "M": "patterns.render",
-      "N": "patterns.render",
-      "O": "patterns.render",
-      "P": "patterns.render"
+      "M": "emoji.render",
+      "N": "emoji.render",
+      "O": "emoji.render",
+      "P": "emoji.render"
     }
   },
   {
@@ -121,6 +121,10 @@
   {
     "id": "Yoga",
     "type": "yoga"
+  },
+  {
+    "id": "emoji",
+    "type": "emoji"
   },
   {
     "id": "patterns",
