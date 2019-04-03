@@ -42,6 +42,27 @@
         {rotation: 1.4, x: 0, y: 90},
         {rotation: 1.2, x: 0, y: -40},
         {rotation: 1.9, x: 0, y: -40},
+        {rotation: .3, x: -80, y: 0},
+        {rotation: .2, x: 80, y: 0},
+        {rotation: -.5, x: 120, y: 0},
+        {rotation: -1.5, x: 0, y: -80},
+        {rotation: -.4, x: -140, y: 0},
+        {rotation: .4, x: -150, y: 0},
+        {rotation: .4, x: 130, y: 0},
+        {rotation: -.6, x: 140, y: 0},
+
+        {rotation: 0.1, x: 120, y: 0},
+        {rotation: Math.PI / 2, x: 0, y: 120},
+        {rotation: 3, x: -120, y: 0},
+        {rotation: -Math.PI / 2, x: 0, y: -20},
+
+        {rotation: .4, x: 130, y: 0},
+        {rotation: -.6, x: 140, y: 0},
+
+        {rotation: 0, x: 70, y: 0},
+        {rotation: Math.PI / 2, x: 0, y: 90},
+        {rotation: Math.PI, x: -70, y: 0},
+        {rotation: -Math.PI / 2, x: 0, y: -50},
       ];
 
       const localRandom = window.Random(100);
@@ -61,6 +82,11 @@
         for (const offset of offsets) {
           const path = new Path({debug: false});
           path.lineTo(offset - width / 2, -300);
+          path.lineTo(offset - width / 2, -200);
+          path.lineTo(offset - width / 2, -100);
+          path.lineTo(offset - width / 2, 0);
+          path.lineTo(offset - width / 2, 100);
+          path.lineTo(offset - width / 2, 200);
           path.lineTo(offset - width / 2, 300);
           const line = path.toObject3D();
           band.push(line);
@@ -97,23 +123,26 @@
     update(frame) {
       super.update(frame);
 
-      const startFrame = 6582;
+      const startFrame = FRAME_FOR_BEAN(48 * 13.5);
+      const endFrame = FRAME_FOR_BEAN(48 * 17.5);
+      const duration = endFrame - startFrame;
 
       for (let i = 0; i < this.bands.length; i++) {
         for (const line of this.bands[i]) {
           const path = line.path;
           path.material.uniforms.drawStart.value = 0;
-          path.material.uniforms.drawEnd.value = lerp(0, 1, (frame - startFrame - 300 + i * 15) / 300);
+          path.material.uniforms.drawEnd.value = lerp(0, 1, (frame - startFrame - this.bands.length * 20 + i * 20 + 20) / 300);
           path.material.uniforms.wobbliness.value = 1;
         }
         const drape = this.drapes[i];
         //drape.position.y = clamp(-50, 0, -600 + 1200 * Math.sin(frame / 100 - i * 0.01) + 300 + 300 * Math.sin(i));
-        drape.position.y = lerp(-600, 0, (frame - startFrame - 300 + i * 15) / 300);
+        drape.position.y = lerp(-600, 0, (frame - startFrame - this.bands.length * 20 + i * 20 + 20) / 300);
       }
 
-      this.camera.position.z = easeIn(400, 120, (frame - startFrame) / 650);
-      this.camera.position.y = lerp(0, 40, (frame - startFrame) / 650);
-      this.camera.rotation.z = easeIn(0, -.2, (frame - startFrame) / 700);
+      this.camera.position.z = easeIn(600, 120, (frame - startFrame) / duration);
+      this.camera.position.y = lerp(0, 40, (frame - startFrame) / duration);
+      this.camera.rotation.y = easeIn(0, -.2, (frame - startFrame) / duration);
+      this.camera.rotation.z = easeIn(0, -.2, (frame - startFrame) / duration);
     }
   }
 
