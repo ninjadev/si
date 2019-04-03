@@ -4,6 +4,7 @@ uniform float drawEnd;
 uniform float id;
 uniform float wobbliness;
 uniform float totalLength;
+uniform vec3 color;
 
 varying vec2 vUv;
 
@@ -61,7 +62,6 @@ void main() {
     amount = amount +
         (1. - step(drawStart, uv.x)) * startCircle * edge +
         step(drawEnd, uv.x) * endCircle * edge;
-    float color = rand(uv) * 0.1;
     vec3 foreground = vec3(color);
     vec3 background = vec3(color);
     gl_FragColor = vec4(mix(background, foreground, vec3(amount)), amount);
