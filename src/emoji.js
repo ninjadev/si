@@ -8,37 +8,44 @@
         }
       });
 
-      this.cube = new THREE.Mesh(new THREE.BoxGeometry(50, 50, 50),
-        new THREE.MeshStandardMaterial());
-      this.scene.add(this.cube);
-
-      var light = new THREE.PointLight(0xffffff, 1, 100);
-      light.position.set(50, 50, 50);
-      this.scene.add(light);
-
-      this.camera.position.z = 100;
+      this.camera.position.z = 2000;
+      this.camera.position.x = 700;
+      this.camera.position.y = 1200;
 
       this.emojiTextures = [];
       this.emojiMaterials = [];
+      this.emojiGeometry = new THREE.PlaneGeometry(128, 128, 1);
+      this.tiles = [];
       for (let emojiId in window.sunglassesMosaic.emojies) {
         if (window.sunglassesMosaic.emojies.hasOwnProperty(emojiId)) {
           this.emojiTextures[emojiId] = Loader.loadTexture(`res/emoji/${window.sunglassesMosaic.emojies[emojiId]}`);
 
-          // TODO: Maybe use MeshBasicMaterial?
-          this.emojiMaterials[emojiId] = new THREE.MeshStandardMaterial({
+          this.emojiMaterials[emojiId] = new THREE.MeshBasicMaterial({
             map: this.emojiTextures[emojiId],
-            metalness: 0.1,
-            roughness: 0.9,
+            transparent: true
           })
         }
+      }
+
+
+      for (let i = 0; i < window.sunglassesMosaic.tiles.length; i++) {
+        const tile = window.sunglassesMosaic.tiles[i];
+        const material = this.emojiMaterials[tile.emoji_id];
+        const tileMesh = new THREE.Mesh(this.emojiGeometry, material);
+        tileMesh.position.x = tile.x;
+        tileMesh.position.y = 1800 - tile.y;
+        tileMesh.position.z = 0.01 * i;
+        this.tiles.push(tileMesh);
+        this.scene.add(tileMesh);
       }
     }
 
     update(frame) {
       super.update(frame);
 
-      this.cube.rotation.x = Math.sin(frame / 50);
-      this.cube.rotation.y = Math.cos(frame / 50);
+      for (let tile of this.tiles) {
+        tile.rotation.z = frame / 60;
+      }
     }
   }
 
