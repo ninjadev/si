@@ -111,6 +111,60 @@
         this.scene.add(container);
       }
 
+      this.clouds = [
+        {
+          coords: [40, 20, 465],
+          color: [1, .6, .3],
+          time: 180
+        },
+        {
+          coords: [-60, -20, 325],
+          color: [0, 1, 1],
+          time: 350
+        },
+        {
+          coords: [60, 0, 220],
+          color: [.5, 1, .5],
+          time: 600
+        },
+        {
+          coords: [-70, 0, 120],
+          color: [.5, .75, 1],
+          time: 600
+        },
+        {
+          coords: [0, 40, 100],
+          color: [1, .5, .5],
+          time: 700
+        },
+      ];
+
+      const positionRandom = new Random(123);
+      for (const cloud of this.clouds) {
+        const mesh = new THREE.Object3D();
+        cloud.circles = [];
+        for (let i=0; i < 30; i++) {
+          const circle = new THREE.Mesh(
+            new THREE.CircleGeometry(6 + localRandom() * 4, 16),
+            new THREE.MeshBasicMaterial({color: new THREE.Color(...cloud.color)})
+          );
+          circle.material.transparent = true;
+          circle.material.opacity = .6;
+          const position = new THREE.Vector3(positionRandom() * 30 - 15, positionRandom() * 14 - 7, 0);
+          circle.position.copy(position);
+          mesh.add(circle);
+          cloud.circles.push({
+            speed: localRandom() * 3,
+            mesh: circle,
+            position,
+          });
+        }
+        mesh.position.set(...cloud.coords);
+        mesh.visible = false;
+        cloud.mesh = mesh;
+        this.scene.add(mesh);
+      }
+
       this.camera.position.z = 200;
 
       this.wall = new THREE.Mesh(
@@ -137,6 +191,25 @@
         const drape = this.drapes[i];
         //drape.position.y = clamp(-50, 0, -600 + 1200 * Math.sin(frame / 100 - i * 0.01) + 300 + 300 * Math.sin(i));
         drape.position.y = lerp(-600, 0, (frame - startFrame - this.bands.length * 20 + i * 20 + 20) / 300);
+      }
+
+      for (const cloud of this.clouds) {
+        if (frame - startFrame >= cloud.time && frame - startFrame < cloud.time + 500) {
+          if (!cloud.mesh.visible) {
+            cloud.mesh.visible = true;
+          }
+          for (const circle of cloud.circles) {
+            circle.mesh.position.set(
+              circle.position.x + Math.sin((frame - startFrame - cloud.time) * circle.speed / 60) * 3,
+              circle.position.y - Math.sin((frame - startFrame - cloud.time) * circle.speed / 60) * 3,
+              0
+            );
+          }
+        } else {
+          if (cloud.mesh.visible) {
+            cloud.mesh.visible = false;
+          }
+        }
       }
 
       this.camera.position.z = easeIn(600, 120, (frame - startFrame) / duration);
