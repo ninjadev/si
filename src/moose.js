@@ -21,8 +21,8 @@
     const outerCircleRadianEnd = 2 * Math.PI - outerCircleRadianOffsetFromStart;
     for (let i = 0; i <= outerSegments; i++) {
       const radianOffset = outerCircleRadianOffsetFromStart + i * (outerCircleRadianEnd - outerCircleRadianOffsetFromStart) / outerSegments;
-      const x = outerCircleRadius + Math.cos(radianOffset) * outerCircleRadius;
-      const y = outerCircleRadius + Math.sin(radianOffset) * outerCircleRadius;
+      const x = Math.cos(radianOffset) * outerCircleRadius;
+      const y = Math.sin(radianOffset) * outerCircleRadius;
       cee.lineTo(x, y);
     }
 
@@ -33,40 +33,45 @@
     const innerCircleRadianEnd = 2 * Math.PI - innerCircleRadianOffsetFromStart;
     for (let i = innerSegments; i >= 0; i--) {
       const radianOffset = innerCircleRadianOffsetFromStart + i * (innerCircleRadianEnd - innerCircleRadianOffsetFromStart) / innerSegments;
-      const x = outerCircleRadius + Math.cos(radianOffset) * innerCircleRadius;
-      const y = outerCircleRadius + Math.sin(radianOffset) * innerCircleRadius;
+      const x = Math.cos(radianOffset) * innerCircleRadius;
+      const y = Math.sin(radianOffset) * innerCircleRadius;
       cee.lineTo(x, y);
     }
 
     // Complete the C
     cee.lineTo(
-      outerCircleRadius + Math.cos(outerCircleRadianOffsetFromStart) * outerCircleRadius,
-      outerCircleRadius + Math.sin(outerCircleRadianOffsetFromStart) * outerCircleRadius
+      Math.cos(outerCircleRadianOffsetFromStart) * outerCircleRadius,
+      Math.sin(outerCircleRadianOffsetFromStart) * outerCircleRadius
     );
 
-    const upperFlag = new Path({ directionSize });
-    upperFlag.lineTo(H, D + C + B + C);
-    upperFlag.lineTo(H + E, D + C + B + C);
-    upperFlag.lineTo(H + E - C, D + C + B);
-    upperFlag.lineTo(H, D + C + B);
-    upperFlag.lineTo(H, D + C + B + C);
-    
-    const lowerFlag = new Path({ directionSize });
-    lowerFlag.lineTo(H, D + C);
-    lowerFlag.lineTo(H + E - C, D + C);
-    lowerFlag.lineTo(H + E, D);
-    lowerFlag.lineTo(H, D);
-    lowerFlag.lineTo(H, D + C);
+    const upperBeak = new Path({ directionSize });
+    upperBeak.lineTo(0, C / 2);
+    upperBeak.lineTo(E, C / 2);
+    upperBeak.lineTo(E - C, - C / 2);
+    upperBeak.lineTo(0, - C / 2);
+    upperBeak.lineTo(0, C / 2);
+
+    const lowerBeak = new Path({ directionSize });
+    lowerBeak.lineTo(0, -C / 2);
+    lowerBeak.lineTo(E, -C / 2);
+    lowerBeak.lineTo(E - C, C / 2);
+    lowerBeak.lineTo(0, C / 2);
+    lowerBeak.lineTo(0, -C / 2);
 
     const wrapper = new THREE.Object3D();
-    wrapper.add(cee.toObject3D());
-    wrapper.add(upperFlag.toObject3D());
-    wrapper.add(lowerFlag.toObject3D());
-
-    wrapper.position.set(-A / 2, -A / 2, 0);
+    const cceo3d = cee.toObject3D();
+    wrapper.add(cceo3d);
+    const ufo3d = upperBeak.toObject3D();
+    ufo3d.position.set(offsetToVerticalClipFromCircleCentre, B / 2 + C / 2, 0);
+    wrapper.add(ufo3d);
+    const lfo3d = lowerBeak.toObject3D();
+    lfo3d.position.set(offsetToVerticalClipFromCircleCentre, -B / 2 - C / 2, 0);
+    wrapper.add(lfo3d);
 
     const outerWrapper = new THREE.Object3D();
     outerWrapper.add(wrapper);
+    outerWrapper.upperBeak = ufo3d;
+    outerWrapper.lowerBeak = lfo3d;
     return outerWrapper;
   }
 
@@ -126,7 +131,6 @@
         return [outerWrapper, lines];
       }
 
-      //this.commodoreLines = [];
       this.commodoreLinesLeft = [];
       this.commodoreLinesWrapperLeft = new THREE.Object3D();
       this.commodoreLinesRight = [];
@@ -148,6 +152,7 @@
 
       this.oomph = 1.0;
 
+      this.commodoreLogos = [];
       this.logoWrapperRight = new THREE.Object3D();
       this.logoWrapperLeft = new THREE.Object3D();
 
@@ -161,6 +166,7 @@
             //-100 + row * (25 + 15),
             0
           );
+          this.commodoreLogos.push(logo);
           if (row % 2 == 0) {
             this.logoWrapperLeft.add(logo);
           } else {
@@ -192,6 +198,15 @@
       // Screen is ca 300 wide. 10 units a 30.
       this.logoWrapperRight.position.x = 300 - ((frame / 2) % 300);
       this.logoWrapperLeft.position.x = -300 + ((frame / 1.5) % 300);
+
+      const openMouth = BEAN % 12 < 6;
+      for (let [i, logo] of this.commodoreLogos.entries()) {
+        const openMyMyMouth = i % 2 == 0 ? openMouth : !openMouth;
+        const rotation = openMyMyMouth ? Math.PI / 8 : 0;
+
+        logo.upperBeak.rotation.z = rotation;
+        logo.lowerBeak.rotation.z = -rotation;
+      }
 
       for (let lines of this.commodoreLinesLeft) {
         for (let line of lines) {
