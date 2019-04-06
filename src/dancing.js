@@ -11,19 +11,16 @@
       let path;
       let line;
       let curve;
-
-      const startx = -150;
-      const starty = -150;
+      const startx = -300;
+      const starty = -288;
       let size = 0.3;
       let r = 20 * size;
-
       this.guys = [];
-
       
       for(let i = 0; i < 20; i++) {
         for(let j = 0; j < 20; j++) {
-          let x = startx + i * 80;
-          let y = starty + j * 80;
+          let x = startx + i * 100;
+          let y = starty + j * 100;
           let body = {
             head: makeHead(x, y, size, r, this.scene),
             frontleft: makeFrontLeft(x, y, size, this.scene),
@@ -35,7 +32,6 @@
         }
       }
 
-      //head
       function makeHead(x, y, size, r, scene) {
         const headx = x;
         const heady = y + r;
@@ -79,7 +75,6 @@
         return head;
       }
 
-      //front left
       function makeFrontLeft(x, y, size, scene) {
         let frontleft = [];
         path = new Path();
@@ -117,7 +112,6 @@
         return frontleft;
       }
 
-      //back left
       function makeBackLeft(x, y, size, scene) {
         let backleft = [];
         path = new Path();
@@ -155,7 +149,6 @@
         return backleft;
       }
 
-      //front right
       function makeFrontRight(x, y, size, scene) {
         let frontright = [];
         path = new Path();
@@ -194,7 +187,6 @@
       }
       
 
-      //back right
       function makeBackRight(x, y, size, scene) {
         let backright = [];
         path = new Path();
@@ -232,7 +224,7 @@
         return backright;
       }
 
-      this.camera.position.z = 200;
+      this.camera.position.z = 10;
       this.wall = new THREE.Mesh(
         new THREE.BoxGeometry(1000, 1000, 100),
         new THREE.MeshBasicMaterial({color: 0xffffff}));
@@ -254,7 +246,9 @@
 
     update(frame) {
       super.update(frame);
-      const startFrame = 7680;
+      const startframe = 7680;
+
+      this.camera.position.z = lerp(10, 1000, Math.tan((frame-startframe) * 0.001));
 
       for(const body of this.guys) {
         for (let i = 0; i < body.head.length; i++) {
