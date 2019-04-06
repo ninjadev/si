@@ -9,9 +9,7 @@
     const H = 0.636 * A; // X offset to circle clipping start
     const I = 0.97 * A;  // Diameter of the outer circle
 
-    const directionSize = 2;
-
-    const cee = new Path({ directionSize });
+    const cee = new Path();
 
     // First we draw the outer circle counterclockwise from the top right.
     const outerSegments = 30;
@@ -44,14 +42,14 @@
       Math.sin(outerCircleRadianOffsetFromStart) * outerCircleRadius
     );
 
-    const upperBeak = new Path({ directionSize });
+    const upperBeak = new Path();
     upperBeak.lineTo(0, C / 2);
     upperBeak.lineTo(E, C / 2);
     upperBeak.lineTo(E - C, - C / 2);
     upperBeak.lineTo(0, - C / 2);
     upperBeak.lineTo(0, C / 2);
 
-    const lowerBeak = new Path({ directionSize });
+    const lowerBeak = new Path();
     lowerBeak.lineTo(0, -C / 2);
     lowerBeak.lineTo(E, -C / 2);
     lowerBeak.lineTo(E - C, C / 2);
@@ -87,10 +85,16 @@
       this.camera.position.z = 200;
 
       this.wall = new THREE.Mesh(
-        new THREE.BoxGeometry(1000, 1000, 100),
-        new THREE.MeshBasicMaterial({color: 0xffffff}));
+        new THREE.BoxGeometry(1000, 1000, 1000),
+        new THREE.MeshBasicMaterial({
+          color: 0xffffff,
+          map: Loader.loadTexture('res/paper.png'),
+          side: THREE.DoubleSide,
+        }));
+      this.wall.material.map.repeat.set(4, 4);
+      this.wall.material.map.wrapS = THREE.RepeatWrapping;
+      this.wall.material.map.wrapT = THREE.RepeatWrapping;
       this.scene.add(this.wall);
-      this.wall.position.z = -100;
 
       const commodoreColors = [
         '#e72c2f',
@@ -107,7 +111,7 @@
         for (let [i, color] of commodoreColors.entries()) {
           color = new THREE.Color(color).multiplyScalar(0.8);
           color = new THREE.Vector3(color.r, color.g, color.b);
-          let path = new Path({ directionSize: width, color });
+          let path = new Path({color});
 
           path.lineTo(
             -length - (i * 10) + 25,

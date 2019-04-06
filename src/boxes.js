@@ -47,10 +47,16 @@
       this.camera.position.z = 200;
 
       this.wall = new THREE.Mesh(
-        new THREE.BoxGeometry(1000, 1000, 100),
-        new THREE.MeshBasicMaterial({color: 0xffffff}));
+        new THREE.BoxGeometry(1000, 1000, 1000),
+        new THREE.MeshBasicMaterial({
+          color: 0xffffff,
+          map: Loader.loadTexture('res/paper.png'),
+          side: THREE.DoubleSide,
+        }));
+      this.wall.material.map.repeat.set(4, 4);
+      this.wall.material.map.wrapS = THREE.RepeatWrapping;
+      this.wall.material.map.wrapT = THREE.RepeatWrapping;
       this.scene.add(this.wall);
-      this.wall.position.z = -100;
     }
 
     update(frame) {
