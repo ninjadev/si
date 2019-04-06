@@ -27,8 +27,8 @@
           (() => {
             const offset = (i % 2 == j % 2) ? 5 : -5;
             const path = new Path();
-            path.lineTo(x, y + offset);
-            path.lineTo(-125 + i * 35, y + offset);
+            path.lineTo(x - 5, y + offset);
+            path.lineTo(-120 + i * 35, y + offset);
             const line = path.toObject3D();
             this.lines.push(line);
             this.scene.add(line);
@@ -38,8 +38,8 @@
           (() => {
             const offset = (j % 2 != i % 2) ? 5 : -5;
             const path = new Path();
-            path.lineTo(x + offset, y);
-            path.lineTo(x + offset, -125 + j * 35);
+            path.lineTo(x + offset, y - 5);
+            path.lineTo(x + offset, -120 + j * 35);
             const line = path.toObject3D();
             this.lines.push(line);
             this.scene.add(line);
