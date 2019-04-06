@@ -12,11 +12,14 @@
         }
       });
 
-      const curve = [];
-      for (let i = 0; i < 20; i++) {
-        const x = 200 * Math.cos(i*Math.PI/20);
-        const y = 100 * Math.sin(i*Math.PI/20);
-        curve.push([x, y]);
+      function makeCurve(xRadius, yRadius, offset) {
+        const coords = [];
+        for (let i = 0; i <= 20; i++) {
+          const x = xRadius * Math.cos(i*Math.PI/20);
+          const y = yRadius * Math.sin(i*Math.PI/20);
+          coords.push([x, y]);
+        }
+        return {coords, offset};
       }
 
       function makeTree(offset) {
@@ -41,13 +44,15 @@
       }
 
       const tracks = [
-        {
-          coords: curve,
-          offset: [0, -150, 25],
-        },
         ...makeTree([0, 12, 0]),
+        makeCurve(200, 100, [0, -150, 25]),
         ...makeTree([-90, 10, 20]),
         ...makeTree([90, 10, 30]),
+        ...makeTree([90, 10, 30]),
+        makeCurve(500, 75, [-650, -145, 0]),
+        ...makeTree([-760, 10, 180]),
+        ...makeTree([-490, -10, 60]),
+        makeCurve(75, 25, [-490, -105, 60]),
       ];
 
       this.lines = [];
@@ -64,7 +69,7 @@
         line.path = path;
       }
 
-      function makeCurve(radius, x, y) {
+      function makeSkewedCurve(radius, x, y) {
         const curve = [];
         for (let i = 3; i < 17; i++) {
           const angle = Math.PI / 2 - i * Math.PI / 2 / 20;
@@ -76,14 +81,15 @@
         return curve;
       }
 
+      const color = new THREE.Vector3(.5, .8, 1);
       const wifilinetracks = [
-        makeCurve(5, -690, 50),
-        makeCurve(10, -690, 50),
-        makeCurve(15, -690, 50),
+        makeSkewedCurve(5, -690, 50),
+        makeSkewedCurve(10, -690, 50),
+        makeSkewedCurve(15, -690, 50),
       ];
       this.wifilines = [];
       for (const track of wifilinetracks) {
-        const path = new Path();
+        const path = new Path({color});
         for (const [x, y] of track) {
           path.lineTo(x, y);
         }
@@ -121,9 +127,8 @@
         line.path = path;
       }
 
-      const color = new THREE.Vector3(.5, .8, 1);
       const path = new Path({color});
-      for (const [x, y] of makeCurve(320, 0, 0)) {
+      for (const [x, y] of makeSkewedCurve(320, 0, 0)) {
         path.lineTo(x, y);
       }
       this.signal = path.toObject3D();
@@ -223,7 +228,7 @@
       for (let i = 0; i < this.lines.length; i++) {
         const path = this.lines[i].path;
         path.material.uniforms.drawStart.value = 0;
-        path.material.uniforms.drawEnd.value = lerp(0, 1, (frame - startFrame - i * 10) / 100);
+        path.material.uniforms.drawEnd.value = lerp(0, 1, (frame - startFrame - i * 8) / 100);
         path.material.uniforms.wobbliness.value = 1;
       }
 
@@ -265,16 +270,17 @@
         this.camera.position.z = easeIn(220, 190, (frame - startFrame) / (wifiStartFrame - startFrame));
 
         this.camera.rotation.x = 0;
+        this.camera.rotation.y = 0;
       } else if (frame < zoomOutFrame) {
-        this.camera.position.x = -700;
+        this.camera.position.x = -720;
         this.camera.position.y = lerp(-20, 15, (frame - wifiStartFrame) / (zoomOutFrame - wifiStartFrame));
         this.camera.position.z = 110;
 
         this.camera.rotation.x = lerp(0, .15, (frame - wifiStartFrame) / (zoomOutFrame - wifiStartFrame));
-        this.camera.rotation.y = 0;
+        this.camera.rotation.y = -.15;
       } else {
         this.camera.position.x = easeOut(
-          -620,
+          -600,
           easeIn(-550, -655, (frame - zoomOutFrame - 150) / 250),
           (frame - zoomOutFrame) / 400);
         this.camera.position.y = easeOut(
@@ -283,7 +289,7 @@
           (frame - zoomOutFrame) / 400);
         this.camera.position.z = easeOut(
           200,
-          easeIn(500, 265, (frame - zoomOutFrame - 150) / 250),
+          easeIn(500, 264, (frame - zoomOutFrame - 150) / 250),
           (frame - zoomOutFrame) / 400);
 
         this.camera.rotation.x = easeOut(-.4, 0, (frame - zoomOutFrame) / 400);
