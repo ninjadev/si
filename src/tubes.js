@@ -61,11 +61,11 @@
     update(frame) {
       super.update(frame);
 
-      const startFrame = FRAME_FOR_BEAN(48 * 29);
+      const startFrame = FRAME_FOR_BEAN(48 * 17 + 36);
 
       for (let i = 0; i < this.dots.length; i++) {
         const dot = this.dots[i];
-        dot.scale.setScalar(easeOut(0, 1, (frame - 7900 + i * 3) / 100));
+        dot.scale.setScalar(easeOut(0, 1, (frame - startFrame + i * 3) / 100));
       }
 
       for (let i = 0; i < this.lines.length; i++) {
