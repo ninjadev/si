@@ -8,6 +8,8 @@
         }
       });
 
+      this.scene.background = new THREE.Color(0xffffff);
+
       this.camera.position.z = 2000;
       this.camera.position.x = 700;
       this.camera.position.y = 1200;
