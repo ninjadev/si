@@ -53,7 +53,7 @@
     update(frame) {
       super.update(frame);
 
-      const startFrame = 7600;
+      const startFrame = FRAME_FOR_BEAN(48 * 18 + 24);
 
       for (let i = 0; i < this.verticals.length; i++) {
         const path = this.verticals[i].path;

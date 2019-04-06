@@ -69,7 +69,7 @@
         selectedScene = this.inputs.E;
       } else if (BEAN < 48 * 17 + 24) {
         selectedScene = this.inputs.F;
-      } else  if (BEAN < 48 * 18 + 24) {
+      } else  if (BEAN < 48 * 19) {
         selectedScene = this.inputs.Gintro;
       } else  if (BEAN < 48 * 20) {
         selectedScene = this.inputs.G;
