@@ -266,11 +266,12 @@
 
       if (frame < wifiStartFrame) {
         this.camera.position.x = 0;
-        this.camera.position.y = easeIn(0, 15, (frame - startFrame) / (wifiStartFrame - startFrame));
-        this.camera.position.z = easeIn(220, 190, (frame - startFrame) / (wifiStartFrame - startFrame));
+        this.camera.position.y = lerp(0, 15, (frame - startFrame) / (wifiStartFrame - startFrame));
+        this.camera.position.z = lerp(220, 190, (frame - startFrame) / (wifiStartFrame - startFrame));
 
         this.camera.rotation.x = 0;
         this.camera.rotation.y = 0;
+        this.camera.rotation.z = easeIn(0, -.15, (frame - startFrame - 50) / (wifiStartFrame - startFrame - 50));
       } else if (frame < zoomOutFrame) {
         this.camera.position.x = -720;
         this.camera.position.y = lerp(-20, 15, (frame - wifiStartFrame) / (zoomOutFrame - wifiStartFrame));
@@ -278,10 +279,11 @@
 
         this.camera.rotation.x = lerp(0, .15, (frame - wifiStartFrame) / (zoomOutFrame - wifiStartFrame));
         this.camera.rotation.y = -.15;
+        this.camera.rotation.z = 0;
       } else {
         this.camera.position.x = easeOut(
           -600,
-          easeIn(-550, -655, (frame - zoomOutFrame - 150) / 250),
+          easeIn(-560, -655, (frame - zoomOutFrame - 150) / 250),
           (frame - zoomOutFrame) / 400);
         this.camera.position.y = easeOut(
           120,
@@ -294,6 +296,7 @@
 
         this.camera.rotation.x = easeOut(-.4, 0, (frame - zoomOutFrame) / 400);
         this.camera.rotation.y = easeOut(.2, 0, (frame - zoomOutFrame) / 150);
+        this.camera.rotation.z = 0;
       }
     }
   }
