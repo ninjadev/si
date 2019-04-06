@@ -145,11 +145,16 @@
       "J": "cross.render",
       "K": "diamond.render",
       "L": "stairs.render",
-      "M": "Yoga.render"
+      "M": "ripple.render",
+      "N": "Yoga.render"
     }
   },
   {
     "id": "dancing",
     "type": "dancing"
+  },
+  {
+    "id": "ripple",
+    "type": "ripple"
   }
 ]
