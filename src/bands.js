@@ -141,7 +141,7 @@
 
       this.camera.position.z = easeIn(600, 120, (frame - startFrame) / duration);
       this.camera.position.y = lerp(0, 40, (frame - startFrame) / duration);
-      this.camera.rotation.y = easeIn(0, -.2, (frame - startFrame) / duration);
+      //this.camera.rotation.y = easeIn(0, -.2, (frame - startFrame) / duration);
       this.camera.rotation.z = easeIn(0, -.2, (frame - startFrame) / duration);
     }
   }

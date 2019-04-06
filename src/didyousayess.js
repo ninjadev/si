@@ -79,7 +79,7 @@
     update(frame) {
       super.update(frame);
 
-      const startFrame = 4388;
+      const startFrame = 900;
       const verticalFrame = startFrame;
       const diagonalFrame = startFrame + 100;
       const backlineFrame = startFrame + 200;
