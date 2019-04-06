@@ -26,7 +26,7 @@
       "K": "patterns.render",
       "L": "patterns.render",
       "L2": "patterns.render",
-      "M": "emoji.render",
+      "M": "dancing.render",
       "N": "emoji.render",
       "O": "emoji.render",
       "P": "emoji.render"
@@ -138,8 +138,7 @@
       "J": "cross.render",
       "K": "diamond.render",
       "L": "stairs.render",
-      "M": "Yoga.render",
-      "N": "dancing.render"
+      "M": "Yoga.render"
     }
   },
   {
