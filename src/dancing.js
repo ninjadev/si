@@ -259,22 +259,22 @@
         for (let i = 0; i < body.frontleft.length; i++) {
           const path = body.frontleft[i].path;
           path.material.uniforms.drawStart.value = 0;
-          path.material.uniforms.drawEnd.value = (BEAN % 24 < 4) || (BEAN % 24 >= 8 && BEAN % 24 < 12) ? 1 : 0;
+          path.material.uniforms.drawEnd.value = (BEAN % 36 < 6) || (BEAN % 36 >= 12 && BEAN % 36 < 18) ? 1 : 0;
         }
         for (let i = 0; i < body.backleft.length; i++) {
           const path = body.backleft[i].path;
           path.material.uniforms.drawStart.value = 0;
-          path.material.uniforms.drawEnd.value = BEAN % 24 >= 4 && BEAN % 24 < 8 ? 1 : 0;
+          path.material.uniforms.drawEnd.value = BEAN % 36 >= 6 && BEAN % 36 < 12 ? 1 : 0;
         }
         for (let i = 0; i < body.frontright.length; i++) {
           const path = body.frontright[i].path;
           path.material.uniforms.drawStart.value = 0;
-          path.material.uniforms.drawEnd.value = (BEAN % 24 >= 12 && BEAN % 24 < 16) || (BEAN % 24 >= 20)  ? 1 : 0;
+          path.material.uniforms.drawEnd.value = (BEAN % 36 >= 18 && BEAN % 36 < 24) || (BEAN % 36 >= 30)  ? 1 : 0;
         }
         for (let i = 0; i < body.backright.length; i++) {
           const path = body.backright[i].path;
           path.material.uniforms.drawStart.value = 0;
-          path.material.uniforms.drawEnd.value = BEAN % 24 >= 16 && BEAN % 24 < 20 ? 1 : 0;
+          path.material.uniforms.drawEnd.value = BEAN % 36 >= 24 && BEAN % 36 < 30 ? 1 : 0;
         }
       }
     }
