@@ -45,15 +45,15 @@
       this.inputs.P.enabled = false;
 
       let selectedScene;
-      if (BEAN < 48 * 2) {
+      if (BEAN < 48 * 6) {
         selectedScene = this.inputs.A;
-      } else if (BEAN < 48 * 4) {
-        selectedScene = this.inputs.B;
-      } else if (BEAN < 48 * 6) {
-        selectedScene = this.inputs.C;
       } else if (BEAN < 48 * 8) {
-        selectedScene = this.inputs.D;
+        selectedScene = this.inputs.B;
+      } else if (BEAN < 48 * 9 + 24) {
+        selectedScene = this.inputs.C;
       } else if (BEAN < 48 * 10) {
+        selectedScene = this.inputs.D;
+      } else if (BEAN < 48 * 12) {
         selectedScene = this.inputs.E;
       } else if (BEAN < 48 * 14) {
         selectedScene = this.inputs.F;
