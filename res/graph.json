@@ -33,13 +33,6 @@
     }
   },
   {
-    "id": "HexFlight",
-    "type": "HexFlightNode",
-    "options": {
-      "shader": "HexFlight"
-    }
-  },
-  {
     "id": "HexFlightMainScene",
     "type": "hexFlightMainScene"
   },
