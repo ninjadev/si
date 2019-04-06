@@ -1,13 +1,74 @@
 (function(global) {
-    function Circle(params) {
-      const circle = new Path({debug:false});
-      for (let i = 0; i <= params.segments; i++) {
-        const x = Math.sin((i / params.segments) * 2 * Math.PI) * params.radius * Math.sin(params.rotateX);
-        const y = Math.cos((i / params.segments) * 2 * Math.PI) * params.radius * Math.cos(params.rotateY);
-        circle.lineTo(x, y);
-      }
-      return circle
+  function CommodoreLogo(A) {
+    const B = 0.034 * A;
+    const C = 0.166 * A;
+    const D = 0.30 * A;
+    const E = 0.364 * A;
+    const F = 0.52 * A;
+    const G = 0.53 * A;  // Diameter of the inner circle
+    const H = 0.636 * A; // X offset to circle clipping start
+    const I = 0.97 * A;  // Diameter of the outer circle
+
+    const directionSize = 2;
+
+    const cee = new Path({ directionSize });
+
+    // First we draw the outer circle counterclockwise from the top right.
+    const outerSegments = 30;
+    const outerCircleRadius = I / 2;
+    const offsetToVerticalClipFromCircleCentre = H - I / 2;
+    const outerCircleRadianOffsetFromStart = Math.acos(offsetToVerticalClipFromCircleCentre / outerCircleRadius);
+    const outerCircleRadianEnd = 2 * Math.PI - outerCircleRadianOffsetFromStart;
+    for (let i = 0; i <= outerSegments; i++) {
+      const radianOffset = outerCircleRadianOffsetFromStart + i * (outerCircleRadianEnd - outerCircleRadianOffsetFromStart) / outerSegments;
+      const x = outerCircleRadius + Math.cos(radianOffset) * outerCircleRadius;
+      const y = outerCircleRadius + Math.sin(radianOffset) * outerCircleRadius;
+      cee.lineTo(x, y);
     }
+
+    // Now we draw the inner circle clockwise from the bottom right
+    const innerSegments = 20;
+    const innerCircleRadius = G / 2;
+    const innerCircleRadianOffsetFromStart = Math.acos(offsetToVerticalClipFromCircleCentre / innerCircleRadius);
+    const innerCircleRadianEnd = 2 * Math.PI - innerCircleRadianOffsetFromStart;
+    for (let i = innerSegments; i >= 0; i--) {
+      const radianOffset = innerCircleRadianOffsetFromStart + i * (innerCircleRadianEnd - innerCircleRadianOffsetFromStart) / innerSegments;
+      const x = outerCircleRadius + Math.cos(radianOffset) * innerCircleRadius;
+      const y = outerCircleRadius + Math.sin(radianOffset) * innerCircleRadius;
+      cee.lineTo(x, y);
+    }
+
+    // Complete the C
+    cee.lineTo(
+      outerCircleRadius + Math.cos(outerCircleRadianOffsetFromStart) * outerCircleRadius,
+      outerCircleRadius + Math.sin(outerCircleRadianOffsetFromStart) * outerCircleRadius
+    );
+
+    const upperFlag = new Path({ directionSize });
+    upperFlag.lineTo(H, D + C + B + C);
+    upperFlag.lineTo(H + E, D + C + B + C);
+    upperFlag.lineTo(H + E - C, D + C + B);
+    upperFlag.lineTo(H, D + C + B);
+    upperFlag.lineTo(H, D + C + B + C);
+    
+    const lowerFlag = new Path({ directionSize });
+    lowerFlag.lineTo(H, D + C);
+    lowerFlag.lineTo(H + E - C, D + C);
+    lowerFlag.lineTo(H + E, D);
+    lowerFlag.lineTo(H, D);
+    lowerFlag.lineTo(H, D + C);
+
+    const wrapper = new THREE.Object3D();
+    wrapper.add(cee.toObject3D());
+    wrapper.add(upperFlag.toObject3D());
+    wrapper.add(lowerFlag.toObject3D());
+
+    wrapper.position.set(-A / 2, -A / 2, 0);
+
+    const outerWrapper = new THREE.Object3D();
+    outerWrapper.add(wrapper);
+    return outerWrapper;
+  }
 
   class moose extends NIN.THREENode {
     constructor(id, options) {
@@ -17,44 +78,6 @@
           render: new NIN.TextureOutput()
         }
       });
-
-      const tracks = [
-        {
-          coords: [
-            [-10,-70],[-10,-50],[-30,-50],[-10,-20],[-30,-20],[-10,10],[-25,10],
-            [0,50],
-            [25,10],[10,10],[30,-20],[10,-20],[30,-50],[10,-50],[10,-70]],
-          offset: [-80, 0],
-        },
-
-        {
-          coords: [[25,10],[-25,10],[0,50],[25,10]],
-          offset: [0, 10],
-        },
-        {
-          coords: [[10,10],[30,-20],[-30,-20],[-10,10]],
-          offset: [0, 10],
-        },
-        {
-          coords: [[10,-20],[30,-50],[-30,-50],[-10,-20]],
-          offset: [0, 10],
-        },
-        {
-          coords: [[10,-50],[10,-70],[-10,-70],[-10,-50]],
-          offset: [0, 10],
-        },
-
-        {
-          coords: [
-            [-10,-70],[-10,-50],[-30,-50],[-10,-20],[-30,-20],[-10,10],[-25,10],
-            [0,50],
-            [25,10],[10,10],[30,-20],[10,-20],[30,-50],[10,-50],[10,-70]],
-          offset: [80, 0],
-        },
-
-      ];
-
-      this.circles = [];
 
       this.camera.position.z = 200;
 
@@ -72,86 +95,119 @@
         '#03a6ee',
       ];
 
-      this.commodoreLines = [];
-      for (let [i, color] of commodoreColors.entries()) {
-        color = new THREE.Color(color);
-        color = new THREE.Vector3(color.r, color.g, color.b);
-        let path = new Path({
-          directionSize: 5,
-          color,
-        });
-        path.lineTo(-150 - i * 7, 40 + i * -3);
-        path.lineTo(180 - i * 7, 40 + i * -3);
-        let obj = path.toObject3D();
-        obj.path = path;
-        this.commodoreLines.push(obj);
-        this.scene.add(obj);
+      function CommodoreLines(width, length) {
+        const wrapper = new THREE.Object3D();
+        const lines = [];
+        for (let [i, color] of commodoreColors.entries()) {
+          color = new THREE.Color(color);
+          color = new THREE.Vector3(color.r, color.g, color.b);
+          let path = new Path({ directionSize: width, color });
+
+          path.lineTo(
+            -length - (i * 10) + 25,
+            -i * (width - 0.5)
+          );
+          path.lineTo(
+            length - (i * 10) + 25,
+            -i * (width - 0.5)
+          );
+          let obj = path.toObject3D();
+          obj.path = path;
+
+          wrapper.add(obj);
+          lines.push(obj);
+        }
+
+        wrapper.position.set(0, 5, 0);
+
+        const outerWrapper = new THREE.Object3D();
+        outerWrapper.add(wrapper);
+        return [outerWrapper, lines];
       }
 
-      this.commodoreLines2 = [];
-      for (let [i, color] of commodoreColors.entries()) {
-        color = new THREE.Color(color);
-        color = new THREE.Vector3(color.r, color.g, color.b);
-        let path = new Path({
-          directionSize: 5,
-          color,
-        });
-        path.lineTo(150 + i * 7, -40 + i * -3);
-        path.lineTo(-180 + i * 7, -40 + i * -3);
-        let obj = path.toObject3D();
-        obj.path = path;
-        this.commodoreLines2.push(obj);
-        this.scene.add(obj);
+      //this.commodoreLines = [];
+      this.commodoreLinesLeft = [];
+      this.commodoreLinesWrapperLeft = new THREE.Object3D();
+      this.commodoreLinesRight = [];
+      this.commodoreLinesWrapperRight = new THREE.Object3D();
+      for (let i=0; i<4; i++) {
+        const [wrapper, lines] = CommodoreLines(3, 180);
+        wrapper.position.y = 60 - i * 40;
+        if (i % 2 == 0) {
+          this.commodoreLinesWrapperLeft.add(wrapper);
+          this.commodoreLinesLeft.push(lines);
+        } else {
+          this.commodoreLinesWrapperRight.add(wrapper);
+          this.commodoreLinesRight.push(lines);
+        }
       }
+      this.scene.add(this.commodoreLinesWrapperLeft);
+      this.commodoreLinesWrapperRight.rotation.y = Math.PI;
+      this.scene.add(this.commodoreLinesWrapperRight);
+
+      this.oomph = 1.0;
+
+      this.logoWrapperRight = new THREE.Object3D();
+      this.logoWrapperLeft = new THREE.Object3D();
+
+      for (let row = 0; row < 5; row++) {
+        for (let col = 0; col < 20; col++) {
+          let logo = CommodoreLogo(25);
+          logo.position.set(
+            -150 + col * (25 + 5),
+            // 5 rows a 25 + 15, offsets 80 40 0 40 80
+            80 - (25 + 15) * row,
+            //-100 + row * (25 + 15),
+            0
+          );
+          if (row % 2 == 0) {
+            this.logoWrapperLeft.add(logo);
+          } else {
+            this.logoWrapperRight.add(logo);
+          }
+        }
+      }
+      this.scene.add(this.logoWrapperLeft);
+      this.logoWrapperRight.rotation.y = Math.PI;
+      this.scene.add(this.logoWrapperRight);
     }
 
     update(frame) {
+
       super.update(frame);
 
-      const startFrame = 0;
-
-      for (let circle of this.circles) {
-        this.scene.remove(circle);
+      if (BEAT && BEAN % 12 == 0) {
+        this.oomph = 1.0;
       }
+
+      this.oomph *= 0.95;
 
       this.circles = [];
 
-      for (let [x, y] of [[-90, 40], [0, 40], [90, 40], [-45, -40], [45, -40]]) {
-        const params = {
-          segments: 40,
-          radius: 40 + lerp(150, 0, (frame - startFrame) / 60) + lerp(20, 0, (frame - startFrame) / 600),
-          rotateX: Math.PI / 2 + (frame / 360),
-          rotateY: Math.sin((frame + x) / 120) * Math.PI,
-        };
-
-        const circle = Circle(params).toObject3D();
-        circle.position.set(x - 1, y - 1, 0);
-        this.circles.push(circle);
-        const circleShadow = Circle(params).toObject3D();
-        circleShadow.position.set(x + 1, y + 2, 0);
-        this.circles.push(circleShadow);
-      }
-
-      for (let circle of this.circles) {
-        this.scene.add(circle);
-      }
-
       const startOfStart = 100;
       const startOfEnd = 400;
-      const speed = 80;
+      const speed = 90;
 
-      for (let commodore of this.commodoreLines) {
-        const path = commodore.path;
-        path.material.uniforms.drawStart.value = lerp(0, 1, (frame - startOfEnd) / speed);
-        path.material.uniforms.drawEnd.value =  lerp(0, 1, (frame - startOfStart) / speed);
-        path.material.uniforms.wobbliness.value = Math.sin(frame / 4) / 4 + 0.75;
+      // Screen is ca 300 wide. 10 units a 30.
+      this.logoWrapperRight.position.x = 300 - ((frame / 2) % 300);
+      this.logoWrapperLeft.position.x = -300 + ((frame / 1.5) % 300);
+
+      for (let lines of this.commodoreLinesLeft) {
+        for (let line of lines) {
+          const path = line.path;
+          path.material.uniforms.drawStart.value = easeIn(0, 1, (frame - startOfEnd) / speed);
+          path.material.uniforms.drawEnd.value = easeOut(0, 1, (frame - startOfStart) / speed);
+          path.material.uniforms.wobbliness.value = this.oomph;
+        }
       }
 
-      for (let commodore of this.commodoreLines2) {
-        const path = commodore.path;
-        path.material.uniforms.drawStart.value = lerp(0, 1, (frame - startOfEnd) / speed);
-        path.material.uniforms.drawEnd.value =  lerp(0, 1, (frame - startOfStart) / speed);
-        path.material.uniforms.wobbliness.value = Math.sin(frame / 4) / 4 + 0.75;
+      for (let lines of this.commodoreLinesRight) {
+        for (let line of lines) {
+          const path = line.path;
+          path.material.uniforms.drawStart.value = easeIn(0, 1, (frame - startOfEnd) / speed);
+          path.material.uniforms.drawEnd.value = easeOut(0, 1, (frame - startOfStart) / speed);
+          path.material.uniforms.wobbliness.value = this.oomph;
+        }
       }
     }
   }
