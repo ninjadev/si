@@ -98,18 +98,19 @@
       function CommodoreLines(width, length) {
         const wrapper = new THREE.Object3D();
         const lines = [];
+        const padding = 0.5;
         for (let [i, color] of commodoreColors.entries()) {
-          color = new THREE.Color(color);
+          color = new THREE.Color(color).multiplyScalar(0.8);
           color = new THREE.Vector3(color.r, color.g, color.b);
           let path = new Path({ directionSize: width, color });
 
           path.lineTo(
             -length - (i * 10) + 25,
-            -i * (width - 0.5)
+            -i * (width - padding)
           );
           path.lineTo(
             length - (i * 10) + 25,
-            -i * (width - 0.5)
+            -i * (width - padding)
           );
           let obj = path.toObject3D();
           obj.path = path;
@@ -118,7 +119,7 @@
           lines.push(obj);
         }
 
-        wrapper.position.set(0, 5, 0);
+        wrapper.position.set(0, 2 * (width - padding), 0);
 
         const outerWrapper = new THREE.Object3D();
         outerWrapper.add(wrapper);
@@ -131,7 +132,7 @@
       this.commodoreLinesRight = [];
       this.commodoreLinesWrapperRight = new THREE.Object3D();
       for (let i=0; i<4; i++) {
-        const [wrapper, lines] = CommodoreLines(3, 180);
+        const [wrapper, lines] = CommodoreLines(2.5, 180);
         wrapper.position.y = 60 - i * 40;
         if (i % 2 == 0) {
           this.commodoreLinesWrapperLeft.add(wrapper);
