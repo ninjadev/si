@@ -98,7 +98,12 @@
         //const color = new THREE.Color(localRandom(), localRandom, 0.5);
         const drape = new THREE.Mesh(
           new THREE.BoxGeometry(width - 1, 600, 2),
-          new THREE.MeshBasicMaterial());
+          new THREE.MeshBasicMaterial({
+            map: Loader.loadTexture('res/paper.png'),
+          }));
+        drape.material.map.repeat.set(1, 16);
+        drape.material.map.wrapS = THREE.RepeatWrapping;
+        drape.material.map.wrapT = THREE.RepeatWrapping;
         drape.position.z = -1;
 
         this.drapes.push(drape);
