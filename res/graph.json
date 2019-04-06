@@ -20,8 +20,8 @@
       "F": "bands.render",
       "Gintro": "patterns.render",
       "G": "trees.render",
-      "H": "patterns.render",
-      "I": "patterns.render",
+      "H": "trees.render",
+      "I": "trees.render",
       "J": "HexFlightMainScene.render",
       "K": "patterns.render",
       "L": "patterns.render",
@@ -68,7 +68,10 @@
   },
   {
     "id": "trees",
-    "type": "trees"
+    "type": "trees",
+    "connected": {
+      "tent": "HexFlightMainScene.render"
+    }
   },
   {
     "id": "boxes",
@@ -137,9 +140,9 @@
       "E": "boxes.render",
       "F": "floats.render",
       "G": "spirals.render",
-      "H": "cross.render",
-      "I": "diagonals.render",
-      "J": "tubes.render",
+      "H": "diagonals.render",
+      "I": "tubes.render",
+      "J": "cross.render",
       "K": "diamond.render",
       "L": "stairs.render",
       "M": "Yoga.render",
