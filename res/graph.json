@@ -13,7 +13,7 @@
       "A": "moose.render",
       "B": "patterns.render",
       "B2": "patterns.render",
-      "C": "NorwayShader.render",
+      "C": "NorwayNode.render",
       "C2": "blobbobob.render",
       "D": "cubobbobob.render",
       "E": "bands.render",
@@ -41,6 +41,13 @@
     "type": "NorwayShaderNode",
     "options": {
       "shader": "NorwayShader"
+    }
+  },
+  {
+    "id": "NorwayNode",
+    "type": "NorwayNode",
+    "connected": {
+      "N": "NorwayShader.render"
     }
   },
   {
