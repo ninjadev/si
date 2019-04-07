@@ -15,7 +15,7 @@
       "B": "patterns.render",
       "B2": "patterns.render",
       "C": "NorwayNode.render",
-      "C2": "blobbobob.render",
+      "C2": "NorwayShader.render",
       "D": "cubobbobob.render",
       "E": "bands.render",
       "F": "bands.render",
@@ -43,6 +43,9 @@
     "type": "NorwayShaderNode",
     "options": {
       "shader": "NorwayShader"
+    },
+    "connected": {
+      "input_scene": "sirpathrick.render"
     }
   },
   {
@@ -50,7 +53,7 @@
     "type": "NorwayNode",
     "connected": {
       "N": "NorwayShader.render",
-      "sirpathrick": "sirpathrick"
+      "sirpathrick": "sirpathrick.render"
     }
   },
   {

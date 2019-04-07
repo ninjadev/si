@@ -50,7 +50,7 @@ void main() {
 
     float intensity = color.r;
     vec4 output_color;
-    if (intensity < THRESHOLD_01 / 256.)
+    if (intensity < THRESHOLD_01 / 256. || 1. == 1.)
     {
       output_color = texture2D(z1, vUv);
     }

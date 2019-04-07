@@ -71,7 +71,7 @@
 
       //this.map_object.material.uniforms.frame.value = frame;
 
-      /*if (frame < 3000) {
+      if (frame < 3000) {
         var center_x = 8;
         var center_y = 19;
 
@@ -86,7 +86,7 @@
         this.camera.position.x = 30 * Math.sin(frame/20.);
         this.camera.up = new THREE.Vector3(0,0,1);
         this.camera.lookAt(new THREE.Vector3(0,0,0));
-      }*/
+      }
 
       
     }

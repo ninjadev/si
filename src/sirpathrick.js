@@ -41,7 +41,7 @@
         new THREE.BoxGeometry(1000, 1000, 1000),
         new THREE.MeshBasicMaterial({
           color: 0xffffff,
-          map: Loader.loadTexture('res/paper.png'),
+          map: Loader.loadTexture('res/map/testpattern.jpg'),
           side: THREE.DoubleSide,
         }));
       this.wall.material.map.repeat.set(4, 4);
