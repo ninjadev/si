@@ -349,16 +349,16 @@
       );
 
       this.NoScroller.ctx.clearRect(0, 0, this.NoScroller.canvas.width, this.NoScroller.canvas.height);
-      for (let pixelOffset = 0; pixelOffset < this.NoScroller.textCanvas.width; pixelOffset += 2) {
+      for (let pixelOffset = 0; pixelOffset < this.NoScroller.textCanvas.width; pixelOffset += 3) {
         this.NoScroller.ctx.drawImage(
           this.NoScroller.textCanvas,
           pixelOffset,
           0,
-          2,
+          3,
           this.NoScroller.textCanvas.height,
           scrollOffset + pixelOffset,
           Math.sin(pixelOffset / 60 + frame / 3) * 6,
-          2,
+          3,
           this.NoScroller.textCanvas.height
         );
       }
@@ -372,16 +372,16 @@
       );
 
       this.LongestScroller.ctx.clearRect(0, 0, this.LongestScroller.canvas.width, this.LongestScroller.canvas.height);
-      for (let pixelOffset = 0; pixelOffset < this.LongestScroller.textCanvas.width; pixelOffset += 2) {
+      for (let pixelOffset = 0; pixelOffset < this.LongestScroller.textCanvas.width; pixelOffset += 3) {
         this.LongestScroller.ctx.drawImage(
           this.LongestScroller.textCanvas,
           pixelOffset,
           0,
-          2,
+          3,
           this.LongestScroller.textCanvas.height,
           scrollOffset2 + pixelOffset,
           Math.sin(pixelOffset / 60 + frame / 3) * 6,
-          2,
+          3,
           this.LongestScroller.textCanvas.height
         );
       }
@@ -395,16 +395,16 @@
       );
 
       this.AmigaScroller.ctx.clearRect(0, 0, this.AmigaScroller.canvas.width, this.AmigaScroller.canvas.height);
-      for (let pixelOffset = 0; pixelOffset < this.AmigaScroller.textCanvas.width; pixelOffset += 2) {
+      for (let pixelOffset = 0; pixelOffset < this.AmigaScroller.textCanvas.width; pixelOffset += 3) {
         this.AmigaScroller.ctx.drawImage(
           this.AmigaScroller.textCanvas,
           pixelOffset,
           0,
-          2,
+          3,
           this.AmigaScroller.textCanvas.height,
           scrollOffset3 + pixelOffset,
           Math.sin(pixelOffset / 60 + frame / 3) * 6,
-          2,
+          3,
           this.AmigaScroller.textCanvas.height
         );
       }
