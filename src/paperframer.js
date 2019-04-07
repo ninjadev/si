@@ -11,11 +11,18 @@
         }
       });
 
+      this.renderTarget = new THREE.WebGLRenderTarget(1920, 1080, {
+        minFilter: THREE.LinearFilter,
+        magFilter: THREE.LinearFilter,
+        format: THREE.RGBAFormat,
+      });
+
       this.scene.add(this.cube);
 
       this.camera = new THREE.OrthographicCamera(-11 / 2, 11 / 2, 8.5 / 2, -8.5 / 2, 1, 1000);
 
       this.camera.position.z = 100;
+
 
       this.paper = new THREE.Mesh(
         new THREE.PlaneGeometry(19 / 2, 14 / 2),
@@ -68,9 +75,23 @@
       this.scene.add(titles[0].text);
     }
 
-    update() {
+    update(frame) {
       this.paper.material.map = this.inputs.A.getValue();
       this.paper.material.needsUpdate = true;
+    }
+
+    resize() {
+      this.renderTarget.setSize(16 * GU, 9 * GU);
+    }
+
+    render(renderer) {
+      if(BEAN >= 120 && BEAN < 138) {
+      } else if(BEAN >= 216 && BEAN < 234) {
+      } else if(BEAN >= 312 && BEAN < 330) {
+      } else {
+        renderer.render(this.scene, this.camera, this.renderTarget, true);
+        this.outputs.render.setValue(this.renderTarget.texture);
+      }
     }
   }
 
