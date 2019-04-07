@@ -80,7 +80,7 @@
         },
         {
           startFrame: 1007,
-          endFrame: 1438,
+          endFrame: 1583,
           transition: 60,
           text: XWrite('MOMMA MOMM'),
         },

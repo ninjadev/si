@@ -324,13 +324,17 @@
       this.mommaBird.scale.z = 1 + 0.05 * this.oomph;
 
       let animationChainX;
-      animationChainX = smoothstep(100, 35, (frame - 140 - start) / 60);
+      animationChainX = smoothstep(25, -200, (frame - 450 - start) / 150);
+      animationChainX = smoothstep(35, animationChainX, (frame - 290 - start) / 120);
+      animationChainX = smoothstep(100, animationChainX, (frame - 140 - start) / 60);
       animationChainX = smoothstep(-60, animationChainX, (frame - 90 - start) / 50);
       animationChainX = smoothstep(180, animationChainX, (frame - start) / 90);
       this.mommaBird.position.x = animationChainX;
 
       let animationChainY;
-      animationChainY = smoothstep(20, 40, (frame - 140 - start) / 60);
+      animationChainY = smoothstep(30, 50, (frame - 450 - start) / 120);
+      animationChainY = smoothstep(40, animationChainY, (frame - 290 - start) / 120);
+      animationChainY = smoothstep(20, animationChainY, (frame - 140 - start) / 60);
       animationChainY = smoothstep(0, animationChainY, (frame - 100 - start) / 60);
       animationChainY = smoothstep(40, animationChainY, (frame - start) / 100);
       this.mommaBird.position.y = animationChainY;
@@ -338,7 +342,11 @@
       openMouth = BEAN % 2 == 0;
       this.mommaBird.upperBeak.rotation.z = openMouth ? Math.PI / 16 : 0;
       this.mommaBird.lowerBeak.rotation.z = openMouth ? -Math.PI / 32 : 0;
-      this.mommaBird.rotation.z = smoothstep(Math.PI - Math.PI / 6, Math.PI + Math.PI / 4, (frame - start) / 180);
+
+      let rotationChain;
+      rotationChain = smoothstep(Math.PI + Math.PI / 4, Math.PI - Math.PI / 6, (frame - 420 - start) / 120);
+      rotationChain = smoothstep(Math.PI - Math.PI / 6, rotationChain, (frame - start) / 180);
+      this.mommaBird.rotation.z = rotationChain;
 
 
       // NO SCROLLERS
