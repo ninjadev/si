@@ -57,6 +57,15 @@
       this.wall.material.map.wrapS = THREE.RepeatWrapping;
       this.wall.material.map.wrapT = THREE.RepeatWrapping;
       this.scene.add(this.wall);
+
+      const titles = [{
+        startFrame: 0,
+        endFrame: 300,
+        text: XWrite('MOMMO'),
+      }];
+      titles[0].text.scale.set(0.5 / scale, 0.5 / scale, 0.5 / scale);
+      titles[0].text.position.set(0 * scale, 7.5 / 2, 0);
+      this.scene.add(titles[0].text);
     }
 
     update() {
