@@ -59,11 +59,11 @@
       let selectedScene;
       if (BEAN < 24 * 5) {
         selectedScene = this.inputs.Startlogo;
-      } else if (BEAN < 24 * 7) {
+      } else if (BEAN < 48 * 3.5) {
         selectedScene = this.inputs.A;
-      } else if (BEAN < 24 * 10) {
+      } else if (BEAN < 48 * 5.5) {
         selectedScene = this.inputs.A2;
-      } else if (BEAN < 24 * 16) {
+      } else if (BEAN < 48 * 8) {
         selectedScene = this.inputs.B;
       } else if (BEAN < 48 * 10) {
         selectedScene = this.inputs.B2;
