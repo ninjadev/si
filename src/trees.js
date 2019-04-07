@@ -138,7 +138,7 @@
       this.signal = path.toObject3D();
       this.scene.add(this.signal);
       this.signal.position.set(-625, -220, 130);
-      this.signal.rotation.z = .7;
+      this.signal.rotation.z = .75;
       this.signal.rotation.y = 2;
       this.signal.path = path;
 
@@ -172,7 +172,7 @@
         new THREE.BoxGeometry(20, 11.25, 1),
         new THREE.MeshBasicMaterial({color: 0xffffff}));
       this.scene.add(this.tentwall);
-      this.tentwall.position.set(-652, -45, 254);
+      this.tentwall.position.set(-651, -45, 254);
 
       function tentShapeLeft(u, v, target) {
         let x;
@@ -248,6 +248,30 @@
       this.scene.add(this.treePlaneTwo);
       this.treePlaneTwo.position.set(-560, -10, 279);
 
+      this.treeFoot = new THREE.Mesh(
+        new THREE.BoxGeometry(20, 20, 1),
+        new THREE.MeshBasicMaterial({map: Loader.loadTexture('res/paper.png')}));
+      this.scene.add(this.treeFoot);
+      this.treeFoot.position.set(-560, -40, 279);
+
+      this.leftTreePlane = new THREE.Mesh(
+        new THREE.ParametricGeometry(treePlane, 10, 10),
+        new THREE.MeshBasicMaterial({map: Loader.loadTexture('res/paper.png')}));
+      this.scene.add(this.leftTreePlane);
+      this.leftTreePlane.position.set(-760, 10, 179);
+
+      this.leftTreePlaneTwo = new THREE.Mesh(
+        new THREE.ParametricGeometry(treePlane, 10, 10),
+        new THREE.MeshBasicMaterial({map: Loader.loadTexture('res/paper.png')}));
+      this.scene.add(this.leftTreePlaneTwo);
+      this.leftTreePlaneTwo.position.set(-760, -20, 179);
+
+      this.leftTreeFoot = new THREE.Mesh(
+        new THREE.BoxGeometry(20, 20, 1),
+        new THREE.MeshBasicMaterial({map: Loader.loadTexture('res/paper.png')}));
+      this.scene.add(this.leftTreeFoot);
+      this.leftTreeFoot.position.set(-760, -50, 179);
+
       this.camera.position.z = 220;
 
       this.wall = new THREE.Mesh(
@@ -286,7 +310,7 @@
       for (let i = 0; i < this.wifilines.length; i++) {
         const path = this.wifilines[i].path;
         path.material.uniforms.drawStart.value = 0;
-        path.material.uniforms.drawEnd.value = lerp(0, 1, (frame - wifiStartFrame - i * 50) / 100);
+        path.material.uniforms.drawEnd.value = lerp(0, 1, (frame - wifiStartFrame - i * 50 - 25) / 100);
         path.material.uniforms.wobbliness.value = 1;
       }
 
@@ -304,7 +328,7 @@
         path.material.uniforms.wobbliness.value = 1;
       }
 
-      this.signal.path.material.uniforms.drawStart.value = lerp(1, 0, (frame - zoomOutFrame) / 200);
+      this.signal.path.material.uniforms.drawStart.value = lerp(1, 0, (frame - zoomOutFrame - 10) / 330);
       this.signal.path.material.uniforms.drawEnd.value = 1;
       this.signal.path.material.uniforms.wobbliness.value = 1;
 
@@ -318,7 +342,7 @@
       if (frame < wifiStartFrame) {
         this.camera.position.x = 0;
         this.camera.position.y = lerp(0, 15, (frame - startFrame) / (wifiStartFrame - startFrame));
-        this.camera.position.z = lerp(220, 190, (frame - startFrame) / (wifiStartFrame - startFrame));
+        this.camera.position.z = lerp(250, 215, (frame - startFrame) / (wifiStartFrame - startFrame));
 
         this.camera.rotation.x = 0;
         this.camera.rotation.y = 0;
@@ -334,15 +358,15 @@
       } else {
         this.camera.position.x = easeInOutSin(
           -665,
-          easeIn(-575, -652, (frame - zoomOutFrame - 150) / 250),
+          easeIn(-575, -651, (frame - zoomOutFrame - 150) / 250),
           (frame - zoomOutFrame) / 400);
         this.camera.position.y = easeInOutSin(
           62,
-          easeIn(40, -45, (frame - zoomOutFrame - 150) / 250),
+          easeIn(40, -45.2, (frame - zoomOutFrame - 150) / 250),
           (frame - zoomOutFrame) / 400);
         this.camera.position.z = easeInOutSin(
           20,
-          easeIn(550, 269, (frame - zoomOutFrame - 150) / 250),
+          easeIn(550, 268.5, (frame - zoomOutFrame - 150) / 250),
           (frame - zoomOutFrame) / 400);
 
         this.camera.rotation.x = smoothstep(-.2, 0, (frame - zoomOutFrame) / 250);
