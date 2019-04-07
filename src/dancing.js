@@ -13,23 +13,62 @@
       let curve;
       const startx = -300;
       const starty = -288;
-      let size = 0.3;
-      let r = 20 * size;
+      const xys = [[0,0], [70, 50], [-40, -110], [-95, 40], [-135, -75], [-200, 20], [90, -70], [150, 15], [-250, -90], [250, 35], [210, -90]];
       this.guys = [];
+      let xy = 0;
       
-      for(let i = 0; i < 20; i++) {
-        for(let j = 0; j < 20; j++) {
-          let x = startx + i * 100;
-          let y = starty + j * 100;
-          let body = {
-            head: makeHead(x, y, size, r, this.scene),
-            frontleft: makeFrontLeft(x, y, size, this.scene),
-            frontright:  makeFrontRight(x, y, size, this.scene),
-            backleft: makeBackLeft(x, y, size, this.scene),
-            backright: makeBackRight(x, y, size, this.scene)
-          }
-          this.guys.push(body);
+      for(let i = 0; i < xys.length; i++) {
+        let size = xy % 2 == 0 ? 0.5 : 0.4;
+        let r = 20 * size;
+        let x = xys[xy][0];
+        let y = xys[xy][1]; 
+        let body = {
+          head: makeHead(x, y, size, r, this.scene),
+          frontleft: makeFrontLeft(x, y, size, this.scene),
+          frontright:  makeFrontRight(x, y, size, this.scene),
+          backleft: makeBackLeft(x, y, size, this.scene),
+          backright: makeBackRight(x, y, size, this.scene)
         }
+        this.guys.push(body);
+        xy += 1;
+      }
+      this.discoball = [];
+      path = new Path();
+      curve = makeCurve(30, 0, 130);
+      for(const [x, y] of curve) {
+        path.lineTo(x, y);
+      }
+      line = path.toObject3D();
+      this.discoball.push(line);
+      this.scene.add(line);
+      line.path = path;
+      path = new Path();
+      path.lineTo(0, 200);
+      path.lineTo(0, 160);
+      line = path.toObject3D();
+      this.discoball.push(line);
+      this.scene.add(line);
+      line.path = path;
+
+      const xyz = [[2.3, 130, 0], [2.7, 130, 0], [0, 5, 0], [3.6, 130, 0], [4, 130, 0]];
+      const colors = ["#00F0F6", "#F61D64", "#7EF600"];
+      this.discolines = [];
+      for(let l = 0; l < 5; l++) {
+        let color = new THREE.Color(colors[l % 3]).multiplyScalar(0.8);
+        color = new THREE.Vector3(color.r, color.g, color.b);
+        path = new Path({color});
+        let ly = 90;
+        for(let i = 0; i < 12; i++) {
+          path.lineTo(i % 2 == 0 ? -2 : 2, ly);
+          ly -= 5;
+        }
+        line = path.toObject3D();
+        line.rotation.z = xyz[l][0];
+        line.position.y = xyz[l][1];
+        line.position.x = xyz[l][2];
+        this.discolines.push(line);
+        this.scene.add(line);
+        line.path = path;
       }
 
       function makeHead(x, y, size, r, scene) {
@@ -254,7 +293,13 @@
       super.update(frame);
       const startframe = 7680;
 
-      this.camera.position.z = lerp(10, 1000, Math.tan((frame-startframe) * 0.001));
+      this.camera.position.z = lerp(10, 1500, Math.tan((frame-startframe) * 0.001));
+
+      for(let i = 0; i < this.discolines.length; i++) {
+        const path = this.discolines[i].path;
+        path.material.uniforms.drawStart.value = i != 2 ? lerp(1, 0, Math.tan((frame - startframe)/10)) : 0;
+        path.material.uniforms.drawEnd.value = i == 2 ? lerp(0, 1, Math.tan((frame - startframe)/10)) : 1;
+      }
 
       for(const body of this.guys) {
         for (let i = 0; i < body.head.length; i++) {
