@@ -13,7 +13,7 @@
       let curve;
 
       const xys = [[0,0], [70, 50], [-40, -110], [-95, 40], [-135, -75], [-200, 20], [90, -70], [150, 15], [-250, -90], [250, 35], [210, -90]];
-      const hair = [["long", "#ff99e6"], ["short", "#E1CAA0"], ["mid", "#ff9933"], ["short", "#b2997c"], ["mid", "#86592d"], ["mid", "#000000"], ["mid", "#000000"], ["mid", "#000000"], ["mid", "#000000"], ["mid", "#000000"], ["mid", "#000000"]];
+      const hair = [["long", "#ff99e6"], ["short", "#E1CAA0"], ["mid", "#ff9933"], ["short", "#b2997c"], ["mid", "#000000"], ["mid", "#000000"], ["mid", "#000000"], ["mid", "#000000"], ["mid", "#000000"], ["mid", "#000000"], ["mid", "#000000"]];
       this.guys = [];
       for(let i = 0; i < xys.length; i++) {
         let size = i % 2 == 0 ? 0.5 : 0.4;
@@ -301,7 +301,7 @@
         let hair = [];
         color = new THREE.Color(color).multiplyScalar(0.8);
         color = new THREE.Vector3(color.r, color.g, color.b);
-        path = new Path({color, directionSize : 8});
+        path = new Path({color, directionSize : 5});
         path.lineTo(x - 16 * size, y - 12 * size);
         path.lineTo(x - 8 * size, y - 2 * size);
         path.lineTo(x + 10 * size, y - 4 * size);
@@ -318,11 +318,11 @@
         color = new THREE.Color(color).multiplyScalar(0.8);
         color = new THREE.Vector3(color.r, color.g, color.b);
         path = new Path({color, directionSize : 12});
-        path.lineTo(x - 24 * size, y - 110 * size);
+        path.lineTo(x - 24 * size, y - 100 * size);
         path.lineTo(x - 16 * size, y - 8 * size);
         path.lineTo(x, y - 1 * size);
         path.lineTo(x + 16 * size, y - 8 * size);
-        path.lineTo(x + 24 * size, y - 110 * size);
+        path.lineTo(x + 24 * size, y - 100 * size);
         line = path.toObject3D();
         hair.push(line);
         scene.add(line);
@@ -335,10 +335,10 @@
         color = new THREE.Color(color).multiplyScalar(0.8);
         color = new THREE.Vector3(color.r, color.g, color.b);
         path = new Path({color, directionSize : 12});
-        path.lineTo(x - 18 * size, y - 16 * size);
+        path.lineTo(x - 16 * size, y - 16 * size);
         path.lineTo(x - 8 * size, y - 1 * size);
-        path.lineTo(x + 8 * size, y - 1 * size);
-        path.lineTo(x + 18 * size, y - 16 * size);
+        path.lineTo(x + 10 * size, y - 3 * size);
+        path.lineTo(x + 16 * size, y - 13 * size);
         line = path.toObject3D();
         hair.push(line);
         scene.add(line);
@@ -374,7 +374,7 @@
 
     update(frame) {
       super.update(frame);
-      const startframe = 7680;
+      const startframe = 8080;
       this.camera.position.z = lerp(70, 1500, Math.tan((frame-startframe) * 0.001));
 
       for(let i = 0; i < this.discolines.length; i++) {
