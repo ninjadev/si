@@ -63,6 +63,8 @@
         {rotation: Math.PI / 2, x: 0, y: 90},
         {rotation: Math.PI, x: -70, y: 0},
         {rotation: -Math.PI / 2, x: 0, y: -50},
+
+        {rotation: -.8, x: -100, y: 30},
       ];
 
       const localRandom = window.Random(100);
@@ -128,19 +130,29 @@
           time: 350
         },
         {
-          coords: [60, 0, 220],
-          color: [.5, 1, .5],
-          time: 600
+          coords: [-35, 30, 300],
+          color: [1, 1, .5],
+          time: 400
         },
         {
-          coords: [-70, 0, 120],
+          coords: [60, 0, 220],
+          color: [.5, 1, .5],
+          time: 450
+        },
+        {
+          coords: [-50, 45, 180],
+          color: [1, 0.5, 1],
+          time: 700
+        },
+        {
+          coords: [-50, 20, 120],
           color: [.5, .75, 1],
-          time: 600
+          time: 850
         },
         {
           coords: [0, 40, 100],
           color: [1, .5, .5],
-          time: 700
+          time: 950
         },
       ];
 
@@ -148,14 +160,14 @@
       for (const cloud of this.clouds) {
         const mesh = new THREE.Object3D();
         cloud.circles = [];
-        for (let i=0; i < 30; i++) {
+        for (let i=0; i < 10; i++) {
           const circle = new THREE.Mesh(
-            new THREE.CircleGeometry(6 + localRandom() * 4, 16),
+            new THREE.CircleGeometry(7 + localRandom() * 4, 20),
             new THREE.MeshBasicMaterial({color: new THREE.Color(...cloud.color)})
           );
           //circle.material.transparent = true;
           //circle.material.opacity = .6;
-          const position = new THREE.Vector3(positionRandom() * 30 - 15, positionRandom() * 14 - 7, 0);
+          const position = new THREE.Vector3(positionRandom() * 30 - 15, positionRandom() * 6 - 3, 0);
           circle.position.copy(position);
           mesh.add(circle);
           cloud.circles.push({
@@ -202,11 +214,18 @@
       }
 
       for (const cloud of this.clouds) {
-        if (frame - startFrame >= cloud.time && frame - startFrame < cloud.time + 500) {
+        if (frame - startFrame >= cloud.time && frame - startFrame < cloud.time + 400) {
           for (const circle of cloud.circles) {
+            circle.mesh.scale.setScalar(
+              elasticOut(
+                .01,
+                easeIn(1, .01, (frame - startFrame - cloud.time - 380) / 20),
+                1,
+                (frame - startFrame - cloud.time) / 20)
+            );
             circle.mesh.position.set(
-              circle.position.x + Math.sin((frame - startFrame - cloud.time) * circle.speed / 60) * 3,
-              circle.position.y - Math.sin((frame - startFrame - cloud.time) * circle.speed / 60) * 3,
+              circle.position.x + Math.sin((frame - startFrame - cloud.time) * circle.speed / 60) * 2,
+              circle.position.y - Math.sin((frame - startFrame - cloud.time) * circle.speed / 60) * 2,
               0
             );
           }
