@@ -13,7 +13,6 @@ void main() {
     vec2 uv = vUv - 0.5;
     uv *= 2.;
     uv += 0.5;
-    uv.x += .5;
 
     vec4 imageColor = texture2D(image, uv).rgba;
 
