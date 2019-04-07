@@ -13,13 +13,14 @@
       let curve;
 
       const xys = [[0,0], [70, 50], [-40, -110], [-95, 40], [-135, -75], [-200, 20], [90, -70], [150, 15], [-250, -90], [250, 35], [210, -90]];
-      const hair = [["long", "#ff99e6"], ["short", "#E1CAA0"], ["mid", "#ff9933"], ["short", "#b2997c"], ["mid", "#000000"], ["mid", "#000000"], ["mid", "#000000"], ["mid", "#000000"], ["mid", "#000000"], ["mid", "#000000"], ["mid", "#000000"]];
+      const hair = [["long", "#ff99e6"], ["short", "#E1CAA0"], ["mid", "#ff9933"], ["short", "#b2997c"], ["mid", "#86592d"], ["mid", "#53402d"], ["mid", "#000000"], ["mid", "#000000"], ["mid", "#000000"], ["mid", "#000000"], ["mid", "#000000"]];
       this.guys = [];
       for(let i = 0; i < xys.length; i++) {
-        let size = i % 2 == 0 ? 0.5 : 0.4;
+        let size = i % 2 === 1 || i === 0 ? 0.4 : 0.5;
         let r = 20 * size;
         let x = xys[i][0];
         let y = xys[i][1]; 
+        let directionSize = 2;
         let hairpath; 
         if (hair[i][0] === "short") {
           hairpath = makeShortHair(x, y + r * 2, size, this.scene, hair[i][1]);
@@ -29,12 +30,12 @@
           hairpath = makeMidHair(x, y + r * 2, size, this.scene, hair[i][1]);
         }
         let body = {
-          head: makeHead(x, y, size, r, this.scene),
+          head: makeHead(x, y, size, r, this.scene, directionSize),
           hair: hairpath,
-          frontleft: makeFrontLeft(x, y, size, this.scene),
-          frontright:  makeFrontRight(x, y, size, this.scene),
-          backleft: makeBackLeft(x, y, size, this.scene),
-          backright: makeBackRight(x, y, size, this.scene)
+          frontleft: makeFrontLeft(x, y, size, this.scene, directionSize),
+          frontright:  makeFrontRight(x, y, size, this.scene, directionSize),
+          backleft: makeBackLeft(x, y, size, this.scene, directionSize),
+          backright: makeBackRight(x, y, size, this.scene, directionSize)
         }
         this.guys.push(body);
       }
@@ -148,9 +149,9 @@
         return head;
       }
 
-      function makeFrontLeft(x, y, size, scene) {
+      function makeFrontLeft(x, y, size, scene, directionSize) {
         let frontleft = [];
-        path = new Path();
+        path = new Path({directionSize});
         path.lineTo(x, y);
         path.lineTo(x, y - 10 * size);
         path.lineTo(x + 25 * size, y - 12 * size);
@@ -162,7 +163,7 @@
         frontleft.push(line);
         scene.add(line);
         line.path = path;
-        path = new Path();
+        path = new Path({directionSize});
         path.lineTo(x + 21 * size, y - 91 * size); 
         path.lineTo(x + 20 * size, y - 130 * size); 
         path.lineTo(x + 25 * size, y - 215 * size);
@@ -185,9 +186,9 @@
         return frontleft;
       }
 
-      function makeBackLeft(x, y, size, scene) {
+      function makeBackLeft(x, y, size, scene, directionSize) {
         let backleft = [];
-        path = new Path();
+        path = new Path({directionSize});
         path.lineTo(x, y);
         path.lineTo(x, y - 10 * size);
         path.lineTo(x - 25 * size, y - 12 * size);
@@ -210,7 +211,7 @@
         backleft.push(line);
         scene.add(line);
         line.path = path;
-        path = new Path();
+        path = new Path({directionSize});
         path.lineTo(x - 22 * size, y - 91 * size);
         path.lineTo(x - 37 * size, y - 108 * size);
         path.lineTo(x - 45 * size, y - 100 * size);
@@ -222,9 +223,9 @@
         return backleft;
       }
 
-      function makeFrontRight(x, y, size, scene) {
+      function makeFrontRight(x, y, size, scene, directionSize) {
         let frontright = [];
-        path = new Path();
+        path = new Path({directionSize});
         path.lineTo(x, y);
         path.lineTo(x, y - 10 * size);
         path.lineTo(x - 25 * size, y - 12 * size);
@@ -236,7 +237,7 @@
         frontright.push(line);
         scene.add(line);
         line.path = path;
-        path = new Path();
+        path = new Path({directionSize});
         path.lineTo(x - 21 * size, y - 91 * size); 
         path.lineTo(x - 20 * size, y - 130 * size);
         path.lineTo(x - 25 * size, y - 215 * size);
@@ -260,9 +261,9 @@
       }
       
 
-      function makeBackRight(x, y, size, scene) {
+      function makeBackRight(x, y, size, scene, directionSize) {
         let backright = [];
-        path = new Path();
+        path = new Path({directionSize});
         path.lineTo(x, y);
         path.lineTo(x, y - 10 * size);
         path.lineTo(x + 25 * size, y - 12 * size);
@@ -285,7 +286,7 @@
         backright.push(line);
         scene.add(line);
         line.path = path;
-        path = new Path();
+        path = new Path({directionSize});
         path.lineTo(x + 22 * size, y - 91 * size);
         path.lineTo(x + 37 * size, y - 108 * size);
         path.lineTo(x + 45 * size, y - 100 * size);
