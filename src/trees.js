@@ -31,18 +31,22 @@
           {
             coords: [[25,10],[-25,10],[0,50],[25,10]],
             offset,
+            fill: 0x7fff7f,
           },
           {
             coords: [[10,10],[30,-20],[-30,-20],[-10,10]],
             offset,
+            fill: 0x7fff7f,
           },
           {
             coords: [[10,-20],[30,-50],[-30,-50],[-10,-20]],
             offset,
+            fill: 0x7fff7f,
           },
           {
             coords: [[10,-50],[10,-70],[-10,-70],[-10,-50]],
             offset,
+            fill: 0x5f0010,
           },
         ];
       }
@@ -62,7 +66,10 @@
       this.lines = [];
 
       for (const track of tracks) {
-        const path = new Path({debug: false, fill: true, fillColor: 0x7fff7f});
+        const path = new Path('fill' in track && {
+          fill: true,
+          fillColor: track.fill,
+        });
         for (const [x, y] of track.coords) {
           path.lineTo(x, y);
         }
@@ -106,7 +113,10 @@
       this.mainTree = [];
       const mainTreeTracks = makeTree([-700, 0, 0]);
       for (const track of mainTreeTracks) {
-        const path = new Path();
+        const path = new Path('fill' in track && {
+          fill: true,
+          fillColor: track.fill,
+        });
         for (const [x, y] of track.coords) {
           path.lineTo(x, y);
         }
@@ -120,7 +130,10 @@
       this.frontTree = [];
       const frontTreeTracks = makeTree([-560, 20, 280]);
       for (const track of frontTreeTracks) {
-        const path = new Path();
+        const path = new Path('fill' in track && {
+          fill: true,
+          fillColor: track.fill,
+        });
         for (const [x, y] of track.coords) {
           path.lineTo(x, y);
         }
@@ -142,7 +155,7 @@
       this.signal.rotation.y = 2;
       this.signal.path = path;
 
-      const tentPath = new Path();
+      const tentPath = new Path({fill: true, fillColor: 0xef8f5f});
       tentPath.lineTo(0, 0);
       tentPath.lineTo(30, 60);
       tentPath.lineTo(60, 0);
@@ -173,104 +186,6 @@
         new THREE.MeshBasicMaterial({color: 0xffffff}));
       this.scene.add(this.tentwall);
       this.tentwall.position.set(-651, -45, 254);
-
-      function tentShapeLeft(u, v, target) {
-        let x;
-        if (v < 25/60) {
-          x = clamp(0, u * 17.5 + 30 * v, 30);
-        } else {
-          x = clamp(0, 30 * u + 30 * v, 30);
-        }
-        const y = v * 60;
-        target.set(
-          x,
-          y,
-          0
-        );
-      }
-      function tentShapeRight(u, v, target) {
-        let x;
-        if (v < 25/60) {
-          const t = lerp(1, 0, v / (25/60));
-          x = clamp(30 + 12.5 * t, 30 * u + 30 * (1 - v), 60);
-        } else {
-          x = clamp(30, 30 * u + 30 * (1 - v), 60);
-        }
-        const y = v * 60;
-        target.set(
-          x,
-          y,
-          0
-        );
-      }
-
-      function treeTop(u, v, target) {
-        const width = (1 - v) * 50;
-        const x = u * width + (50 - width) / 2 - 25;
-        const y = v * 40 + 10;
-        target.set(x, y, 0);
-      }
-
-      function treePlane(u, v, target) {
-        const width = 20 + (1 - v) * 40;
-        const x = u * width + v * 20 - 30;
-        const y = v * 30 - 20;
-        target.set(x, y, 0);
-      }
-
-      this.tentcoverleft = new THREE.Mesh(
-        new THREE.ParametricGeometry(tentShapeLeft, 10, 10),
-        new THREE.MeshBasicMaterial({map: Loader.loadTexture('res/paper.png')}));
-      this.scene.add(this.tentcoverleft);
-      this.tentcoverleft.position.set(-680, -50, 259);
-
-      this.tentcoverright = new THREE.Mesh(
-        new THREE.ParametricGeometry(tentShapeRight, 10, 10),
-        new THREE.MeshBasicMaterial({map: Loader.loadTexture('res/paper.png')}));
-      this.scene.add(this.tentcoverright);
-      this.tentcoverright.position.set(-680, -50, 259);
-
-      this.treeTop = new THREE.Mesh(
-        new THREE.ParametricGeometry(treeTop, 10, 10),
-        new THREE.MeshBasicMaterial({map: Loader.loadTexture('res/paper.png')}));
-      this.scene.add(this.treeTop);
-      this.treeTop.position.set(-560, 20, 279);
-
-      this.treePlane = new THREE.Mesh(
-        new THREE.ParametricGeometry(treePlane, 10, 10),
-        new THREE.MeshBasicMaterial({map: Loader.loadTexture('res/paper.png')}));
-      this.scene.add(this.treePlane);
-      this.treePlane.position.set(-560, 20, 279);
-
-      this.treePlaneTwo = new THREE.Mesh(
-        new THREE.ParametricGeometry(treePlane, 10, 10),
-        new THREE.MeshBasicMaterial({map: Loader.loadTexture('res/paper.png')}));
-      this.scene.add(this.treePlaneTwo);
-      this.treePlaneTwo.position.set(-560, -10, 279);
-
-      this.treeFoot = new THREE.Mesh(
-        new THREE.BoxGeometry(20, 20, 1),
-        new THREE.MeshBasicMaterial({map: Loader.loadTexture('res/paper.png')}));
-      this.scene.add(this.treeFoot);
-      this.treeFoot.position.set(-560, -40, 279);
-
-      this.leftTreePlane = new THREE.Mesh(
-        new THREE.ParametricGeometry(treePlane, 10, 10),
-        new THREE.MeshBasicMaterial({map: Loader.loadTexture('res/paper.png')}));
-      this.scene.add(this.leftTreePlane);
-      this.leftTreePlane.position.set(-760, 10, 179);
-
-      this.leftTreePlaneTwo = new THREE.Mesh(
-        new THREE.ParametricGeometry(treePlane, 10, 10),
-        new THREE.MeshBasicMaterial({map: Loader.loadTexture('res/paper.png')}));
-      this.scene.add(this.leftTreePlaneTwo);
-      this.leftTreePlaneTwo.position.set(-760, -20, 179);
-
-      this.leftTreeFoot = new THREE.Mesh(
-        new THREE.BoxGeometry(20, 20, 1),
-        new THREE.MeshBasicMaterial({map: Loader.loadTexture('res/paper.png')}));
-      this.scene.add(this.leftTreeFoot);
-      this.leftTreeFoot.position.set(-760, -50, 179);
 
       this.camera.position.z = 220;
 
