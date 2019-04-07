@@ -188,9 +188,6 @@
       this.chick1 = CommodoreLogo(25);
       this.chick2 = CommodoreLogo(25);
       this.chick3 = CommodoreLogo(25);
-      this.chick1.rotation.z = Math.PI / 2;
-      this.chick2.rotation.z = Math.PI / 2;
-      this.chick3.rotation.z = Math.PI / 2;
 
       this.mommaBird = CommodoreLogo(50);
       this.scene.add(this.mommaBird);
@@ -221,7 +218,7 @@
       this.chickNest.add(nesto3d);
       this.scene.add(this.chickNest);
 
-      this.chickNest.position.set(70, -50, 0);
+      this.chickNest.position.set(-70, -50, 0);
 
       function Scroller(text) {
         this.text = text;
@@ -249,28 +246,29 @@
 
         this.texture = new THREE.VideoTexture(this.canvas);
         this.texture.minFilter = THREE.LinearFilter;
-        this.texture.magFilter = THREE.LinearFilter;
-
+        this.texture.magFilter = THREE.LinearFilter; 
         const material = new THREE.MeshBasicMaterial({ color: 0xffffff, map: this.texture, transparent: true, });
         const geometry = new THREE.BoxBufferGeometry(100, 10, 1);
         this.scrollerMesh = new THREE.Mesh(geometry, material);
       }
 
-      this.NoScroller = new Scroller('SOLSKOGEN JUST              SCROLLERS NO');
+      this.NoScroller = new Scroller('NO SCROLLERS                JUST SOLSKOGEN');
       this.scene.add(this.NoScroller.scrollerMesh);
 
-      this.LongestScroller = new Scroller('ARE  YOU  MAKING  FUN  OF  MY  SCROLLER? THIS  IS  THE  LONGEST  SCROLLER  I  COULD  AFFORD.');
+      this.LongestScroller = new Scroller('THIS IS THE LOOONGEST SCROLLER I COULD AFFORD');
       this.scene.add(this.LongestScroller.scrollerMesh);
 
-      this.AmigaScroller = new Scroller('AMIGA  AMIGA  AMIGA  AMIGA  AMIGA  KEVIIIN  AMIGA  AMIGA');
+      this.AmigaScroller = new Scroller('AMIGAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA');
       this.scene.add(this.AmigaScroller.scrollerMesh);
 
-      this.NoScroller.scrollerMesh.position.set(25, -5, 0);
-      this.NoScroller.scrollerMesh.rotation.z = -Math.PI / 5;
-      this.LongestScroller.scrollerMesh.position.set(15, -15, 0);
-      this.LongestScroller.scrollerMesh.rotation.z = -Math.PI / 4;
-      this.AmigaScroller.scrollerMesh.position.set(35, -10, 0);
-      this.AmigaScroller.scrollerMesh.rotation.z = -Math.PI / 5;
+      this.NoScroller.scrollerMesh.position.set(-35, -5, 0);
+      this.NoScroller.scrollerMesh.rotation.z = Math.PI / 5;
+
+      this.LongestScroller.scrollerMesh.position.set(-15, -15, 0);
+      this.LongestScroller.scrollerMesh.rotation.z = Math.PI / 4;
+
+      this.AmigaScroller.scrollerMesh.position.set(-25, -10, -5);
+      this.AmigaScroller.scrollerMesh.rotation.z = Math.PI / 5;
     }
 
     update(frame) {
@@ -285,13 +283,13 @@
       this.chick2.position.z = 10;
       this.chick3.position.z = -5;
 
-      this.chick1.position.x = -13 + Math.sin(frame / 2);
+      this.chick1.position.x = 13 - Math.sin(frame / 2);
       this.chick1.position.y = -6 + Math.sin(frame / 3);
 
-      this.chick2.position.x = Math.cos(frame / 2);
+      this.chick2.position.x = -Math.cos(frame / 2);
       this.chick2.position.y = 6 + Math.cos(frame / 3);
 
-      this.chick3.position.x = 18 + Math.cos(frame / 2);
+      this.chick3.position.x = -18 - Math.cos(frame / 2);
       this.chick3.position.y = -2 + Math.sin(frame / 3);
 
       this.chick1.rotation.x = Math.sin(frame / 10) / 3;
@@ -317,14 +315,18 @@
       const start = 548;
       const mommaIsStationary = 180;
 
+      this.chick1.rotation.z = lerp(Math.PI / 2, Math.PI / 3, (frame - start - mommaIsStationary) / 20);
+      this.chick2.rotation.z = lerp(Math.PI / 2, Math.PI / 4, (frame - start - mommaIsStationary) / 30);
+      this.chick3.rotation.z = lerp(Math.PI / 2, Math.PI / 5, (frame - start - mommaIsStationary) / 10);
+
       this.mommaBird.scale.x = 1 + 0.1 * this.oomph;
       this.mommaBird.scale.y = 1 + 0.2 * this.oomph;
       this.mommaBird.scale.z = 1 + 0.05 * this.oomph;
 
       let animationChainX;
-      animationChainX = smoothstep(-100, -35, (frame - 140 - start) / 60);
-      animationChainX = smoothstep(60, animationChainX, (frame - 90 - start) / 50);
-      animationChainX = smoothstep(-180, animationChainX, (frame - start) / 90);
+      animationChainX = smoothstep(100, 35, (frame - 140 - start) / 60);
+      animationChainX = smoothstep(-60, animationChainX, (frame - 90 - start) / 50);
+      animationChainX = smoothstep(180, animationChainX, (frame - start) / 90);
       this.mommaBird.position.x = animationChainX;
 
       let animationChainY;
@@ -336,18 +338,18 @@
       openMouth = BEAN % 2 == 0;
       this.mommaBird.upperBeak.rotation.z = openMouth ? Math.PI / 16 : 0;
       this.mommaBird.lowerBeak.rotation.z = openMouth ? -Math.PI / 32 : 0;
-      this.mommaBird.rotation.z = smoothstep(Math.PI / 6, -Math.PI / 4, (frame - start) / 180);
+      this.mommaBird.rotation.z = smoothstep(Math.PI - Math.PI / 6, Math.PI + Math.PI / 4, (frame - start) / 180);
 
 
       // NO SCROLLERS
       const scrollOffset = lerp(
-        -this.NoScroller.textCanvas.width,
         this.NoScroller.textCanvas.width,
-        (frame - mommaIsStationary - 80 - start) / (this.NoScroller.text.length * 4)
+        -this.NoScroller.textCanvas.width,
+        (frame - mommaIsStationary - 40 - start) / (this.NoScroller.text.length * 6)
       );
 
       this.NoScroller.ctx.clearRect(0, 0, this.NoScroller.canvas.width, this.NoScroller.canvas.height);
-      for (let pixelOffset = 0; pixelOffset < this.NoScroller.textCanvas.width; pixelOffset++) {
+      for (let pixelOffset = 0; pixelOffset < this.NoScroller.textCanvas.width; pixelOffset += 2) {
         this.NoScroller.ctx.drawImage(
           this.NoScroller.textCanvas,
           pixelOffset,
@@ -355,58 +357,58 @@
           2,
           this.NoScroller.textCanvas.height,
           scrollOffset + pixelOffset,
-          Math.sin(pixelOffset / 60 + frame / 2) * 7,
+          Math.sin(pixelOffset / 60 + frame / 3) * 6,
           2,
           this.NoScroller.textCanvas.height
         );
       }
       this.NoScroller.texture.needsUpdate = true;
 
-      // // LONGEST
-      // const scrollOffset2 = lerp(
-      //   -this.LongestScroller.textCanvas.width,
-      //   this.LongestScroller.textCanvas.width,
-      //   (frame - mommaIsStationary - 60 - start) / (this.LongestScroller.text.length * 4)
-      // );
+      // LONGEST
+      const scrollOffset2 = lerp(
+        this.LongestScroller.textCanvas.width,
+        -this.LongestScroller.textCanvas.width,
+        (frame - mommaIsStationary - 20 - start) / (this.LongestScroller.text.length * 5)
+      );
 
-      // this.LongestScroller.ctx.clearRect(0, 0, this.LongestScroller.canvas.width, this.LongestScroller.canvas.height);
-      // for (let pixelOffset = 0; pixelOffset < this.LongestScroller.textCanvas.width; pixelOffset ++) {
-      //   this.LongestScroller.ctx.drawImage(
-      //     this.LongestScroller.textCanvas,
-      //     pixelOffset,
-      //     0,
-      //     2,
-      //     this.LongestScroller.textCanvas.height,
-      //     scrollOffset2 + pixelOffset,
-      //     Math.sin(pixelOffset / 60 + frame / 2) * 7,
-      //     2,
-      //     this.LongestScroller.textCanvas.height
-      //   );
-      // }
-      // this.LongestScroller.texture.needsUpdate = true;
+      this.LongestScroller.ctx.clearRect(0, 0, this.LongestScroller.canvas.width, this.LongestScroller.canvas.height);
+      for (let pixelOffset = 0; pixelOffset < this.LongestScroller.textCanvas.width; pixelOffset += 2) {
+        this.LongestScroller.ctx.drawImage(
+          this.LongestScroller.textCanvas,
+          pixelOffset,
+          0,
+          2,
+          this.LongestScroller.textCanvas.height,
+          scrollOffset2 + pixelOffset,
+          Math.sin(pixelOffset / 60 + frame / 3) * 6,
+          2,
+          this.LongestScroller.textCanvas.height
+        );
+      }
+      this.LongestScroller.texture.needsUpdate = true;
 
-      // // AMIGA
-      // const scrollOffset3 = lerp(
-      //   -this.AmigaScroller.textCanvas.width,
-      //   this.AmigaScroller.textCanvas.width,
-      //   (frame - mommaIsStationary - start) / (this.AmigaScroller.text.length * 5)
-      // );
+      // AMIGA
+      const scrollOffset3 = lerp(
+        this.AmigaScroller.textCanvas.width,
+        -this.AmigaScroller.textCanvas.width,
+        (frame - mommaIsStationary - start) / (this.AmigaScroller.text.length * 10)
+      );
 
-      // this.AmigaScroller.ctx.clearRect(0, 0, this.AmigaScroller.canvas.width, this.AmigaScroller.canvas.height);
-      // for (let pixelOffset = 0; pixelOffset < this.AmigaScroller.textCanvas.width; pixelOffset ++) {
-      //   this.AmigaScroller.ctx.drawImage(
-      //     this.AmigaScroller.textCanvas,
-      //     pixelOffset,
-      //     0,
-      //     2,
-      //     this.AmigaScroller.textCanvas.height,
-      //     scrollOffset3 + pixelOffset,
-      //     Math.sin(pixelOffset / 60 + frame / 2) * 7,
-      //     2,
-      //     this.AmigaScroller.textCanvas.height
-      //   );
-      // }
-      // this.AmigaScroller.texture.needsUpdate = true;
+      this.AmigaScroller.ctx.clearRect(0, 0, this.AmigaScroller.canvas.width, this.AmigaScroller.canvas.height);
+      for (let pixelOffset = 0; pixelOffset < this.AmigaScroller.textCanvas.width; pixelOffset += 2) {
+        this.AmigaScroller.ctx.drawImage(
+          this.AmigaScroller.textCanvas,
+          pixelOffset,
+          0,
+          2,
+          this.AmigaScroller.textCanvas.height,
+          scrollOffset3 + pixelOffset,
+          Math.sin(pixelOffset / 60 + frame / 3) * 6,
+          2,
+          this.AmigaScroller.textCanvas.height
+        );
+      }
+      this.AmigaScroller.texture.needsUpdate = true;
     }
   }
 
