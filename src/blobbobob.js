@@ -23,7 +23,7 @@
       super.update(frame);
       this.frame = frame;
       this.throb *= 0.9;
-      if(BEAT && BEAN % 4 === 0) {
+      if(BEAT && BEAN % 6 === 0) {
         this.throb = 1;
         this.rotationOffsets[0] = Math.random() * Math.PI * 2;
         this.rotationOffsets[1] = Math.random() * Math.PI * 2;
