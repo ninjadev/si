@@ -188,7 +188,8 @@
       "shader": "splasher"
     },
     "connected": {
-        "A": "Waller.render"
+      "A": "Waller.render",
+      "PaperContent": "paperframer.render"
     }
   }
 ]
