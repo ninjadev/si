@@ -65,19 +65,43 @@
       this.wall.material.map.wrapT = THREE.RepeatWrapping;
       this.scene.add(this.wall);
 
-      const titles = [{
-        startFrame: 0,
-        endFrame: 300,
-        text: XWrite('MOMMO'),
-      }];
-      titles[0].text.scale.set(0.5 / scale, 0.5 / scale, 0.5 / scale);
-      titles[0].text.position.set(0 * scale, 7.5 / 2, 0);
-      this.scene.add(titles[0].text);
+      this.titles = [
+        {
+          startFrame: 400,
+          endFrame: 719,
+          transition: 60,
+          text: XWrite('MOMMO MO'),
+        },
+        {
+          startFrame: 719,
+          endFrame: 1007,
+          transition: 60,
+          text: XWrite('MMMA OAM'),
+        },
+        {
+          startFrame: 1007,
+          endFrame: 1438,
+          transition: 60,
+          text: XWrite('MOMMA MOMM'),
+        },
+      ];
+      for (let title of this.titles) {
+        title.text.scale.set(0.25 / scale, 0.25 / scale, 0.25 / scale);
+        title.text.position.set(0 * scale, 7.5 / 2, 0);
+        this.scene.add(title.text);
+      }
     }
 
     update(frame) {
       this.paper.material.map = this.inputs.A.getValue();
       this.paper.material.needsUpdate = true;
+
+      for (let { startFrame, endFrame, text, transition, } of this.titles) {
+        for (let path of text.paths) {
+          path.material.uniforms.drawStart.value = smoothstep(0, 1, (frame - endFrame + transition) / transition);
+          path.material.uniforms.drawEnd.value = smoothstep(0, 1, (frame - startFrame) / transition);
+        }
+      }
     }
 
     resize() {

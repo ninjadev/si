@@ -312,7 +312,7 @@
       this.chick3.upperBeak.rotation.z = openMouth ? Math.PI / 3 : 0;
       this.chick3.lowerBeak.rotation.z = openMouth ? -Math.PI / 3 : 0;
 
-      const start = 548;
+      const start = 1007;
       const mommaIsStationary = 180;
 
       this.chick1.rotation.z = lerp(Math.PI / 2, Math.PI / 3, (frame - start - mommaIsStationary) / 20);
@@ -368,7 +368,7 @@
       const scrollOffset2 = lerp(
         this.LongestScroller.textCanvas.width,
         -this.LongestScroller.textCanvas.width,
-        (frame - mommaIsStationary - 20 - start) / (this.LongestScroller.text.length * 5)
+        (frame - mommaIsStationary - 20 - start) / (this.LongestScroller.text.length * 6)
       );
 
       this.LongestScroller.ctx.clearRect(0, 0, this.LongestScroller.canvas.width, this.LongestScroller.canvas.height);
