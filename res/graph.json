@@ -11,6 +11,7 @@
     "type": "SceneSwitcherNode",
     "connected": {
       "A": "moose.render",
+      "A2": "MommaBird.render",
       "B": "patterns.render",
       "B2": "patterns.render",
       "C": "NorwayNode.render",
@@ -76,6 +77,10 @@
   {
     "id": "boxes",
     "type": "boxes"
+  },
+  {
+    "id": "MommaBird",
+    "type": "MommaBird"
   },
   {
     "id": "moose",

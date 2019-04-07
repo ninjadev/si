@@ -9,7 +9,9 @@
     const H = 0.636 * A; // X offset to circle clipping start
     const I = 0.97 * A;  // Diameter of the outer circle
 
-    const cee = new Path();
+    const directionSize = 2;
+
+    const cee = new Path({ directionSize });
 
     // First we draw the outer circle counterclockwise from the top right.
     const outerSegments = 30;
@@ -42,14 +44,14 @@
       Math.sin(outerCircleRadianOffsetFromStart) * outerCircleRadius
     );
 
-    const upperBeak = new Path();
+    const upperBeak = new Path({ directionSize });
     upperBeak.lineTo(0, C / 2);
     upperBeak.lineTo(E, C / 2);
     upperBeak.lineTo(E - C, - C / 2);
     upperBeak.lineTo(0, - C / 2);
     upperBeak.lineTo(0, C / 2);
 
-    const lowerBeak = new Path();
+    const lowerBeak = new Path({ directionSize });
     lowerBeak.lineTo(0, -C / 2);
     lowerBeak.lineTo(E, -C / 2);
     lowerBeak.lineTo(E - C, C / 2);
@@ -73,7 +75,7 @@
     return outerWrapper;
   }
 
-  class moose extends NIN.THREENode {
+  class MommaBird extends NIN.THREENode {
     constructor(id, options) {
       super(id, {
         camera: options.camera,
@@ -111,7 +113,7 @@
         for (let [i, color] of commodoreColors.entries()) {
           color = new THREE.Color(color).multiplyScalar(0.8);
           color = new THREE.Vector3(color.r, color.g, color.b);
-          let path = new Path({color});
+          let path = new Path({ directionSize: width, color });
 
           path.lineTo(
             -length - (i * 10) + 25,
@@ -150,9 +152,9 @@
           this.commodoreLinesRight.push(lines);
         }
       }
-      this.scene.add(this.commodoreLinesWrapperLeft);
+      //this.scene.add(this.commodoreLinesWrapperLeft);
       this.commodoreLinesWrapperRight.rotation.y = Math.PI;
-      this.scene.add(this.commodoreLinesWrapperRight);
+      //this.scene.add(this.commodoreLinesWrapperRight);
 
       this.oomph = 1.0;
 
@@ -178,9 +180,48 @@
           }
         }
       }
-      this.scene.add(this.logoWrapperLeft);
+      //this.scene.add(this.logoWrapperLeft);
       this.logoWrapperRight.rotation.y = Math.PI;
-      this.scene.add(this.logoWrapperRight);
+      //this.scene.add(this.logoWrapperRight);
+
+      this.chicks = [];
+      this.chick1 = CommodoreLogo(25);
+      this.chick2 = CommodoreLogo(25);
+      this.chick3 = CommodoreLogo(25);
+      this.chick1.rotation.z = Math.PI / 2;
+      this.chick2.rotation.z = Math.PI / 2;
+      this.chick3.rotation.z = Math.PI / 2;
+
+      this.mommaBird = CommodoreLogo(50);
+      this.scene.add(this.mommaBird);
+
+      this.nest = new Path({directionSize: 2});
+      this.nest.lineTo(-40, -10);
+      this.nest.lineTo(-20, -20);
+      this.nest.lineTo(20, -20);
+      this.nest.lineTo(40, -10);
+      this.nest.lineTo(40, -11);
+      this.nest.lineTo(33, -20);
+      this.nest.lineTo(15, -28);
+      this.nest.lineTo(-15, -28);
+      this.nest.lineTo(-33, -20);
+      this.nest.lineTo(-40, -10);
+      this.nest.lineTo(-40, -11);
+      this.nest.lineTo(-20, -23);
+      this.nest.lineTo(0, -25);
+      this.nest.lineTo(20, -23);
+      this.nest.lineTo(40, -11);
+
+      const nesto3d = this.nest.toObject3D();
+
+      this.chickNest = new THREE.Object3D();
+      this.chickNest.add(this.chick1);
+      this.chickNest.add(this.chick2);
+      this.chickNest.add(this.chick3);
+      this.chickNest.add(nesto3d);
+      this.scene.add(this.chickNest);
+
+      this.chickNest.position.set(70, -50, 0);
     }
 
     update(frame) {
@@ -190,47 +231,61 @@
       if (BEAT && BEAN % 12 == 0) {
         this.oomph = 1.0;
       }
-
       this.oomph *= 0.95;
 
-      this.circles = [];
+      this.chick1.position.z = -5;
+      this.chick2.position.z = 10;
+      this.chick3.position.z = -5;
 
-      const startOfStart = 90;
-      const startOfEnd = 360;
-      const speed = 90;
+      this.chick1.position.x = -13 + Math.sin(frame / 2);
+      this.chick1.position.y = -6 + Math.sin(frame / 3);
 
-      // Screen is ca 300 wide. 10 units a 30.
-      this.logoWrapperRight.position.x = 300 - ((frame / 2) % 300);
-      this.logoWrapperLeft.position.x = -300 + ((frame / 1.5) % 300);
+      this.chick2.position.x = Math.cos(frame / 2);
+      this.chick2.position.y = 6 + Math.cos(frame / 3);
 
-      const openMouth = BEAN % 12 < 6;
-      for (let [i, logo] of this.commodoreLogos.entries()) {
-        const openMyMyMouth = i % 2 == 0 ? openMouth : !openMouth;
-        const rotation = openMyMyMouth ? Math.PI / 8 : 0;
+      this.chick3.position.x = 18 + Math.cos(frame / 2);
+      this.chick3.position.y = -2 + Math.sin(frame / 3);
 
-        logo.upperBeak.rotation.z = rotation;
-        logo.lowerBeak.rotation.z = -rotation;
-      }
+      this.chick1.rotation.x = Math.sin(frame / 10) / 3;
+      this.chick2.rotation.x = Math.cos(frame / 5) / 3;
+      this.chick3.rotation.x = Math.sin(frame / 12) / 3;
 
-      for (let lines of this.commodoreLinesLeft) {
-        for (let line of lines) {
-          const path = line.path;
-          path.material.uniforms.drawStart.value = easeIn(0, 1, (frame - startOfEnd) / speed);
-          path.material.uniforms.drawEnd.value = easeOut(0, 1, (frame - startOfStart) / speed);
-          path.material.uniforms.wobbliness.value = this.oomph;
-        }
-      }
+      this.chick1.rotation.y = Math.sin(frame / 10) / 3;
+      this.chick2.rotation.y = Math.cos(frame / 5) / 3;
+      this.chick3.rotation.y = Math.sin(frame / 12) / 3;
 
-      for (let lines of this.commodoreLinesRight) {
-        for (let line of lines) {
-          const path = line.path;
-          path.material.uniforms.drawStart.value = easeIn(0, 1, (frame - startOfEnd) / speed);
-          path.material.uniforms.drawEnd.value = easeOut(0, 1, (frame - startOfStart) / speed);
-          path.material.uniforms.wobbliness.value = this.oomph;
-        }
-      }
+      let openMouth = BEAN % 6 < 3;
+      this.chick1.upperBeak.rotation.z = openMouth ? Math.PI / 6 : 0;
+      this.chick1.lowerBeak.rotation.z = openMouth ? -Math.PI / 6 : 0;
+
+      openMouth = BEAN % 12 < 6;
+      this.chick2.upperBeak.rotation.z = !openMouth ? Math.PI / 7 : 0;
+      this.chick2.lowerBeak.rotation.z = !openMouth ? -Math.PI / 7 : 0;
+
+      openMouth = BEAN % 8 < 4;
+      this.chick3.upperBeak.rotation.z = openMouth ? Math.PI / 3 : 0;
+      this.chick3.lowerBeak.rotation.z = openMouth ? -Math.PI / 3 : 0;
+
+      const start = 548;
+
+      let animationChainX;
+      animationChainX = smoothstep(-100, -30, (frame - 140 - start) / 60);
+      animationChainX = smoothstep(60, animationChainX, (frame - 90 - start) / 50);
+      animationChainX = smoothstep(-180, animationChainX, (frame - start) / 90);
+      this.mommaBird.position.x = animationChainX;
+
+      let animationChainY;
+      animationChainY = smoothstep(20, 40, (frame - 180 - start) / 60);
+      animationChainY = smoothstep(0, animationChainY, (frame - 100 - start) / 60);
+      animationChainY = smoothstep(40, animationChainY, (frame - start) / 100);
+      this.mommaBird.position.y = animationChainY;
+
+      openMouth = BEAN % 2 == 0;
+      this.mommaBird.upperBeak.rotation.z = openMouth ? Math.PI / 16 : 0;
+      this.mommaBird.lowerBeak.rotation.z = openMouth ? -Math.PI / 32 : 0;
+      this.mommaBird.rotation.z = smoothstep(Math.PI / 6, -Math.PI / 4, (frame - start) / 300);
     }
   }
 
-  global.moose = moose;
+  global.MommaBird = MommaBird;
 })(this);

@@ -4,6 +4,7 @@
       super(id, {
         inputs: {
           A: new NIN.TextureInput(),
+          A2: new NIN.TextureInput(),
           B: new NIN.TextureInput(),
           B2: new NIN.TextureInput(),
           C: new NIN.TextureInput(),
@@ -32,6 +33,7 @@
 
     beforeUpdate() {
       this.inputs.A.enabled = false;
+      this.inputs.A2.enabled = false;
       this.inputs.B.enabled = false;
       this.inputs.B2.enabled = false;
       this.inputs.C.enabled = false;
@@ -53,8 +55,10 @@
       this.inputs.P.enabled = false;
 
       let selectedScene;
-      if (BEAN < 48 * 4) {
+      if (BEAN < 48 * 2) {
         selectedScene = this.inputs.A;
+      } else if (BEAN < 48 * 4) {
+        selectedScene = this.inputs.A2;
       } else if (BEAN < 48 * 8) {
         selectedScene = this.inputs.B;
       } else if (BEAN < 48 * 10) {
