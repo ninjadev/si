@@ -3,7 +3,7 @@
     "id": "root",
     "type": "NIN.RootNode",
     "connected": {
-      "screen": "sceneSwitcherNode.render"
+      "screen": "Waller.render"
     }
   },
   {
@@ -156,5 +156,12 @@
   {
     "id": "ripple",
     "type": "ripple"
+  },
+  {
+    "id": "Waller",
+    "type": "waller",
+    "connected": {
+        "A": "sceneSwitcherNode.render"
+    }
   }
 ]
