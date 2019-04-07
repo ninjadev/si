@@ -8,11 +8,13 @@
         },
         inputs: {
           N: new NIN.TextureInput(),
+          sirpathrick: new NIN.TextureInput(),
         },
       });
 
       this.flateby_image = Loader.loadTexture('res/map/flateby.png');
       this.map_image = Loader.loadTexture('res/map/norge.png');
+      //this.z1 = Loader.loadTexture('res/map/testpattern.jpg');
       this.z1 = Loader.loadTexture('res/map/t1.png');
       this.z2 = Loader.loadTexture('res/map/t2.png');
       this.z3 = Loader.loadTexture('res/map/t3.png');
@@ -42,6 +44,7 @@
       this.map_object.material.transparent = true;
 
       this.map_object.material.uniforms.tDiffuse.value = this.map_image;
+      //this.map_object.material.uniforms.z1.value = this.inputs.sirpathrick.getValue();
       this.map_object.material.uniforms.z1.value = this.z1;
       this.map_object.material.uniforms.z2.value = this.z2;
       this.map_object.material.uniforms.z3.value = this.z3;
@@ -66,11 +69,24 @@
     update(frame) {
       super.update(frame);
 
-      this.map_object.material.uniforms.frame.value = frame;
+      //this.map_object.material.uniforms.frame.value = frame;
 
-      this.camera.position.x = 30 * Math.sin(frame/20.);
-      this.camera.up = new THREE.Vector3(0,0,1);
-      this.camera.lookAt(new THREE.Vector3(0,0,0));
+      /*if (frame < 3000) {
+        var center_x = 8;
+        var center_y = 19;
+
+        this.camera.up = new THREE.Vector3(0,0,1);
+        this.camera.lookAt(new THREE.Vector3(center_x, center_y, 0));
+        this.camera.position.z = 7;
+        this.camera.position.y = center_y-0.01;
+        this.camera.position.x = center_x;
+      } else {
+        this.camera.position.z = 7;
+        this.camera.position.y = -30;
+        this.camera.position.x = 30 * Math.sin(frame/20.);
+        this.camera.up = new THREE.Vector3(0,0,1);
+        this.camera.lookAt(new THREE.Vector3(0,0,0));
+      }*/
 
       
     }
