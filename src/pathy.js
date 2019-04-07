@@ -45,7 +45,10 @@
 
       this.wall = new THREE.Mesh(
         new THREE.BoxGeometry(1000, 1000, 100),
-        new THREE.MeshBasicMaterial({color: 0xffffff}));
+        new THREE.MeshBasicMaterial({map: Loader.loadTexture('res/paper.png')}));
+      this.wall.material.map.repeat.set(4, 4);
+      this.wall.material.map.wrapS = THREE.RepeatWrapping;
+      this.wall.material.map.wrapT = THREE.RepeatWrapping;
       this.scene.add(this.wall);
       this.wall.position.z = -100;
     }
