@@ -1,4 +1,8 @@
 (function(global) {
+  function easeInOutSin(a, b, t) {
+    t = (1 + Math.sin(Math.PI * t - Math.PI / 2)) / 2;
+    return lerp(a, b, t);
+  }
 
   class trees extends NIN.THREENode {
     constructor(id, options) {
@@ -151,17 +155,24 @@
       this.tent.position.set(-680, -50, 260);
       this.tent.path = tentPath;
 
+      function tentTriangle(u, v, target) {
+        const width = 50 * (1 - v);
+        const x = u * width + (50 - width) / 2 - 25;
+        const y = v * 50 - 20;
+        target.set(x, y, 0);
+      }
+
       this.tentblack = new THREE.Mesh(
-        new THREE.BoxGeometry(30, 40, 1),
-        new THREE.MeshBasicMaterial({color: 0x000000}));
+        new THREE.ParametricGeometry(tentTriangle, 10, 10),
+        new THREE.MeshBasicMaterial({color: 0x1f282f}));
       this.scene.add(this.tentblack);
-      this.tentblack.position.set(-655, -35, 245);
+      this.tentblack.position.set(-655, -32, 253);
 
       this.tentwall = new THREE.Mesh(
         new THREE.BoxGeometry(20, 11.25, 1),
         new THREE.MeshBasicMaterial({color: 0xffffff}));
       this.scene.add(this.tentwall);
-      this.tentwall.position.set(-655, -45, 250);
+      this.tentwall.position.set(-652, -45, 254);
 
       function tentShapeLeft(u, v, target) {
         let x;
@@ -193,24 +204,64 @@
         );
       }
 
+      function treeTop(u, v, target) {
+        const width = (1 - v) * 50;
+        const x = u * width + (50 - width) / 2 - 25;
+        const y = v * 40 + 10;
+        target.set(x, y, 0);
+      }
+
+      function treePlane(u, v, target) {
+        const width = 20 + (1 - v) * 40;
+        const x = u * width + v * 20 - 30;
+        const y = v * 30 - 20;
+        target.set(x, y, 0);
+      }
+
       this.tentcoverleft = new THREE.Mesh(
         new THREE.ParametricGeometry(tentShapeLeft, 10, 10),
-        new THREE.MeshBasicMaterial({color: 0xffffff}));
+        new THREE.MeshBasicMaterial({map: Loader.loadTexture('res/paper.png')}));
       this.scene.add(this.tentcoverleft);
       this.tentcoverleft.position.set(-680, -50, 259);
 
       this.tentcoverright = new THREE.Mesh(
         new THREE.ParametricGeometry(tentShapeRight, 10, 10),
-        new THREE.MeshBasicMaterial({color: 0xffffff}));
+        new THREE.MeshBasicMaterial({map: Loader.loadTexture('res/paper.png')}));
       this.scene.add(this.tentcoverright);
       this.tentcoverright.position.set(-680, -50, 259);
+
+      this.treeTop = new THREE.Mesh(
+        new THREE.ParametricGeometry(treeTop, 10, 10),
+        new THREE.MeshBasicMaterial({map: Loader.loadTexture('res/paper.png')}));
+      this.scene.add(this.treeTop);
+      this.treeTop.position.set(-560, 20, 279);
+
+      this.treePlane = new THREE.Mesh(
+        new THREE.ParametricGeometry(treePlane, 10, 10),
+        new THREE.MeshBasicMaterial({map: Loader.loadTexture('res/paper.png')}));
+      this.scene.add(this.treePlane);
+      this.treePlane.position.set(-560, 20, 279);
+
+      this.treePlaneTwo = new THREE.Mesh(
+        new THREE.ParametricGeometry(treePlane, 10, 10),
+        new THREE.MeshBasicMaterial({map: Loader.loadTexture('res/paper.png')}));
+      this.scene.add(this.treePlaneTwo);
+      this.treePlaneTwo.position.set(-560, -10, 279);
 
       this.camera.position.z = 220;
 
       this.wall = new THREE.Mesh(
-        new THREE.BoxGeometry(2000, 1000, 100),
-        new THREE.MeshBasicMaterial({color: 0xffffff}));
+        new THREE.BoxGeometry(2000, 1000, 10),
+        new THREE.MeshBasicMaterial({
+          color: 0xffffff,
+          map: Loader.loadTexture('res/paper.png'),
+          side: THREE.DoubleSide,
+        }));
+      this.wall.material.map.repeat.set(8, 4);
+      this.wall.material.map.wrapS = THREE.RepeatWrapping;
+      this.wall.material.map.wrapT = THREE.RepeatWrapping;
       this.scene.add(this.wall);
+      this.wall.position.x = -500;
       this.wall.position.z = -100;
     }
 
@@ -271,31 +322,31 @@
 
         this.camera.rotation.x = 0;
         this.camera.rotation.y = 0;
-        this.camera.rotation.z = easeIn(0, -.15, (frame - startFrame - 50) / (wifiStartFrame - startFrame - 50));
+        this.camera.rotation.z = lerp(0, -.05, (frame - startFrame - 50) / (wifiStartFrame - startFrame - 50));
       } else if (frame < zoomOutFrame) {
         this.camera.position.x = -720;
         this.camera.position.y = lerp(-20, 15, (frame - wifiStartFrame) / (zoomOutFrame - wifiStartFrame));
-        this.camera.position.z = 110;
+        this.camera.position.z = 125;
 
         this.camera.rotation.x = lerp(0, .15, (frame - wifiStartFrame) / (zoomOutFrame - wifiStartFrame));
         this.camera.rotation.y = -.15;
         this.camera.rotation.z = 0;
       } else {
-        this.camera.position.x = easeOut(
-          -600,
-          easeIn(-560, -655, (frame - zoomOutFrame - 150) / 250),
+        this.camera.position.x = easeInOutSin(
+          -665,
+          easeIn(-575, -652, (frame - zoomOutFrame - 150) / 250),
           (frame - zoomOutFrame) / 400);
-        this.camera.position.y = easeOut(
-          120,
-          easeIn(20, -45, (frame - zoomOutFrame - 150) / 250),
+        this.camera.position.y = easeInOutSin(
+          62,
+          easeIn(40, -45, (frame - zoomOutFrame - 150) / 250),
           (frame - zoomOutFrame) / 400);
-        this.camera.position.z = easeOut(
-          200,
-          easeIn(500, 264, (frame - zoomOutFrame - 150) / 250),
+        this.camera.position.z = easeInOutSin(
+          20,
+          easeIn(550, 269, (frame - zoomOutFrame - 150) / 250),
           (frame - zoomOutFrame) / 400);
 
-        this.camera.rotation.x = easeOut(-.4, 0, (frame - zoomOutFrame) / 400);
-        this.camera.rotation.y = easeOut(.2, 0, (frame - zoomOutFrame) / 150);
+        this.camera.rotation.x = smoothstep(-.2, 0, (frame - zoomOutFrame) / 250);
+        this.camera.rotation.y = smoothstep(.55, 0, (frame - zoomOutFrame) / 250);
         this.camera.rotation.z = 0;
       }
     }
