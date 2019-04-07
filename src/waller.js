@@ -139,7 +139,7 @@
 
       this.background.position.z = -0.004;
 
-      const pinGeometryCircleParts = 24;
+      const pinGeometryCircleParts = 32;
       const pinGeometryHeightParts = 5;
       const pinGeometry = new THREE.CylinderGeometry(1, 1, 2, pinGeometryCircleParts, pinGeometryHeightParts);
 
@@ -161,20 +161,23 @@
         pinGeometry,
         new THREE.MeshStandardMaterial({
           roughness: 0.9,
-          metalness: 0,
+          metalness: 0.1,
           color: 0xff7f7f,
+          shading: THREE.FlatShading,
         }));
       this.leftPin.rotation.x = Math.PI / 2;
-      this.leftPin.scale.set(0.7, 0.7, 0.7);
-      this.leftPin.position.x = -15.6;
-      this.leftPin.position.y = 11.4;
-      this.leftPin.position.z = 0.5;
+      this.leftPin.scale.set(0.5 / 100, 0.5 / 100, 0.5 / 100);
+      this.leftPin.position.x = -13.1 / 100;
+      this.leftPin.position.y = 9.6 / 100;
+      this.leftPin.position.z = 0.7 / 100;
       this.leftPin.castShadow = true;
+      this.leftPin.receiveShadow = true;
 
       this.rightPin = this.leftPin.clone();
-      this.rightPin.position.x = 15.5;
-      this.rightPin.position.y = 11.6;
+      this.rightPin.position.x = 13.2 / 100;
+      this.rightPin.position.y = 9.9 / 100;
       this.rightPin.castShadow = true;
+      this.leftPin.receiveShadow = true;
 
       this.scene.add(this.leftPin);
       this.scene.add(this.rightPin);
