@@ -194,7 +194,11 @@
         }
         const drape = this.drapes[i];
         //drape.position.y = clamp(-50, 0, -600 + 1200 * Math.sin(frame / 100 - i * 0.01) + 300 + 300 * Math.sin(i));
-        drape.position.y = lerp(-600, 0, (frame - startFrame - this.bands.length * 20 + i * 20 + 20) / 300);
+        if (frame < startFrame + this.bands.length * 20 - i * 20 - 20) {
+          drape.position.y = -1000;
+        } else {
+          drape.position.y = lerp(-600, 0, (frame - startFrame - this.bands.length * 20 + i * 20 + 20) / 300);
+        }
       }
 
       for (const cloud of this.clouds) {
