@@ -8,7 +8,7 @@
   "aspectRatio": "16:9",
   "music": {
     "path": "res/music.ogg",
-    "bpm": 105,
+    "bpm": 100,
     "subdivision": 6,
     "BEANOffset": 0
   },

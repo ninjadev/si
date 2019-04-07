@@ -3,6 +3,7 @@
     constructor(id) {
       super(id, {
         inputs: {
+          Startlogo: new NIN.TextureInput(),
           A: new NIN.TextureInput(),
           A2: new NIN.TextureInput(),
           B: new NIN.TextureInput(),
@@ -32,6 +33,7 @@
     }
 
     beforeUpdate() {
+      this.inputs.Startlogo.enabled = false;
       this.inputs.A.enabled = false;
       this.inputs.A2.enabled = false;
       this.inputs.B.enabled = false;
@@ -55,11 +57,13 @@
       this.inputs.P.enabled = false;
 
       let selectedScene;
-      if (BEAN < 48 * 2) {
+      if (BEAN < 24 * 5) {
+        selectedScene = this.inputs.Startlogo;
+      } else if (BEAN < 24 * 7) {
         selectedScene = this.inputs.A;
-      } else if (BEAN < 48 * 4) {
+      } else if (BEAN < 24 * 10) {
         selectedScene = this.inputs.A2;
-      } else if (BEAN < 48 * 8) {
+      } else if (BEAN < 24 * 16) {
         selectedScene = this.inputs.B;
       } else if (BEAN < 48 * 10) {
         selectedScene = this.inputs.B2;
@@ -102,7 +106,16 @@
       this.selectedScene = selectedScene;
     }
 
-    render() {
+    render(renderer) {
+      //renderer.physicallyCorrectLights = true;
+      //renderer.gammaInput = true;
+      //renderer.gammaOutput = true;
+      //renderer.gammaFactor = 2.2;
+      renderer.shadowMap.enabled = true;
+      //renderer.toneMapping = THREE.ReinhardToneMapping;
+      const exposure = 0.68;
+      //renderer.toneMappingExposure = Math.pow(exposure, 5.0);
+
       this.outputs.render.setValue(this.selectedScene.getValue());
     }
   }

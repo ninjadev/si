@@ -30,7 +30,8 @@
       "M": "dancing.render",
       "N": "emoji.render",
       "O": "emoji.render",
-      "P": "emoji.render"
+      "P": "emoji.render",
+      "Startlogo": "starterkit.render"
     }
   },
   {
@@ -166,7 +167,18 @@
     "id": "Waller",
     "type": "waller",
     "connected": {
-        "A": "sceneSwitcherNode.render"
+      "A": "paperframer.render"
     }
+  },
+  {
+    "id": "paperframer",
+    "type": "paperframer",
+    "connected": {
+      "A": "sceneSwitcherNode.render"
+    }
+  },
+  {
+    "id": "starterkit",
+    "type": "starterkit"
   }
 ]
