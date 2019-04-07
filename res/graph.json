@@ -3,7 +3,7 @@
     "id": "root",
     "type": "NIN.RootNode",
     "connected": {
-      "screen": "Waller.render"
+      "screen": "splasher.render"
     }
   },
   {
@@ -180,5 +180,15 @@
   {
     "id": "starterkit",
     "type": "starterkit"
+  },
+  {
+    "id": "splasher",
+    "type": "splasherNode",
+    "options": {
+      "shader": "splasher"
+    },
+    "connected": {
+        "A": "Waller.render"
+    }
   }
 ]
