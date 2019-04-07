@@ -85,13 +85,8 @@
     }
 
     render(renderer) {
-      if(BEAN >= 120 && BEAN < 138) {
-      } else if(BEAN >= 216 && BEAN < 234) {
-      } else if(BEAN >= 312 && BEAN < 330) {
-      } else {
-        renderer.render(this.scene, this.camera, this.renderTarget, true);
-        this.outputs.render.setValue(this.renderTarget.texture);
-      }
+      renderer.render(this.scene, this.camera, this.renderTarget, true);
+      this.outputs.render.setValue(this.renderTarget.texture);
     }
   }
 

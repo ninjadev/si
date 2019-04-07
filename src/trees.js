@@ -62,7 +62,7 @@
       this.lines = [];
 
       for (const track of tracks) {
-        const path = new Path({debug: false});
+        const path = new Path({debug: false, fill: true, fillColor: 0x7fff7f});
         for (const [x, y] of track.coords) {
           path.lineTo(x, y);
         }
