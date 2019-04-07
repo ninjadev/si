@@ -222,10 +222,58 @@
       this.scene.add(this.chickNest);
 
       this.chickNest.position.set(70, -50, 0);
+
+      function Scroller(text) {
+        this.text = text;
+        this.textCanvas = document.createElement('canvas');
+        this.textCtx = this.textCanvas.getContext('2d');
+        this.textCtx.font = 'bold 72px arial';
+
+        const measure = this.textCtx.measureText(this.text);
+        this.textCanvas.width = measure.width;
+        this.textCanvas.height = 72;
+
+        this.textCtx.clearRect(0, 0, this.textCanvas.width, this.textCanvas.height);
+        //this.textCtx.fillStyle = 'red';
+        //this.textCtx.fillRect(0, 0, this.textCanvas.width, this.textCanvas.height);
+        this.textCtx.fillStyle = 'black';
+        this.textCtx.font = 'bold 72px arial';
+        this.textCtx.textAlign = 'center';
+        this.textCtx.textBaseline = 'middle';
+        this.textCtx.fillText(this.text, this.textCanvas.width / 2, this.textCanvas.height / 2);
+
+        this.canvas = document.createElement('canvas');
+        this.canvas.width = this.textCanvas.width;
+        this.canvas.height = this.textCanvas.height;
+        this.ctx = this.canvas.getContext('2d');
+
+        this.texture = new THREE.VideoTexture(this.canvas);
+        this.texture.minFilter = THREE.LinearFilter;
+        this.texture.magFilter = THREE.LinearFilter;
+
+        const material = new THREE.MeshBasicMaterial({ color: 0xffffff, map: this.texture, transparent: true, });
+        const geometry = new THREE.BoxBufferGeometry(100, 10, 1);
+        this.scrollerMesh = new THREE.Mesh(geometry, material);
+      }
+
+      this.NoScroller = new Scroller('SOLSKOGEN JUST              SCROLLERS NO');
+      this.scene.add(this.NoScroller.scrollerMesh);
+
+      this.LongestScroller = new Scroller('ARE  YOU  MAKING  FUN  OF  MY  SCROLLER? THIS  IS  THE  LONGEST  SCROLLER  I  COULD  AFFORD.');
+      this.scene.add(this.LongestScroller.scrollerMesh);
+
+      this.AmigaScroller = new Scroller('AMIGA  AMIGA  AMIGA  AMIGA  AMIGA  KEVIIIN  AMIGA  AMIGA');
+      this.scene.add(this.AmigaScroller.scrollerMesh);
+
+      this.NoScroller.scrollerMesh.position.set(25, -5, 0);
+      this.NoScroller.scrollerMesh.rotation.z = -Math.PI / 5;
+      this.LongestScroller.scrollerMesh.position.set(15, -15, 0);
+      this.LongestScroller.scrollerMesh.rotation.z = -Math.PI / 4;
+      this.AmigaScroller.scrollerMesh.position.set(35, -10, 0);
+      this.AmigaScroller.scrollerMesh.rotation.z = -Math.PI / 5;
     }
 
     update(frame) {
-
       super.update(frame);
 
       if (BEAT && BEAN % 12 == 0) {
@@ -267,15 +315,20 @@
       this.chick3.lowerBeak.rotation.z = openMouth ? -Math.PI / 3 : 0;
 
       const start = 548;
+      const mommaIsStationary = 180;
+
+      this.mommaBird.scale.x = 1 + 0.1 * this.oomph;
+      this.mommaBird.scale.y = 1 + 0.2 * this.oomph;
+      this.mommaBird.scale.z = 1 + 0.05 * this.oomph;
 
       let animationChainX;
-      animationChainX = smoothstep(-100, -30, (frame - 140 - start) / 60);
+      animationChainX = smoothstep(-100, -35, (frame - 140 - start) / 60);
       animationChainX = smoothstep(60, animationChainX, (frame - 90 - start) / 50);
       animationChainX = smoothstep(-180, animationChainX, (frame - start) / 90);
       this.mommaBird.position.x = animationChainX;
 
       let animationChainY;
-      animationChainY = smoothstep(20, 40, (frame - 180 - start) / 60);
+      animationChainY = smoothstep(20, 40, (frame - 140 - start) / 60);
       animationChainY = smoothstep(0, animationChainY, (frame - 100 - start) / 60);
       animationChainY = smoothstep(40, animationChainY, (frame - start) / 100);
       this.mommaBird.position.y = animationChainY;
@@ -283,7 +336,77 @@
       openMouth = BEAN % 2 == 0;
       this.mommaBird.upperBeak.rotation.z = openMouth ? Math.PI / 16 : 0;
       this.mommaBird.lowerBeak.rotation.z = openMouth ? -Math.PI / 32 : 0;
-      this.mommaBird.rotation.z = smoothstep(Math.PI / 6, -Math.PI / 4, (frame - start) / 300);
+      this.mommaBird.rotation.z = smoothstep(Math.PI / 6, -Math.PI / 4, (frame - start) / 180);
+
+
+      // NO SCROLLERS
+      const scrollOffset = lerp(
+        -this.NoScroller.textCanvas.width,
+        this.NoScroller.textCanvas.width,
+        (frame - mommaIsStationary - 80 - start) / (this.NoScroller.text.length * 4)
+      );
+
+      this.NoScroller.ctx.clearRect(0, 0, this.NoScroller.canvas.width, this.NoScroller.canvas.height);
+      for (let pixelOffset = 0; pixelOffset < this.NoScroller.textCanvas.width; pixelOffset++) {
+        this.NoScroller.ctx.drawImage(
+          this.NoScroller.textCanvas,
+          pixelOffset,
+          0,
+          2,
+          this.NoScroller.textCanvas.height,
+          scrollOffset + pixelOffset,
+          Math.sin(pixelOffset / 60 + frame / 2) * 7,
+          2,
+          this.NoScroller.textCanvas.height
+        );
+      }
+      this.NoScroller.texture.needsUpdate = true;
+
+      // // LONGEST
+      // const scrollOffset2 = lerp(
+      //   -this.LongestScroller.textCanvas.width,
+      //   this.LongestScroller.textCanvas.width,
+      //   (frame - mommaIsStationary - 60 - start) / (this.LongestScroller.text.length * 4)
+      // );
+
+      // this.LongestScroller.ctx.clearRect(0, 0, this.LongestScroller.canvas.width, this.LongestScroller.canvas.height);
+      // for (let pixelOffset = 0; pixelOffset < this.LongestScroller.textCanvas.width; pixelOffset ++) {
+      //   this.LongestScroller.ctx.drawImage(
+      //     this.LongestScroller.textCanvas,
+      //     pixelOffset,
+      //     0,
+      //     2,
+      //     this.LongestScroller.textCanvas.height,
+      //     scrollOffset2 + pixelOffset,
+      //     Math.sin(pixelOffset / 60 + frame / 2) * 7,
+      //     2,
+      //     this.LongestScroller.textCanvas.height
+      //   );
+      // }
+      // this.LongestScroller.texture.needsUpdate = true;
+
+      // // AMIGA
+      // const scrollOffset3 = lerp(
+      //   -this.AmigaScroller.textCanvas.width,
+      //   this.AmigaScroller.textCanvas.width,
+      //   (frame - mommaIsStationary - start) / (this.AmigaScroller.text.length * 5)
+      // );
+
+      // this.AmigaScroller.ctx.clearRect(0, 0, this.AmigaScroller.canvas.width, this.AmigaScroller.canvas.height);
+      // for (let pixelOffset = 0; pixelOffset < this.AmigaScroller.textCanvas.width; pixelOffset ++) {
+      //   this.AmigaScroller.ctx.drawImage(
+      //     this.AmigaScroller.textCanvas,
+      //     pixelOffset,
+      //     0,
+      //     2,
+      //     this.AmigaScroller.textCanvas.height,
+      //     scrollOffset3 + pixelOffset,
+      //     Math.sin(pixelOffset / 60 + frame / 2) * 7,
+      //     2,
+      //     this.AmigaScroller.textCanvas.height
+      //   );
+      // }
+      // this.AmigaScroller.texture.needsUpdate = true;
     }
   }
 
