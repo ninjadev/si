@@ -153,8 +153,8 @@
             new THREE.CircleGeometry(6 + localRandom() * 4, 16),
             new THREE.MeshBasicMaterial({color: new THREE.Color(...cloud.color)})
           );
-          circle.material.transparent = true;
-          circle.material.opacity = .6;
+          //circle.material.transparent = true;
+          //circle.material.opacity = .6;
           const position = new THREE.Vector3(positionRandom() * 30 - 15, positionRandom() * 14 - 7, 0);
           circle.position.copy(position);
           mesh.add(circle);
@@ -165,7 +165,6 @@
           });
         }
         mesh.position.set(...cloud.coords);
-        mesh.visible = false;
         cloud.mesh = mesh;
         this.scene.add(mesh);
       }
@@ -200,9 +199,6 @@
 
       for (const cloud of this.clouds) {
         if (frame - startFrame >= cloud.time && frame - startFrame < cloud.time + 500) {
-          if (!cloud.mesh.visible) {
-            cloud.mesh.visible = true;
-          }
           for (const circle of cloud.circles) {
             circle.mesh.position.set(
               circle.position.x + Math.sin((frame - startFrame - cloud.time) * circle.speed / 60) * 3,
@@ -211,8 +207,8 @@
             );
           }
         } else {
-          if (cloud.mesh.visible) {
-            cloud.mesh.visible = false;
+          for (const circle of cloud.circles) {
+            circle.mesh.position.set(0, 0, 1000);
           }
         }
       }
