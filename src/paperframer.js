@@ -70,24 +70,35 @@
           startFrame: 400,
           endFrame: 719,
           transition: 60,
-          text: XWrite('MOMMO MO'),
+          text: XWrite('MOMMO'),
         },
         {
           startFrame: 719,
           endFrame: 1007,
           transition: 60,
-          text: XWrite('MMMA OAM'),
+          text: XWrite('COMMAMA DORE'),
         },
         {
           startFrame: 1007,
           endFrame: 1583,
           transition: 60,
-          text: XWrite('MOMMA MOMM'),
+          text: XWrite('MOMMA COMMODORE'),
+        },
+        {
+          startFrame: 2007,
+          endFrame: 3583,
+          transition: 60,
+          text: XWrite('COMMODOOMOMO'),
         },
       ];
+      // TODO: Make text fit scaling stuff
+      //const pointsAvailable = 4 * scale;
       for (let title of this.titles) {
-        title.text.scale.set(0.25 / scale, 0.25 / scale, 0.25 / scale);
-        title.text.position.set(0 * scale, 7.5 / 2, 0);
+        //const textDownscale = title.totalWidth / pointsAvailable;
+        //const scale = title.totalWidth / pointsAvailable;
+        //title.text.scale.set(textDownscale, textDownscale, textDownscale);
+        title.text.scale.set(0.20 / scale, 0.20 / scale, 0.20 / scale);
+        title.text.position.set(0 * scale, 7.7 / 2, 0);
         this.scene.add(title.text);
       }
     }
