@@ -244,11 +244,17 @@
         this.canvas.height = this.textCanvas.height;
         this.ctx = this.canvas.getContext('2d');
 
+        this.ctx.drawImage(this.textCanvas, 0, 0);
+
         this.texture = new THREE.VideoTexture(this.canvas);
         this.texture.minFilter = THREE.LinearFilter;
-        this.texture.magFilter = THREE.LinearFilter; 
+        this.texture.magFilter = THREE.LinearFilter;
         const material = new THREE.MeshBasicMaterial({ color: 0xffffff, map: this.texture, transparent: true, });
-        const geometry = new THREE.BoxBufferGeometry(100, 10, 1);
+        const geometry = new THREE.PlaneGeometry(100, 10, 64, 1);
+        for(let i = 0; i < geometry.vertices.length; i++) {
+          const vertex = geometry.vertices[i];
+          vertex.originalY = vertex.y;
+        }
         this.scrollerMesh = new THREE.Mesh(geometry, material);
       }
 
@@ -356,23 +362,17 @@
         (frame - mommaIsStationary - 40 - start) / (this.NoScroller.text.length * 6)
       );
 
-      this.NoScroller.ctx.clearRect(0, 0, this.NoScroller.canvas.width, this.NoScroller.canvas.height);
-      for (let pixelOffset = 0; pixelOffset < this.NoScroller.textCanvas.width; pixelOffset += 3) {
-        this.NoScroller.ctx.drawImage(
-          this.NoScroller.textCanvas,
-          pixelOffset,
-          0,
-          3,
-          this.NoScroller.textCanvas.height,
-          scrollOffset + pixelOffset,
-          Math.sin(pixelOffset / 60 + frame / 3) * 6,
-          3,
-          this.NoScroller.textCanvas.height
-        );
-      }
       this.NoScroller.texture.needsUpdate = true;
+      for(let i = 0; i < this.NoScroller.scrollerMesh.geometry.vertices.length; i++) {
+        const vertex = this.NoScroller.scrollerMesh.geometry.vertices[i];
+        const x = i / 2 | 0;
+        vertex.y = vertex.originalY + 2 * Math.sin(frame / 20 + x * Math.PI * 2 / 64 * 8);
+      }
+      this.NoScroller.scrollerMesh.geometry.verticesNeedUpdate = true;
+      this.NoScroller.scrollerMesh.material.map.offset.x = (frame / 120) % 1;
 
       // LONGEST
+      /*
       const scrollOffset2 = lerp(
         this.LongestScroller.textCanvas.width,
         -this.LongestScroller.textCanvas.width,
@@ -417,6 +417,7 @@
         );
       }
       this.AmigaScroller.texture.needsUpdate = true;
+      */
     }
   }
 
