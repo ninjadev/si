@@ -74,6 +74,7 @@
           fill: true,
           fillColor: track.fillColor,
           fillMap: track.fillMap,
+          directionSize: 2,
         };
         const path = new Path(options);
         for (const [x, y] of track.coords) {
@@ -230,6 +231,10 @@
         path.material.uniforms.drawStart.value = 0;
         path.material.uniforms.drawEnd.value = lerp(0, 1, (frame - startFrame - i * 8) / 100);
         path.material.uniforms.wobbliness.value = 1;
+
+        if(path.fill) {
+          path.magicAnimationUpdater();
+        }
       }
 
       for (let i = 0; i < this.wifilines.length; i++) {
@@ -244,6 +249,7 @@
         path.material.uniforms.drawStart.value = 0;
         path.material.uniforms.drawEnd.value = lerp(0, 1, (frame - wifiStartFrame - i * 10) / 100);
         path.material.uniforms.wobbliness.value = 1;
+        path.magicAnimationUpdater();
       }
 
       for (let i = 0; i < this.frontTree.length; i++) {
@@ -251,6 +257,7 @@
         path.material.uniforms.drawStart.value = 0;
         path.material.uniforms.drawEnd.value = lerp(0, 1, (frame - wifiStartFrame - i * 10) / 100);
         path.material.uniforms.wobbliness.value = 1;
+        path.magicAnimationUpdater();
       }
 
       this.signal.path.material.uniforms.drawStart.value = lerp(1, 0, (frame - zoomOutFrame - 10) / 330);
