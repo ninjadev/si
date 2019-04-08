@@ -76,7 +76,7 @@
           startFrame: 719,
           endFrame: 1007,
           transition: 10,
-          text: XWrite('HUNGRY COMMODORES'),
+          text: XWrite('HANGRY COMMODORES'),
         },
         {
           startFrame: 1007,
