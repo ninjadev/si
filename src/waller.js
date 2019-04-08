@@ -295,6 +295,13 @@
         this.camera.position.x = 0;
       }
 
+      if(BEAN >= 324) {
+      this.camera.position.z = easeIn(
+        0.16,
+        0.3,
+        Math.pow(lerp(0, 1, F(frame, 324, 24 + 12)), 8.));
+      }
+
       this.cameraRotationDDD.x = (Math.random() - 0.5) * 0.001;
       this.cameraRotationDDD.y = (Math.random() - 0.5) * 0.001;
       this.cameraRotationDDD.z = (Math.random() - 0.5) * 0.001;

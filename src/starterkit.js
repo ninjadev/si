@@ -23,9 +23,9 @@
       mesh.scale.set(1 / scale, 1 / scale, 1 / scale);
       this.sceneWrapper.add(mesh);
 
-      this.flatWord = XWrite('AAAA');
-      this.shadeWord = XWrite('AAAAA');
-      this.societyWord = XWrite('AAAAAAA');
+      this.flatWord = XWrite('FLAT');
+      this.shadeWord = XWrite('SHADE');
+      this.societyWord = XWrite('SOCIETY');
 
       this.sceneWrapper.add(this.flatWord);
       this.sceneWrapper.add(this.shadeWord);

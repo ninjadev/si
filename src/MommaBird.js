@@ -11,7 +11,11 @@
 
     const directionSize = 2;
 
-    const cee = new Path({ directionSize });
+    const cee = new Path({
+      directionSize,
+      fillMap: Loader.loadTexture('res/paper.png'),
+      fill: true,
+    });
 
     // First we draw the outer circle counterclockwise from the top right.
     const outerSegments = 30;
@@ -231,8 +235,6 @@
         this.textCanvas.height = 72;
 
         this.textCtx.clearRect(0, 0, this.textCanvas.width, this.textCanvas.height);
-        //this.textCtx.fillStyle = 'red';
-        //this.textCtx.fillRect(0, 0, this.textCanvas.width, this.textCanvas.height);
         this.textCtx.fillStyle = 'black';
         this.textCtx.font = 'bold 72px arial';
         this.textCtx.textAlign = 'center';
@@ -244,11 +246,17 @@
         this.canvas.height = this.textCanvas.height;
         this.ctx = this.canvas.getContext('2d');
 
+        this.ctx.drawImage(this.textCanvas, 0, 0);
+
         this.texture = new THREE.VideoTexture(this.canvas);
         this.texture.minFilter = THREE.LinearFilter;
-        this.texture.magFilter = THREE.LinearFilter; 
+        this.texture.magFilter = THREE.LinearFilter;
         const material = new THREE.MeshBasicMaterial({ color: 0xffffff, map: this.texture, transparent: true, });
-        const geometry = new THREE.BoxBufferGeometry(100, 10, 1);
+        const geometry = new THREE.PlaneGeometry(100, 10, 64, 1);
+        for(let i = 0; i < geometry.vertices.length; i++) {
+          const vertex = geometry.vertices[i];
+          vertex.originalY = vertex.y;
+        }
         this.scrollerMesh = new THREE.Mesh(geometry, material);
       }
 
@@ -350,73 +358,40 @@
 
 
       // NO SCROLLERS
-      const scrollOffset = lerp(
-        this.NoScroller.textCanvas.width,
-        -this.NoScroller.textCanvas.width,
-        (frame - mommaIsStationary - 40 - start) / (this.NoScroller.text.length * 6)
-      );
-
-      this.NoScroller.ctx.clearRect(0, 0, this.NoScroller.canvas.width, this.NoScroller.canvas.height);
-      for (let pixelOffset = 0; pixelOffset < this.NoScroller.textCanvas.width; pixelOffset += 3) {
-        this.NoScroller.ctx.drawImage(
-          this.NoScroller.textCanvas,
-          pixelOffset,
-          0,
-          3,
-          this.NoScroller.textCanvas.height,
-          scrollOffset + pixelOffset,
-          Math.sin(pixelOffset / 60 + frame / 3) * 6,
-          3,
-          this.NoScroller.textCanvas.height
-        );
-      }
       this.NoScroller.texture.needsUpdate = true;
+      for(let i = 0; i < this.NoScroller.scrollerMesh.geometry.vertices.length; i++) {
+        const vertex = this.NoScroller.scrollerMesh.geometry.vertices[i];
+        const x = i / 2 | 0;
+        vertex.y = vertex.originalY + 2 * Math.sin(frame / 10 + x * Math.PI * 2 / 64 * 8);
+      }
+      this.NoScroller.scrollerMesh.geometry.verticesNeedUpdate = true;
+      this.NoScroller.scrollerMesh.material.map.offset.x = lerp(
+        -1, 1, (frame - mommaIsStationary - 40 - start) / (this.NoScroller.text.length * 7)
+      );
 
       // LONGEST
-      const scrollOffset2 = lerp(
-        this.LongestScroller.textCanvas.width,
-        -this.LongestScroller.textCanvas.width,
-        (frame - mommaIsStationary - 20 - start) / (this.LongestScroller.text.length * 6)
+      this.LongestScroller.texture.needsUpdate = true;
+      for(let i = 0; i < this.LongestScroller.scrollerMesh.geometry.vertices.length; i++) {
+        const vertex = this.LongestScroller.scrollerMesh.geometry.vertices[i];
+        const x = i / 2 | 0;
+        vertex.y = vertex.originalY + 2 * Math.sin(frame / 10 + x * Math.PI * 2 / 64 * 8);
+      }
+      this.LongestScroller.scrollerMesh.geometry.verticesNeedUpdate = true;
+      this.LongestScroller.scrollerMesh.material.map.offset.x = lerp(
+        -1, 1, (frame - mommaIsStationary - 20 - start) / (this.LongestScroller.text.length * 7)
       );
 
-      this.LongestScroller.ctx.clearRect(0, 0, this.LongestScroller.canvas.width, this.LongestScroller.canvas.height);
-      for (let pixelOffset = 0; pixelOffset < this.LongestScroller.textCanvas.width; pixelOffset += 3) {
-        this.LongestScroller.ctx.drawImage(
-          this.LongestScroller.textCanvas,
-          pixelOffset,
-          0,
-          3,
-          this.LongestScroller.textCanvas.height,
-          scrollOffset2 + pixelOffset,
-          Math.sin(pixelOffset / 60 + frame / 3) * 6,
-          3,
-          this.LongestScroller.textCanvas.height
-        );
-      }
-      this.LongestScroller.texture.needsUpdate = true;
 
       // AMIGA
-      const scrollOffset3 = lerp(
-        this.AmigaScroller.textCanvas.width,
-        -this.AmigaScroller.textCanvas.width,
-        (frame - mommaIsStationary - start) / (this.AmigaScroller.text.length * 10)
-      );
-
-      this.AmigaScroller.ctx.clearRect(0, 0, this.AmigaScroller.canvas.width, this.AmigaScroller.canvas.height);
-      for (let pixelOffset = 0; pixelOffset < this.AmigaScroller.textCanvas.width; pixelOffset += 3) {
-        this.AmigaScroller.ctx.drawImage(
-          this.AmigaScroller.textCanvas,
-          pixelOffset,
-          0,
-          3,
-          this.AmigaScroller.textCanvas.height,
-          scrollOffset3 + pixelOffset,
-          Math.sin(pixelOffset / 60 + frame / 3) * 6,
-          3,
-          this.AmigaScroller.textCanvas.height
-        );
-      }
       this.AmigaScroller.texture.needsUpdate = true;
+      for(let i = 0; i < this.AmigaScroller.scrollerMesh.geometry.vertices.length; i++) {
+        const vertex = this.AmigaScroller.scrollerMesh.geometry.vertices[i];
+        const x = i / 2 | 0;
+        vertex.y = vertex.originalY + 2 * Math.sin(frame / 10 + x * Math.PI * 2 / 64 * 8);
+      }
+      this.AmigaScroller.scrollerMesh.geometry.verticesNeedUpdate = true;
+      this.AmigaScroller.scrollerMesh.material.map.offset.x = lerp(
+        -1, 1, (frame - mommaIsStationary - start) / (this.AmigaScroller.text.length * 10));
     }
   }
 

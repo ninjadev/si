@@ -11,7 +11,6 @@
         },
       });
 
-      this.flateby_image = Loader.loadTexture('res/map/flateby.png');
       this.map_image = Loader.loadTexture('res/map/norge.png');
       //this.z1 = Loader.loadTexture('res/map/testpattern.jpg');
       this.z1 = Loader.loadTexture('res/map/t1.png');
@@ -26,11 +25,13 @@
       this.z10 = Loader.loadTexture('res/map/z10.png');
       this.z11 = Loader.loadTexture('res/map/z11.png');
 
-      this.flateby_sign = new THREE.Mesh(new THREE.PlaneGeometry(10, 10, 1),
-                                 new THREE.ShaderMaterial(SHADERS.ColorToTransparrent));
+      this.flateby_sign = new THREE.Mesh(
+        new THREE.PlaneGeometry(10, 10, 1),
+        new THREE.MeshBasicMaterial({
+          map: Loader.loadTexture('res/flateby-marker-graffiti.png'),
+        }));
       this.scene.add(this.flateby_sign);
       this.flateby_sign.material.transparent = true;
-      this.flateby_sign.material.uniforms.tDiffuse.value = this.flateby_image;
 
       this.flateby_sign.rotation.x = Math.PI/2;
       this.flateby_sign.position.x = -7;
@@ -89,7 +90,9 @@
       // These needs to be set in update for nin reasons
       this.map_object.material.uniforms.z1.value = this.inputs.sirpathrick.getValue();
 
-      
+      this.flateby_sign.quaternion.copy(this.camera.quaternion);
+
+
     }
   }
 

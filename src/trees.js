@@ -31,22 +31,26 @@
           {
             coords: [[25,10],[-25,10],[0,50],[25,10]],
             offset,
-            fill: 0x7fff7f,
+            fillColor: 0x7fff7f,
+            fillMap: Loader.loadTexture('res/paper.png'),
           },
           {
             coords: [[10,10],[30,-20],[-30,-20],[-10,10]],
             offset,
-            fill: 0x7fff7f,
+            fillColor: 0x7fff7f,
+            fillMap: Loader.loadTexture('res/paper.png'),
           },
           {
             coords: [[10,-20],[30,-50],[-30,-50],[-10,-20]],
             offset,
-            fill: 0x7fff7f,
+            fillColor: 0x7fff7f,
+            fillMap: Loader.loadTexture('res/paper.png'),
           },
           {
             coords: [[10,-50],[10,-70],[-10,-70],[-10,-50]],
             offset,
-            fill: 0x5f0010,
+            fillColor: 0x5f0010,
+            fillMap: Loader.loadTexture('res/paper.png'),
           },
         ];
       }
@@ -59,17 +63,21 @@
         ...makeTree([90, 10, 30]),
         makeCurve(500, 75, [-650, -145, 0]),
         ...makeTree([-760, 10, 180]),
-        ...makeTree([-490, -10, 60]),
-        makeCurve(75, 25, [-490, -105, 60]),
+        ...makeTree([-520, -4, 4]),
+        ...makeTree([-420, -10, 60]),
+        makeCurve(75, 25, [-420, -105, 60]),
       ];
 
       this.lines = [];
 
       for (const track of tracks) {
-        const path = new Path('fill' in track && {
+        const options = ('fillColor' in track || 'fillMap' in track) && {
           fill: true,
-          fillColor: track.fill,
-        });
+          fillColor: track.fillColor,
+          fillMap: track.fillMap,
+          directionSize: 2,
+        };
+        const path = new Path(options);
         for (const [x, y] of track.coords) {
           path.lineTo(x, y);
         }
@@ -113,10 +121,12 @@
       this.mainTree = [];
       const mainTreeTracks = makeTree([-700, 0, 0]);
       for (const track of mainTreeTracks) {
-        const path = new Path('fill' in track && {
+        const options = ('fillColor' in track || 'fillMap' in track) && {
           fill: true,
-          fillColor: track.fill,
-        });
+          fillColor: track.fillColor,
+          fillMap: track.fillMap,
+        };
+        const path = new Path(options);
         for (const [x, y] of track.coords) {
           path.lineTo(x, y);
         }
@@ -130,10 +140,12 @@
       this.frontTree = [];
       const frontTreeTracks = makeTree([-560, 20, 280]);
       for (const track of frontTreeTracks) {
-        const path = new Path('fill' in track && {
+        const options = ('fillColor' in track || 'fillMap' in track) && {
           fill: true,
-          fillColor: track.fill,
-        });
+          fillColor: track.fillColor,
+          fillMap: track.fillMap,
+        };
+        const path = new Path(options);
         for (const [x, y] of track.coords) {
           path.lineTo(x, y);
         }
@@ -145,14 +157,13 @@
       }
 
       const path = new Path({color});
-      for (const [x, y] of makeSkewedCurve(320, 0, 0)) {
+      for (const [x, y] of makeSkewedCurve(155, 0, 0)) {
         path.lineTo(x, y);
       }
       this.signal = path.toObject3D();
       this.scene.add(this.signal);
-      this.signal.position.set(-625, -220, 130);
-      this.signal.rotation.z = .75;
-      this.signal.rotation.y = 2;
+      this.signal.position.set(-618, -84, 0);
+      this.signal.rotation.z = .7;
       this.signal.path = path;
 
       const tentPath = new Path({fill: true, fillColor: 0xef8f5f});
@@ -214,12 +225,17 @@
       const startFrame = FRAME_FOR_BEAN(48 * 19);
       const wifiStartFrame = FRAME_FOR_BEAN(48 * 19 + 24);
       const zoomOutFrame = FRAME_FOR_BEAN(48 * 20);
+      const zoomInFrame = FRAME_FOR_BEAN(48 * 20 + 24);
 
       for (let i = 0; i < this.lines.length; i++) {
         const path = this.lines[i].path;
         path.material.uniforms.drawStart.value = 0;
         path.material.uniforms.drawEnd.value = lerp(0, 1, (frame - startFrame - i * 8) / 100);
         path.material.uniforms.wobbliness.value = 1;
+
+        if(path.fill) {
+          path.magicAnimationUpdater();
+        }
       }
 
       for (let i = 0; i < this.wifilines.length; i++) {
@@ -234,6 +250,7 @@
         path.material.uniforms.drawStart.value = 0;
         path.material.uniforms.drawEnd.value = lerp(0, 1, (frame - wifiStartFrame - i * 10) / 100);
         path.material.uniforms.wobbliness.value = 1;
+        path.magicAnimationUpdater();
       }
 
       for (let i = 0; i < this.frontTree.length; i++) {
@@ -241,10 +258,11 @@
         path.material.uniforms.drawStart.value = 0;
         path.material.uniforms.drawEnd.value = lerp(0, 1, (frame - wifiStartFrame - i * 10) / 100);
         path.material.uniforms.wobbliness.value = 1;
+        path.magicAnimationUpdater();
       }
 
-      this.signal.path.material.uniforms.drawStart.value = lerp(1, 0, (frame - zoomOutFrame - 10) / 330);
-      this.signal.path.material.uniforms.drawEnd.value = 1;
+      this.signal.path.material.uniforms.drawStart.value = 0;
+      this.signal.path.material.uniforms.drawEnd.value = lerp(0, 1, (frame - zoomOutFrame - 10) / 100);
       this.signal.path.material.uniforms.wobbliness.value = 1;
 
       this.tent.path.material.uniforms.drawStart.value = 0;
@@ -270,22 +288,32 @@
         this.camera.rotation.x = lerp(0, .15, (frame - wifiStartFrame) / (zoomOutFrame - wifiStartFrame));
         this.camera.rotation.y = -.15;
         this.camera.rotation.z = 0;
-      } else {
+      } else if ( frame < zoomInFrame) {
         this.camera.position.x = easeInOutSin(
-          -665,
-          easeIn(-575, -651, (frame - zoomOutFrame - 150) / 250),
-          (frame - zoomOutFrame) / 400);
+          -685,
+          -600,
+          (frame - zoomOutFrame) / (zoomInFrame - zoomOutFrame));
         this.camera.position.y = easeInOutSin(
           62,
-          easeIn(40, -45.2, (frame - zoomOutFrame - 150) / 250),
-          (frame - zoomOutFrame) / 400);
+          50,
+          (frame - zoomOutFrame) / (zoomInFrame - zoomOutFrame));
         this.camera.position.z = easeInOutSin(
-          20,
-          easeIn(550, 268.5, (frame - zoomOutFrame - 150) / 250),
-          (frame - zoomOutFrame) / 400);
+          30,
+          210,
+          (frame - zoomOutFrame) / (zoomInFrame - zoomOutFrame));
 
-        this.camera.rotation.x = smoothstep(-.2, 0, (frame - zoomOutFrame) / 250);
-        this.camera.rotation.y = smoothstep(.55, 0, (frame - zoomOutFrame) / 250);
+        this.camera.rotation.x = easeInOutSin(
+          -.2, -.2, (frame - zoomOutFrame) / (zoomInFrame - zoomOutFrame));
+        this.camera.rotation.y = easeInOutSin(
+          .2, 0, (frame - zoomOutFrame) / (zoomInFrame - zoomOutFrame));
+        this.camera.rotation.z = 0;
+      } else {
+        this.camera.position.x = lerp(-560, -651, (frame - zoomInFrame) / 287);
+        this.camera.position.y = lerp(78, -45.2, (frame - zoomInFrame) / 287);
+        this.camera.position.z = lerp(515, 268.5, (frame - zoomInFrame) / 287);
+
+        this.camera.rotation.x = easeIn(-.25, 0, (frame - zoomInFrame) / 287);
+        this.camera.rotation.y = 0;
         this.camera.rotation.z = 0;
       }
     }

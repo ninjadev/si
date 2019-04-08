@@ -1,6 +1,18 @@
 {
     "tDiffuse": { "type": "t", "value": null },
+    "paperContent": { "type": "t", "value": null },
     "image": { "type": "t", "value": null },
     "frame": { "type": "f", "value": 0.0 },
+    "r": { "type": "f", "value": 1.0 },
+    "g": { "type": "f", "value": 1.0 },
+    "b": { "type": "f", "value": 1.0 },
+    "paperR": { "type": "f", "value": 1.0 },
+    "paperG": { "type": "f", "value": 1.0 },
+    "paperB": { "type": "f", "value": 1.0 },
+    "xScale": { "type": "f", "value": 1.0 },
+    "yScale": { "type": "f", "value": 1.0 },
+    "xOffset": { "type": "f", "value": 0.0 },
+    "xOffsetPaper": { "type": "f", "value": 0.0 },
+    "yOffset": { "type": "f", "value": 0.0 },
     "overlayer": { "type": "f", "value": 0.0 }
 }
