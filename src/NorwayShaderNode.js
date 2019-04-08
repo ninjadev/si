@@ -2,7 +2,7 @@
   class NorwayShaderNode extends NIN.ShaderNode {
     constructor(id, options) {
       options.inputs = {
-         input_scene: new NIN.TextureInput(),
+         sirpathrick: new NIN.TextureInput(),
       }
       super(id, options);
 
@@ -31,7 +31,7 @@
       
       //this.uniforms.tDiffuse.value = this.inputs.three_scene.getValue();
       this.uniforms.tDiffuse.value = this.map_image;
-      this.uniforms.z1.value = this.inputs.input_scene.getValue();
+      this.uniforms.z1.value = this.inputs.sirpathrick.getValue();
       this.uniforms.z2.value = this.z2;
       this.uniforms.z3.value = this.z3;
       this.uniforms.z4.value = this.z4;

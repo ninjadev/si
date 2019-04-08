@@ -41,11 +41,11 @@
       this.map_object = new THREE.Mesh(new THREE.PlaneGeometry(50, 50, 1),
                                  new THREE.ShaderMaterial(SHADERS.NorwayShader));
       this.scene.add(this.map_object);
-      this.map_object.material.transparent = true;
+      //this.map_object.material.transparent = true;
 
       this.map_object.material.uniforms.tDiffuse.value = this.map_image;
-      //this.map_object.material.uniforms.z1.value = this.inputs.sirpathrick.getValue();
-      this.map_object.material.uniforms.z1.value = this.z1;
+      this.map_object.material.uniforms.z1.value = this.inputs.sirpathrick.getValue();
+      //this.map_object.material.uniforms.z1.value = this.z1;
       this.map_object.material.uniforms.z2.value = this.z2;
       this.map_object.material.uniforms.z3.value = this.z3;
       this.map_object.material.uniforms.z4.value = this.z4;

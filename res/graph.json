@@ -45,7 +45,7 @@
       "shader": "NorwayShader"
     },
     "connected": {
-      "input_scene": "sirpathrick.render"
+      "sirpathrick": "sirpathrick.render"
     }
   },
   {

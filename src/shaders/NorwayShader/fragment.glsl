@@ -105,8 +105,8 @@ void main() {
 
     if (intensity < THRESHOLD_BG / 256.)
     {
-      output_color = vec4(1., 1., 1., 0.);
+      output_color = vec4(1., 1., 1., 1.);
     }
 
-    gl_FragColor = output_color;
+    gl_FragColor = vec4(output_color.r, output_color.g, output_color.b, 1.0);
 }
