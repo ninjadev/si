@@ -76,7 +76,7 @@
           startFrame: 719,
           endFrame: 1007,
           transition: 10,
-          text: XWrite('PACMAN DORES'),
+          text: XWrite('HUNGRY COMMODORES'),
         },
         {
           startFrame: 1007,
