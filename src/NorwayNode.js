@@ -7,11 +7,12 @@
           render: new NIN.TextureOutput()
         },
         inputs: {
-          N: new NIN.TextureInput(),
+          sirpathrick: new NIN.TextureInput(),
         },
       });
 
       this.map_image = Loader.loadTexture('res/map/norge.png');
+      //this.z1 = Loader.loadTexture('res/map/testpattern.jpg');
       this.z1 = Loader.loadTexture('res/map/t1.png');
       this.z2 = Loader.loadTexture('res/map/t2.png');
       this.z3 = Loader.loadTexture('res/map/t3.png');
@@ -38,12 +39,12 @@
       this.flateby_sign.position.z = 5;
 
       this.map_object = new THREE.Mesh(new THREE.PlaneGeometry(50, 50, 1),
-                                 new THREE.ShaderMaterial(SHADERS.NorwayShader));
+                                 new THREE.ShaderMaterial(SHADERS.NorwayShader).clone());
       this.scene.add(this.map_object);
       this.map_object.material.transparent = true;
 
       this.map_object.material.uniforms.tDiffuse.value = this.map_image;
-      this.map_object.material.uniforms.z1.value = this.z1;
+      //this.map_object.material.uniforms.z1.value = this.z1;
       this.map_object.material.uniforms.z2.value = this.z2;
       this.map_object.material.uniforms.z3.value = this.z3;
       this.map_object.material.uniforms.z4.value = this.z4;
@@ -67,11 +68,63 @@
     update(frame) {
       super.update(frame);
 
-      this.map_object.material.uniforms.frame.value = frame;
+      //this.map_object.material.uniforms.frame.value = frame;
 
-      this.camera.position.x = 30 * Math.sin(frame/20.);
-      this.camera.up = new THREE.Vector3(0,0,1);
-      this.camera.lookAt(new THREE.Vector3(0,0,0));
+      this.map_object.material.uniforms.fade_in.value = smoothstep(0, 1, (frame - 2800) / 100);
+
+      if (frame < 2870) {
+        var center_x = 8.6;
+        var center_y = 18.6;
+
+        this.camera.up = new THREE.Vector3(0,0,1);
+        this.camera.lookAt(new THREE.Vector3(center_x, center_y, 0));
+        this.camera.position.z = 10.9;
+        this.camera.position.y = center_y-0.01;
+        this.camera.position.x = center_x;
+      } else if (BEAN < 504) {
+        var center_x = 8.6;
+        var center_y = 18.6;
+        var df = frame - 2870;
+
+        this.camera.up = new THREE.Vector3(0,0,1);
+        this.camera.lookAt(new THREE.Vector3(center_x , center_y , 0));
+        this.camera.position.z = 10.9;
+        this.camera.position.y = center_y-0.01 - df / 6; 
+        this.camera.position.x = center_x - smoothstep(0, 10, df / 100);
+      } else if (BEAN < 524) {
+        var center_x = 8.6;
+        var center_y = 18.6;
+        var df = FRAME_FOR_BEAN(504) - 2870;
+
+        this.camera.up = new THREE.Vector3(0,0,1);
+        this.camera.lookAt(new THREE.Vector3(center_x - df / 20 , center_y - df / 12, 0));
+        this.camera.position.z = 10.9;
+        this.camera.position.y = center_y-0.01 - df / 6; 
+        this.camera.position.x = center_x - df / 10;
+      } else if (frame < 3350) {
+        var center_x = 8.6;
+        var center_y = 18.6;
+        var df = frame - FRAME_FOR_BEAN(504);
+
+        this.camera.up = new THREE.Vector3(0,0,1);
+        this.camera.lookAt(new THREE.Vector3(center_x - df / 20 , center_y - df / 12, 0));
+        this.camera.position.z = 10.9;
+        this.camera.position.y = center_y-0.01 - df / 6; 
+        this.camera.position.x = center_x - df / 10;
+      } else {
+        var center_x = 8.6;
+        var center_y = 18.6;
+        var df = 3350 - FRAME_FOR_BEAN(504);
+
+        this.camera.up = new THREE.Vector3(0,0,1);
+        this.camera.lookAt(new THREE.Vector3(center_x - df / 20 , center_y - df / 12, 0));
+        this.camera.position.z = 10.9;
+        this.camera.position.y = center_y-0.01 - df / 6; 
+        this.camera.position.x = center_x - df / 10;
+      } 
+
+      // These needs to be set in update for nin reasons
+      this.map_object.material.uniforms.z1.value = this.inputs.sirpathrick.getValue();
 
       this.flateby_sign.quaternion.copy(this.camera.quaternion);
 

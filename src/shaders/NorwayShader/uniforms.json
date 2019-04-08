@@ -11,5 +11,6 @@
     "z9": { "type": "t", "value": null },
     "z10": { "type": "t", "value": null },
     "z11": { "type": "t", "value": null },
+    "fade_in": { "type": "f", "value": 0.0 },
     "frame": { "type": "f", "value": 0.0 }
 }

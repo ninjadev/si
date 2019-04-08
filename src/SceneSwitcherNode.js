@@ -65,7 +65,9 @@
         selectedScene = this.inputs.A2;
       } else if (BEAN < 48 * 8) {
         selectedScene = this.inputs.B;
-      } else if (BEAN < 48 * 10) {
+      } else if (BEAN < 48 * 9.5) {
+        // Note, this scene intentionally swtiches early since it
+        // is piped into the next scene for a transition.
         selectedScene = this.inputs.B2;
       } else if(BEAN < 48 * 12) {
         selectedScene = this.inputs.C;
