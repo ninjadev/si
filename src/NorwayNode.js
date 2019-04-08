@@ -39,7 +39,7 @@
       this.flateby_sign.position.z = 5;
 
       this.map_object = new THREE.Mesh(new THREE.PlaneGeometry(50, 50, 1),
-                                 new THREE.ShaderMaterial(SHADERS.NorwayShader));
+                                 new THREE.ShaderMaterial(SHADERS.NorwayShader).clone());
       this.scene.add(this.map_object);
       //this.map_object.material.transparent = true;
 
@@ -69,7 +69,7 @@
     update(frame) {
       super.update(frame);
 
-      //this.map_object.material.uniforms.frame.value = frame;
+      this.map_object.material.uniforms.z1.value = this.inputs.sirpathrick.getValue();
 
       if (frame < 3000) {
         var center_x = 8;
@@ -88,7 +88,7 @@
         this.camera.lookAt(new THREE.Vector3(0,0,0));
       }
 
-      
+
     }
   }
 
