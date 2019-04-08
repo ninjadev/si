@@ -70,13 +70,13 @@
           startFrame: 400,
           endFrame: 719,
           transition: 10,
-          text: XWrite('MOMMO'),
+          text: XWrite('FLT SHD SCTY'),
         },
         {
           startFrame: 719,
           endFrame: 1007,
           transition: 10,
-          text: XWrite('COMMAMA DORE'),
+          text: XWrite('PACMAN DORES'),
         },
         {
           startFrame: 1007,
