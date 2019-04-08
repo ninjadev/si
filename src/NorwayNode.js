@@ -70,7 +70,9 @@
 
       //this.map_object.material.uniforms.frame.value = frame;
 
-      if (frame < 3200) {
+      this.map_object.material.uniforms.fade_in.value = smoothstep(0, 1, (frame - 2800) / 100);
+
+      if (frame < 2870) {
         var center_x = 8.6;
         var center_y = 18.6;
 
@@ -79,12 +81,46 @@
         this.camera.position.z = 10.9;
         this.camera.position.y = center_y-0.01;
         this.camera.position.x = center_x;
-      } else {
-        this.camera.position.z = 7;
-        this.camera.position.y = -30;
-        this.camera.position.x = 30 * Math.sin(frame/20.);
+      } else if (BEAN < 504) {
+        var center_x = 8.6;
+        var center_y = 18.6;
+        var df = frame - 2870;
+
         this.camera.up = new THREE.Vector3(0,0,1);
-        this.camera.lookAt(new THREE.Vector3(0,0,0));
+        this.camera.lookAt(new THREE.Vector3(center_x , center_y , 0));
+        this.camera.position.z = 10.9;
+        this.camera.position.y = center_y-0.01 - df / 6; 
+        this.camera.position.x = center_x - smoothstep(0, 10, df / 100);
+      } else if (BEAN < 524) {
+        var center_x = 8.6;
+        var center_y = 18.6;
+        var df = FRAME_FOR_BEAN(504) - 2870;
+
+        this.camera.up = new THREE.Vector3(0,0,1);
+        this.camera.lookAt(new THREE.Vector3(center_x - df / 20 , center_y - df / 12, 0));
+        this.camera.position.z = 10.9;
+        this.camera.position.y = center_y-0.01 - df / 6; 
+        this.camera.position.x = center_x - df / 10;
+      } else if (frame < 3350) {
+        var center_x = 8.6;
+        var center_y = 18.6;
+        var df = frame - FRAME_FOR_BEAN(504);
+
+        this.camera.up = new THREE.Vector3(0,0,1);
+        this.camera.lookAt(new THREE.Vector3(center_x - df / 20 , center_y - df / 12, 0));
+        this.camera.position.z = 10.9;
+        this.camera.position.y = center_y-0.01 - df / 6; 
+        this.camera.position.x = center_x - df / 10;
+      } else {
+        var center_x = 8.6;
+        var center_y = 18.6;
+        var df = 3350 - FRAME_FOR_BEAN(504);
+
+        this.camera.up = new THREE.Vector3(0,0,1);
+        this.camera.lookAt(new THREE.Vector3(center_x - df / 20 , center_y - df / 12, 0));
+        this.camera.position.z = 10.9;
+        this.camera.position.y = center_y-0.01 - df / 6; 
+        this.camera.position.x = center_x - df / 10;
       } 
 
       // These needs to be set in update for nin reasons

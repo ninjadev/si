@@ -1,4 +1,5 @@
 uniform float frame;
+uniform float fade_in;
 uniform sampler2D tDiffuse;
 uniform sampler2D z1;
 uniform sampler2D z2;
@@ -51,10 +52,11 @@ void main() {
     float intensity = color.r;
     vec4 output_color;
     vec2 uv_t = vec2((1. - vUv.x) / 16. * 9., vUv.y);
+    vec4 fade_in_color = texture2D(z1, ((uv_t - vec2(0.5, 0.5))* 5.) + vec2(2.076, -1.36));
     if (intensity < THRESHOLD_01 / 256.)
     {
       // vec2(0.31, -0.38)
-      output_color = texture2D(z1, ((uv_t - vec2(0.5, 0.5))* 5.) + vec2(2.076, -1.36));
+      output_color = fade_in_color;
     }
     else if (intensity < THRESHOLD_02 / 256.)
     {
@@ -107,8 +109,10 @@ void main() {
 
     if (intensity < THRESHOLD_BG / 256.)
     {
-      //output_color = vec4(1., 1., 1., 0.);
+      output_color = vec4(1., 1., 1., 0.);
     }
+
+    output_color = output_color * fade_in + fade_in_color * (1. - fade_in);
 
     gl_FragColor = output_color;
 }
