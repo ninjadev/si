@@ -46,7 +46,7 @@
         let frontright = frontleft.clone();
         frontright.scale.x = -1;
         this.scene.add(frontright);
-        let backleft = makeFront(0, 0, size, directionSize, fill, fillColor);
+        let backleft = makeBack(0, 0, size, directionSize, fill, fillColor);
         backleft.position.set(x, y, 0);
         this.scene.add(backleft);
         let backright = backleft.clone();
