@@ -203,7 +203,7 @@
       this.logoWrapperRight.position.x = 300 - ((frame / 2) % 300);
       this.logoWrapperLeft.position.x = -300 + ((frame / 1.5) % 300);
 
-      const openMouth = BEAN % 12 < 6;
+      const openMouth = (BEAN + 1) % 12 < 6;
       for (let [i, logo] of this.commodoreLogos.entries()) {
         const openMyMyMouth = i % 2 == 0 ? openMouth : !openMouth;
         const rotation = openMyMyMouth ? Math.PI / 8 : 0;
