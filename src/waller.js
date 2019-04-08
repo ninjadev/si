@@ -96,10 +96,12 @@
       this.poster3.castShadow = true;
       this.poster4.castShadow = true;
 
+      /*
       this.scene.add(this.poster1);
       this.scene.add(this.poster2);
       this.scene.add(this.poster3);
       this.scene.add(this.poster4);
+      */
 
       this.paper = new THREE.Mesh(paperGeometry,
         new THREE.MeshStandardMaterial({
@@ -190,7 +192,8 @@
       light.shadow.mapSize.height = 4096; // default
       light.shadow.camera.near = 0.5;       // default
       light.shadow.camera.far = 0.9;
-      light.target.position.y = 0.04;
+      light.target.position.y = 0.06;
+      light.penumbra = 1;
       this.scene.add(light.target);
       this.light1 = light;
       this.scene.add(light);
@@ -198,9 +201,9 @@
       //this.scene.add(helper);
 
       const hemiLight = new THREE.HemisphereLight( 0xffffff, 0xffffff, 0.6 );
-              hemiLight.color.setHSL( 0.6, 1, 0.6 );
-              hemiLight.groundColor.setHSL( 0.095, 1, 0.75 );
-              hemiLight.position.set( 0, 50, 0 );
+      hemiLight.color.setHSL( 0.6, 1, 0.6 );
+      hemiLight.groundColor.setHSL( 0.095, 1, 0.75 );
+      hemiLight.position.set( 0, 0, 0 );
       this.scene.add( hemiLight );
 
       this.hemiLight = hemiLight;
@@ -247,49 +250,23 @@
       this.camera.position.z = lerp(1, 30 / 100, frame / 3000);
 
 
-      const shockZoom = easeIn(
+      const shockZoom = Math.pow(easeIn(
           0,
           1,
-          F(frame, 66 + 3, 3));
+          F(frame, 114 - 6, 12)), 2);
       this.camera.position.z = lerp(this.camera.position.z, 40 / 100, shockZoom);
-      this.camera.position.x = lerp(0, -5 / 100, shockZoom);
+      this.camera.position.x = 0;
 
-      const angler = F(frame, 66 - 6, 12);
+      const angler = F(frame, 114, 12);
 
-      this.light1.angle = easeIn(1.2, 0.42, angler);
+      this.light1.angle = easeIn(1.2, 0.63, angler);
 
       const lookAt = new THREE.Vector3(0, 0, 0);
 
       const angler2 = F(frame, 96, 32);
-      this.light1.angle = easeIn(this.light1.angle, 0.6, angler2);
+      //this.light1.angle = easeIn(this.light1.angle, 0.6, angler2);
 
       if(BEAN < 120) {
-        if(BEAN >= 96 + 6 * 0 + 3) {
-          this.camera.position.z = 38 / 100;
-          this.camera.position.x = 0;
-          lookAt.x = 0;
-          lookAt.y = 0;
-        }
-        if(BEAN >= 96 + 6 * 1 + 3) {
-          this.camera.position.z = 34 / 100;
-          this.camera.position.x = 0;
-          lookAt.x = 0;
-          lookAt.y = 0;
-        }
-        if(BEAN >= 96 + 6 * 2 + 3) {
-          this.camera.position.z = 32 / 100;
-          this.camera.position.x = 0;
-          lookAt.x = 0;
-          lookAt.y = 0;
-        }
-        if(BEAN >= 96 + 6 * 3 + 3) {
-          this.camera.position.z = 30 / 100;
-          this.camera.position.x = 0;
-          lookAt.x = 0;
-          lookAt.y = 0;
-        }
-
-        this.camera.lookAt(lookAt);
       } else {
         this.camera.position.z = 30 / 100;
         this.camera.position.x = 0;
@@ -316,6 +293,14 @@
       this.camera.rotation.x += this.cameraRotationD.x;
       this.camera.rotation.y += this.cameraRotationD.y;
       this.camera.rotation.z += this.cameraRotationD.z;
+
+      this.background.material.color.setRGB(0.5, 0.5, 0.5);
+      if(BEAN >= 120) {
+        this.background.material.color.setRGB(0.35, 0.35, 1);
+      }
+      if(BEAN >= 216) {
+        this.background.material.color.setRGB(0.5, 1.0, 0.5);
+      }
 
 
       //demo.renderer.ninGammaOutput = true;

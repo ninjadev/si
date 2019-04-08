@@ -1,10 +1,13 @@
 uniform float frame;
+uniform float framiness;
+uniform float generalGrayScaler;
 uniform float overlayer;
 uniform float xScale;
 uniform float yScale;
 uniform float xOffset;
 uniform float yOffset;
 uniform float xOffsetPaper;
+uniform float backgroundiness;
 uniform float r;
 uniform float g;
 uniform float b;
@@ -45,24 +48,30 @@ void main() {
     vec4 imageColor = texture2D(image, uv).rgba;
 
     float borderSize = 0.02;
-    vec3 color = mix(sceneColor.rgb, vec3(1.), (
+    vec3 framiColor = mix(sceneColor.rgb, vec3(1.), (
     step(-borderSize, paperContentUv.x) *
     (1. - step(1. + borderSize, paperContentUv.x)) *
     step(-borderSize, paperContentUv.y) *
     (1. - step(1. + borderSize, paperContentUv.y))
     ));
 
-    color = mix(color, paperContentColor, (
+    framiColor = mix(framiColor, paperContentColor, (
     step(0., paperContentUv.x) *
     (1. - step(1., paperContentUv.x)) *
     step(0., paperContentUv.y) *
     (1. - step(1., paperContentUv.y))
     ));
 
+    vec3 color = mix(sceneColor.rgb, framiColor, framiness);
+
+    color = mix(originalSceneColor, color, backgroundiness);
+
     color = mix(color, imageColor.rgb, imageColor.a);
 
     float flippo = floor(mod(vUv.x * 4., 1.) * 2.);
     color = mix(color, originalSceneColor, 1. - step(mix( flippo + vUv.y, flippo - vUv.y, flippo), overlayer));
+
+    color = mix(color, vec3(color.r * 0.2989 + color.g * 0.5870 + color.b * 0.1140), generalGrayScaler);
 
     gl_FragColor = vec4(color, 1.);
 }
