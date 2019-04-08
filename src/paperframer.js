@@ -69,25 +69,25 @@
         {
           startFrame: 400,
           endFrame: 719,
-          transition: 60,
+          transition: 10,
           text: XWrite('MOMMO'),
         },
         {
           startFrame: 719,
           endFrame: 1007,
-          transition: 60,
+          transition: 10,
           text: XWrite('COMMAMA DORE'),
         },
         {
           startFrame: 1007,
           endFrame: 1583,
-          transition: 60,
+          transition: 10,
           text: XWrite('MOMMA COMMODORE'),
         },
         {
           startFrame: 2007,
           endFrame: 3583,
-          transition: 60,
+          transition: 10,
           text: XWrite('COMMODOOMOMO'),
         },
       ];
@@ -108,9 +108,11 @@
       this.paper.material.needsUpdate = true;
 
       for (let { startFrame, endFrame, text, transition, } of this.titles) {
-        for (let path of text.paths) {
-          path.material.uniforms.drawStart.value = smoothstep(0, 1, (frame - endFrame + transition) / transition);
-          path.material.uniforms.drawEnd.value = smoothstep(0, 1, (frame - startFrame) / transition);
+        for (let i = 0; i < text.paths.length; i++) {
+          const path = text.paths[i];
+          const offset = i * transition;
+          path.material.uniforms.drawStart.value = lerp(0, 1, (frame - endFrame + transition - offset) / transition);
+          path.material.uniforms.drawEnd.value = lerp(0, 1, (frame - startFrame - offset) / transition);
         }
       }
     }
