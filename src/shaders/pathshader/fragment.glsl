@@ -115,7 +115,7 @@ float cnoise(vec3 P)
   vec3 fade_xyz = fade(Pf0);
   vec4 n_z = mix(vec4(n000, n100, n010, n110), vec4(n001, n101, n011, n111), fade_xyz.z);
   vec2 n_yz = mix(n_z.xy, n_z.zw, fade_xyz.y);
-  float n_xyz = mix(n_yz.x, n_yz.y, fade_xyz.x); 
+  float n_xyz = mix(n_yz.x, n_yz.y, fade_xyz.x);
   return 2.2 * n_xyz;
 }
 
@@ -185,7 +185,7 @@ float pnoise(vec3 P, vec3 rep)
   vec3 fade_xyz = fade(Pf0);
   vec4 n_z = mix(vec4(n000, n100, n010, n110), vec4(n001, n101, n011, n111), fade_xyz.z);
   vec2 n_yz = mix(n_z.xy, n_z.zw, fade_xyz.y);
-  float n_xyz = mix(n_yz.x, n_yz.y, fade_xyz.x); 
+  float n_xyz = mix(n_yz.x, n_yz.y, fade_xyz.x);
   return 2.2 * n_xyz;
 }
 
@@ -232,6 +232,11 @@ void main() {
 
     float startCircle = linecap(uv.x, uv.y, drawStart, edgeSize);
     float endCircle = linecap(uv.x, uv.y, drawEnd, edgeSize);
+
+    if(drawEnd <= drawStart + 0.001) {
+        startCircle *= 0.;
+        endCircle *= 0.;
+    }
 
     amount = amount +
         (1. - step(drawStart, uv.x)) * startCircle * edge +
