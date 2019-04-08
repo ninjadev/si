@@ -120,49 +120,54 @@
 
       this.clouds = [
         {
-          coords: [40, 20, 465],
+          coords: [40, 30, 465],
           color: [1, .6, .3],
-          time: 180
+          image: 'cocoon',
         },
         {
           coords: [-50, 20, 420],
           color: [.5, .75, 1],
-          time: 240
+          image: 'desire',
         },
         {
-          coords: [80, 10, 385],
+          coords: [80, 0, 385],
           color: [.5, 1, .5],
-          time: 310
+          image: 'logicoma',
         },
         {
           coords: [-60, -20, 325],
           color: [0, 1, 1],
-          time: 390
+          image: 'altair',
         },
         {
-          coords: [-35, 30, 300],
+          coords: [-35, 25, 300],
           color: [1, 1, .5],
-          time: 450
+          image: 'poobrain',
         },
         {
           coords: [60, 0, 220],
           color: [.5, 1, .5],
-          time: 530
+          image: 'pandacube',
         },
         {
-          coords: [-50, 45, 180],
+          coords: [-50, 55, 180],
           color: [1, 0.5, 1],
-          time: 700
+          image: 'ephidrena',
+        },
+        {
+          coords: [15, 25, 150],
+          color: [.75, 1, .5],
+          image: 'poobrain',
         },
         {
           coords: [-50, 20, 120],
           color: [.5, .75, 1],
-          time: 850
+          image: 'schnappsgirls',
         },
         {
           coords: [0, 40, 100],
           color: [1, .5, .5],
-          time: 950
+          time: 950,
         },
       ];
 
@@ -175,8 +180,6 @@
             new THREE.CircleGeometry(7 + localRandom() * 4, 20),
             new THREE.MeshBasicMaterial({color: new THREE.Color(...cloud.color)})
           );
-          //circle.material.transparent = true;
-          //circle.material.opacity = .6;
           const position = new THREE.Vector3(positionRandom() * 30 - 15, positionRandom() * 6 - 3, 0);
           circle.position.copy(position);
           mesh.add(circle);
@@ -189,6 +192,13 @@
         mesh.position.set(...cloud.coords);
         cloud.mesh = mesh;
         this.scene.add(mesh);
+
+        const image = new THREE.Mesh(
+          new THREE.PlaneGeometry(10, 10, 4),
+          new THREE.MeshBasicMaterial({map: Loader.loadTexture('res/greets/' + cloud.image + '.png')}));
+        image.position.z = 1;
+        cloud.image = image;
+        mesh.add(image);
       }
 
       this.camera.position.z = 200;
@@ -223,26 +233,33 @@
         }
       }
 
-      for (const cloud of this.clouds) {
-        if (frame - startFrame >= cloud.time && frame - startFrame < cloud.time + 300) {
+      for (const [index, cloud] of this.clouds.entries()) {
+        const cloudFrame = FRAME_FOR_BEAN(48 * 14.5 + 6 + index * 12);
+        if (frame >= cloudFrame && frame < cloudFrame + 200) {
           for (const circle of cloud.circles) {
             circle.mesh.scale.setScalar(
               elasticOut(
                 .01,
-                easeIn(1, .01, (frame - startFrame - cloud.time - 280) / 20),
+                easeIn(1, .01, (frame - cloudFrame - 180) / 20),
                 1,
-                (frame - startFrame - cloud.time) / 20)
+                (frame - cloudFrame) / 20)
             );
             circle.mesh.position.set(
-              circle.position.x + Math.sin((frame - startFrame - cloud.time) * circle.speed / 60) * 2,
-              circle.position.y - Math.sin((frame - startFrame - cloud.time) * circle.speed / 60) * 2,
+              circle.position.x + Math.sin((frame - cloudFrame) * circle.speed / 60) * 2,
+              circle.position.y - Math.sin((frame - cloudFrame) * circle.speed / 60) * 2,
               0
             );
           }
+          cloud.image.scale.setScalar(
+            elasticOut(
+              .01,
+              easeIn(1, .01, (frame - cloudFrame - 230) / 20),
+              1,
+              (frame - cloudFrame) / 20)
+          );
+          cloud.mesh.position.set(...cloud.coords);
         } else {
-          for (const circle of cloud.circles) {
-            circle.mesh.position.set(0, 0, 1000);
-          }
+          cloud.mesh.position.set(0, 0, 1000);
         }
       }
 
