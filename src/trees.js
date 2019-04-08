@@ -31,22 +31,26 @@
           {
             coords: [[25,10],[-25,10],[0,50],[25,10]],
             offset,
-            fill: 0x7fff7f,
+            fillColor: 0x7fff7f,
+            fillMap: Loader.loadTexture('res/paper.png'),
           },
           {
             coords: [[10,10],[30,-20],[-30,-20],[-10,10]],
             offset,
-            fill: 0x7fff7f,
+            fillColor: 0x7fff7f,
+            fillMap: Loader.loadTexture('res/paper.png'),
           },
           {
             coords: [[10,-20],[30,-50],[-30,-50],[-10,-20]],
             offset,
-            fill: 0x7fff7f,
+            fillColor: 0x7fff7f,
+            fillMap: Loader.loadTexture('res/paper.png'),
           },
           {
             coords: [[10,-50],[10,-70],[-10,-70],[-10,-50]],
             offset,
-            fill: 0x5f0010,
+            fillColor: 0x5f0010,
+            fillMap: Loader.loadTexture('res/paper.png'),
           },
         ];
       }
@@ -66,10 +70,12 @@
       this.lines = [];
 
       for (const track of tracks) {
-        const path = new Path('fill' in track && {
+        const options = ('fillColor' in track || 'fillMap' in track) && {
           fill: true,
-          fillColor: track.fill,
-        });
+          fillColor: track.fillColor,
+          fillMap: track.fillMap,
+        };
+        const path = new Path(options);
         for (const [x, y] of track.coords) {
           path.lineTo(x, y);
         }
@@ -113,10 +119,12 @@
       this.mainTree = [];
       const mainTreeTracks = makeTree([-700, 0, 0]);
       for (const track of mainTreeTracks) {
-        const path = new Path('fill' in track && {
+        const options = ('fillColor' in track || 'fillMap' in track) && {
           fill: true,
-          fillColor: track.fill,
-        });
+          fillColor: track.fillColor,
+          fillMap: track.fillMap,
+        };
+        const path = new Path(options);
         for (const [x, y] of track.coords) {
           path.lineTo(x, y);
         }
@@ -130,10 +138,12 @@
       this.frontTree = [];
       const frontTreeTracks = makeTree([-560, 20, 280]);
       for (const track of frontTreeTracks) {
-        const path = new Path('fill' in track && {
+        const options = ('fillColor' in track || 'fillMap' in track) && {
           fill: true,
-          fillColor: track.fill,
-        });
+          fillColor: track.fillColor,
+          fillMap: track.fillMap,
+        };
+        const path = new Path(options);
         for (const [x, y] of track.coords) {
           path.lineTo(x, y);
         }

@@ -125,19 +125,29 @@
           time: 180
         },
         {
+          coords: [-50, 20, 420],
+          color: [.5, .75, 1],
+          time: 240
+        },
+        {
+          coords: [80, 10, 385],
+          color: [.5, 1, .5],
+          time: 310
+        },
+        {
           coords: [-60, -20, 325],
           color: [0, 1, 1],
-          time: 350
+          time: 390
         },
         {
           coords: [-35, 30, 300],
           color: [1, 1, .5],
-          time: 400
+          time: 450
         },
         {
           coords: [60, 0, 220],
           color: [.5, 1, .5],
-          time: 450
+          time: 530
         },
         {
           coords: [-50, 45, 180],
@@ -214,12 +224,12 @@
       }
 
       for (const cloud of this.clouds) {
-        if (frame - startFrame >= cloud.time && frame - startFrame < cloud.time + 400) {
+        if (frame - startFrame >= cloud.time && frame - startFrame < cloud.time + 300) {
           for (const circle of cloud.circles) {
             circle.mesh.scale.setScalar(
               elasticOut(
                 .01,
-                easeIn(1, .01, (frame - startFrame - cloud.time - 380) / 20),
+                easeIn(1, .01, (frame - startFrame - cloud.time - 280) / 20),
                 1,
                 (frame - startFrame - cloud.time) / 20)
             );
