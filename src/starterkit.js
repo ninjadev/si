@@ -1,4 +1,5 @@
 (function(global) {
+  const F = (frame, from, delta) => (frame - FRAME_FOR_BEAN(from)) / (FRAME_FOR_BEAN(from + delta) - FRAME_FOR_BEAN(from));
   class starterkit extends NIN.THREENode {
     constructor(id, options) {
       super(id, {
@@ -76,11 +77,32 @@
       this.sceneWrapper.position.y = -0.75;
 
       this.camera.position.z = 8;
+
     }
 
     update(frame) {
       super.update(frame);
 
+      for(let i = 0; i < this.flatWord.paths.length; i++) {
+        const flatAnimator = easeOut(0, 1, F(frame, 84 + 3 + i / 4, 1 + i / 4));
+        const path = this.flatWord.paths[i];
+        path.material.uniforms.drawStart.value = 0;
+        path.material.uniforms.drawEnd.value = flatAnimator;
+      }
+
+      for(let i = 0; i < this.shadeWord.paths.length; i++) {
+        const shadeAnimator = easeOut(0, 1, F(frame, 84 + 3 + 3 + i / 4, 1 + i / 4));
+        const path = this.shadeWord.paths[i];
+        path.material.uniforms.drawStart.value = 0;
+        path.material.uniforms.drawEnd.value = shadeAnimator;
+      }
+
+      for(let i = 0; i < this.societyWord.paths.length; i++) {
+        const societyAnimator = easeOut(0, 1, F(frame, 84 + 3 + 3 + 4 + i / 4, 1 + i / 4));
+        const path = this.societyWord.paths[i];
+        path.material.uniforms.drawStart.value = 0;
+        path.material.uniforms.drawEnd.value = societyAnimator;
+      }
 
     }
   }

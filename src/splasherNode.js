@@ -8,6 +8,7 @@
       };
       super(id, options);
 
+      this.flatshadeMap = Loader.loadTexture('res/flatshadesociety-graffiti.png');
       this.solMap = Loader.loadTexture('res/sol-graffiti.png');
       this.skogMap = Loader.loadTexture('res/skog-graffiti.png');
       this.enMap = Loader.loadTexture('res/en-graffiti.png');
@@ -17,29 +18,35 @@
     }
 
     update(frame) {
+      this.uniforms.generalGrayScaler.value = easeIn(1, 0, F(frame, 96, 24));
+
       this.uniforms.frame.value = frame;
       this.uniforms.tDiffuse.value = this.inputs.A.getValue();
       this.uniforms.paperContent.value = this.inputs.PaperContent.getValue();
       this.uniforms.image.value = this.solMap;
       this.uniforms.overlayer.value = 0;
       this.inputs.A.enabled = true;
+      this.uniforms.backgroundiness.value = 1;
+      this.uniforms.framiness.value = 1;
       const BAR = BEAN / 24;
       if(BAR >= 5 && BAR < 6) {
         this.uniforms.overlayer.value = 1;
-        this.uniforms.image.value = this.solMap;
-        const scaler = elasticOut(1.0, .1, 1, F(frame, 5 * 24, 3));
+        this.uniforms.image.value = this.flatshadeMap;
+        const scaler = elasticOut(1.0, .1, 1, F(frame, 5 * 24, 3)) * 0.9;
         this.uniforms.xScale.value = 2100 / 1500 * scaler;
-        this.uniforms.yScale.value = 1 * scaler;
-        this.uniforms.xOffset.value = lerp(0.2, 0.22, F(frame, 5 * 24, 24));
-        this.uniforms.yOffset.value = 0.05;
+        this.uniforms.yScale.value = 1 * scaler * 1.2;
+        this.uniforms.xOffset.value = 0;
+        this.uniforms.yOffset.value = 0;
         this.uniforms.xOffsetPaper.value = lerp(0.03, 0.0, F(frame, 5 * 24, 24));
         this.uniforms.r.value = 0.5;
-        this.uniforms.g.value = 1.0;
-        this.uniforms.b.value = 0.5;
-        this.uniforms.paperR.value = 0.5;
-        this.uniforms.paperG.value = 0.5;
-        this.uniforms.paperB.value = 0.5;
+        this.uniforms.g.value = 0.5;
+        this.uniforms.b.value = 1.0;
+        this.uniforms.paperR.value = 1.0;
+        this.uniforms.paperG.value = 1.0;
+        this.uniforms.paperB.value = 1.0;
         this.uniforms.overlayer.value = lerp(1, 0, F(frame, 5 * 24 + 12 + 6, 6));
+        this.uniforms.backgroundiness.value = 0;
+        this.uniforms.framiness.value = 0;
       }
       if(BAR >= 9 && BAR < 10) {
         this.uniforms.overlayer.value = 1;
