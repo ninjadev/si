@@ -7,7 +7,6 @@
           render: new NIN.TextureOutput()
         },
         inputs: {
-          N: new NIN.TextureInput(),
           sirpathrick: new NIN.TextureInput(),
         },
       });
@@ -39,13 +38,12 @@
       this.flateby_sign.position.z = 5;
 
       this.map_object = new THREE.Mesh(new THREE.PlaneGeometry(50, 50, 1),
-                                 new THREE.ShaderMaterial(SHADERS.NorwayShader));
+                                 new THREE.ShaderMaterial(SHADERS.NorwayShader).clone());
       this.scene.add(this.map_object);
       this.map_object.material.transparent = true;
 
       this.map_object.material.uniforms.tDiffuse.value = this.map_image;
-      //this.map_object.material.uniforms.z1.value = this.inputs.sirpathrick.getValue();
-      this.map_object.material.uniforms.z1.value = this.z1;
+      //this.map_object.material.uniforms.z1.value = this.z1;
       this.map_object.material.uniforms.z2.value = this.z2;
       this.map_object.material.uniforms.z3.value = this.z3;
       this.map_object.material.uniforms.z4.value = this.z4;
@@ -71,13 +69,13 @@
 
       //this.map_object.material.uniforms.frame.value = frame;
 
-      /*if (frame < 3000) {
-        var center_x = 8;
-        var center_y = 19;
+      if (frame < 3200) {
+        var center_x = 8.6;
+        var center_y = 18.6;
 
         this.camera.up = new THREE.Vector3(0,0,1);
         this.camera.lookAt(new THREE.Vector3(center_x, center_y, 0));
-        this.camera.position.z = 7;
+        this.camera.position.z = 10.9;
         this.camera.position.y = center_y-0.01;
         this.camera.position.x = center_x;
       } else {
@@ -86,7 +84,10 @@
         this.camera.position.x = 30 * Math.sin(frame/20.);
         this.camera.up = new THREE.Vector3(0,0,1);
         this.camera.lookAt(new THREE.Vector3(0,0,0));
-      }*/
+      } 
+
+      // These needs to be set in update for nin reasons
+      this.map_object.material.uniforms.z1.value = this.inputs.sirpathrick.getValue();
 
       
     }

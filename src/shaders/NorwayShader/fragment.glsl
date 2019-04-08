@@ -50,9 +50,11 @@ void main() {
 
     float intensity = color.r;
     vec4 output_color;
+    vec2 uv_t = vec2((1. - vUv.x) / 16. * 9., vUv.y);
     if (intensity < THRESHOLD_01 / 256.)
     {
-      output_color = texture2D(z1, vUv);
+      // vec2(0.31, -0.38)
+      output_color = texture2D(z1, ((uv_t - vec2(0.5, 0.5))* 5.) + vec2(2.076, -1.36));
     }
     else if (intensity < THRESHOLD_02 / 256.)
     {
@@ -105,7 +107,7 @@ void main() {
 
     if (intensity < THRESHOLD_BG / 256.)
     {
-      output_color = vec4(1., 1., 1., 0.);
+      //output_color = vec4(1., 1., 1., 0.);
     }
 
     gl_FragColor = output_color;

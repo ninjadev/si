@@ -49,8 +49,7 @@
     "id": "NorwayNode",
     "type": "NorwayNode",
     "connected": {
-      "N": "NorwayShader.render",
-      "sirpathrick": "sirpathrick"
+      "sirpathrick": "sirpathrick.render"
     }
   },
   {
