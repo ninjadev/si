@@ -88,7 +88,7 @@
           startFrame: 6767,
           endFrame: 7601,
           transition: 10,
-          text: XWrite('DANCE WITH NINJADEV'),
+          text: XWrite('DANCE WITH KINJAKEV'),
         },
         {
           startFrame: 7631,
