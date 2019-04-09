@@ -1,0 +1,11 @@
+{
+    "tDiffuse": { "type": "t", "value": null },
+    "frame": { "type": "f", "value": 0.0 },
+    "blobbiness": { "type": "f", "value": 0.0 },
+    "xScale": { "type": "f", "value": 1.0 },
+    "yScale": { "type": "f", "value": 1.0 },
+    "zScale": { "type": "f", "value": 1.0 },
+    "cutSpacing": { "type": "f", "value": 0.0 },
+    "scratcher": { "type": "f", "value": 0.0 },
+    "rotater": { "type": "f", "value": 0.0 }
+}
