@@ -10,6 +10,7 @@
     "id": "sceneSwitcherNode",
     "type": "SceneSwitcherNode",
     "connected": {
+      "Startlogo": "starterkit.render",
       "A1": "patterns.render",
       "A2": "cubobbobob.render",
       "B1": "NorwayNode.render",
@@ -199,6 +200,13 @@
     "connected": {
       "A": "Waller.render",
       "PaperContent": "paperframer.render"
+    }
+  },
+  {
+    "id": "twistorama",
+    "type": "twistoramaNode",
+    "options": {
+      "shader": "twistorama"
     }
   }
 ]

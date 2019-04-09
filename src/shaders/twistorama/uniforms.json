@@ -1,0 +1,6 @@
+{
+    "tDiffuse": { "type": "t", "value": null },
+    "frame": { "type": "f", "value": 0.0 },
+    "scratcher": { "type": "f", "value": 0.0 },
+    "rotater": { "type": "f", "value": 0.0 }
+}
