@@ -57,7 +57,7 @@
       "shader": "LineDepth"
     },
     "connected": {
-      "lines": "lineBackground.render"
+      "lines": "lineBackground.depth"
     }
   },
   {
