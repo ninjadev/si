@@ -59,7 +59,9 @@
       "sirpathrick": "sirpathrick.render",
       "boxes": "boxes.render",
       "cross": "cross.render",
-      "moose": "moose.render"
+      "moose": "moose.render",
+      "pathy": "pathy.render",
+      "diagonals": "diagonals.render"
     }
   },
   {

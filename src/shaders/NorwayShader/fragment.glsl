@@ -72,7 +72,7 @@ void main() {
     }
     else if (intensity < THRESHOLD_05 / 256.)
     {
-      output_color = texture2D(z5, vUv);
+      output_color = texture2D(z5, vUv * 2.);
     }
     else if (intensity < THRESHOLD_06 / 256.)
     {

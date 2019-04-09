@@ -10,7 +10,9 @@
           sirpathrick: new NIN.TextureInput(),
           boxes: new NIN.TextureInput(),
           cross: new NIN.TextureInput(),
+          pathy: new NIN.TextureInput(),
           moose: new NIN.TextureInput(),
+          diagonals: new NIN.TextureInput(),
         },
       });
 
@@ -131,8 +133,8 @@
       this.map_object.material.uniforms.z8.value = this.inputs.boxes.getValue();
 
 
-      //this.map_object.material.uniforms.z9.value = this.inputs.boxes.getValue();
-      //this.map_object.material.uniforms.z5.value = this.inputs.boxes.getValue();
+      this.map_object.material.uniforms.z9.value = this.inputs.pathy.getValue();
+      this.map_object.material.uniforms.z5.value = this.inputs.diagonals.getValue();
       this.map_object.material.uniforms.z6.value = this.inputs.cross.getValue();
       this.map_object.material.uniforms.z4.value = this.inputs.boxes.getValue();
       //this.map_object.material.uniforms.z7.value = this.inputs.boxes.getValue();
