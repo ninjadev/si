@@ -31,6 +31,15 @@
 
       this.scene.add(this.twistoramaContainer);
 
+      this.forest = new THREE.Mesh(
+        new THREE.PlaneGeometry(),
+        new THREE.MeshBasicMaterial({
+          map: Loader.loadTexture('res/placeholder.png'),
+        }));
+      this.scene.add(this.forest);
+      const forestScale = 0.25;
+      this.forest.scale.set(forestScale, forestScale * 9659 / 1920, forestScale);
+
 
 
       const inchToCm = 2.54;
@@ -381,28 +390,39 @@
         }
       }
 
+      this.paper.visible = true;
+      this.shadowPaper.visible = true;
+      this.forest.visible = false;
       if(BEAN >= 888) {
         this.camera.position.y = 0;
+
+        u.yScale.value = easeIn(u.yScale.value, 6, F(frame, 924 - 6, 6));
+
+        this.camera.position.y = easeIn(0, -0.03, F(frame, 924-5,2));
+        this.camera.position.z = easeIn(.3, 0.15, F(frame, 924-5,2));
+        this.twistoramaContainer.position.x = easeIn(0, 0.042, F(frame, 924 - 5, 2));
+        u.rotater.value = easeIn(0, Math.PI, F(frame, 924 - 5, 2));
+        if(BEAN >= 924 - 3 && BEAN < 900 + 24 + 12) {
+          this.camera.position.y = lerp(-0.03, 0.03, F(frame, 924 -3, 12 + 3));
+          this.camera.position.z = 0.15;
+        }
+
+        this.scratcherSpeed *= 0.95;
+        this.scratcherPosition += this.scratcherSpeed;
+        u.scratcher.value = this.scratcherPosition;
+        this.rotaterSpeed *= 0.95;
+        this.rotaterPosition += this.rotaterSpeed;
+        u.rotater.value = this.rotaterPosition;
+
+        this.forest.position.y = easeIn(0.53, -0.53, F(frame, 984, 24 * 3));
+
+        if(BEAN >= 984 && BEAN < 1080) {
+          this.paper.visible = false;
+          this.shadowPaper.visible = false;
+          this.forest.visible = true;
+        }
+
       }
-
-      u.yScale.value = easeIn(u.yScale.value, 6, F(frame, 924 - 6, 6));
-
-      this.camera.position.y = easeIn(0, -0.03, F(frame, 924-5,2));
-      this.camera.position.z = easeIn(.3, 0.15, F(frame, 924-5,2));
-      this.twistoramaContainer.position.x = easeIn(0, 0.042, F(frame, 924 - 5, 2));
-      u.rotater.value = easeIn(0, Math.PI, F(frame, 924 - 5, 2));
-      if(BEAN >= 924 - 3 && BEAN < 900 + 24 + 12) {
-        this.camera.position.y = lerp(-0.03, 0.03, F(frame, 924 -3, 12 + 3));
-        this.camera.position.z = 0.15;
-      }
-
-      this.scratcherSpeed *= 0.95;
-      this.scratcherPosition += this.scratcherSpeed;
-      u.scratcher.value = this.scratcherPosition;
-      this.rotaterSpeed *= 0.95;
-      this.rotaterPosition += this.rotaterSpeed;
-      u.rotater.value = this.rotaterPosition;
-
 
       //demo.renderer.ninGammaOutput = true;
     }
