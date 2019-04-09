@@ -1,78 +1,4 @@
 (function(global) {
-  function CommodoreLogo(A) {
-    const B = 0.034 * A;
-    const C = 0.166 * A;
-    const D = 0.30 * A;
-    const E = 0.364 * A;
-    const F = 0.52 * A;
-    const G = 0.53 * A;  // Diameter of the inner circle
-    const H = 0.636 * A; // X offset to circle clipping start
-    const I = 0.97 * A;  // Diameter of the outer circle
-
-    const cee = new Path();
-
-    // First we draw the outer circle counterclockwise from the top right.
-    const outerSegments = 30;
-    const outerCircleRadius = I / 2;
-    const offsetToVerticalClipFromCircleCentre = H - I / 2;
-    const outerCircleRadianOffsetFromStart = Math.acos(offsetToVerticalClipFromCircleCentre / outerCircleRadius);
-    const outerCircleRadianEnd = 2 * Math.PI - outerCircleRadianOffsetFromStart;
-    for (let i = 0; i <= outerSegments; i++) {
-      const radianOffset = outerCircleRadianOffsetFromStart + i * (outerCircleRadianEnd - outerCircleRadianOffsetFromStart) / outerSegments;
-      const x = Math.cos(radianOffset) * outerCircleRadius;
-      const y = Math.sin(radianOffset) * outerCircleRadius;
-      cee.lineTo(x, y);
-    }
-
-    // Now we draw the inner circle clockwise from the bottom right
-    const innerSegments = 20;
-    const innerCircleRadius = G / 2;
-    const innerCircleRadianOffsetFromStart = Math.acos(offsetToVerticalClipFromCircleCentre / innerCircleRadius);
-    const innerCircleRadianEnd = 2 * Math.PI - innerCircleRadianOffsetFromStart;
-    for (let i = innerSegments; i >= 0; i--) {
-      const radianOffset = innerCircleRadianOffsetFromStart + i * (innerCircleRadianEnd - innerCircleRadianOffsetFromStart) / innerSegments;
-      const x = Math.cos(radianOffset) * innerCircleRadius;
-      const y = Math.sin(radianOffset) * innerCircleRadius;
-      cee.lineTo(x, y);
-    }
-
-    // Complete the C
-    cee.lineTo(
-      Math.cos(outerCircleRadianOffsetFromStart) * outerCircleRadius,
-      Math.sin(outerCircleRadianOffsetFromStart) * outerCircleRadius
-    );
-
-    const upperBeak = new Path();
-    upperBeak.lineTo(0, C / 2);
-    upperBeak.lineTo(E, C / 2);
-    upperBeak.lineTo(E - C, - C / 2);
-    upperBeak.lineTo(0, - C / 2);
-    upperBeak.lineTo(0, C / 2);
-
-    const lowerBeak = new Path();
-    lowerBeak.lineTo(0, -C / 2);
-    lowerBeak.lineTo(E, -C / 2);
-    lowerBeak.lineTo(E - C, C / 2);
-    lowerBeak.lineTo(0, C / 2);
-    lowerBeak.lineTo(0, -C / 2);
-
-    const wrapper = new THREE.Object3D();
-    const cceo3d = cee.toObject3D();
-    wrapper.add(cceo3d);
-    const ufo3d = upperBeak.toObject3D();
-    ufo3d.position.set(offsetToVerticalClipFromCircleCentre, B / 2 + C / 2, 0);
-    wrapper.add(ufo3d);
-    const lfo3d = lowerBeak.toObject3D();
-    lfo3d.position.set(offsetToVerticalClipFromCircleCentre, -B / 2 - C / 2, 0);
-    wrapper.add(lfo3d);
-
-    const outerWrapper = new THREE.Object3D();
-    outerWrapper.add(wrapper);
-    outerWrapper.upperBeak = ufo3d;
-    outerWrapper.lowerBeak = lfo3d;
-    return outerWrapper;
-  }
-
   class moose extends NIN.THREENode {
     constructor(id, options) {
       super(id, {
@@ -109,7 +35,7 @@
         const lines = [];
         const padding = 0.5;
         for (let [i, color] of commodoreColors.entries()) {
-          color = new THREE.Color(color).multiplyScalar(0.8);
+          color = new THREE.Color(color).multiplyScalar(0.5);
           color = new THREE.Vector3(color.r, color.g, color.b);
           let path = new Path({color});
 
@@ -195,13 +121,18 @@
 
       this.circles = [];
 
+      const startFrame = 719;
+
       const startOfStart = 90;
-      const startOfEnd = 360;
-      const speed = 90;
+      const startOfEnd = 120;
+      const speed = 240;
 
       // Screen is ca 300 wide. 10 units a 30.
-      this.logoWrapperRight.position.x = 300 - ((frame / 2) % 300);
-      this.logoWrapperLeft.position.x = -300 + ((frame / 1.5) % 300);
+      //this.logoWrapperRight.position.x = 600 - ((frame / 2) % 600);
+      //this.logoWrapperLeft.position.x = -600 + ((frame / 2) % 600);
+
+      this.logoWrapperLeft.position.x = -600 + lerp(0, 600, (frame - startFrame) / 600);
+      this.logoWrapperRight.position.x = 600 - lerp(0, 600, (frame - startFrame) / 600);
 
       const openMouth = (BEAN + 1) % 12 < 6;
       for (let [i, logo] of this.commodoreLogos.entries()) {
@@ -215,8 +146,8 @@
       for (let lines of this.commodoreLinesLeft) {
         for (let line of lines) {
           const path = line.path;
-          path.material.uniforms.drawStart.value = easeIn(0, 1, (frame - startOfEnd) / speed);
-          path.material.uniforms.drawEnd.value = easeOut(0, 1, (frame - startOfStart) / speed);
+          path.material.uniforms.drawStart.value = easeIn(0, 1, (frame - startFrame - startOfEnd) / speed);
+          path.material.uniforms.drawEnd.value = easeOut(0, 1, (frame - startFrame - startOfStart) / speed);
           path.material.uniforms.wobbliness.value = this.oomph;
         }
       }
@@ -224,8 +155,8 @@
       for (let lines of this.commodoreLinesRight) {
         for (let line of lines) {
           const path = line.path;
-          path.material.uniforms.drawStart.value = easeIn(0, 1, (frame - startOfEnd) / speed);
-          path.material.uniforms.drawEnd.value = easeOut(0, 1, (frame - startOfStart) / speed);
+          path.material.uniforms.drawStart.value = easeIn(0, 1, (frame - startFrame - startOfEnd) / speed);
+          path.material.uniforms.drawEnd.value = easeOut(0, 1, (frame - startFrame - startOfStart) / speed);
           path.material.uniforms.wobbliness.value = this.oomph;
         }
       }
