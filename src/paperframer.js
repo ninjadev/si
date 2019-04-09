@@ -82,13 +82,13 @@
           startFrame: 6479,
           endFrame: 6667,
           transition: 10,
-          text: XWrite('HANGRY COMMODORES'),
+          text: XWrite('HUNGRY COMMODORES'),
         },
         {
           startFrame: 6767,
           endFrame: 7601,
           transition: 10,
-          text: XWrite('DANCE WITH KINJAKEV'),
+          text: XWrite('DANCE WITH NINJADEV'),
         },
         {
           startFrame: 7631,
