@@ -31,7 +31,8 @@
       "N": "emoji.render",
       "O": "emoji.render",
       "P": "emoji.render",
-      "Startlogo": "starterkit.render"
+      "Startlogo": "starterkit.render",
+      "A5": "LineDepth.render"
     }
   },
   {
@@ -43,6 +44,20 @@
     "type": "NorwayShaderNode",
     "options": {
       "shader": "NorwayShader"
+    }
+  },
+  {
+    "id": "lineBackground",
+    "type": "lineBackground"
+  },
+  {
+    "id": "LineDepth",
+    "type": "LineDepth",
+    "options": {
+      "shader": "LineDepth"
+    },
+    "connected": {
+      "lines": "lineBackground.depth"
     }
   },
   {
