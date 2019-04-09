@@ -54,14 +54,14 @@
 
     update(frame) {
       super.update(frame);
-      const beanOffset = 1392;
+      const beanOffset = 408;
       const timing = {
-        goodMood: {start: 1392, end: 1392 + 12},
-        shades: {start: 1392 + 12, end: 1392 + 12 + 12},
-        pixelArt: {start: 1392 + 12 * 2, end: 1392 + 12 * 2 + 12},
-        dancingSkills: {start: 1392 + 12 * 3, end: 1392 + 12 * 3 + 12},
-        campingEquipment: {start: 1392 + 12 * 4, end: 1392 + 12 * 4 + 12},
-        hardware: {start: 1392 + 12 * 5, end: 1392 + 12 * 5 + 12},
+        goodMood: {start: beanOffset, end: beanOffset + 12},
+        shades: {start: beanOffset + 12, end: beanOffset + 12 + 12},
+        pixelArt: {start: beanOffset + 12 * 2, end: beanOffset + 12 * 2 + 12},
+        dancingSkills: {start: beanOffset + 12 * 3, end: beanOffset + 12 * 3 + 12},
+        campingEquipment: {start: beanOffset + 12 * 4, end: beanOffset + 12 * 4 + 12},
+        hardware: {start: beanOffset + 12 * 5, end: beanOffset + 12 * 5 + 12},
       };
 
       for (let mosaicKey in window.emojiMosaics) {
