@@ -73,22 +73,34 @@
           text: XWrite('NINJADEV'),
         },
         {
-          startFrame: 719,
-          endFrame: 1007,
-          transition: 10,
-          text: XWrite('HANGRY COMMODORES'),
-        },
-        {
-          startFrame: 1007,
-          endFrame: 1583,
-          transition: 10,
-          text: XWrite('MOMMA COMMODORE'),
-        },
-        {
           startFrame: 2007,
           endFrame: 3583,
           transition: 10,
           text: XWrite('COMMODOOMOMO'),
+        },
+        {
+          startFrame: 6479,
+          endFrame: 6667,
+          transition: 10,
+          text: XWrite('HANGRY COMMODORES'),
+        },
+        {
+          startFrame: 6767,
+          endFrame: 7601,
+          transition: 10,
+          text: XWrite('DANCE WITH NINJADEV'),
+        },
+        {
+          startFrame: 7631,
+          endFrame: 8107,
+          transition: 10,
+          text: XWrite('MOMMA COMMODORE'),
+        },
+        {
+          startFrame: 8207,
+          endFrame: 8783,
+          transition: 10,
+          text: XWrite('TUNNELS AHEAD'),
         },
       ];
       // TODO: Make text fit scaling stuff
