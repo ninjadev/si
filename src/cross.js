@@ -62,10 +62,10 @@
       // Time shift used only on the map scene
       if (frame > FRAME_FOR_BEAN(330) && frame <= FRAME_FOR_BEAN(408)) {
         // Tune this final number to get timing
-        frame = frame + FRAME_FOR_BEAN(48 * 18 + 24) - FRAME_FOR_BEAN(365); 
+        frame = frame + FRAME_FOR_BEAN(24 * 41) - FRAME_FOR_BEAN(365); 
       }
 
-      const startFrame = FRAME_FOR_BEAN(48 * 18 + 24);
+      const startFrame = FRAME_FOR_BEAN(24 * 41);
 
       for (let i = 0; i < this.verticals.length; i++) {
         const path = this.verticals[i].path;

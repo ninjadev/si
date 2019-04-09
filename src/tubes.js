@@ -67,7 +67,7 @@
     update(frame) {
       super.update(frame);
 
-      const startFrame = FRAME_FOR_BEAN(48 * 17 + 36);
+      const startFrame = FRAME_FOR_BEAN(24 * 40) - 75;
 
       for (let i = 0; i < this.dots.length; i++) {
         const dot = this.dots[i];

@@ -9,6 +9,7 @@
       super(id, options);
 
       this.flatshadeMap = Loader.loadTexture('res/flatshadesociety-graffiti.png');
+      this.flatebyMap = Loader.loadTexture('res/flateby-marker-overlay-graffiti.png');
       this.solMap = Loader.loadTexture('res/sol-graffiti.png');
       this.skogMap = Loader.loadTexture('res/skog-graffiti.png');
       this.enMap = Loader.loadTexture('res/en-graffiti.png');
@@ -98,6 +99,23 @@
         this.uniforms.paperG.value = 1.0;
         this.uniforms.paperB.value = 0.5;
         this.uniforms.overlayer.value = lerp(1, 0, F(frame, 21 * 24 + 12 + 6, 6));
+      }
+      if(BAR >= 23 && BAR < 24) {
+        this.uniforms.overlayer.value = 1;
+        this.uniforms.image.value = this.flatebyMap;
+        const scaler = 1.0 * elasticOut(1.0, .1, 1, F(frame, 25 * 24, 3));
+        this.uniforms.xScale.value = 2100 / 1500 * scaler;
+        this.uniforms.yScale.value = 1 * scaler;
+        this.uniforms.xOffset.value = 0.10;
+        this.uniforms.yOffset.value = 0;
+        this.uniforms.xOffsetPaper.value = lerp(0.03, 0.0, F(frame, 25 * 24, 24));
+        this.uniforms.r.value = 1.0;
+        this.uniforms.g.value = 1.0;
+        this.uniforms.b.value = 0.5;
+        this.uniforms.paperR.value = 0.5;
+        this.uniforms.paperG.value = 0.5;
+        this.uniforms.paperB.value = 0.5;
+        this.uniforms.overlayer.value = lerp(1, 0, F(frame, 25 * 24 + 12 + 6, 6));
       }
       if(BAR >= 25 && BAR < 26) {
         this.uniforms.overlayer.value = 1;

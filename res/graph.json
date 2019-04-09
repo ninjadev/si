@@ -10,6 +10,7 @@
     "id": "sceneSwitcherNode",
     "type": "SceneSwitcherNode",
     "connected": {
+      "Startlogo": "starterkit.render",
       "A1": "patterns.render",
       "A2": "cubobbobob.render",
       "B1": "NorwayNode.render",
@@ -18,13 +19,13 @@
       "A4": "trees.render",
       "B3": "HexFlightMainScene.render",
       "B4": "LineDepth.render",
-      "Scratches": "patterns.render",
       "B5intro": "moose.render",
       "B5": "dancing.render",
       "B6": "dancing.render",
       "A5": "MommaBird.render",
       "A6": "bands.render",
-      "Outro": "starterkit.render"
+      "Outro": "starterkit.render",
+      "Scratches": "patterns.render"
     }
   },
   {
@@ -161,15 +162,14 @@
       "C": "didyousayess.render",
       "D": "boxes.render",
       "E": "sirpathrick.render",
-      "F": "floats.render",
+      "F": "diamond.render",
       "G": "spirals.render",
       "H": "diagonals.render",
       "I": "tubes.render",
       "J": "cross.render",
-      "K": "diamond.render",
-      "L": "stairs.render",
-      "M": "ripple.render",
-      "N": "Yoga.render"
+      "K": "stairs.render",
+      "L": "Yoga.render",
+      "M": "ripple.render"
     }
   },
   {
@@ -207,6 +207,13 @@
     "connected": {
       "A": "Waller.render",
       "PaperContent": "paperframer.render"
+    }
+  },
+  {
+    "id": "twistorama",
+    "type": "twistoramaNode",
+    "options": {
+      "shader": "twistorama"
     }
   }
 ]

@@ -24,41 +24,15 @@
 
       this.oomph = 1.0;
 
-      this.commodoreLogos = [];
-      this.logoWrapperRight = new THREE.Object3D();
-      this.logoWrapperLeft = new THREE.Object3D();
-
-      for (let row = 0; row < 5; row++) {
-        for (let col = 0; col < 20; col++) {
-          let logo = CommodoreLogo(25);
-          logo.position.set(
-            -150 + col * (25 + 5),
-            // 5 rows a 25 + 15, offsets 80 40 0 40 80
-            80 - (25 + 15) * row,
-            //-100 + row * (25 + 15),
-            0
-          );
-          this.commodoreLogos.push(logo);
-          if (row % 2 == 0) {
-            this.logoWrapperLeft.add(logo);
-          } else {
-            this.logoWrapperRight.add(logo);
-          }
-        }
-      }
-      //this.scene.add(this.logoWrapperLeft);
-      this.logoWrapperRight.rotation.y = Math.PI;
-      //this.scene.add(this.logoWrapperRight);
-
       this.chicks = [];
-      this.chick1 = CommodoreLogo(25);
-      this.chick2 = CommodoreLogo(25);
-      this.chick3 = CommodoreLogo(25);
+      this.chick1 = CommodoreLogo(25, '#ffffff');
+      this.chick2 = CommodoreLogo(25, '#ffffff');
+      this.chick3 = CommodoreLogo(25, '#ffffff');
 
-      this.mommaBird = CommodoreLogo(50);
+      this.mommaBird = CommodoreLogo(50, '#ffffff');
       this.scene.add(this.mommaBird);
 
-      this.nest = new Path({directionSize: 2});
+      this.nest = new Path();
       this.nest.lineTo(-40, -10);
       this.nest.lineTo(-20, -20);
       this.nest.lineTo(20, -20);
@@ -184,10 +158,27 @@
 
       const start = 7631;
       const mommaIsStationary = 180;
-
-      this.chick1.rotation.z = lerp(Math.PI / 2, Math.PI / 3, (frame - start - mommaIsStationary) / 20);
-      this.chick2.rotation.z = lerp(Math.PI / 2, Math.PI / 4, (frame - start - mommaIsStationary) / 30);
-      this.chick3.rotation.z = lerp(Math.PI / 2, Math.PI / 5, (frame - start - mommaIsStationary) / 10);
+      this.chick1.rotation.z = lerp(
+        Math.PI / 2,
+        lerp(
+          Math.PI / 3,
+          Math.PI / 2,
+          (frame - start - 510) / 20),
+        (frame - start - mommaIsStationary) / 20);
+      this.chick2.rotation.z = lerp(
+        Math.PI / 2,
+        lerp(
+          Math.PI / 4,
+          Math.PI / 2,
+          (frame - start - 510) / 30),
+        (frame - start - mommaIsStationary) / 30);
+      this.chick3.rotation.z = lerp(
+        Math.PI / 2,
+        lerp(
+          Math.PI / 5,
+          Math.PI / 2,
+          (frame - start - 510) / 10),
+        (frame - start - mommaIsStationary) / 10);
 
       this.mommaBird.scale.x = 1 + 0.1 * this.oomph;
       this.mommaBird.scale.y = 1 + 0.2 * this.oomph;

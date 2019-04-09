@@ -1,4 +1,9 @@
 (function(global) {
+  function easeInOutElastic(a, b, t) {
+    t = (t -= .5) < 0 ? (.02 + .01 / t) * Math.sin(50 * t) : (.02 - .01 / t) * Math.sin(50 * t) + 1;
+    return lerp(a, b, t);
+  }
+
   class dancing extends NIN.THREENode {
     constructor(id, options) {
       super(id, {
@@ -251,6 +256,9 @@
       this.wall.material.map.wrapS = THREE.RepeatWrapping;
       this.wall.material.map.wrapT = THREE.RepeatWrapping;
       this.scene.add(this.wall);
+
+      this.mommaBird = CommodoreLogo(100, '#ffffff');
+      this.scene.add(this.mommaBird);
     }
 
     update(frame) {
@@ -270,6 +278,20 @@
         body.frontright.visible = (BEAN % 36 >= 18 && BEAN % 36 < 24) || (BEAN % 36 >= 30);
         body.backright.visible = BEAN % 36 >= 24 && BEAN % 36 < 30;
       }
+
+      let rotationChain;
+      rotationChain = smoothstep(Math.PI + Math.PI / 4, Math.PI * (4 / 5), (frame - 7556) / 100);
+      rotationChain = smoothstep(Math.PI, rotationChain, (frame - 7306) / 120);
+
+      const openMouth = BEAN % 2 == 0;
+      this.mommaBird.upperBeak.rotation.z = openMouth ? Math.PI / 16 : 0;
+      this.mommaBird.lowerBeak.rotation.z = openMouth ? -Math.PI / 32 : 0;
+
+      this.mommaBird.rotation.z = rotationChain;
+      this.mommaBird.position.y = easeIn(150, 300, (frame - 7556) / 60);
+      this.mommaBird.position.x = smoothstep(320, smoothstep(230, 50, (frame - 7556) / 60), (frame - 7306) / 120);
+      
+      Math.sin(frame / 10) * 10;
     }
   }
 
