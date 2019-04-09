@@ -57,7 +57,9 @@
     "type": "NorwayNode",
     "connected": {
       "sirpathrick": "sirpathrick.render",
-      "boxes": "boxes.render"
+      "boxes": "boxes.render",
+      "cross": "cross.render",
+      "moose": "moose.render"
     }
   },
   {

@@ -92,11 +92,11 @@ void main() {
     }
     else if (intensity < THRESHOLD_10 / 256.)
     {
-      output_color = texture2D(z10, vUv);
+      output_color = texture2D(z10, vUv * 3.);
     }
     else
     {
-      output_color = texture2D(z11, vUv);
+      output_color = texture2D(z11, vUv * 3.);
     }
     /*output_color = vec4(output_color.r - red * 10.,
                             output_color.g - green * 10., 
