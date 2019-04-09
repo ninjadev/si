@@ -68,7 +68,7 @@
       if(BAR >= 13 && BAR < 14) {
         this.uniforms.overlayer.value = 1;
         this.uniforms.image.value = this.enMap;
-        const scaler = elasticOut(1.0, .1, 1, F(frame, 13 * 24, 3));
+        const scaler = 1;//elasticOut(1.0, .1, 1, F(frame, 13 * 24, 3));
         this.uniforms.xScale.value = 2100 / 1500 * scaler;
         this.uniforms.yScale.value = 1 * scaler;
         this.uniforms.xOffset.value = lerp(0.2, 0.22, F(frame, 13 * 24, 24));

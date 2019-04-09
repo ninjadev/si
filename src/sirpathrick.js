@@ -54,6 +54,10 @@
     update(frame) {
       super.update(frame);
 
+      if (frame > FRAME_FOR_BEAN(330)) {
+        frame = frame + FRAME_FOR_BEAN(24 * 12.5) - FRAME_FOR_BEAN(330);
+      }
+
       const startFrame = FRAME_FOR_BEAN(24 * 12.5);
       for (let i = 0; i < this.lines.length; i++) {
         const path = this.lines[i].path;
