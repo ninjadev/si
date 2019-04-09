@@ -213,28 +213,28 @@
     update(frame) {
       super.update(frame);
 
-      const startFrame = FRAME_FOR_BEAN(48 * 13.5);
-      const endFrame = FRAME_FOR_BEAN(48 * 17.5);
+      const startFrame = FRAME_FOR_BEAN(24 * 57);
+      const endFrame = FRAME_FOR_BEAN(24 * 61);
       const duration = endFrame - startFrame;
 
       for (let i = 0; i < this.bands.length; i++) {
         for (const line of this.bands[i]) {
           const path = line.path;
           path.material.uniforms.drawStart.value = 0;
-          path.material.uniforms.drawEnd.value = lerp(0, 1, (frame - startFrame - this.bands.length * 20 + i * 20 + 20) / 300);
+          path.material.uniforms.drawEnd.value = lerp(0, 1, (frame - startFrame - this.bands.length * 15 + i * 15 + 100) / 300);
           path.material.uniforms.wobbliness.value = 1;
         }
         const drape = this.drapes[i];
         //drape.position.y = clamp(-50, 0, -600 + 1200 * Math.sin(frame / 100 - i * 0.01) + 300 + 300 * Math.sin(i));
-        if (frame < startFrame + this.bands.length * 20 - i * 20 - 20) {
+        if (frame < startFrame + this.bands.length * 15 - i * 15 - 100) {
           drape.position.y = -1000;
         } else {
-          drape.position.y = lerp(-600, 0, (frame - startFrame - this.bands.length * 20 + i * 20 + 20) / 300);
+          drape.position.y = lerp(-600, 0, (frame - startFrame - this.bands.length * 15 + i * 15 + 100) / 300);
         }
       }
 
       for (const [index, cloud] of this.clouds.entries()) {
-        const cloudFrame = FRAME_FOR_BEAN(48 * 14.5 + 6 + index * 12);
+        const cloudFrame = FRAME_FOR_BEAN(24 * 57 + 6 + index * 12);
         if (frame >= cloudFrame && frame < cloudFrame + 200) {
           for (const circle of cloud.circles) {
             circle.mesh.scale.setScalar(
