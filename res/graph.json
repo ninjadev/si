@@ -22,7 +22,7 @@
       "B5intro": "moose.render",
       "B5": "dancing.render",
       "B6": "dancing.render",
-      "A5": "moose.render",
+      "A5": "MommaBird.render",
       "A6": "bands.render",
       "Outro": "starterkit.render"
     }

@@ -182,7 +182,7 @@
       this.chick3.upperBeak.rotation.z = openMouth ? Math.PI / 3 : 0;
       this.chick3.lowerBeak.rotation.z = openMouth ? -Math.PI / 3 : 0;
 
-      const start = 1007;
+      const start = 7631;
       const mommaIsStationary = 180;
 
       this.chick1.rotation.z = lerp(Math.PI / 2, Math.PI / 3, (frame - start - mommaIsStationary) / 20);

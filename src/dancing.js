@@ -245,7 +245,7 @@
         new THREE.MeshBasicMaterial({
           color: 0xffffff,
           map: Loader.loadTexture('res/paper.png'),
-          side: THREE.DoubleSide,
+          side: THREE.BackSide,
         }));
       this.wall.material.map.repeat.set(4, 4);
       this.wall.material.map.wrapS = THREE.RepeatWrapping;
@@ -255,8 +255,8 @@
 
     update(frame) {
       super.update(frame);
-      const startframe = 8080;
-      this.camera.position.z = lerp(70, 1500, Math.tan((frame-startframe) * 0.001));
+      const startframe = 6767;
+      this.camera.position.z = lerp(70, 500, Math.tan((frame - startframe) * 0.0010));
 
       for(let i = 0; i < this.discolines.length; i++) {
         const path = this.discolines[i].path;
@@ -264,7 +264,7 @@
         path.material.uniforms.drawEnd.value = i == 2 ? lerp(0, 1, Math.tan((frame - startframe)/10)) : 1;
       }
 
-      for(const body of this.guys) {
+      for (const body of this.guys) {
         body.frontleft.visible = (BEAN % 36 < 6) || (BEAN % 36 >= 12 && BEAN % 36 < 18);
         body.backleft.visible = BEAN % 36 >= 6 && BEAN % 36 < 12;
         body.frontright.visible = (BEAN % 36 >= 18 && BEAN % 36 < 24) || (BEAN % 36 >= 30);
