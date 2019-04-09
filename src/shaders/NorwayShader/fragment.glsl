@@ -1,6 +1,8 @@
 uniform float frame;
 uniform float fade_in;
 uniform sampler2D tDiffuse;
+uniform sampler2D tPlume;
+uniform sampler2D tBorder;
 uniform sampler2D z1;
 uniform sampler2D z2;
 uniform sampler2D z3;
@@ -36,7 +38,7 @@ varying vec2 vUv;
 void main() {
     //gl_FragColor = vec4(vUv, 0.5 + 0.5 * sin(frame / 60.0), 1.0);
     vec4 color = texture2D(tDiffuse, vUv);
-    
+
     // Doing edge detection, simple sobel thingy
     vec4 up = texture2D(tDiffuse, vec2(vUv.x, vUv.y + EDGE_WIDTH));
     vec4 right = texture2D(tDiffuse, vec2(vUv.x + EDGE_WIDTH, vUv.y));
@@ -99,13 +101,10 @@ void main() {
       output_color = texture2D(z11, vUv * 3.);
     }
     /*output_color = vec4(output_color.r - red * 10.,
-                            output_color.g - green * 10., 
-                            output_color.b - blue * 10., 
+                            output_color.g - green * 10.,
+                            output_color.b - blue * 10.,
                             1.0);
     */
-    if (red > 0.008) {
-        output_color = vec4(0., 0., 0., 1.);
-    }
 
     if (intensity < THRESHOLD_BG / 256.)
     {
@@ -113,6 +112,12 @@ void main() {
     }
 
     output_color = output_color * fade_in + fade_in_color * (1. - fade_in);
+
+    vec4 borderColor = texture2D(tBorder, vUv);
+    vec4 plumeColor = texture2D(tPlume, vUv);
+    output_color = vec4(mix(output_color.rgb, borderColor.rgb, borderColor.a), max(output_color.a, borderColor.a));
+
+    output_color = vec4(mix(plumeColor.rgb, output_color.rgb, output_color.a), max(output_color.a, plumeColor.a));
 
     gl_FragColor = output_color;
 }

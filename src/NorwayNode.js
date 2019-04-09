@@ -20,6 +20,14 @@
 
 
       this.map_image = Loader.loadTexture('res/map/norge.png');
+      this.map_plume = Loader.loadTexture('res/norge-plume.png');
+      this.map_borders = Loader.loadTexture('res/norge-border.png');
+      this.map_plume.minFilter = THREE.LinearFilter;
+      this.map_plume.magFilter = THREE.LinearFilter;
+      this.map_borders.minFilter = THREE.LinearFilter;
+      this.map_borders.magFilter = THREE.LinearFilter;
+      this.map_image.minFilter = THREE.LinearFilter;
+      this.map_image.magFilter = THREE.LinearFilter;
       //this.z1 = Loader.loadTexture('res/map/testpattern.jpg');
       this.z1 = Loader.loadTexture('res/map/t1.png');
       this.z2 = Loader.loadTexture('res/map/t2.png');
@@ -54,6 +62,8 @@
       this.map_object.material.transparent = true;
 
       this.map_object.material.uniforms.tDiffuse.value = this.map_image;
+      this.map_object.material.uniforms.tPlume.value = this.map_plume;
+      this.map_object.material.uniforms.tBorder.value = this.map_borders;
       //this.map_object.material.uniforms.z1.value = this.z1;
       this.map_object.material.uniforms.z2.value = this.z2;
       this.map_object.material.uniforms.z3.value = this.z3;
@@ -66,6 +76,15 @@
       this.map_object.material.uniforms.z9.value = this.z9;
       this.map_object.material.uniforms.z10.value = this.z10;
       this.map_object.material.uniforms.z11.value = this.z11;
+
+      this.bg = new THREE.Mesh(
+        new THREE.BoxGeometry(1000, 1000, 1000),
+        new THREE.MeshBasicMaterial({
+          color: 0x7fffff,
+          side: THREE.BackSide,
+        }));
+
+      this.scene.add(this.bg);
 
       var light = new THREE.PointLight(0xffffff, 1, 100);
       light.position.set(50, 50, 50);
