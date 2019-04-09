@@ -15,8 +15,64 @@
   "googleAnalyticsID": "Your GA ID",
   "labels": [
     {
-      "name": "Start",
+      "name": "Preroll",
       "BEAN": 0
+    },
+    {
+      "name": "A1",
+      "BEAN": 120
+    },
+    {
+      "name": "A2",
+      "BEAN": 216
+    },
+    {
+      "name": "B1",
+      "BEAN": 312
+    },
+    {
+      "name": "B2",
+      "BEAN": 408
+    },
+    {
+      "name": "A3",
+      "BEAN": 504
+    },
+    {
+      "name": "A4",
+      "BEAN": 600
+    },
+    {
+      "name": "B3",
+      "BEAN": 696
+    },
+    {
+      "name": "B4",
+      "BEAN": 792
+    },
+    {
+      "name": "Scratches",
+      "BEAN": 888
+    },
+    {
+      "name": "B5",
+      "BEAN": 1080
+    },
+    {
+      "name": "B6",
+      "BEAN": 1176
+    },
+    {
+      "name": "A5",
+      "BEAN": 1272
+    },
+    {
+      "name": "A6",
+      "BEAN": 1368
+    },
+    {
+      "name": "Outro",
+      "BEAN": 1464
     }
   ]
 }
