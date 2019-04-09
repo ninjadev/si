@@ -61,7 +61,9 @@
       "cross": "cross.render",
       "moose": "moose.render",
       "pathy": "pathy.render",
-      "diagonals": "diagonals.render"
+      "diagonals": "diagonals.render",
+      "Yoga": "Yoga.render",
+      "ripple": "ripple.render"
     }
   },
   {

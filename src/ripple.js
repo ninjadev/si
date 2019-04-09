@@ -56,6 +56,11 @@
     update(frame) {
       super.update(frame);
 
+      // Time shift used only on the map scene
+      if (frame > FRAME_FOR_BEAN(330) && frame <= FRAME_FOR_BEAN(408)) {
+        frame = frame + 7500 - FRAME_FOR_BEAN(330);
+      }
+
       const startFrame = FRAME_FOR_BEAN(48 * 25 + 24);
 
       for (let i = 0; i < this.lines.length; i++) {

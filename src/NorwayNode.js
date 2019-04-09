@@ -13,6 +13,8 @@
           pathy: new NIN.TextureInput(),
           moose: new NIN.TextureInput(),
           diagonals: new NIN.TextureInput(),
+          Yoga: new NIN.TextureInput(),
+          ripple: new NIN.TextureInput(),
         },
       });
 
@@ -81,6 +83,9 @@
         var start_x = 8.6;
         var start_y = 18.6;
 
+        var back_x = 30;
+        var back_y = 6;
+
         this.camera.up = new THREE.Vector3(0,0,1);
         this.camera.lookAt(new THREE.Vector3(start_x, start_y, 0));
         this.camera.position.z = 10.9;
@@ -96,7 +101,7 @@
         this.camera.position.z = 4.9;
         this.camera.position.y = start_y-0.01 - df / 6; 
         this.camera.position.x = start_x - smoothstep(0, 30, df / 100);
-      } else if (BEAN < 524) {
+      } /*else if (BEAN < 524) {
         var start_x = 8.6;
         var start_y = 18.6;
         var df = FRAME_FOR_BEAN(504) - 2870;
@@ -126,7 +131,7 @@
         this.camera.position.z = 10.9;
         this.camera.position.y = start_y-0.01 - df / 6; 
         this.camera.position.x = start_x - smoothstep(0, 30, df / 100);
-      } 
+      } */
 
       // These needs to be set in update for nin reasons
       this.map_object.material.uniforms.z1.value = this.inputs.sirpathrick.getValue();
@@ -137,11 +142,16 @@
       this.map_object.material.uniforms.z5.value = this.inputs.diagonals.getValue();
       this.map_object.material.uniforms.z6.value = this.inputs.cross.getValue();
       this.map_object.material.uniforms.z4.value = this.inputs.boxes.getValue();
-      //this.map_object.material.uniforms.z7.value = this.inputs.boxes.getValue();
-      //this.map_object.material.uniforms.z3.value = this.inputs.boxes.getValue();
-      //this.map_object.material.uniforms.z2.value = this.inputs.boxes.getValue();
+      
+      this.map_object.material.uniforms.z7.value = this.inputs.diagonals.getValue();
+      
+      this.map_object.material.uniforms.z3.value = this.inputs.Yoga.getValue();
+      
+      this.map_object.material.uniforms.z2.value = this.inputs.ripple.getValue();
+      
       this.map_object.material.uniforms.z10.value = this.inputs.moose.getValue();
-      //this.map_object.material.uniforms.z11.value = this.inputs.moose.getValue();
+      
+      this.map_object.material.uniforms.z11.value = this.inputs.Yoga.getValue();
 
       this.flateby_sign.quaternion.copy(this.camera.quaternion);
 
