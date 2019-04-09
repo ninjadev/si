@@ -3,7 +3,7 @@
 
     spawnPlanes() {
       this.planes = [];
-      this.planeCount = 16;
+      this.planeCount = 19;
       this.planeDistance = 15;
       const hexFlightMaterial = new THREE.ShaderMaterial(SHADERS.HexFlight).clone();
       const hexSolidMaterial = new THREE.ShaderMaterial(SHADERS.HexSolid).clone();
@@ -67,7 +67,7 @@
       var SHORTDIST = 20;
       var LONGDIST = 50;
 
-      this.camera.position.z = -(frame - 6030) / 5;
+      this.camera.position.z = -(frame - 4035) / 5;
       var dvz = -1/5;
       var camerapandist = 5;
       var camerapanangler = 1.4;
