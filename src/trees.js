@@ -222,10 +222,11 @@
     update(frame) {
       super.update(frame);
 
-      const startFrame = FRAME_FOR_BEAN(48 * 19);
-      const wifiStartFrame = FRAME_FOR_BEAN(48 * 19 + 24);
-      const zoomOutFrame = FRAME_FOR_BEAN(48 * 20);
-      const zoomInFrame = FRAME_FOR_BEAN(48 * 20 + 24);
+      const startFrame = FRAME_FOR_BEAN(24 * 21);
+      const wifiStartFrame = FRAME_FOR_BEAN(24 * 23);
+      const zoomOutFrame = FRAME_FOR_BEAN(24 * 24);
+      const zoomInFrame = FRAME_FOR_BEAN(24 * 26);
+      const endFrame = FRAME_FOR_BEAN(24 * 28);
 
       for (let i = 0; i < this.lines.length; i++) {
         const path = this.lines[i].path;
@@ -262,7 +263,7 @@
       }
 
       this.signal.path.material.uniforms.drawStart.value = 0;
-      this.signal.path.material.uniforms.drawEnd.value = lerp(0, 1, (frame - zoomOutFrame - 10) / 100);
+      this.signal.path.material.uniforms.drawEnd.value = lerp(0, 1, (frame - zoomOutFrame - 10) / 300);
       this.signal.path.material.uniforms.wobbliness.value = 1;
 
       this.tent.path.material.uniforms.drawStart.value = 0;
@@ -308,11 +309,12 @@
           .2, 0, (frame - zoomOutFrame) / (zoomInFrame - zoomOutFrame));
         this.camera.rotation.z = 0;
       } else {
-        this.camera.position.x = lerp(-560, -651, (frame - zoomInFrame) / 287);
-        this.camera.position.y = lerp(78, -45.2, (frame - zoomInFrame) / 287);
-        this.camera.position.z = lerp(515, 268.5, (frame - zoomInFrame) / 287);
+        const duration = endFrame - zoomInFrame;
+        this.camera.position.x = lerp(-560, -651, (frame - zoomInFrame) / duration);
+        this.camera.position.y = lerp(78, -45.2, (frame - zoomInFrame) / duration);
+        this.camera.position.z = lerp(515, 268.5, (frame - zoomInFrame) / duration);
 
-        this.camera.rotation.x = easeIn(-.25, 0, (frame - zoomInFrame) / 287);
+        this.camera.rotation.x = easeIn(-.25, 0, (frame - zoomInFrame) / duration);
         this.camera.rotation.y = 0;
         this.camera.rotation.z = 0;
       }

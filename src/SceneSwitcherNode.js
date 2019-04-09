@@ -58,7 +58,7 @@
         selectedScene = this.inputs.B2;
       } else if (BEAN < 24 * 25) {
         selectedScene = this.inputs.A3;
-      } else if (BEAN < 24 * 29) {
+      } else if (BEAN < 24 * 28) { // One beat early ;)
         selectedScene = this.inputs.A4;
       } else if (BEAN < 24 * 33) {
         selectedScene = this.inputs.B3;
