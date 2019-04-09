@@ -235,7 +235,7 @@
         this.light1.intensity = 0.0;
       } else {
         this.light1.intensity = easeOut(
-          0, 1, (frame - 130) / 90);
+          0, 1, (frame - 132) / 150);
       }
 
       this.hemiLight.intensity = 0.1 + this.light1.intensity * 0.5;
@@ -279,14 +279,25 @@
         Math.pow(lerp(0, 1, F(frame, 324, 24 + 12)), 8.));
       }
 
-      this.cameraRotationDDD.x = (Math.random() - 0.5) * 0.001;
-      this.cameraRotationDDD.y = (Math.random() - 0.5) * 0.001;
-      this.cameraRotationDDD.z = (Math.random() - 0.5) * 0.001;
+      this.cameraRotationDDD.x += (Math.random() - 0.5) * 0.0002;
+      this.cameraRotationDDD.y += (Math.random() - 0.5) * 0.0002;
+      this.cameraRotationDDD.z += (Math.random() - 0.5) * 0.0002;
+
+      this.cameraRotationDD.x += (Math.random() - 0.5) * 0.001;
+      this.cameraRotationDD.y += (Math.random() - 0.5) * 0.001;
+      this.cameraRotationDD.z += (Math.random() - 0.5) * 0.001;
+
+      if(BEAN >= 120 && BEAN < 123) {
+        this.camera.rotation.x = (Math.random() - 0.5) * 0.02;
+        this.camera.rotation.y = (Math.random() - 0.5) * 0.02;
+        this.camera.rotation.z = (Math.random() - 0.5) * 0.02;
+      }
 
       this.cameraRotationDD.add(this.cameraRotationDDD);
       this.cameraRotationDD.x -= this.camera.rotation.x * 0.1;
       this.cameraRotationDD.y -= this.camera.rotation.y * 0.1;
       this.cameraRotationDD.z -= this.camera.rotation.z * 0.1;
+      this.cameraRotationDDD.multiplyScalar(0.9);
       this.cameraRotationDD.multiplyScalar(0.1);
       this.cameraRotationD.add(this.cameraRotationDD);
       this.cameraRotationD.multiplyScalar(0.85);

@@ -67,10 +67,10 @@
 
       this.titles = [
         {
-          startFrame: 400,
+          startFrame: 140,
           endFrame: 719,
           transition: 10,
-          text: XWrite('FLT SHD SCTY'),
+          text: XWrite('NINJADEV'),
         },
         {
           startFrame: 719,
