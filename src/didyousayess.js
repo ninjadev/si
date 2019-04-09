@@ -85,7 +85,7 @@
     update(frame) {
       super.update(frame);
 
-      const startFrame = FRAME_FOR_BEAN(48 * 8) - 200;
+      const startFrame = FRAME_FOR_BEAN(24 * 9) - 200;
       const verticalFrame = startFrame;
       const diagonalFrame = startFrame + 100;
       const backlineFrame = startFrame + 200;

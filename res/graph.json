@@ -65,7 +65,10 @@
   },
   {
     "id": "cubobbobob",
-    "type": "cubobbobob"
+    "type": "cubobbobob",
+    "connected": {
+      "background": "patterns.render"
+    }
   },
   {
     "id": "pathy",
@@ -149,8 +152,8 @@
       "A": "gems.render",
       "B": "pathy.render",
       "C": "didyousayess.render",
-      "D": "sirpathrick.render",
-      "E": "boxes.render",
+      "D": "boxes.render",
+      "E": "sirpathrick.render",
       "F": "floats.render",
       "G": "spirals.render",
       "H": "diagonals.render",

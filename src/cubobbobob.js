@@ -3,8 +3,11 @@
     constructor(id, options) {
       super(id, {
         camera: options.camera,
+        inputs: {
+          background: new NIN.TextureInput(),
+        },
         outputs: {
-          render: new NIN.TextureOutput()
+          render: new NIN.TextureOutput(),
         }
       });
       this.geometry = new THREE.BoxGeometry(50, 50, 50, 50, 50, 50);
@@ -17,6 +20,12 @@
       var light = new THREE.PointLight(0xffffff, 1, 100);
       light.position.set(50, 50, 50);
       this.scene.add(light);
+
+      this.background = new THREE.Mesh(
+        new THREE.BoxGeometry(200, 112.5, 1),
+        new THREE.MeshBasicMaterial({color: 0xffffff}));
+      this.scene.add(this.background);
+      this.background.position.z = -100;
 
       this.camera.position.z = 100;
     }
@@ -35,6 +44,9 @@
         this.sign *= -1;
         this.twists = -100;
       }
+
+      this.background.material.map = this.inputs.background.getValue();
+      this.background.material.needsUpdate = true;
     }
 
     twist(amount) {
