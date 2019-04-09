@@ -257,7 +257,7 @@
       this.wall.material.map.wrapT = THREE.RepeatWrapping;
       this.scene.add(this.wall);
 
-      this.mommaBird = CommodoreLogo(100, fillColor='#ffffff');
+      this.mommaBird = CommodoreLogo(100, '#ffffff');
       this.scene.add(this.mommaBird);
     }
 
@@ -281,7 +281,7 @@
 
       let rotationChain;
       rotationChain = smoothstep(Math.PI + Math.PI / 4, Math.PI * (4 / 5), (frame - 7556) / 100);
-      rotationChain = smoothstep(Math.PI, rotationChain, (frame - 7376) / 120);
+      rotationChain = smoothstep(Math.PI, rotationChain, (frame - 7306) / 120);
 
       const openMouth = BEAN % 2 == 0;
       this.mommaBird.upperBeak.rotation.z = openMouth ? Math.PI / 16 : 0;
@@ -289,7 +289,7 @@
 
       this.mommaBird.rotation.z = rotationChain;
       this.mommaBird.position.y = easeIn(150, 300, (frame - 7556) / 60);
-      this.mommaBird.position.x = smoothstep(320, smoothstep(230, 50, (frame - 7556) / 60), (frame - 7376) / 120);
+      this.mommaBird.position.x = smoothstep(320, smoothstep(230, 50, (frame - 7556) / 60), (frame - 7306) / 120);
       
       Math.sin(frame / 10) * 10;
     }
