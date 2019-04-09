@@ -1,7 +1,10 @@
 #define AA 2
-uniform sampler2D iChannel1;
-uniform sampler2D iChannel2;
 uniform float frame;
+uniform float blobbiness;
+uniform float cutSpacing;
+uniform float xScale;
+uniform float yScale;
+uniform float zScale;
 uniform float rotater;
 uniform float scratcher;
 varying vec2 vUv;
@@ -103,14 +106,15 @@ const float pi = 3.1415927;
 vec2 map(vec3 p) {
     p *= 0.5;
     vec3 boxPoint = rotateY(rotater + -pi / 4. + scratcher * p.y) * (p + vec3(0., 0., 0.));
-    float box = sdBox(boxPoint, vec3(1., 2., 1.) / 6.);
+    float box = sdBox(boxPoint, vec3(1. * xScale, 1. * yScale, 1. * zScale) / 6.);
     float shapes = box;
     float ground = 9999999.;
 
-    float spacing = 0.15;
+    float spacing = cutSpacing;
     shapes = max(shapes, -sdBox(p, vec3(10., spacing / 4., 10.)));
     shapes = max(shapes, -sdBox(p + vec3(0., spacing, 0.), vec3(10., spacing / 4., 10.)));
     shapes = max(shapes, -sdBox(p + vec3(0., -spacing, 0.), vec3(10., spacing / 4., 10.)));
+
 
     return vec2(shapes, 1.);
 }
@@ -184,10 +188,10 @@ vec3 shade(in vec3 ro, in vec3 rd, in float t, in float m) {
     float fsha = 1.;
 
     vec3 green = vec3(56., 32., 43.) / 255.;
-    vec3 yellow = vec3(255., 252., 0.) / 255.;
+    vec3 yellow = vec3(.2, .2, 1.);
 
     if(m < 1.5) {
-        float dis = texture2D( iChannel1, 5.0*pos.xy ).x;
+        float dis = 0.;
 
         float be = sdEllipsoid( pos, vec3(-0.3,-0.5,-0.1), vec3(0.2,1.0,0.5) );
         be = 1.0-smoothstep( -0.01, 0.01, be );
@@ -200,7 +204,7 @@ vec3 shade(in vec3 ro, in vec3 rd, in float t, in float m) {
         mateS *= 1.0 + 0.5*ff*ff;
         mateS *= 1.0-0.5*be;
 
-        mateD = vec3(1.0,0.8,0.4);
+        mateD = vec3(1.0,1.0,0.5);
         mateD *= dis;
         mateD *= 0.015;
         mateD += vec3(0.8,0.4,0.3)*0.15*be;
@@ -209,13 +213,13 @@ vec3 shade(in vec3 ro, in vec3 rd, in float t, in float m) {
 
         float f = clamp( dot( -rd, nor ), 0.0, 1.0 );
         f = 1.0-pow( f, 8.0 );
-        f = 1.0 - (1.0-f)*(1.0-texture2D( iChannel2, 0.3*pos.xy ).x);
-        mateS *= vec3(0.5,0.1,0.0) + f*vec3(0.5,0.9,1.0);
+        f = 1.0 - (1.0-f)*(1.0-0.);
+        mateS *= vec3(0.5,0.1,1.0) + f*vec3(0.5,0.9,1.0);
 
         float b = 1.0-smoothstep( 0.25,0.55,abs(pos.y));
         focc = 0.2 + 0.8*smoothstep( 0.0, 0.15, sdSphere(pos,vec4(0.05,0.52,0.0,0.13)) );
     } else if (m < 2.5) {
-        float dis = texture2D(iChannel1, 5.0*pos.xy ).x;
+        float dis = 0.;
 
         float be = sdEllipsoid( pos, vec3(-0.3,-0.5,-0.1), vec3(0.2,1.0,0.5) );
         be = 1.0-smoothstep( -0.01, 0.01, be );
@@ -243,7 +247,7 @@ vec3 shade(in vec3 ro, in vec3 rd, in float t, in float m) {
 
         float f = clamp( dot( -rd, nor ), 0.0, 1.0 );
         f = 1.0-pow( f, 8.0 );
-        f = 1.0 - (1.0-f)*(1.0-texture2D( iChannel2, 0.3*pos.xy ).x);
+        f = 1.0 - (1.0-f)*(1.0-0.);
         mateS *= vec3(0.5,0.1,0.0) + f*vec3(0.5,0.9,1.0);
 
         float b = 1.0-smoothstep( 0.25,0.55,abs(pos.y));
@@ -323,6 +327,8 @@ vec4 render(in vec3 ro, in vec3 rd, in vec2 q) {
         col.rgb = shade(ro, rd, tm.x, tm.y);
         col.a = 1.;
         maxdist = tm.x;
+    } else {
+        col = vec4(0.);
     }
 
     return clamp( col, 0.0, 1.0 );

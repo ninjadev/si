@@ -12,9 +12,25 @@
         }
       });
 
+      this.rotaterPosition = 0;
+      this.rotaterSpeed = 0;
+      this.scratcherPosition = 0;
+      this.scratcherSpeed = 0;
+
       this.camera.near = 0.01;
       this.camera.far = 50;
       this.camera.updateProjectionMatrix();
+
+      this.twistoramaContainer = new THREE.Mesh(
+        new THREE.PlaneGeometry(1, 1),
+        new THREE.ShaderMaterial(SHADERS.twistorama).clone()
+      );
+      this.twistoramaContainer.material.transparent = true,
+        this.twistoramaContainer.position.z = 0.01;
+      this.twistoramaContainer.scale.set(16 / 100 * 2, 9 / 100 * 2, 1);
+
+      this.scene.add(this.twistoramaContainer);
+
 
 
       const inchToCm = 2.54;
@@ -312,6 +328,80 @@
       if(BEAN >= 216) {
         this.background.material.color.setRGB(0.5, 1.0, 0.5);
       }
+      if(BEAN >= 888) {
+        this.background.material.color.setRGB(1.0, 1.0, 0.5);
+      }
+
+
+
+
+      /* twistorama */
+      const u = this.twistoramaContainer.material.uniforms;
+      u.frame.value = 1500;
+      //u.rotater.value = frame / 10;
+      //u.scratcher.value = 1;
+      //
+
+      this.twistoramaContainer.visible = BEAN >= 888;
+
+      let t = F(frame, 888, 9);
+      u.xScale.value = smoothstep(2, 0, t) + easeOut(0, 1, t);
+      u.yScale.value = smoothstep(2, 0, t) + easeOut(0, 1, t);
+      u.zScale.value = smoothstep(2, 0, t) + easeOut(0, 1, t);
+
+      u.blobbiness.value = 0;
+
+      if(BEAN >= 900 && BEAN < 906) {
+        u.xScale.value = 0.5;
+        u.yScale.value = 0.5;
+        u.zScale.value = 0.5;
+        u.blobbiness.value = smoothstep(0, 1, F(frame, 900, 3));
+      }
+
+      if(BEAT) {
+        switch(BEAN) {
+          case 888:
+            this.rotaterPosition = 0;
+            this.rotaterSpeed = 0.34;
+            this.scratcherPosition = 0;
+            this.scratcherSpeed = 0;
+            break;
+          case 888 + 12:
+            //this.scratcherPosition = ((BEAN - 888) % 8) - 4;
+            //this.scratcherSpeed = (Math.random() - 0.5) * 2;
+            this.rotaterSpeed = -0.2
+            break;
+          case 900:
+          case 24 +888 + 2:
+          case 24 +888 + 5:
+          case 24 +888 + 6:
+          case 24 +888 + 9:
+            this.scratcherPosition = ((BEAN - 888) % 8) - 4;
+            this.scratcherSpeed = (Math.random() - 0.5) * 2;
+        }
+      }
+
+      if(BEAN >= 888) {
+        this.camera.position.y = 0;
+      }
+
+      u.yScale.value = easeIn(u.yScale.value, 6, F(frame, 924 - 6, 6));
+
+      this.camera.position.y = easeIn(0, -0.03, F(frame, 924-5,2));
+      this.camera.position.z = easeIn(.3, 0.15, F(frame, 924-5,2));
+      this.twistoramaContainer.position.x = easeIn(0, 0.042, F(frame, 924 - 5, 2));
+      u.rotater.value = easeIn(0, Math.PI, F(frame, 924 - 5, 2));
+      if(BEAN >= 924 - 3 && BEAN < 900 + 24 + 12) {
+        this.camera.position.y = lerp(-0.03, 0.03, F(frame, 924 -3, 12 + 3));
+        this.camera.position.z = 0.15;
+      }
+
+      this.scratcherSpeed *= 0.95;
+      this.scratcherPosition += this.scratcherSpeed;
+      u.scratcher.value = this.scratcherPosition;
+      this.rotaterSpeed *= 0.95;
+      this.rotaterPosition += this.rotaterSpeed;
+      u.rotater.value = this.rotaterPosition;
 
 
       //demo.renderer.ninGammaOutput = true;

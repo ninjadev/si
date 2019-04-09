@@ -19,13 +19,13 @@
       "A4": "trees.render",
       "B3": "HexFlightMainScene.render",
       "B4": "LineDepth.render",
-      "Scratches": "patterns.render",
       "B5intro": "moose.render",
       "B5": "dancing.render",
       "B6": "dancing.render",
       "A5": "MommaBird.render",
       "A6": "bands.render",
-      "Outro": "starterkit.render"
+      "Outro": "starterkit.render",
+      "Scratches": "patterns.render"
     }
   },
   {
