@@ -44,7 +44,7 @@
     update(frame) {
       super.update(frame);
 
-      const startFrame = FRAME_FOR_BEAN(48 * 5);
+      const startFrame = FRAME_FOR_BEAN(24 * 5);
 
       for (let i = 0; i < this.lines.length; i++) {
         const path = this.lines[i].path;
