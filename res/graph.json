@@ -24,7 +24,7 @@
       "B6": "dancing.render",
       "A5": "MommaBird.render",
       "A6": "bands.render",
-      "Outro": "starterkit.render",
+      "Outro": "end.render",
       "Scratches": "patterns.render"
     }
   },
@@ -215,5 +215,9 @@
     "options": {
       "shader": "twistorama"
     }
+  },
+  {
+    "id": "end",
+    "type": "end"
   }
 ]
