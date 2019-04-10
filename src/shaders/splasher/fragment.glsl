@@ -34,7 +34,7 @@ void main() {
     paperContentColor = vec3(paperR, paperG, paperB) * (1. * grayscalePaper) + (1. - grayscalePaper) * vec3(r, g, b);
 
     vec3 sceneColor = texture2D(tDiffuse, vUv).rgb;
-    vec3 originalSceneColor = sceneColor;
+    vec3 originalSceneColor = vec3(sceneColor);
     float avg = (sceneColor.r + sceneColor.g + sceneColor.b) / 3.;
     avg = avg * 0.0 + 1.0;
     sceneColor = mix(sceneColor, avg * vec3(r, g, b), 1.);
@@ -75,14 +75,13 @@ void main() {
     color = mix(color, vec3(color.r * 0.2989 + color.g * 0.5870 + color.b * 0.1140), generalGrayScaler);
 
     vec2 ruv = vUv;
-    ruv -= 0.5;
-    ruv.x += xOffset;
-    ruv.y += yOffset;
+    ruv *= vec2(16., 9.) / 16.;
+    ruv.x -= 0.19;
+    ruv.y -= .15;
     ruv.x *= xScale;
-    ruv.y *= yScale;
-    ruv *= radiuser * vec2(16. / 9., 1.);
-    ruv += 0.5;
-    float radiusCutoff = 2. * radiuser * sqrt(ruv.x * ruv.x + ruv.y * ruv.y);
+    ruv.y *= xScale;
+    float radius = -1. + 2. * (ruv.x * ruv.x + ruv.y * ruv.y) + sin(3.15 + ruv.x * 13.);
+    gl_FragColor = vec4(color, 1.);
 
-    gl_FragColor = vec4(mix(originalSceneColor, color, radiusCutoff), 1.);
+    //gl_FragColor = vec4(mix(color, originalSceneColor, step(radiuser, radius)), 1.);
 }

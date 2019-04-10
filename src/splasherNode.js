@@ -115,7 +115,7 @@
         this.uniforms.paperR.value = 0.5;
         this.uniforms.paperG.value = 0.5;
         this.uniforms.paperB.value = 0.5;
-        //this.uniforms.overlayer.value = lerp(1, 0, F(frame, 17 * 24 + 12 + 6, 6));
+        this.uniforms.radiuser.value = easeOut(0, 3.5, F(frame, 17 * 24, 24));
         this.uniforms.overlayer.value = 1;
       }
       if(BAR >= 25 && BAR < 26) {
