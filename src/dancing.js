@@ -57,7 +57,7 @@
         let backright = backleft.clone();
         backright.scale.x = -1;
         this.scene.add(backright);
-        let body = {head, hair, frontleft, frontright, backleft, backright}
+        let body = {pos: [x, y + r * 1.5], head, hair, frontleft, frontright, backleft, backright}
         this.guys.push(body);
       }
 
@@ -263,8 +263,35 @@
 
     update(frame) {
       super.update(frame);
-      const startframe = 6767;
-      this.camera.position.z = lerp(70, 500, Math.tan((frame - startframe) * 0.0010));
+      const startframe = 6767
+      const startBEAN = 1128;
+      
+      let z = 35;
+
+      if (BEAN <= startBEAN + 6) {
+        this.camera.position.set(this.guys[0].pos[0], this.guys[0].pos[1], z);
+      } else if (BEAN > startBEAN + 6 && BEAN <= startBEAN + 12) {
+        this.camera.position.set(this.guys[1].pos[0], this.guys[1].pos[1], z);
+      } else if (BEAN > startBEAN + 12 && BEAN <= startBEAN + 18) {
+        this.camera.position.set(this.guys[2].pos[0], this.guys[2].pos[1], z + 5);
+      } else if (BEAN > startBEAN + 18 && BEAN <= startBEAN + 24) {
+        this.camera.position.set(this.guys[3].pos[0], this.guys[3].pos[1], z);
+      } else if (BEAN > startBEAN + 24 && BEAN <= startBEAN + 30) {
+        this.camera.position.set(this.guys[4].pos[0], this.guys[4].pos[1], z + 5);
+      } else if (BEAN > startBEAN + 30 && BEAN <= startBEAN + 36) {
+        this.camera.position.set(this.guys[5].pos[0], this.guys[5].pos[1], z);
+      } else if (BEAN > startBEAN + 36 && BEAN <= startBEAN + 42) {
+        this.camera.position.set(this.guys[6].pos[0], this.guys[6].pos[1], z + 5);
+      } else if (BEAN > startBEAN + 42 && BEAN <= startBEAN + 48) {
+        this.camera.position.set(this.guys[7].pos[0], this.guys[7].pos[1], z);
+      } else if (BEAN > startBEAN + 48 && BEAN <= startBEAN + 54) {
+        this.camera.position.set(0, 140, 160);
+      } else {
+        z = lerp(70, 500, Math.tan((frame - startframe) * 0.0010));
+        let x = 0;
+        let y = 0;
+        this.camera.position.set(x, y, z);
+      }
 
       for(let i = 0; i < this.discolines.length; i++) {
         const path = this.discolines[i].path;
@@ -272,11 +299,13 @@
         path.material.uniforms.drawEnd.value = i == 2 ? lerp(0, 1, Math.tan((frame - startframe)/10)) : 1;
       }
 
-      for (const body of this.guys) {
-        body.frontleft.visible = (BEAN % 36 < 6) || (BEAN % 36 >= 12 && BEAN % 36 < 18);
-        body.backleft.visible = BEAN % 36 >= 6 && BEAN % 36 < 12;
-        body.frontright.visible = (BEAN % 36 >= 18 && BEAN % 36 < 24) || (BEAN % 36 >= 30);
-        body.backright.visible = BEAN % 36 >= 24 && BEAN % 36 < 30;
+      if (BEAN > startBEAN + 48) {
+        for (const body of this.guys) {
+          body.frontleft.visible = (BEAN % 36 < 6) || (BEAN % 36 >= 12 && BEAN % 36 < 18);
+          body.backleft.visible = BEAN % 36 >= 6 && BEAN % 36 < 12;
+          body.frontright.visible = (BEAN % 36 >= 18 && BEAN % 36 < 24) || (BEAN % 36 >= 30);
+          body.backright.visible = BEAN % 36 >= 24 && BEAN % 36 < 30;
+        }
       }
 
       let rotationChain;
