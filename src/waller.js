@@ -390,10 +390,19 @@
         }
       }
 
+      const RUNE_HEX_START_BEAN = 672 - 12;
+      const RUNE_SCANLINES_START_BEAN = 792 + 12;
+      const ALEKS_BIRD_START_BEAN = 1080;
+      if (BEAN >= RUNE_HEX_START_BEAN && BEAN < RUNE_SCANLINES_START_BEAN) {
+        this.camera.position.z = easeIn(.3, 0.16, F(frame, RUNE_HEX_START_BEAN, 12));
+      } else if (BEAN <= RUNE_SCANLINES_START_BEAN + 24) {
+        this.camera.position.z = easeIn(0.16, 0.3, F(frame, RUNE_SCANLINES_START_BEAN, 24));
+      }
+
       this.paper.visible = true;
       this.shadowPaper.visible = true;
       this.forest.visible = false;
-      if(BEAN >= 888) {
+      if (BEAN >= 888 && BEAN < ALEKS_BIRD_START_BEAN) {
         this.camera.position.y = 0;
 
         u.yScale.value = easeIn(u.yScale.value, 6, F(frame, 924 - 6, 6));
@@ -421,10 +430,10 @@
           this.shadowPaper.visible = false;
           this.forest.visible = true;
         }
-
+      } else {
+        this.camera.position.y = 0;
+        this.camera.position.z = easeIn(.15, 0.3, F(frame, ALEKS_BIRD_START_BEAN, 12));
       }
-
-      //demo.renderer.ninGammaOutput = true;
     }
   }
 

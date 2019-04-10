@@ -7,34 +7,35 @@
       this.planeDistance = 15;
       const hexFlightMaterial = new THREE.ShaderMaterial(SHADERS.HexFlight).clone();
       const hexSolidMaterial = new THREE.ShaderMaterial(SHADERS.HexSolid).clone();
-      this.planeShaders = [hexSolidMaterial.clone(),
-                           hexFlightMaterial.clone(),
-                           hexFlightMaterial.clone(),
-                           hexFlightMaterial.clone(),
-                           hexSolidMaterial.clone(),
-                           hexFlightMaterial.clone(),
-                           hexFlightMaterial.clone(),
-                           hexFlightMaterial.clone(),
-                           hexSolidMaterial.clone(),
-                           hexFlightMaterial.clone(),
-                           hexFlightMaterial.clone(),
-                           hexFlightMaterial.clone(),
-                           hexSolidMaterial.clone(),
-                           hexFlightMaterial.clone(),
-                           hexFlightMaterial.clone(),
-                           hexFlightMaterial.clone(),
-                           hexSolidMaterial.clone(),
-                           hexSolidMaterial.clone(),
-                           hexSolidMaterial.clone(),
-                           hexSolidMaterial.clone(),
-                           hexSolidMaterial.clone(),
-                           hexSolidMaterial.clone(),
-                           hexSolidMaterial.clone(),
-                           hexSolidMaterial.clone(),
-                          ];
-      for(var i = 0; i < this.planeCount; i++) {
+      this.planeShaders = [
+        hexSolidMaterial.clone(),
+        hexFlightMaterial.clone(),
+        hexFlightMaterial.clone(),
+        hexFlightMaterial.clone(),
+        hexSolidMaterial.clone(),
+        hexFlightMaterial.clone(),
+        hexFlightMaterial.clone(),
+        hexFlightMaterial.clone(),
+        hexSolidMaterial.clone(),
+        hexFlightMaterial.clone(),
+        hexFlightMaterial.clone(),
+        hexFlightMaterial.clone(),
+        hexSolidMaterial.clone(),
+        hexFlightMaterial.clone(),
+        hexFlightMaterial.clone(),
+        hexFlightMaterial.clone(),
+        hexSolidMaterial.clone(),
+        hexSolidMaterial.clone(),
+        hexSolidMaterial.clone(),
+        hexSolidMaterial.clone(),
+        hexSolidMaterial.clone(),
+        hexSolidMaterial.clone(),
+        hexSolidMaterial.clone(),
+        hexSolidMaterial.clone(),
+      ];
+      for (var i = 0; i < this.planeCount; i++) {
         var tmp = new THREE.Mesh(new THREE.BoxGeometry(100, 100, 1),
-                                 this.planeShaders[i]);
+          this.planeShaders[i]);
         tmp.material.transparent = true;
         tmp.position.z = - (10 + i * this.planeDistance);
         tmp.material.uniforms.planeID.value = i;
@@ -60,6 +61,14 @@
       this.scene.add(light);
 
       this.camera.position.z = 0;
+
+      this.wall = new THREE.Mesh(
+        new THREE.BoxGeometry(1000, 1000, 1000),
+        new THREE.MeshBasicMaterial({
+          color: 0x000000,
+          side: THREE.DoubleSide,
+        }));
+      this.scene.add(this.wall);
     }
 
     update(frame) {
