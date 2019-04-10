@@ -68,7 +68,7 @@
         path.material.uniforms.wobbliness.value = 1;
 
         const line = this.lines[i];
-        line.position.y = line.initialY - easeIn(0, 270, (frame - startFrame - 200 - i * 2) / 70);
+        line.position.y = line.initialY - easeIn(0, 270, F(frame, 156 + i * 0.1, 6));
       }
     }
   }

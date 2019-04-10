@@ -58,7 +58,7 @@
       for(let i = 0; i < this.lines.length; i++) {
         const path = this.lines[i].path;
         path.material.uniforms.drawStart.value = 0;
-        path.material.uniforms.drawEnd.value =  2 * Math.sin(frame / 100 - i * 0.01) + 0.5 + 0.5 * Math.sin(i);
+        path.material.uniforms.drawEnd.value =  2 * Math.sin((frame-  1000) / 100 - i * 0.01) + 0.5 + 0.5 * Math.sin(i);
         path.material.uniforms.wobbliness.value = 1;
       }
     }
