@@ -234,7 +234,7 @@
       this.hemiLight = hemiLight;
 
 
-      this.camera.position.z = 40;
+      this.camera.position.z = 30;
 
       this.cameraRotationDDD = new THREE.Vector3(0, 0, 0);
       this.cameraRotationDD = new THREE.Vector3(0, 0, 0);
@@ -272,7 +272,7 @@
       this.paper.rotation.x = 0;
       this.paper.rotation.y = 0;
 
-      this.camera.position.z = lerp(1, 30 / 100, frame / 3000);
+      this.camera.position.z = lerp(0.5, 30 / 100, frame / 3000);
 
 
       const shockZoom = Math.pow(easeIn(

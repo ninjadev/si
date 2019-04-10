@@ -1,4 +1,5 @@
 uniform float frame;
+uniform float radiuser;
 uniform float framiness;
 uniform float generalGrayScaler;
 uniform float overlayer;
@@ -73,5 +74,15 @@ void main() {
 
     color = mix(color, vec3(color.r * 0.2989 + color.g * 0.5870 + color.b * 0.1140), generalGrayScaler);
 
-    gl_FragColor = vec4(color, 1.);
+    vec2 ruv = vUv;
+    ruv -= 0.5;
+    ruv.x += xOffset;
+    ruv.y += yOffset;
+    ruv.x *= xScale;
+    ruv.y *= yScale;
+    ruv *= radiuser * vec2(16. / 9., 1.);
+    ruv += 0.5;
+    float radiusCutoff = 2. * radiuser * sqrt(ruv.x * ruv.x + ruv.y * ruv.y);
+
+    gl_FragColor = vec4(mix(originalSceneColor, color, radiusCutoff), 1.);
 }

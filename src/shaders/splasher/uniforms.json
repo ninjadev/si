@@ -17,5 +17,6 @@
     "xOffset": { "type": "f", "value": 0.0 },
     "xOffsetPaper": { "type": "f", "value": 0.0 },
     "yOffset": { "type": "f", "value": 0.0 },
-    "overlayer": { "type": "f", "value": 0.0 }
+    "overlayer": { "type": "f", "value": 0.0 },
+    "radiuser": { "type": "f", "value": 1.0 }
 }

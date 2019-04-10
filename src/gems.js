@@ -62,8 +62,9 @@
 
       for (let i = 0; i < this.lines.length; i++) {
         const path = this.lines[i].path;
+        this.lines[i].fillMesh.visible = BEAN >= 144 + 5;
         path.material.uniforms.drawStart.value = 0;
-        path.material.uniforms.drawEnd.value = lerp(0, 1, (frame - startFrame - i * 2) / 100);
+        path.material.uniforms.drawEnd.value = easeIn(0, 1, F(frame, 144 - i * 0.04, 5));
         path.material.uniforms.wobbliness.value = 1;
 
         const line = this.lines[i];
