@@ -21,21 +21,21 @@
       let fillColor = "#ffffff";
 
       const info = [
-        [0, 0, "l", "#ff99e6"], 
-        [70, 50, "s", "#E1CAA0"], 
-        [-40, -110, "m", "#ff9933"], 
-        [-95, 40, "s", "#b2997c"], 
-        [-135, -75, "m", "#86592d"], 
-        [-200, 20, "m", "#53402d"], 
-        [90, -70, "m", "#000000"], 
-        [150, 15, "m", "#000000"], 
-        [-250, -90, "m", "#000000"], 
-        [250, 35, "m", "#000000"], 
-        [210, -90, "m", "#000000"]
+        [0, 10, "xl", "#ff99e6", "julie"], 
+        [80, 50, "s", "#e1caa0", "stian"], 
+        [0, -100, "m", "#ff9933", "aleks"], 
+        [-80, 50, "s", "#b2997c", "iver"], 
+        [-100, -75, "m", "#86592d", "sigve"], 
+        [-160, 20, "m", "#53402d", "rune"], 
+        [100, -75, "m", "#8c735a", "cristea"], 
+        [160, 20, "l", "#b37700", "flory"], 
+        [-250, -90, "m", "#000000", ""], 
+        [250, 35, "m", "#000000", ""], 
+        [210, -90, "m", "#000000", ""]
       ];
 
       this.guys = [];
-      for(let i = 0; i < info.length; i++) {
+      for(let i = 0; i < info.length - 3; i++) {
         let size = i % 2 === 1 || i === 0 ? 0.4 : 0.5;
         let r = 20 * size;
         let x = info[i][0];
@@ -186,12 +186,18 @@
         let hair = new THREE.Object3D();
         color = new THREE.Color(color).multiplyScalar(0.8);
         color = new THREE.Vector3(color.r, color.g, color.b);
-        let arr = length === "l" ? [
+        let arr = length === "xl" ? [
           [x - 24 * size, y - 100 * size],
           [x - 16 * size, y - 8 * size],
           [x, y - 1 * size],
           [x + 16 * size, y - 8 * size],
           [x + 24 * size, y - 100 * size]
+        ] : length === "l" ? [
+          [x - 24 * size, y - 50 * size],
+          [x - 16 * size, y - 8 * size],
+          [x, y - 1 * size],
+          [x + 16 * size, y - 8 * size],
+          [x + 24 * size, y - 50 * size]
         ] : length === "s" ? [
           [x - 16 * size, y - 12 * size],
           [x - 8 * size, y - 2 * size],
@@ -354,18 +360,18 @@
         y = lerp(140, -100, Math.tan((frame - startframe) * 0.0010));
         this.camera.position.set(x, y, z);
       } else if (BEAN >= startBEAN + 72 && BEAN < startBEAN + 90) {
-        z = 350;
-        x = lerp(200, -400, Math.tan((frame - startframe) * 0.0010));
-        y = lerp(-100, 0, Math.tan((frame - startframe) * 0.0010));
+        z = lerp(70, 350, Math.tan((frame - startframe) * 0.0010));
+        x = lerp(200, -220, Math.tan((frame - startframe) * 0.0010));
+        y = lerp(-40, 0, Math.tan((frame - startframe) * 0.0010));
         this.camera.position.set(x, y, z);
       } else if (BEAN >= startBEAN + 90 && BEAN < startBEAN + 108) {
-        z = 350;
-        x = lerp(-400, 200, Math.tan((frame - startframe) * 0.0010));
+        z = lerp(70, 350, Math.tan((frame - startframe) * 0.0010));
+        x = lerp(-220, 20, Math.tan((frame - startframe) * 0.0010));
         y = lerp(0, 30, Math.tan((frame - startframe) * 0.0010));
         this.camera.position.set(x, y, z);
       } else {
-        z = lerp(350, 500, Math.tan((frame - startframe) * 0.0010));
-        this.camera.position.set(x, y, z);
+        z = lerp(350, 680, Math.tan((frame - startframe) * 0.0010));
+        this.camera.position.set(x, y + 70, z);
       }
 
       for(let i = 0; i < this.discolines.length; i++) {
