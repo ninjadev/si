@@ -3,7 +3,7 @@
     "id": "root",
     "type": "NIN.RootNode",
     "connected": {
-      "screen": "splasher.render"
+      "screen": "FXAA.render"
     }
   },
   {
@@ -219,5 +219,15 @@
   {
     "id": "end",
     "type": "end"
+  },
+  {
+    "id": "FXAA",
+    "type": "FXAANode",
+    "options": {
+      "shader": "FXAA"
+    },
+    "connected": {
+        "A": "splasher.render"
+    }
   }
 ]
