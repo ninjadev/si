@@ -57,13 +57,17 @@
         let backright = backleft.clone();
         backright.scale.x = -1;
         this.scene.add(backright);
-        let body = {pos: [x, y + r * 1.5], head, hair, frontleft, frontright, backleft, backright}
+        let handsUp1 = makeHandsUp1(x, y, size, directionSize, fill, fillColor);
+        this.scene.add(handsUp1);
+        let handsUp2 = makeHandsUp2(x, y, size, directionSize, fill, fillColor);
+        this.scene.add(handsUp2);
+        let body = {pos: [x, y + r * 1.5], head, hair, frontleft, frontright, backleft, backright, handsUp1, handsUp2}
         this.guys.push(body);
       }
 
       let discoball = makeDiscoBall();
       this.scene.add(discoball);
- 
+
       const xyz = [[2.3, 130, 0], [2.7, 130, 0], [0, 5, 0], [3.6, 130, 0], [4, 130, 0]];
       const colors = ["#00F0F6", "#F61D64", "#7EF600"];
       this.discolines = [];
@@ -244,6 +248,62 @@
         return line;
       }
 
+      function makeHandsUp1(x, y, size, directionSize, fill, fillColor) {
+        let front = new THREE.Object3D();
+        line = makeLine([
+          [x - 5 * size, y],
+          [x - 5 * size, y - 10 * size],
+          [x - 15 * size, y - 10 * size],
+          [x - 45 * size, y + 80 * size],
+          [x - 55 * size, y + 78 * size],
+          [x - 25 * size, y - 10 * size],
+          [x - 25 * size, y - 140 * size],
+          [x - 30 * size, y - 210 * size],
+          [x - 15 * size, y - 210 * size],
+          [x - 10 * size, y - 135 * size],
+          [x + 10 * size, y - 135 * size],
+          [x + 15 * size, y - 210 * size],
+          [x + 30 * size, y - 210 * size],
+          [x + 25 * size, y - 140 * size],
+          [x + 25 * size, y - 10 * size],
+          [x + 55 * size, y + 78 * size],
+          [x + 45 * size, y + 80 * size],
+          [x + 15 * size, y - 10 * size],
+          [x + 5 * size, y - 10 * size],
+          [x + 5 * size, y],
+        ], null, directionSize, fill, fillColor);
+        front.add(line);
+        return front;
+      }
+
+      function makeHandsUp2(x, y, size, directionSize, fill, fillColor) {
+        let front = new THREE.Object3D();
+        line = makeLine([
+          [x - 5 * size, y],
+          [x - 5 * size, y - 10 * size],
+          [x - 15 * size, y - 10 * size],
+          [x - 75 * size, y + 75 * size],
+          [x - 85 * size, y + 70 * size],
+          [x - 25 * size, y - 10 * size],
+          [x - 25 * size, y - 140 * size],
+          [x - 30 * size, y - 210 * size],
+          [x - 15 * size, y - 210 * size],
+          [x - 10 * size, y - 135 * size],
+          [x + 10 * size, y - 135 * size],
+          [x + 15 * size, y - 210 * size],
+          [x + 30 * size, y - 210 * size],
+          [x + 25 * size, y - 140 * size],
+          [x + 25 * size, y - 10 * size],
+          [x + 85 * size, y + 70 * size],
+          [x + 75 * size, y + 75 * size],
+          [x + 15 * size, y - 10 * size],
+          [x + 5 * size, y - 10 * size],
+          [x + 5 * size, y],
+        ], null, directionSize, fill, fillColor);
+        front.add(line);
+        return front;
+      }
+
       this.camera.position.z = 10;
       this.wall = new THREE.Mesh(
         new THREE.BoxGeometry(1000, 1000, 1000),
@@ -270,35 +330,35 @@
       let x = 0;
       let y = 0;
 
-      if (BEAN <= startBEAN + 6) {
+      if (BEAN < startBEAN + 6) {
         this.camera.position.set(this.guys[0].pos[0], this.guys[0].pos[1], z);
-      } else if (BEAN > startBEAN + 6 && BEAN <= startBEAN + 12) {
+      } else if (BEAN >= startBEAN + 6 && BEAN < startBEAN + 12) {
         this.camera.position.set(this.guys[1].pos[0], this.guys[1].pos[1], z);
-      } else if (BEAN > startBEAN + 12 && BEAN <= startBEAN + 18) {
+      } else if (BEAN >= startBEAN + 12 && BEAN < startBEAN + 18) {
         this.camera.position.set(this.guys[2].pos[0], this.guys[2].pos[1], z + 5);
-      } else if (BEAN > startBEAN + 18 && BEAN <= startBEAN + 24) {
+      } else if (BEAN >= startBEAN + 18 && BEAN < startBEAN + 24) {
         this.camera.position.set(this.guys[3].pos[0], this.guys[3].pos[1], z);
-      } else if (BEAN > startBEAN + 24 && BEAN <= startBEAN + 30) {
+      } else if (BEAN >= startBEAN + 24 && BEAN < startBEAN + 30) {
         this.camera.position.set(this.guys[4].pos[0], this.guys[4].pos[1], z + 5);
-      } else if (BEAN > startBEAN + 30 && BEAN <= startBEAN + 36) {
+      } else if (BEAN >= startBEAN + 30 && BEAN < startBEAN + 36) {
         this.camera.position.set(this.guys[5].pos[0], this.guys[5].pos[1], z);
-      } else if (BEAN > startBEAN + 36 && BEAN <= startBEAN + 42) {
+      } else if (BEAN >= startBEAN + 36 && BEAN < startBEAN + 42) {
         this.camera.position.set(this.guys[6].pos[0], this.guys[6].pos[1], z + 5);
-      } else if (BEAN > startBEAN + 42 && BEAN <= startBEAN + 48) {
+      } else if (BEAN >= startBEAN + 42 && BEAN < startBEAN + 48) {
         this.camera.position.set(this.guys[7].pos[0], this.guys[7].pos[1], z);
-      } else if (BEAN > startBEAN + 48 && BEAN <= startBEAN + 54) {
+      } else if (BEAN >= startBEAN + 48 && BEAN < startBEAN + 54) {
         this.camera.position.set(0, 140, 160);
-      } else if (BEAN > startBEAN + 54 && BEAN <= startBEAN + 72) {
+      } else if (BEAN >= startBEAN + 54 && BEAN < startBEAN + 72) {
         z = lerp(70, 350, Math.tan((frame - startframe) * 0.0010));
         x = lerp(0, 200, Math.tan((frame - startframe) * 0.0010));
         y = lerp(140, -100, Math.tan((frame - startframe) * 0.0010));
         this.camera.position.set(x, y, z);
-      } else if (BEAN > startBEAN + 72 && BEAN <= startBEAN + 90) {
+      } else if (BEAN >= startBEAN + 72 && BEAN < startBEAN + 90) {
         z = 350;
         x = lerp(200, -400, Math.tan((frame - startframe) * 0.0010));
         y = lerp(-100, 0, Math.tan((frame - startframe) * 0.0010));
         this.camera.position.set(x, y, z);
-      } else if (BEAN > startBEAN + 90 && BEAN <= startBEAN + 108) {
+      } else if (BEAN >= startBEAN + 90 && BEAN < startBEAN + 108) {
         z = 350;
         x = lerp(-400, 200, Math.tan((frame - startframe) * 0.0010));
         y = lerp(0, 30, Math.tan((frame - startframe) * 0.0010));
@@ -314,12 +374,33 @@
         path.material.uniforms.drawEnd.value = i == 2 ? lerp(0, 1, Math.tan((frame - startframe)/10)) : 1;
       }
 
-      if (BEAN > startBEAN + 48) {
+      if (BEAN < startBEAN + 48) {
+        for (const body of this.guys) {
+          body.frontleft.visible = false;
+          body.backleft.visible = false;
+          body.frontright.visible = false;
+          body.backright.visible = false;
+          body.handsUp1.visible = false;
+          body.handsUp2.visible = true;
+        }
+      }
+      if (BEAN >= startBEAN + 48 && BEAN < startBEAN + 108) {
         for (const body of this.guys) {
           body.frontleft.visible = (BEAN % 36 < 6) || (BEAN % 36 >= 12 && BEAN % 36 < 18);
           body.backleft.visible = BEAN % 36 >= 6 && BEAN % 36 < 12;
           body.frontright.visible = (BEAN % 36 >= 18 && BEAN % 36 < 24) || (BEAN % 36 >= 30);
           body.backright.visible = BEAN % 36 >= 24 && BEAN % 36 < 30;
+          body.handsUp1.visible = false;
+          body.handsUp2.visible = false;
+        }
+      } else if (BEAN >= startBEAN + 108) {
+        for (const body of this.guys) {
+          body.frontleft.visible = false;
+          body.backleft.visible = false;
+          body.frontright.visible = false;
+          body.backright.visible = false;
+          body.handsUp1.visible = BEAN % 2 === 0;
+          body.handsUp2.visible = BEAN % 2 === 1;
         }
       }
 
