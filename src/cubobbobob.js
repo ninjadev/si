@@ -12,7 +12,26 @@
         }
       });
       this.geometry = new THREE.BoxGeometry(50, 50, 50, 50, 50, 50);
-      this.cube = new THREE.Mesh(this.geometry, new THREE.MeshNormalMaterial());
+      this.cube = new THREE.Mesh(this.geometry, [
+        new THREE.MeshBasicMaterial({
+          map: new THREE.CanvasTexture(this.texture()),
+        }),
+        new THREE.MeshBasicMaterial({
+          map: new THREE.CanvasTexture(this.texture()),
+        }),
+        new THREE.MeshBasicMaterial({
+          map: new THREE.CanvasTexture(this.texture()),
+        }),
+        new THREE.MeshBasicMaterial({
+          map: new THREE.CanvasTexture(this.texture()),
+        }),
+        new THREE.MeshBasicMaterial({
+          map: new THREE.CanvasTexture(this.texture()),
+        }),
+        new THREE.MeshBasicMaterial({
+          map: new THREE.CanvasTexture(this.texture()),
+        }),
+      ]);
       this.scene.add(this.cube);
       this.twistAmount = 10;
       this.twists = 0;
@@ -71,6 +90,23 @@
         this.geometry.vertices[i].applyQuaternion(quaternion);
       }
       this.geometry.verticesNeedUpdate = true;
+    }
+
+    texture() {
+      const canvas = document.createElement('canvas');
+      canvas.width = 100;
+      canvas.height = 100;
+      const ctx = canvas.getContext('2d');
+      ctx.fillStyle = '#00000';
+      ctx.fillRect(0, 0, 100, 100);
+      ctx.strokeStyle = '#ffffff';
+      for(let i = 0; i < 10; i++) {
+        ctx.moveTo(0, i*10 + 10 /2);
+        ctx.lineTo(100, i*10 + 10 /2);
+        ctx.stroke();
+      }
+
+      return canvas;
     }
   }
 
