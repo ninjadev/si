@@ -352,26 +352,26 @@
         this.camera.position.set(this.guys[6].pos[0], this.guys[6].pos[1], z + 5);
       } else if (BEAN >= startBEAN + 42 && BEAN < startBEAN + 48) {
         this.camera.position.set(this.guys[7].pos[0], this.guys[7].pos[1], z);
-      } else if (BEAN >= startBEAN + 48 && BEAN < startBEAN + 54) {
+      } else if (BEAN >= startBEAN + 48 && BEAN < startBEAN + 60) {
         this.camera.position.set(0, 110, 130);
-      } else if (BEAN >= startBEAN + 54 && BEAN < startBEAN + 72) {
+      } else if (BEAN >= startBEAN + 60 && BEAN < startBEAN + 78) {
         z = lerp(60, 280, Math.tan((frame - startframe) * 0.0010));
         x = lerp(40, 200, Math.tan((frame - startframe) * 0.0010));
         y = lerp(80, -130, Math.tan((frame - startframe) * 0.0010));
         this.camera.position.set(x, y, z);
-      } else if (BEAN >= startBEAN + 72 && BEAN < startBEAN + 90) {
+      } else if (BEAN >= startBEAN + 78 && BEAN < startBEAN + 96) {
         z = lerp(60, 280, Math.tan((frame - startframe) * 0.0010));
         x = lerp(200, -220, Math.tan((frame - startframe) * 0.0010));
         y = lerp(-40, -80, Math.tan((frame - startframe) * 0.0010));
         this.camera.position.set(x, y, z);
-      } else if (BEAN >= startBEAN + 90 && BEAN < startBEAN + 108) {
+      } else if (BEAN >= startBEAN + 96 && BEAN < startBEAN + 108) {
         z = lerp(60, 280, Math.tan((frame - startframe) * 0.0010));
         x = lerp(-220, 20, Math.tan((frame - startframe) * 0.0010));
         y = lerp(0, 30, Math.tan((frame - startframe) * 0.0010));
         this.camera.position.set(x, y, z);
       } else {
-        z = lerp(150, 430, Math.tan((frame - startframe) * 0.0010));
-        this.camera.position.set(x, y, z);
+        z = lerp(150, 455, Math.tan((frame - startframe) * 0.0010));
+        this.camera.position.set(x, y - 20, z);
       }
 
       for(let i = 0; i < this.discolines.length; i++) {
@@ -419,10 +419,8 @@
       this.mommaBird.lowerBeak.rotation.z = openMouth ? -Math.PI / 32 : 0;
 
       this.mommaBird.rotation.z = rotationChain;
-      this.mommaBird.position.y = easeIn(150, 300, (frame - 7556) / 60);
-      this.mommaBird.position.x = smoothstep(320, smoothstep(230, 50, (frame - 7556) / 60), (frame - 7306) / 120);
-      
-      Math.sin(frame / 10) * 10;
+      this.mommaBird.position.y = easeIn(120, 230, (frame - 7556) / 60);
+      this.mommaBird.position.x = smoothstep(320, smoothstep(230, 80, (frame - 7556) / 60), (frame - 7306) / 120);
     }
   }
 
