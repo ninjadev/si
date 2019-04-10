@@ -61,7 +61,7 @@
         this.scene.add(handsUp1);
         let handsUp2 = makeHandsUp2(x, y, size, directionSize, fill, fillColor);
         this.scene.add(handsUp2);
-        let body = {pos: [x, y + r * 1.5], head, hair, frontleft, frontright, backleft, backright, handsUp1, handsUp2}
+        let body = {pos: [x, y + r], head, hair, frontleft, frontright, backleft, backright, handsUp1, handsUp2}
         this.guys.push(body);
       }
 
@@ -332,7 +332,7 @@
       const startframe = 6767
       const startBEAN = 1128;
       
-      let z = 35;
+      let z = 22;
       let x = 0;
       let y = 0;
 
@@ -353,25 +353,25 @@
       } else if (BEAN >= startBEAN + 42 && BEAN < startBEAN + 48) {
         this.camera.position.set(this.guys[7].pos[0], this.guys[7].pos[1], z);
       } else if (BEAN >= startBEAN + 48 && BEAN < startBEAN + 54) {
-        this.camera.position.set(0, 140, 160);
+        this.camera.position.set(0, 110, 130);
       } else if (BEAN >= startBEAN + 54 && BEAN < startBEAN + 72) {
-        z = lerp(70, 350, Math.tan((frame - startframe) * 0.0010));
-        x = lerp(0, 200, Math.tan((frame - startframe) * 0.0010));
-        y = lerp(140, -100, Math.tan((frame - startframe) * 0.0010));
+        z = lerp(60, 280, Math.tan((frame - startframe) * 0.0010));
+        x = lerp(40, 200, Math.tan((frame - startframe) * 0.0010));
+        y = lerp(80, -130, Math.tan((frame - startframe) * 0.0010));
         this.camera.position.set(x, y, z);
       } else if (BEAN >= startBEAN + 72 && BEAN < startBEAN + 90) {
-        z = lerp(70, 350, Math.tan((frame - startframe) * 0.0010));
+        z = lerp(60, 280, Math.tan((frame - startframe) * 0.0010));
         x = lerp(200, -220, Math.tan((frame - startframe) * 0.0010));
-        y = lerp(-40, 0, Math.tan((frame - startframe) * 0.0010));
+        y = lerp(-40, -80, Math.tan((frame - startframe) * 0.0010));
         this.camera.position.set(x, y, z);
       } else if (BEAN >= startBEAN + 90 && BEAN < startBEAN + 108) {
-        z = lerp(70, 350, Math.tan((frame - startframe) * 0.0010));
+        z = lerp(60, 280, Math.tan((frame - startframe) * 0.0010));
         x = lerp(-220, 20, Math.tan((frame - startframe) * 0.0010));
         y = lerp(0, 30, Math.tan((frame - startframe) * 0.0010));
         this.camera.position.set(x, y, z);
       } else {
-        z = lerp(350, 680, Math.tan((frame - startframe) * 0.0010));
-        this.camera.position.set(x, y + 70, z);
+        z = lerp(150, 430, Math.tan((frame - startframe) * 0.0010));
+        this.camera.position.set(x, y, z);
       }
 
       for(let i = 0; i < this.discolines.length; i++) {
