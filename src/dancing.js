@@ -267,6 +267,8 @@
       const startBEAN = 1128;
       
       let z = 35;
+      let x = 0;
+      let y = 0;
 
       if (BEAN <= startBEAN + 6) {
         this.camera.position.set(this.guys[0].pos[0], this.guys[0].pos[1], z);
@@ -286,10 +288,23 @@
         this.camera.position.set(this.guys[7].pos[0], this.guys[7].pos[1], z);
       } else if (BEAN > startBEAN + 48 && BEAN <= startBEAN + 54) {
         this.camera.position.set(0, 140, 160);
+      } else if (BEAN > startBEAN + 54 && BEAN <= startBEAN + 72) {
+        z = lerp(70, 350, Math.tan((frame - startframe) * 0.0010));
+        x = lerp(0, 200, Math.tan((frame - startframe) * 0.0010));
+        y = lerp(140, -100, Math.tan((frame - startframe) * 0.0010));
+        this.camera.position.set(x, y, z);
+      } else if (BEAN > startBEAN + 72 && BEAN <= startBEAN + 90) {
+        z = 350;
+        x = lerp(200, -400, Math.tan((frame - startframe) * 0.0010));
+        y = lerp(-100, 0, Math.tan((frame - startframe) * 0.0010));
+        this.camera.position.set(x, y, z);
+      } else if (BEAN > startBEAN + 90 && BEAN <= startBEAN + 108) {
+        z = 350;
+        x = lerp(-400, 200, Math.tan((frame - startframe) * 0.0010));
+        y = lerp(0, 30, Math.tan((frame - startframe) * 0.0010));
+        this.camera.position.set(x, y, z);
       } else {
-        z = lerp(70, 500, Math.tan((frame - startframe) * 0.0010));
-        let x = 0;
-        let y = 0;
+        z = lerp(350, 500, Math.tan((frame - startframe) * 0.0010));
         this.camera.position.set(x, y, z);
       }
 
