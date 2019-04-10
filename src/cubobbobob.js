@@ -1,4 +1,5 @@
 (function(global) {
+  const F = (frame, from, delta) => (frame - FRAME_FOR_BEAN(from)) / (FRAME_FOR_BEAN(from + delta) - FRAME_FOR_BEAN(from));
   class cubobbobob extends NIN.THREENode {
     constructor(id, options) {
       super(id, {
@@ -28,12 +29,15 @@
       this.background.position.z = -100;
 
       this.camera.position.z = 100;
+
+      this.startFrame = 1295;
+      this.startBEAN = 216;
     }
 
     update(frame) {
       super.update(frame);
       if(BEAT && BEAN % 4 === 0) {
-        this.twistAmount = 20;
+        this.twistAmount = 50;
       } else {
         this.twistAmount = 10;
       }
@@ -42,8 +46,11 @@
 
       if(this.twists > 100) {
         this.sign *= -1;
-        this.twists = -100;
+        this.twists = 0;
       }
+
+      const rotate = lerp(0, 800, F(frame, 5*24*24));
+      this.cube.rotation.y = rotate;
 
       this.background.material.map = this.inputs.background.getValue();
       this.background.material.needsUpdate = true;
