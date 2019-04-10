@@ -351,7 +351,7 @@
       //u.scratcher.value = 1;
       //
 
-      this.twistoramaContainer.visible = BEAN >= 888;
+      this.twistoramaContainer.visible = BEAN >= 888 && BEAN < 1080;
 
       let t = F(frame, 888, 9);
       u.xScale.value = smoothstep(2, 0, t) + easeOut(0, 1, t);
