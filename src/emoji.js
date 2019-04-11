@@ -54,7 +54,7 @@
 
     update(frame) {
       super.update(frame);
-      const beanOffset = 408;
+      const beanOffset = 1368;
       const timing = {
         goodMood: {start: beanOffset, end: beanOffset + 12},
         shades: {start: beanOffset + 12, end: beanOffset + 12 + 12},

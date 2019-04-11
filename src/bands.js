@@ -213,8 +213,8 @@
     update(frame) {
       super.update(frame);
 
-      const startFrame = FRAME_FOR_BEAN(24 * 57);
-      const endFrame = FRAME_FOR_BEAN(24 * 61);
+      const startFrame = FRAME_FOR_BEAN(24 * 17);
+      const endFrame = FRAME_FOR_BEAN(24 * 21);
       const duration = endFrame - startFrame;
 
       for (let i = 0; i < this.bands.length; i++) {
@@ -234,7 +234,7 @@
       }
 
       for (const [index, cloud] of this.clouds.entries()) {
-        const cloudFrame = FRAME_FOR_BEAN(24 * 57 + 6 + index * 12);
+        const cloudFrame = FRAME_FOR_BEAN(24 * 17 + 6 + index * 12);
         if (frame >= cloudFrame && frame < cloudFrame + 200) {
           for (const circle of cloud.circles) {
             circle.mesh.scale.setScalar(
