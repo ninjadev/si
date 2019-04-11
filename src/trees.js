@@ -16,6 +16,14 @@
         }
       });
 
+      this.constructionPaper = Loader.loadTexture('res/constructionpaper.jpg');
+      const constructionPaper = this.constructionPaper;
+      const mapScale = 0.01;
+      constructionPaper.repeat.set(mapScale, mapScale);
+      constructionPaper.wrapS = THREE.RepeatWrapping;
+      constructionPaper.wrapT = THREE.RepeatWrapping;
+      constructionPaper.offset.set(0.5, 0.5);
+
       function makeCurve(xRadius, yRadius, offset) {
         const coords = [];
         for (let i = 0; i <= 20; i++) {
@@ -29,28 +37,28 @@
       function makeTree(offset) {
         return [
           {
-            coords: [[25,10],[-25,10],[0,50],[25,10]],
+            coords: [[25,12], [24, 10], [-24, 10], [-25,12], [-1.5, 50], [1.5,50], [25,12]],
             offset,
             fillColor: 0x7fff7f,
-            fillMap: Loader.loadTexture('res/paper.png'),
+            fillMap: constructionPaper,
           },
           {
-            coords: [[10,10],[30,-20],[-30,-20],[-10,10]],
+            coords: [[10,10], [30,-17.5], [29, -20], [-27,-20], [-28, -17.5], [-10,10]],
             offset,
             fillColor: 0x7fff7f,
-            fillMap: Loader.loadTexture('res/paper.png'),
+            fillMap: constructionPaper,
           },
           {
-            coords: [[10,-20],[30,-50],[-30,-50],[-10,-20]],
+            coords: [[10,-20],[29,-48],[28, -50], [-28,-50],[-29, -48], [-10,-20]],
             offset,
             fillColor: 0x7fff7f,
-            fillMap: Loader.loadTexture('res/paper.png'),
+            fillMap: constructionPaper,
           },
           {
             coords: [[10,-50],[10,-70],[-10,-70],[-10,-50]],
             offset,
-            fillColor: 0x5f0010,
-            fillMap: Loader.loadTexture('res/paper.png'),
+            fillColor: 0xff7f7f,
+            fillMap: constructionPaper,
           },
         ];
       }
@@ -235,7 +243,10 @@
         path.material.uniforms.wobbliness.value = 1;
 
         if(path.fill) {
-          path.magicAnimationUpdater();
+          //path.magicAnimationUpdater();
+        }
+        if(this.lines[i].fillMesh) {
+          this.lines[i].fillMesh.visible = path.material.uniforms.drawEnd.value > 0.999;
         }
       }
 
@@ -251,7 +262,10 @@
         path.material.uniforms.drawStart.value = 0;
         path.material.uniforms.drawEnd.value = lerp(0, 1, (frame - wifiStartFrame - i * 10) / 100);
         path.material.uniforms.wobbliness.value = 1;
-        path.magicAnimationUpdater();
+        //path.magicAnimationUpdater();
+        if(path.fillMesh) {
+          path.fillMesh.visible = path.material.uniforms.drawEnd.value > 0.999;
+        }
       }
 
       for (let i = 0; i < this.frontTree.length; i++) {
@@ -259,7 +273,10 @@
         path.material.uniforms.drawStart.value = 0;
         path.material.uniforms.drawEnd.value = lerp(0, 1, (frame - wifiStartFrame - i * 10) / 100);
         path.material.uniforms.wobbliness.value = 1;
-        path.magicAnimationUpdater();
+        //path.magicAnimationUpdater();
+        if(path.fillMesh) {
+          path.fillMesh.visible = path.material.uniforms.drawEnd.value > 0.999;
+        }
       }
 
       this.signal.path.material.uniforms.drawStart.value = 0;

@@ -207,7 +207,7 @@
     },
     "connected": {
       "A": "Waller.render",
-      "PaperContent": "paperframer.render"
+      "PaperContent": "sceneSwitcherNode.render"
     }
   },
   {

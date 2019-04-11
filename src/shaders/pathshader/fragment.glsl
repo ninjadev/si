@@ -4,6 +4,7 @@ uniform float drawEnd;
 uniform float id;
 uniform float wobbliness;
 uniform float totalLength;
+uniform float width;
 uniform vec3 color;
 
 varying vec2 vUv;
@@ -218,6 +219,8 @@ void main() {
     float thicknessModifier = 1. + 0.2 * pnoise(vec3(humanizeX * 2., id * 23., id * 57.), vec3(1.));
 
     float scale = thicknessModifier;
+
+    scale *= width;
 
     uv.y /= scale;
     uv.y += offset;

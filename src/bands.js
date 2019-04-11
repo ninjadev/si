@@ -205,7 +205,7 @@
 
       this.wall = new THREE.Mesh(
         new THREE.BoxGeometry(1000, 1000, 100),
-        new THREE.MeshBasicMaterial({color: 0xffffff}));
+        new THREE.MeshBasicMaterial({color: 0x7f7fff}));
       this.scene.add(this.wall);
       this.wall.position.z = -100;
     }

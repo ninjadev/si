@@ -50,19 +50,19 @@
         selectedScene = this.inputs.D;
       } else if (BEAN < 24 * 13) {
         selectedScene = this.inputs.E;
-      } else if (BEAN < 24 * 38) { // Actually start at 37
+      } else if (BEAN < 24 * 37) { // Actually start at 37
         selectedScene = this.inputs.F;
+      } else if (BEAN < 24 * 38) {
+        selectedScene = this.inputs.L;
       } else if (BEAN < 24 * 39) {
-        selectedScene = this.inputs.G;
+        selectedScene = this.inputs.C;
       } else if (BEAN < 24 * 40) {
         selectedScene = this.inputs.H;
       } else if (BEAN < 24 * 41) {
-        selectedScene = this.inputs.I;
-      } else if (BEAN < 24 * 42) {
-        selectedScene = this.inputs.J;
-      } else if (BEAN < 24 * 43) {
         selectedScene = this.inputs.K;
-      } else if (BEAN < 24 * 44) {
+      } else if (BEAN < 24 * 42) {
+        selectedScene = this.inputs.K;
+      } else if (BEAN < 24 * 43) {
         selectedScene = this.inputs.L;
       } else {
         selectedScene = this.inputs.M;

@@ -1,4 +1,5 @@
 (function(global) {
+  const F = (frame, from, delta) => (frame - FRAME_FOR_BEAN(from)) / (FRAME_FOR_BEAN(from + delta) - FRAME_FOR_BEAN(from));
   class yoga extends NIN.THREENode {
     constructor(id, options) {
       super(id, {
@@ -10,6 +11,8 @@
 
       this.lines = [];
 
+      this.sceneContainer = new THREE.Object3D();
+
       const gridsize = 20;
       const xcount = 30;
       const ycount = 30;
@@ -17,7 +20,9 @@
         for(let i = 0; i < ycount; i++) {
           const x = (i - xcount / 2 - 0.25 + (j % 2 === 0 ? 0.5 : 0)) * gridsize;
           const y = (j - ycount / 2) * gridsize * 0.5;
-          const path = new Path();
+          const path = new Path({
+            fill: true,
+          });
           path.directionSize = 1;
           const steps = 32;
           const r = 5;
@@ -31,10 +36,12 @@
           line.position.y = y;
           line.rotation.z = Math.random() * 2 * Math.PI;
           this.lines.push(line);
-          this.scene.add(line);
+          this.sceneContainer.add(line);
           line.path = path;
         }
       }
+
+      this.scene.add(this.sceneContainer);
 
       this.camera.position.z = 200;
 
@@ -54,10 +61,28 @@
     update(frame) {
       super.update(frame);
 
+      const containerScale = BEAN >= 906 ? 2 : 1;
+      this.sceneContainer.scale.set(containerScale, containerScale, containerScale);
+
       for (let i = 0; i < this.lines.length; i++) {
         const path = this.lines[i].path;
-        path.material.uniforms.drawStart.value = Math.max((frame / 100 % 2) - 1, 0);
-        path.material.uniforms.drawEnd.value = Math.min((frame / 100) % 2, 1);
+        path.material.uniforms.drawStart.value = 0;
+        path.material.uniforms.drawEnd.value = easeOut(
+          0,1,
+          F(frame, 888, 6));
+        if(BEAN >= 900) {
+          path.material.uniforms.drawStart.value = easeOut(
+            0,1,
+            F(frame, 903, 0));
+        }
+        path.material.uniforms.width.value = BEAN >= 906 ? 0.8 : 1.3;
+        path.fillMesh.visible = BEAN >= 906;
+        if(BEAN >= 906) {
+          path.material.uniforms.drawStart.value = 0;
+          path.material.uniforms.drawEnd.value = easeOut(
+            0,1,
+            F(frame, 906, 0));
+        }
         path.material.uniforms.wobbliness.value = 1;
         //this.lines[i].rotation.y = (frame) / 50;
       }
