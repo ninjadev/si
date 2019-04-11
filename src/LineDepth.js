@@ -25,6 +25,7 @@
       this.uniforms.raw_bg.value = this.testpattern;
       this.uniforms.depthmap.value = this.inputs.lines.getValue();
       this.uniforms.frame.value = frame;
+      this.uniforms.blackfade.value = smoothstep(1, 0, (frame - 4737) / 50);
     }
   }
 
