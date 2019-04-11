@@ -100,22 +100,23 @@
         this.uniforms.paperB.value = 0.5;
         this.uniforms.overlayer.value = lerp(1, 0, F(frame, 21 * 24 + 12 + 6, 6));
       }
-      if(BAR >= 23 && BAR < 24) {
+      if(BAR >= 17 && BAR < 21) {
         this.uniforms.overlayer.value = 1;
         this.uniforms.image.value = this.flatebyMap;
-        const scaler = 1.0 * elasticOut(1.0, .1, 1, F(frame, 25 * 24, 3));
+        const scaler = 1.0 * elasticOut(1.0, .1, 1, F(frame, 17 * 24, 3));
         this.uniforms.xScale.value = 2100 / 1500 * scaler;
         this.uniforms.yScale.value = 1 * scaler;
-        this.uniforms.xOffset.value = 0.10;
+        this.uniforms.xOffset.value = 0.16;
         this.uniforms.yOffset.value = 0;
-        this.uniforms.xOffsetPaper.value = lerp(0.03, 0.0, F(frame, 25 * 24, 24));
+        this.uniforms.xOffsetPaper.value = lerp(0.03, 0.0, F(frame, 17 * 24, 24));
         this.uniforms.r.value = 1.0;
         this.uniforms.g.value = 1.0;
         this.uniforms.b.value = 0.5;
         this.uniforms.paperR.value = 0.5;
         this.uniforms.paperG.value = 0.5;
         this.uniforms.paperB.value = 0.5;
-        this.uniforms.overlayer.value = lerp(1, 0, F(frame, 25 * 24 + 12 + 6, 6));
+        this.uniforms.radiuser.value = easeOut(0, 3.5, F(frame, 17 * 24, 24));
+        this.uniforms.overlayer.value = 1;
       }
       if(BAR >= 25 && BAR < 26) {
         this.uniforms.overlayer.value = 1;
@@ -127,8 +128,8 @@
         this.uniforms.yOffset.value = 0.05;
         this.uniforms.xOffsetPaper.value = lerp(0.03, 0.0, F(frame, 25 * 24, 24));
         this.uniforms.r.value = 1.0;
-        this.uniforms.g.value = 0.5;
-        this.uniforms.b.value = 0.5;
+        this.uniforms.g.value = 1.0;
+        this.uniforms.b.value = 1.0;
         this.uniforms.paperR.value = 0.5;
         this.uniforms.paperG.value = 1.0;
         this.uniforms.paperB.value = 0.5;

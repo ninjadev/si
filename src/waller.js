@@ -234,7 +234,7 @@
       this.hemiLight = hemiLight;
 
 
-      this.camera.position.z = 40;
+      this.camera.position.z = 30;
 
       this.cameraRotationDDD = new THREE.Vector3(0, 0, 0);
       this.cameraRotationDD = new THREE.Vector3(0, 0, 0);
@@ -272,14 +272,14 @@
       this.paper.rotation.x = 0;
       this.paper.rotation.y = 0;
 
-      this.camera.position.z = lerp(1, 30 / 100, frame / 3000);
+      const cameraGlider = lerp(0.5, 30 / 100, frame / 3000);
 
 
       const shockZoom = Math.pow(easeIn(
           0,
           1,
           F(frame, 114 - 6, 12)), 2);
-      this.camera.position.z = lerp(this.camera.position.z, 40 / 100, shockZoom);
+      this.camera.position.z = cameraGlider + lerp(0, 30 / 100 - cameraGlider, shockZoom);
       this.camera.position.x = 0;
 
       const angler = F(frame, 114, 12);
@@ -291,17 +291,12 @@
       const angler2 = F(frame, 96, 32);
       //this.light1.angle = easeIn(this.light1.angle, 0.6, angler2);
 
-      if(BEAN < 120) {
-      } else {
-        this.camera.position.z = 30 / 100;
-        this.camera.position.x = 0;
-      }
 
       if(BEAN >= 324) {
-      this.camera.position.z = easeIn(
-        0.16,
-        0.3,
-        Math.pow(lerp(0, 1, F(frame, 324, 24 + 12)), 8.));
+        this.camera.position.z = easeIn(
+          0.16,
+          0.3,
+          Math.pow(lerp(0, 1, F(frame, 324, 24 + 12)), 8.));
       }
 
       this.cameraRotationDDD.x += (Math.random() - 0.5) * 0.0002;
@@ -337,12 +332,15 @@
       if(BEAN >= 216) {
         this.background.material.color.setRGB(0.5, 1.0, 0.5);
       }
+      if(BEAN >= 600) {
+        this.background.material.color.setRGB(0.5, 0.5, 1.0);
+      }
       if(BEAN >= 888) {
         this.background.material.color.setRGB(1.0, 1.0, 0.5);
       }
-
-
-
+      if(BEAN >= 1176) {
+        this.background.material.color.setRGB(1.0, .5, 1.0);
+      }
 
       /* twistorama */
       const u = this.twistoramaContainer.material.uniforms;
@@ -395,9 +393,10 @@
       const ALEKS_BIRD_START_BEAN = 1080;
       if (BEAN >= RUNE_HEX_START_BEAN && BEAN < RUNE_SCANLINES_START_BEAN) {
         this.camera.position.z = easeIn(.3, 0.16, F(frame, RUNE_HEX_START_BEAN, 12));
-      } else if (BEAN <= RUNE_SCANLINES_START_BEAN + 24) {
+      } else if (BEAN >= RUNE_SCANLINES_START_BEAN && BEAN < RUNE_SCANLINES_START_BEAN + 24) {
         this.camera.position.z = easeIn(0.16, 0.3, F(frame, RUNE_SCANLINES_START_BEAN, 24));
       }
+
 
       this.paper.visible = true;
       this.shadowPaper.visible = true;
@@ -430,7 +429,7 @@
           this.shadowPaper.visible = false;
           this.forest.visible = true;
         }
-      } else {
+      } else if(BEAN >= ALEKS_BIRD_START_BEAN) {
         this.camera.position.y = 0;
         this.camera.position.z = easeIn(.15, 0.3, F(frame, ALEKS_BIRD_START_BEAN, 12));
       }
