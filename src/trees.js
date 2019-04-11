@@ -107,10 +107,10 @@
         shadowLine.position.z -= 1;
       }
 
-      function makeSkewedCurve(radius, x, y) {
+      function makeSkewedCurve(radius, x, y, offsetangle=0) {
         const curve = [];
         for (let i = 3; i < 17; i++) {
-          const angle = Math.PI / 2 - i * Math.PI / 2 / 20;
+          const angle = Math.PI / 2 - i * Math.PI / 2 / 20 + offsetangle;
           curve.push([
             x + radius * Math.cos(angle),
             y + radius * Math.sin(angle),
@@ -133,6 +133,23 @@
         }
         const line = path.toObject3D();
         this.wifilines.push(line);
+        this.scene.add(line);
+        line.path = path;
+      }
+
+      const wifilinereceivertracks = [
+        makeSkewedCurve(5, -530, 44, 1.5),
+        makeSkewedCurve(10, -530, 44, 1.5),
+        makeSkewedCurve(15, -530, 44, 1.5),
+      ];
+      this.wifilinesreceiver = [];
+      for (const track of wifilinereceivertracks) {
+        const path = new Path({color});
+        for (const [x, y] of track) {
+          path.lineTo(x, y);
+        }
+        const line = path.toObject3D();
+        this.wifilinesreceiver.push(line);
         this.scene.add(line);
         line.path = path;
       }
@@ -174,16 +191,6 @@
         line.position.set(...track.offset);
         line.path = path;
       }
-
-      const path = new Path({color});
-      for (const [x, y] of makeSkewedCurve(155, 0, 0)) {
-        path.lineTo(x, y);
-      }
-      this.signal = path.toObject3D();
-      this.scene.add(this.signal);
-      this.signal.position.set(-618, -84, 0);
-      this.signal.rotation.z = .7;
-      this.signal.path = path;
 
       const tentPath = new Path({fill: true, fillColor: 0xef8f5f});
       tentPath.lineTo(0, 0);
@@ -268,6 +275,13 @@
         path.material.uniforms.wobbliness.value = 1;
       }
 
+      for (let i = 0; i < this.wifilinesreceiver.length; i++) {
+        const path = this.wifilinesreceiver[i].path;
+        path.material.uniforms.drawStart.value = 0;
+        path.material.uniforms.drawEnd.value = lerp(0, 1, (frame - wifiStartFrame - i * 50 - 305) / 100);
+        path.material.uniforms.wobbliness.value = 1;
+      }
+
       for (let i = 0; i < this.mainTree.length; i++) {
         const path = this.mainTree[i].path;
         path.material.uniforms.drawStart.value = 0;
@@ -289,10 +303,6 @@
           path.fillMesh.visible = path.material.uniforms.drawEnd.value > 0.999;
         }
       }
-
-      this.signal.path.material.uniforms.drawStart.value = 0;
-      this.signal.path.material.uniforms.drawEnd.value = lerp(0, 1, (frame - zoomOutFrame - 10) / 300);
-      this.signal.path.material.uniforms.wobbliness.value = 1;
 
       this.tent.path.material.uniforms.drawStart.value = 0;
       this.tent.path.material.uniforms.drawEnd.value = lerp(0, 1, (frame - zoomOutFrame) / 200);
