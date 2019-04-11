@@ -31,7 +31,7 @@ void main() {
     vec3 paperContentColor = texture2D(paperContent, paperContentUv).rgb;
 
     float grayscalePaper = (paperContentColor.r + paperContentColor.g + paperContentColor.b) / 3.;
-    paperContentColor = vec3(paperR, paperG, paperB) * (1. * grayscalePaper) + (1. - grayscalePaper) * vec3(r, g, b);
+    //paperContentColor = vec3(paperR, paperG, paperB) * (1. * grayscalePaper) + (1. - grayscalePaper) * vec3(r, g, b);
 
     vec3 sceneColor = texture2D(tDiffuse, vUv).rgb;
     vec3 originalSceneColor = vec3(sceneColor);
@@ -49,7 +49,7 @@ void main() {
     vec4 imageColor = texture2D(image, uv).rgba;
 
     float borderSize = 0.02;
-    vec3 framiColor = mix(sceneColor.rgb, vec3(1.), (
+    vec3 framiColor = mix(sceneColor.rgb, vec3(0., 0., 0.), (
     step(-borderSize, paperContentUv.x) *
     (1. - step(1. + borderSize, paperContentUv.x)) *
     step(-borderSize, paperContentUv.y) *
@@ -69,6 +69,7 @@ void main() {
 
     color = mix(color, imageColor.rgb, imageColor.a);
 
+
     float flippo = floor(mod(vUv.x * 4., 1.) * 2.);
     color = mix(color, originalSceneColor, 1. - step(mix( flippo + vUv.y, flippo - vUv.y, flippo), overlayer));
 
@@ -81,7 +82,7 @@ void main() {
     ruv.x *= xScale;
     ruv.y *= xScale;
     float radius = -1. + 2. * (ruv.x * ruv.x + ruv.y * ruv.y) + sin(3.15 + ruv.x * 13.);
-    gl_FragColor = vec4(color, 1.);
+    //gl_FragColor = vec4(color, 1.);
 
-    //gl_FragColor = vec4(mix(color, originalSceneColor, step(radiuser, radius)), 1.);
+    gl_FragColor = vec4(mix(color, originalSceneColor, step(radiuser, radius)), 1.);
 }
