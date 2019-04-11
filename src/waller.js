@@ -281,6 +281,7 @@
           F(frame, 114 - 6, 12)), 2);
       this.camera.position.z = cameraGlider + lerp(0, 30 / 100 - cameraGlider, shockZoom);
       this.camera.position.x = 0;
+      this.camera.position.y = 0;
 
       const angler = F(frame, 114, 12);
 
@@ -307,7 +308,7 @@
           this.light1.target.position.x = easeOut(0, 0.04, F(frame, 918 + 2, 1));
           this.light1.target.position.y = lerp(0, 0.03, F(frame, 918 + 3, 24 -3));
 
-          this.light1.angle = easeOut(this.light1.angle, 0.5, F(frame, 930 + 3, 9));
+          this.light1.angle = easeOut(this.light1.angle, 0.5, F(frame, 930, 6));
         }
       }
 
