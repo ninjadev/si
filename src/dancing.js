@@ -416,17 +416,18 @@
         }
       }
 
-      let rotationChain;
-      rotationChain = smoothstep(Math.PI + Math.PI / 4, Math.PI * (4 / 5), (frame - 7556) / 100);
-      rotationChain = smoothstep(Math.PI, rotationChain, (frame - 7306) / 120);
 
       const openMouth = BEAN % 2 == 0;
       this.mommaBird.upperBeak.rotation.z = openMouth ? Math.PI / 16 : 0;
       this.mommaBird.lowerBeak.rotation.z = openMouth ? -Math.PI / 32 : 0;
 
+      const birdBean = FRAME_FOR_BEAN(1242);
+
+      let rotationChain = smoothstep(Math.PI + Math.PI / 8, Math.PI * (4 / 5), (frame - birdBean) / 300);
       this.mommaBird.rotation.z = rotationChain;
-      this.mommaBird.position.y = easeIn(120, 230, (frame - 7556) / 60);
-      this.mommaBird.position.x = smoothstep(320, smoothstep(230, 80, (frame - 7556) / 60), (frame - 7306) / 120);
+      this.mommaBird.position.y = easeIn(-100, 100, (frame - birdBean - FRAME_FOR_BEAN(18)) / 60) + Math.sin(frame / 20) * 10;
+      this.mommaBird.position.x = smoothstep(280, -350, (frame - birdBean) / 240);
+      this.mommaBird.position.z = 5;
     }
   }
 
