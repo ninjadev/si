@@ -88,7 +88,7 @@
           startFrame: 2448,
           endFrame: 2870,
           transition: 10,
-          text: XWrite('BEAUTIFUL EMOJIS'),
+          text: XWrite('BEAUTIFUL TUNNELS'),
         },
         {
           startFrame: 3024,
@@ -124,13 +124,13 @@
           startFrame: 7810,
           endFrame: 8100,
           transition: 5,
-          text: XWrite('BEAUTIFUL COMMODORES'),
+          text: XWrite('BEAUTIFUL COMMOS'),
         },
         {
           startFrame: 8200,
           endFrame: 8670,
           transition: 6,
-          text: XWrite('BEAUTIFUL TUNNELS'),
+          text: XWrite('BEAUTIFUL EMOJIS'),
         },
         {
           startFrame: 8750,
