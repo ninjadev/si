@@ -45,7 +45,7 @@
       this.flateby_sign.rotation.x = Math.PI/2;
       this.flateby_sign.position.x = -9.5;
       this.flateby_sign.position.y = -18;
-      this.flateby_sign.position.z = 1;
+      this.flateby_sign.position.z = 1.3;
 
       this.map_object = new THREE.Mesh(new THREE.PlaneGeometry(50, 50, 1),
                                  new THREE.ShaderMaterial(SHADERS.NorwayShader).clone());
@@ -93,7 +93,7 @@
         this.camera.position.z = 10.9;
         this.camera.position.y = start_y-0.01;
         this.camera.position.x = start_x;
-      } else if (BEAN < 504) {
+      } else {
         var start_x = 8.6;
         var start_y = 18.6;
         var df = frame - FRAME_FOR_BEAN(336);
@@ -101,39 +101,24 @@
         this.camera.up = new THREE.Vector3(0,0,1);
         this.camera.lookAt(new THREE.Vector3(start_x , start_y , 0));
         this.camera.position.z = 4.9;
-        this.camera.position.y = start_y-0.01 - df / 6;
-        this.camera.position.x = start_x - smoothstep(0, 30, df / 100);
-      } /*else if (BEAN < 524) {
-        var start_x = 8.6;
-        var start_y = 18.6;
-        var df = FRAME_FOR_BEAN(504) - 2870;
+        this.camera.position.y = start_y-0.01 +
+                                 smoothstep(0, -54, (frame - FRAME_FOR_BEAN(336)) / (FRAME_FOR_BEAN(397) - FRAME_FOR_BEAN(336))) + 
+                                 easeOut(0, 14.5, (frame - FRAME_FOR_BEAN(397)) / (FRAME_FOR_BEAN(398) - FRAME_FOR_BEAN(397)));
 
-        this.camera.up = new THREE.Vector3(0,0,1);
-        this.camera.lookAt(new THREE.Vector3(start_x - df / 20 , start_y - df / 12, 0));
-        this.camera.position.z = 10.9;
-        this.camera.position.y = start_y-0.01 - df / 6;
-        this.camera.position.x = start_x - smoothstep(0, 30, df / 100);
-      } else if (frame < 3350) {
-        var start_x = 8.6;
-        var start_y = 18.6;
-        var df = frame - FRAME_FOR_BEAN(504);
+        this.camera.position.x = start_x +
+                                 smoothstep(0, -5, (frame - FRAME_FOR_BEAN(349)) / (FRAME_FOR_BEAN(352) - FRAME_FOR_BEAN(349))) +
+                                 smoothstep(0, 5, (frame - FRAME_FOR_BEAN(352)) / (FRAME_FOR_BEAN(354) - FRAME_FOR_BEAN(352))) +
+                                 smoothstep(0, -5, (frame - FRAME_FOR_BEAN(354)) / (FRAME_FOR_BEAN(356) - FRAME_FOR_BEAN(354))) +
+                                 smoothstep(0, -25, (frame - FRAME_FOR_BEAN(336)) / (FRAME_FOR_BEAN(397) - FRAME_FOR_BEAN(336))) +
+                                 easeOut(0, 10.5, (frame - FRAME_FOR_BEAN(397)) / (FRAME_FOR_BEAN(398) - FRAME_FOR_BEAN(397)));
 
-        this.camera.up = new THREE.Vector3(0,0,1);
-        this.camera.lookAt(new THREE.Vector3(start_x - df / 20 , start_y - df / 12, 0));
-        this.camera.position.z = 10.9;
-        this.camera.position.y = start_y-0.01 - df / 6;
-        this.camera.position.x = start_x - smoothstep(0, 30, df / 100);
-      } else {
-        var start_x = 8.6;
-        var start_y = 18.6;
-        var df = 3350 - FRAME_FOR_BEAN(504);
-
-        this.camera.up = new THREE.Vector3(0,0,1);
-        this.camera.lookAt(new THREE.Vector3(start_x - df / 20 , start_y - df / 12, 0));
-        this.camera.position.z = 10.9;
-        this.camera.position.y = start_y-0.01 - df / 6;
-        this.camera.position.x = start_x - smoothstep(0, 30, df / 100);
-      } */
+        this.camera.position.z = 6 + 
+                                easeOut(0, -4.6 , (frame - FRAME_FOR_BEAN(366)) / (FRAME_FOR_BEAN(369) - FRAME_FOR_BEAN(366))) + 
+                                easeOut(0, +4.6 , (frame - FRAME_FOR_BEAN(371)) / (FRAME_FOR_BEAN(374) - FRAME_FOR_BEAN(371))) + 
+                                easeOut(0, + 10 , (frame - FRAME_FOR_BEAN(377)) / (FRAME_FOR_BEAN(380) - FRAME_FOR_BEAN(377))) + 
+                                easeOut(0, - 10, (frame - FRAME_FOR_BEAN(383)) / (FRAME_FOR_BEAN(386) - FRAME_FOR_BEAN(383))) + 
+                                easeOut(0, -4.6 , (frame - FRAME_FOR_BEAN(397)) / (FRAME_FOR_BEAN(398) - FRAME_FOR_BEAN(397)));
+      }
 
       // These needs to be set in update for nin reasons
       this.map_object.material.uniforms.z1.value = this.inputs.sirpathrick.getValue();
