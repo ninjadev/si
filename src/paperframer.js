@@ -68,48 +68,79 @@
 
       this.titles = [
         {
-          startFrame: 140,
-          endFrame: 719,
+          startFrame: 240,
+          endFrame: 857 - 50,
+          transition: 5,
+          text: XWrite('SOLSKOGEN PRESENTS'),
+        },
+        { startFrame: 857,
+          endFrame: 2000,
           transition: 10,
-          text: XWrite('NINJADEV'),
+          text: XWrite('BEAUTIFUL PATTERNS'),
         },
         {
-          startFrame: 2007,
-          endFrame: 3583,
-          transition: 10,
-          text: XWrite('COMMODOOMOMO'),
+          startFrame: 2000,
+          endFrame: 2330,
+          transition: 8,
+          text: XWrite('BEAUTIFUL NORWAY'),
         },
         {
-          startFrame: 6479,
-          endFrame: 6667,
+          startFrame: 2448,
+          endFrame: 2870,
           transition: 10,
-          text: XWrite('HUNGRY COMMODORES'),
+          text: XWrite('BEAUTIFUL EMOJIS'),
+        },
+        {
+          startFrame: 3024,
+          endFrame: 4100,
+          transition: 10,
+          text: XWrite('BEAUTIFUL TREES'),
+        },
+        {
+          startFrame: 4900,
+          endFrame: 5207,
+          transition: 8,
+          text: XWrite('BEAUTIFUL SCANLINES'),
+        },
+        {
+          startFrame: 5307,
+          endFrame: 6337,
+          transition: 8,
+          text: XWrite('BEAUTIFUL TWISTERS'),
+        },
+        {
+          startFrame: 6400,
+          endFrame: 6700,
+          transition: 10,
+          text: XWrite('BEAUTIFUL COMMODORES'),
         },
         {
           startFrame: 6767,
-          endFrame: 7601,
-          transition: 10,
-          text: XWrite('DANCE WITH NINJADEV'),
+          endFrame: 7501,
+          transition: 7,
+          text: XWrite('BEAUTIFUL NINJADEV'),
         },
         {
           startFrame: 7631,
-          endFrame: 8107,
-          transition: 10,
-          text: XWrite('MOMMA COMMODORE'),
+          endFrame: 8110,
+          transition: 7,
+          text: XWrite('BEAUTIFUL MOMMA'),
         },
         {
-          startFrame: 8207,
-          endFrame: 8783,
-          transition: 10,
-          text: XWrite('TUNNELS AHEAD'),
+          startFrame: 8200,
+          endFrame: 8670,
+          transition: 6,
+          text: XWrite('BEAUTIFUL TUNNELS'),
+        },
+        {
+          startFrame: 8750,
+          endFrame: 9800,
+          transition: 6,
+          text: XWrite('BEAUTIFUL OUTRO'),
         },
       ];
-      // TODO: Make text fit scaling stuff
-      //const pointsAvailable = 4 * scale;
+
       for (let title of this.titles) {
-        //const textDownscale = title.totalWidth / pointsAvailable;
-        //const scale = title.totalWidth / pointsAvailable;
-        //title.text.scale.set(textDownscale, textDownscale, textDownscale);
         title.text.scale.set(0.20 / scale, 0.20 / scale, 0.20 / scale);
         title.text.position.set(0 * scale, 7.7 / 2, 0);
         this.scene.add(title.text);
