@@ -291,6 +291,27 @@
       const angler2 = F(frame, 96, 32);
       //this.light1.angle = easeIn(this.light1.angle, 0.6, angler2);
 
+      this.light1.target.position.y = 0.06;
+      this.light1.penumbra = 1;
+      if(BEAN >= 888) {
+        this.light1.intensity = easeOut(1, 0, F(frame, 888, 12));
+
+        if(BEAN >= 894) {
+          this.light1.intensity = 1;
+          this.light1.target.position.y = 0.0;
+          this.light1.angle = 0.1;
+          this.light1.penumbra = 0.1;
+          this.light1.angle = smoothstep(0, 0.1, F(frame, 903 - 3, 3));
+
+          this.light1.angle = smoothstep(this.light1.angle, 0.15, F(frame, 918 - 1, 1));
+          this.light1.target.position.x = easeOut(0, 0.04, F(frame, 918 + 2, 1));
+          this.light1.target.position.y = lerp(0, 0.03, F(frame, 918 + 3, 24 -3));
+
+          this.light1.angle = easeOut(this.light1.angle, 0.5, F(frame, 930 + 3, 9));
+        }
+      }
+
+
 
       if(BEAN >= 324) {
         this.camera.position.z = easeIn(
@@ -314,6 +335,12 @@
       }
 
       if(BEAN >= 912 && BEAN < 912 + 6) {
+        this.camera.rotation.x = (Math.random() - 0.5) * 0.02;
+        this.camera.rotation.y = (Math.random() - 0.5) * 0.02;
+        this.camera.rotation.z = (Math.random() - 0.5) * 0.02;
+      }
+
+      if(BEAN >= 888 && BEAN < 888 + 3) {
         this.camera.rotation.x = (Math.random() - 0.5) * 0.02;
         this.camera.rotation.y = (Math.random() - 0.5) * 0.02;
         this.camera.rotation.z = (Math.random() - 0.5) * 0.02;
@@ -348,7 +375,7 @@
         this.background.material.color.setRGB(0.5, 0.5, 1.0);
       }
       if(BEAN >= 888) {
-        this.background.material.color.setRGB(1.0, 1.0, 0.5);
+        this.background.material.color.setRGB(.1, .0, .1);
       }
       if(BEAN >= 1176) {
         this.background.material.color.setRGB(1.0, .5, 1.0);
@@ -377,28 +404,66 @@
         u.blobbiness.value = smoothstep(0, 1, F(frame, 900, 3));
       }
 
-      if(BEAT) {
-        switch(BEAN) {
-          case 888:
-            this.rotaterPosition = 0;
-            this.rotaterSpeed = 0.34;
-            this.scratcherPosition = 0;
-            this.scratcherSpeed = 0;
-            break;
-          case 888 + 12:
-            //this.scratcherPosition = ((BEAN - 888) % 8) - 4;
-            //this.scratcherSpeed = (Math.random() - 0.5) * 2;
-            this.rotaterSpeed = -0.2
-            break;
-          case 900:
-          case 24 +888 + 2:
-          case 24 +888 + 5:
-          case 24 +888 + 6:
-          case 24 +888 + 9:
-            this.scratcherPosition = ((BEAN - 888) % 8) - 4;
-            this.scratcherSpeed = (Math.random() - 0.5) * 2;
+      switch(frame) {
+        case FRAME_FOR_BEAN(888):
+          this.rotaterPosition = 0;
+          this.rotaterSpeed = 0.34;
+          this.scratcherPosition = 0;
+          this.scratcherSpeed = 0;
+          break;
+        case FRAME_FOR_BEAN(912):
+          this.scratcherPosition = 0.1;
+          this.scratcherSpeed = 1.2;
+          break;
+        case FRAME_FOR_BEAN(912) + 9:
+          this.scratcherSpeed = -1.5;
+          break;
+        case FRAME_FOR_BEAN(912) + 26:
+          //this.scratcherPosition = 1.5;
+          //this.scratcherSpeed = 0;
+          break;
+        case FRAME_FOR_BEAN(918) + 0:
+          //this.scratcherPosition = -1.5;
+          this.scratcherSpeed = -0.2;
+          break;
+        case FRAME_FOR_BEAN(918 + 3) + 0:
+          //this.scratcherPosition = -1.5;
+          this.scratcherSpeed = 0.5;
+          break;
+        case FRAME_FOR_BEAN(942):
+          //this.scratcherPosition = -1.5;
+          this.scratcherSpeed = 0.5
+          break;
+      }
+
+      if(BEAN >= 930 && BEAN < 936) {
+        this.scratcherPosition = easeOut(this.scratcherPosition, 0, F(frame, 930, 6));
+      }
+
+      if(BEAN >= 936 && BEAN <  942) {
+        this.scratcherPosition = easeOut(0, Math.PI / 4, F(frame, 936, 1.5));
+        this.scratcherPosition = smoothstep(this.scratcherPosition, 0, F(frame, 936 + 1.5, 1.5));
+        this.rotaterPosition = smoothstep(0, -Math.PI / 4, F(frame, 936 + 1.5, 1.5));
+        this.scratcherSpeed = 0;
+      }
+
+      if(BEAN >= 942) {
+        this.scratcherPosition = 0;
+        this.rotaterPosition = 0;
+        this.rotaterSpeed = 0;
+        for(let i = 1; i < 8; i++) {
+          this.scratcherPosition = lerp(this.scratcherPosition,
+            0 + ((i % 2) - 0.5),
+            F(frame, 942 + i * 1.5, 0.1));
+          /*
+          this.rotaterPosition = easeOut(this.rotaterPosition,
+            i * Math.PI / 4,
+            F(frame, 942 + i * 1.5, 1.5));
+            */
         }
       }
+
+
 
       const RUNE_HEX_START_BEAN = 672 - 12;
       const RUNE_SCANLINES_START_BEAN = 792 + 12;

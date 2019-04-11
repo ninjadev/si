@@ -135,7 +135,7 @@
         this.uniforms.paperB.value = 0.5;
         this.uniforms.overlayer.value = lerp(1, 0, F(frame, 25 * 24 + 12 + 6, 6));
       }
-      if(BAR >= 29 && BAR < 30) {
+      if(BAR >= 29 && BAR < 30.5) {
         this.uniforms.overlayer.value = 1;
         this.uniforms.image.value = this.graphicsMap;
         const scaler = elasticOut(1.0, .1, 1, F(frame, 29 * 24, 3));
@@ -150,7 +150,7 @@
         this.uniforms.paperR.value = 0.5;
         this.uniforms.paperG.value = 0.5;
         this.uniforms.paperB.value = 1.0;
-        this.uniforms.overlayer.value = lerp(1, 0, F(frame, 29 * 24 + 12 + 6, 6));
+        this.uniforms.overlayer.value = lerp(1, 0, F(frame, 29 * 24 + 12 + 6 + 12, 6));
       }
     }
   }
