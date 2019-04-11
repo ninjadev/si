@@ -24,7 +24,7 @@ void main( )
     vec4 average = (left + middle + right + lefter + righter) / 5.;
     
     //float final_y = uv.y - average.r / LINES * 4.5;
-    float final_y = uv.y - (1. - middle.r) / 7. - average.r / 70.;
+    float final_y = uv.y - (1. - middle.r) / 0.5 - average.r / 10.;
     final_y = final_y * 0.8 + 0.2;
     float final_x = uv.x;
     //float inten = 1. - floor(mod((uv.y - average.r / LINES * 1.5) * LINES, 1.3));
