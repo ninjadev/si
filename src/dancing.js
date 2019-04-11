@@ -16,7 +16,7 @@
       let path;
       let line;
       let curve;
-      let directionSize = 2;
+      let directionSize = 1;
       let fill = true;
       let fillColor = "#7f7fff";
 
@@ -92,12 +92,14 @@
         y = y + r;
         let hode = new THREE.Object3D();
         curve = makeCurve(r, x, y);
-        line = makeLine(curve, null, 2, fill, fillColor);
+        line = makeLine(curve, null, 1, fill, fillColor);
         hode.add(line);
         line = makeLine([
           [x + 10 * size, y - 10 * size],
           [x, y - r + (r/4)],
-          [x - 10 * size, y - 10 * size],
+          [x - 7 * size, y - 14 * size],
+          [x - 9 * size, y - 9 * size],
+          [x - 6 * size, y - 9 * size],
           [x + 10 * size, y - 10 * size]
         ], null, 1);
         hode.add(line);
@@ -209,9 +211,10 @@
           [x + 10 * size, y - 3 * size],
           [x + 16 * size, y - 13 * size]
         ];
-        let directionSize = length = "s" ? 5 : 12;
+        let directionSize = length = "s" ? 1: 1;
         line = makeLine(arr, color, directionSize)
         hair.add(line);
+        hair.position.z = 2;
         return hair;
       }
 
@@ -234,8 +237,9 @@
 
       function makeCurve(radius, x, y, xScale=1, yScale=1) {
         const curve = [];
-        for (let i = 0; i <= 20; i++) {
-          const angle = i * Math.PI / 10;
+        const count = 32;
+        for (let i = 0; i <= count + 0.5; i++) {
+          const angle = i / 32 * Math.PI * 2;
           curve.push([
             x + xScale * radius * Math.cos(angle),
             y + yScale * radius * Math.sin(angle),
@@ -245,7 +249,7 @@
       }
 
       function makeLine(arr, color = null, directionSize = 1, fill = false, fillColor = null) {
-        let path = new Path({color, directionSize, fill, fillColor});
+        let path = new Path({color, directionSize, fill, fillColor, debug: false});
         for(const [x, y] of arr) {
           path.lineTo(x, y);
         }

@@ -86,14 +86,25 @@
           directionSize: 2,
         };
         const path = new Path(options);
+        const shadowPath = new Path({
+          ...options,
+          fillColor: 0,
+        });
         for (const [x, y] of track.coords) {
           path.lineTo(x, y);
+          shadowPath.lineTo(x, y -4);
         }
         const line = path.toObject3D();
+        const shadowLine = shadowPath.toObject3D();
         this.lines.push(line);
+        this.lines.push(shadowLine);
         this.scene.add(line);
+        this.scene.add(shadowLine);
         line.position.set(...track.offset);
+        shadowLine.position.set(...track.offset);
         line.path = path;
+        shadowLine.path = shadowPath;
+        shadowLine.position.z -= 1;
       }
 
       function makeSkewedCurve(radius, x, y) {
