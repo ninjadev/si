@@ -109,22 +109,22 @@
           text: XWrite('BEAUTIFUL TWISTERS'),
         },
         {
-          startFrame: 6400,
-          endFrame: 6700,
-          transition: 10,
-          text: XWrite('BEAUTIFUL COMMODORES'),
-        },
-        {
-          startFrame: 6767,
+          startFrame: 6479,
           endFrame: 7501,
-          transition: 7,
+          transition: 10,
           text: XWrite('BEAUTIFUL NINJADEV'),
         },
         {
           startFrame: 7631,
-          endFrame: 8110,
-          transition: 7,
+          endFrame: 7800,
+          transition: 5,
           text: XWrite('BEAUTIFUL MOMMA'),
+        },
+        {
+          startFrame: 7810,
+          endFrame: 8100,
+          transition: 5,
+          text: XWrite('BEAUTIFUL COMMODORES'),
         },
         {
           startFrame: 8200,
