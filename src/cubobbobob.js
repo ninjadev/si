@@ -42,7 +42,7 @@
       this.scene.add(light);
 
       this.background = new THREE.Mesh(
-        new THREE.BoxGeometry(200, 112.5, 1),
+        new THREE.BoxGeometry(252, 162, 1),
         new THREE.MeshBasicMaterial({color: 0xffffff}));
       this.scene.add(this.background);
       this.background.position.z = -100;
