@@ -24,10 +24,10 @@ varying vec2 vUv;
 void main() {
 
     vec2 paperContentUv = vUv;
-    paperContentUv -= vec2(0.44 - xOffsetPaper, .22);
-    paperContentUv *= 2.;
-    paperContentUv *= vec2(16., 9.) / 16.;
-    paperContentUv /= vec2(11., 8.5) / 11.;
+    paperContentUv -= vec2(0.34 - xOffsetPaper, .22);
+    paperContentUv *= 1.5;
+    //paperContentUv *= vec2(16., 9.) / 16.;
+    //paperContentUv /= vec2(11., 8.5) / 11.;
     vec3 paperContentColor = texture2D(paperContent, paperContentUv).rgb;
 
     float grayscalePaper = (paperContentColor.r + paperContentColor.g + paperContentColor.b) / 3.;
@@ -48,6 +48,11 @@ void main() {
 
     vec4 imageColor = texture2D(image, uv).rgba;
 
+    vec2 uspaper = vec2(11., 8.5) / 8.5;
+
+    paperContentUv -= 0.5;
+    paperContentUv *= uspaper;
+    paperContentUv += 0.5;
     float borderSize = 0.02;
     vec3 framiColor = mix(sceneColor.rgb, vec3(0., 0., 0.), (
     step(-borderSize, paperContentUv.x) *

@@ -20,6 +20,7 @@
 
     update(frame) {
       this.uniforms.generalGrayScaler.value = easeIn(1, 0, F(frame, 96, 24));
+      this.uniforms.radiuser.value = 4;
 
       this.uniforms.frame.value = frame;
       this.uniforms.tDiffuse.value = this.inputs.A.getValue();
@@ -83,22 +84,23 @@
         this.uniforms.paperB.value = 0.5;
         this.uniforms.overlayer.value = lerp(1, 0, F(frame, 13 * 24 + 12 + 6, 6));
       }
-      if(BAR >= 21 && BAR < 22) {
+      if(BAR >= 29 && BAR < 30) {
+        const bar = 29;
         this.uniforms.overlayer.value = 1;
         this.uniforms.image.value = this.demoMap;
-        const scaler = elasticOut(1.0, .1, 1, F(frame, 21 * 24, 3));
+        const scaler = elasticOut(1.0, .1, 1, F(frame, bar * 24, 3));
         this.uniforms.xScale.value = 2100 / 1500 * scaler;
         this.uniforms.yScale.value = 1 * scaler;
-        this.uniforms.xOffset.value = lerp(0.2, 0.22, F(frame, 21 * 24, 24));
+        this.uniforms.xOffset.value = lerp(0.2, 0.22, F(frame, bar * 24, 24));
         this.uniforms.yOffset.value = 0.05;
-        this.uniforms.xOffsetPaper.value = lerp(0.03, 0.0, F(frame, 21 * 24, 24));
+        this.uniforms.xOffsetPaper.value = lerp(0.03, 0.0, F(frame, bar * 24, 24));
         this.uniforms.r.value = 0.5;
         this.uniforms.g.value = 0.5;
         this.uniforms.b.value = 1.0;
         this.uniforms.paperR.value = 1.0;
         this.uniforms.paperG.value = 1.0;
         this.uniforms.paperB.value = 0.5;
-        this.uniforms.overlayer.value = lerp(1, 0, F(frame, 21 * 24 + 12 + 6, 6));
+        this.uniforms.overlayer.value = lerp(1, 0, F(frame, bar * 24 + 12 + 6, 6));
       }
       if(BAR >= 17 && BAR < 21) {
         this.uniforms.overlayer.value = 1;
@@ -118,39 +120,41 @@
         this.uniforms.radiuser.value = easeOut(0, 3.5, F(frame, 17 * 24, 24));
         this.uniforms.overlayer.value = 1;
       }
-      if(BAR >= 25 && BAR < 26) {
+      if(BAR >= 31 && BAR < 32) {
+        const bar = 31;
         this.uniforms.overlayer.value = 1;
         this.uniforms.image.value = this.musicMap;
-        const scaler = elasticOut(1.0, .1, 1, F(frame, 25 * 24, 3));
+        const scaler = elasticOut(1.0, .1, 1, F(frame, bar * 24, 3));
         this.uniforms.xScale.value = 2100 / 1500 * scaler;
         this.uniforms.yScale.value = 1 * scaler;
-        this.uniforms.xOffset.value = lerp(0.2, 0.22, F(frame, 25 * 24, 24));
+        this.uniforms.xOffset.value = lerp(0.2, 0.22, F(frame, bar * 24, 24));
         this.uniforms.yOffset.value = 0.05;
-        this.uniforms.xOffsetPaper.value = lerp(0.03, 0.0, F(frame, 25 * 24, 24));
+        this.uniforms.xOffsetPaper.value = lerp(0.03, 0.0, F(frame, bar * 24, 24));
         this.uniforms.r.value = 1.0;
         this.uniforms.g.value = 1.0;
         this.uniforms.b.value = 1.0;
         this.uniforms.paperR.value = 0.5;
         this.uniforms.paperG.value = 1.0;
         this.uniforms.paperB.value = 0.5;
-        this.uniforms.overlayer.value = lerp(1, 0, F(frame, 25 * 24 + 12 + 6, 6));
+        this.uniforms.overlayer.value = lerp(1, 0, F(frame, bar * 24 + 12 + 6, 6));
       }
-      if(BAR >= 29 && BAR < 30.5) {
+      if(BAR >= 33 && BAR < 34) {
+        const bar = 33;
         this.uniforms.overlayer.value = 1;
         this.uniforms.image.value = this.graphicsMap;
-        const scaler = elasticOut(1.0, .1, 1, F(frame, 29 * 24, 3));
+        const scaler = elasticOut(1.0, .1, 1, F(frame, bar * 24, 3));
         this.uniforms.xScale.value = 2100 / 1500 * scaler;
         this.uniforms.yScale.value = 1 * scaler;
-        this.uniforms.xOffset.value = lerp(0.2, 0.22, F(frame, 29 * 24, 24));
+        this.uniforms.xOffset.value = lerp(0.2, 0.22, F(frame, bar * 24, 24));
         this.uniforms.yOffset.value = 0.05;
-        this.uniforms.xOffsetPaper.value = lerp(0.03, 0.0, F(frame, 29 * 24, 24));
+        this.uniforms.xOffsetPaper.value = lerp(0.03, 0.0, F(frame, bar * 24, 24));
         this.uniforms.r.value = 0.90;
         this.uniforms.g.value = 0.85;
         this.uniforms.b.value = 0.75;
         this.uniforms.paperR.value = 0.5;
         this.uniforms.paperG.value = 0.5;
         this.uniforms.paperB.value = 1.0;
-        this.uniforms.overlayer.value = lerp(1, 0, F(frame, 29 * 24 + 12 + 6 + 12, 6));
+        this.uniforms.overlayer.value = lerp(1, 0, F(frame, bar * 24 + 12 + 6 + 12, 6));
       }
     }
   }
