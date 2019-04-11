@@ -62,20 +62,25 @@
 
       function Scroller(text) {
         this.text = text;
+        const fontSize = 14;
+        const fontFamily = 'monospace';
         this.textCanvas = document.createElement('canvas');
         this.textCtx = this.textCanvas.getContext('2d');
-        this.textCtx.font = 'bold 72px arial';
+        this.textCtx.font = `bold ${fontSize}px ${fontFamily}`;
 
         const measure = this.textCtx.measureText(this.text);
-        this.textCanvas.width = measure.width;
-        this.textCanvas.height = 72;
+        this.textCanvas.width = measure.width + 2;
+        this.textCanvas.height = fontSize;
 
         this.textCtx.clearRect(0, 0, this.textCanvas.width, this.textCanvas.height);
-        this.textCtx.fillStyle = 'black';
-        this.textCtx.font = 'bold 72px arial';
+        this.textCtx.fillStyle = '#ff7fff';
+        this.textCtx.font = `bold ${fontSize}px ${fontFamily}`;
         this.textCtx.textAlign = 'center';
         this.textCtx.textBaseline = 'middle';
         this.textCtx.fillText(this.text, this.textCanvas.width / 2, this.textCanvas.height / 2);
+
+        this.textCtx.clearRect(0, 0, 1, this.textCanvas.height);
+        this.textCtx.clearRect(this.textCanvas.width - 1, 0, 1, this.textCanvas.height);
 
         this.canvas = document.createElement('canvas');
         this.canvas.width = this.textCanvas.width;
@@ -87,8 +92,11 @@
         this.texture = new THREE.VideoTexture(this.canvas);
         this.texture.minFilter = THREE.LinearFilter;
         this.texture.magFilter = THREE.LinearFilter;
+        const planeAspect = 100 / 10;
+        const canvasAspect = this.canvas.width / this.canvas.height;
+        this.texture.repeat.set(planeAspect / canvasAspect, 1);
         const material = new THREE.MeshBasicMaterial({ color: 0xffffff, map: this.texture, transparent: true, });
-        const geometry = new THREE.PlaneGeometry(100, 10, 64, 1);
+        const geometry = new THREE.PlaneGeometry(100, 10, 256, 1);
         for(let i = 0; i < geometry.vertices.length; i++) {
           const vertex = geometry.vertices[i];
           vertex.originalY = vertex.y;
@@ -102,7 +110,7 @@
       this.LongestScroller = new Scroller('THIS IS THE LOOONGEST SCROLLER I COULD AFFORD');
       this.scene.add(this.LongestScroller.scrollerMesh);
 
-      this.AmigaScroller = new Scroller('AMIGAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA');
+      this.AmigaScroller = new Scroller('AMIGAAAAAAAAAAAAAAAAAA');
       this.scene.add(this.AmigaScroller.scrollerMesh);
 
       this.NoScroller.scrollerMesh.position.set(-35, -5, 0);
@@ -216,26 +224,26 @@
 
       // NO SCROLLERS
       this.NoScroller.texture.needsUpdate = true;
-      for(let i = 0; i < this.NoScroller.scrollerMesh.geometry.vertices.length; i++) {
+      const length = this.NoScroller.scrollerMesh.geometry.vertices.length;
+      for(let i = 0; i < length; i++) {
         const vertex = this.NoScroller.scrollerMesh.geometry.vertices[i];
         const x = i / 2 | 0;
-        vertex.y = vertex.originalY + 2 * Math.sin(frame / 10 + x * Math.PI * 2 / 64 * 8);
+        vertex.y = vertex.originalY + 4 * Math.sin(frame / 10 + x * Math.PI * 2 / length * 8);
       }
       this.NoScroller.scrollerMesh.geometry.verticesNeedUpdate = true;
       this.NoScroller.scrollerMesh.material.map.offset.x = lerp(
-        -1, 1, (frame - mommaIsStationary - 40 - start) / (this.NoScroller.text.length * 3.5)
-      );
+        -1, 1, (frame - mommaIsStationary - 40 - start) / (this.NoScroller.text.length * 2.5));
 
       // LONGEST
       this.LongestScroller.texture.needsUpdate = true;
       for(let i = 0; i < this.LongestScroller.scrollerMesh.geometry.vertices.length; i++) {
         const vertex = this.LongestScroller.scrollerMesh.geometry.vertices[i];
         const x = i / 2 | 0;
-        vertex.y = vertex.originalY + 2 * Math.sin(frame / 10 + x * Math.PI * 2 / 64 * 8);
+        vertex.y = vertex.originalY + 4 * Math.sin(frame / 10 + x * Math.PI * 2 / length * 8);
       }
       this.LongestScroller.scrollerMesh.geometry.verticesNeedUpdate = true;
       this.LongestScroller.scrollerMesh.material.map.offset.x = lerp(
-        -1, 1, (frame - mommaIsStationary - 20 - start) / (this.LongestScroller.text.length * 3.5)
+        -1, 1, (frame - mommaIsStationary - 20 - start) / (this.LongestScroller.text.length * 3.)
       );
 
 
@@ -244,7 +252,7 @@
       for(let i = 0; i < this.AmigaScroller.scrollerMesh.geometry.vertices.length; i++) {
         const vertex = this.AmigaScroller.scrollerMesh.geometry.vertices[i];
         const x = i / 2 | 0;
-        vertex.y = vertex.originalY + 2 * Math.sin(frame / 10 + x * Math.PI * 2 / 64 * 8);
+        vertex.y = vertex.originalY + 4 * Math.sin(frame / 10 + x * Math.PI * 2 / length * 8);
       }
       this.AmigaScroller.scrollerMesh.geometry.verticesNeedUpdate = true;
       this.AmigaScroller.scrollerMesh.material.map.offset.x = lerp(
