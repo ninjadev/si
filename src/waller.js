@@ -313,6 +313,18 @@
         this.camera.rotation.z = (Math.random() - 0.5) * 0.02;
       }
 
+      if(BEAN >= 912 && BEAN < 912 + 6) {
+        this.camera.rotation.x = (Math.random() - 0.5) * 0.02;
+        this.camera.rotation.y = (Math.random() - 0.5) * 0.02;
+        this.camera.rotation.z = (Math.random() - 0.5) * 0.02;
+      }
+
+      if(BEAN >= 960 && BEAN < 960 + 6) {
+        this.camera.rotation.x = (Math.random() - 0.5) * 0.02;
+        this.camera.rotation.y = (Math.random() - 0.5) * 0.02;
+        this.camera.rotation.z = (Math.random() - 0.5) * 0.02;
+      }
+
       this.cameraRotationDD.add(this.cameraRotationDDD);
       this.cameraRotationDD.x -= this.camera.rotation.x * 0.1;
       this.cameraRotationDD.y -= this.camera.rotation.y * 0.1;

@@ -1,4 +1,5 @@
 (function(global) {
+  const F = (frame, from, delta) => (frame - FRAME_FOR_BEAN(from)) / (FRAME_FOR_BEAN(from + delta) - FRAME_FOR_BEAN(from));
   class diagonals extends NIN.THREENode {
     constructor(id, options) {
       super(id, {
@@ -75,7 +76,9 @@
       for (let i = 0; i < this.ticks.length; i++) {
         const path = this.ticks[i].path;
         path.material.uniforms.drawStart.value = 0;
-        path.material.uniforms.drawEnd.value = lerp(0, 1, (frame - startFrame - 90 - i / 10) / 20);
+        path.material.uniforms.drawEnd.value = lerp(
+          0, 1,
+          F(frame, 948 + ((i / 110 | 0) - 5) * 1.5 - 2, 0));
         path.material.uniforms.wobbliness.value = 1;
       }
     }

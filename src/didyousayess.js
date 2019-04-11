@@ -1,4 +1,5 @@
 (function(global) {
+  const F = (frame, from, delta) => (frame - FRAME_FOR_BEAN(from)) / (FRAME_FOR_BEAN(from + delta) - FRAME_FOR_BEAN(from));
   class didyousayess extends NIN.THREENode {
     constructor(id, options) {
       super(id, {
@@ -85,31 +86,37 @@
     update(frame) {
       super.update(frame);
 
+      const mator = F(frame, 912, 6);
       const startFrame = FRAME_FOR_BEAN(24 * 9) - 200;
       const verticalFrame = startFrame;
       const diagonalFrame = startFrame + 100;
       const backlineFrame = startFrame + 200;
       const cameraFrame = startFrame + 150;
 
+      const sizinator = F(frame, 912 + 6 + 3, 0);
+
       for (let i = 0; i < this.verticals.length; i++) {
         const path = this.verticals[i].path;
         path.material.uniforms.drawStart.value = 0;
-        path.material.uniforms.drawEnd.value = lerp(0, 1, (frame - verticalFrame - i * 5) / 100);
-        path.material.uniforms.wobbliness.value = 1;
+        path.material.uniforms.drawEnd.value = lerp(0, 1, mator);
+        path.material.uniforms.wobbliness.value = 0.5;
+        path.material.uniforms.width.value = lerp(3, 2, sizinator);
       }
 
       for (let i = 0; i < this.diagonals.length; i++) {
         const path = this.diagonals[i].path;
         path.material.uniforms.drawStart.value = 0;
-        path.material.uniforms.drawEnd.value = lerp(0, 1, (frame - diagonalFrame - i * 5) / 100);
-        path.material.uniforms.wobbliness.value = 1;
+        path.material.uniforms.drawEnd.value = lerp(0, 1, mator);
+        path.material.uniforms.wobbliness.value = 0.5;
+        path.material.uniforms.width.value =lerp(3, 2, sizinator);
       }
 
       for (let i = 0; i < this.backlines.length; i++) {
         const path = this.backlines[i].path;
         path.material.uniforms.drawStart.value = 0;
-        path.material.uniforms.drawEnd.value = lerp(0, 1, (frame - backlineFrame - i * 5) / 150);
-        path.material.uniforms.wobbliness.value = 1;
+        path.material.uniforms.drawEnd.value = lerp(0, 1, mator);
+        path.material.uniforms.wobbliness.value = 0.5;
+        path.material.uniforms.width.value = lerp(3, 2, sizinator);
       }
 
       this.camera.position.z = smoothstep(200, 250, (frame - cameraFrame) / 550);
