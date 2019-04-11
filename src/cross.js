@@ -65,7 +65,7 @@
         frame = frame + FRAME_FOR_BEAN(24 * 41) - FRAME_FOR_BEAN(365); 
       }
 
-      const startFrame = FRAME_FOR_BEAN(24 * 41);
+      const startFrame = FRAME_FOR_BEAN(24 * 9);
 
       for (let i = 0; i < this.verticals.length; i++) {
         const path = this.verticals[i].path;
@@ -80,6 +80,8 @@
         path.material.uniforms.drawEnd.value = lerp(0, 1, (frame - startFrame + i * 4) / (400 - i * 4));
         path.material.uniforms.wobbliness.value = 1;
       }
+
+      this.camera.rotation.z = frame / 180;
     }
   }
 
