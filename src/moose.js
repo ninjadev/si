@@ -88,7 +88,7 @@
 
       for (let row = 0; row < 5; row++) {
         for (let col = 0; col < 20; col++) {
-          let logo = CommodoreLogo(25);
+          let logo = CommodoreLogo(25, '#ffffff', row % 2 == 1);
           logo.position.set(
             -150 + col * (25 + 5),
             // 5 rows a 25 + 15, offsets 80 40 0 40 80
@@ -128,9 +128,7 @@
       const speed = 240;
 
       const startBean = 1308;
-      const beanOffset = Math.floor((BEAN - startBean) / 3);
 
-      //1308  1311 1314 1317
       if (BEAN < 1311) {
         this.logoWrapperRight.position.x = 600 - 90;
         this.logoWrapperLeft.position.x = -600 + 90;
@@ -146,18 +144,19 @@
 
       } else {
         const this_frame_start = FRAME_FOR_BEAN(1320);
-        this.logoWrapperRight.position.x = 600 - 180 - (frame - this_frame_start) - easeOut(0, 30, (frame - this_frame_start) / 30);
-        this.logoWrapperLeft.position.x = -600 + 180 + (frame - this_frame_start) + easeOut(0, 30, (frame - this_frame_start) / 30);
+        this.logoWrapperRight.position.x = 600 - 180 - (frame - this_frame_start) - easeOut(0, 50, (frame - this_frame_start) / 30);
+        this.logoWrapperLeft.position.x = -600 + 180 + (frame - this_frame_start) + easeOut(0, 50, (frame - this_frame_start) / 30);
 
       }
 
       const openMouth = (BEAN + 1) % 12 < 6;
       for (let [i, logo] of this.commodoreLogos.entries()) {
-        const openMyMyMouth = i % 2 == 0 ? openMouth : !openMouth;
+        let openMyMyMouth = i % 2 == 0 ? openMouth : !openMouth;
+        openMyMyMouth = BEAN < 1320 ? 0 : openMouth;
         const rotation = openMyMyMouth ? Math.PI / 8 : 0;
 
-        //logo.upperBeak.rotation.z = rotation;
-        //logo.lowerBeak.rotation.z = -rotation;
+        logo.upperBeak.rotation.z = rotation;
+        logo.lowerBeak.rotation.z = -rotation;
       }
 
       for (let lines of this.commodoreLinesLeft) {

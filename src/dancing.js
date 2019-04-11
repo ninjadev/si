@@ -329,48 +329,50 @@
 
     update(frame) {
       super.update(frame);
-      const startframe = 6767
-      const startBEAN = 1128;
+      //const startframe = 6767
+      //const startBEAN = 1128;
+      const startframe = 6479;
+      const startBEAN = 1080;
 
       let z = 22;
       let x = 0;
       let y = 0;
 
-      if (BEAN < startBEAN + 6) {
+      if (BEAN < startBEAN + 12) {
         this.camera.position.set(this.guys[0].pos[0], this.guys[0].pos[1], z);
-      } else if (BEAN >= startBEAN + 6 && BEAN < startBEAN + 12) {
+      } else if (BEAN < startBEAN + 18) {
         this.camera.position.set(this.guys[1].pos[0], this.guys[1].pos[1], z);
-      } else if (BEAN >= startBEAN + 12 && BEAN < startBEAN + 18) {
+      } else if (BEAN < startBEAN + 24) {
         this.camera.position.set(this.guys[2].pos[0], this.guys[2].pos[1], z + 5);
-      } else if (BEAN >= startBEAN + 18 && BEAN < startBEAN + 24) {
+      } else if (BEAN < startBEAN + 30) {
         this.camera.position.set(this.guys[3].pos[0], this.guys[3].pos[1], z);
-      } else if (BEAN >= startBEAN + 24 && BEAN < startBEAN + 30) {
+      } else if (BEAN < startBEAN + 36) {
         this.camera.position.set(this.guys[4].pos[0], this.guys[4].pos[1], z + 5);
-      } else if (BEAN >= startBEAN + 30 && BEAN < startBEAN + 36) {
+      } else if (BEAN < startBEAN + 42) {
         this.camera.position.set(this.guys[5].pos[0], this.guys[5].pos[1], z);
-      } else if (BEAN >= startBEAN + 36 && BEAN < startBEAN + 42) {
+      } else if (BEAN < startBEAN + 48) {
         this.camera.position.set(this.guys[6].pos[0], this.guys[6].pos[1], z + 5);
-      } else if (BEAN >= startBEAN + 42 && BEAN < startBEAN + 48) {
+      } else if (BEAN < startBEAN + 60) {
         this.camera.position.set(this.guys[7].pos[0], this.guys[7].pos[1], z);
-      } else if (BEAN >= startBEAN + 48 && BEAN < startBEAN + 60) {
+      } else if (BEAN < startBEAN + 78) {
         this.camera.position.set(0, 110, 130);
-      } else if (BEAN >= startBEAN + 60 && BEAN < startBEAN + 78) {
-        z = lerp(60, 280, Math.tan((frame - startframe) * 0.0010));
-        x = lerp(40, 200, Math.tan((frame - startframe) * 0.0010));
-        y = lerp(80, -130, Math.tan((frame - startframe) * 0.0010));
+      } else if (BEAN < startBEAN + 96) {
+        z = lerp(60, 280, Math.tan((frame - startframe - 144) * 0.0010));
+        x = lerp(40, 200, Math.tan((frame - startframe - 144) * 0.0010));
+        y = lerp(80, -130, Math.tan((frame - startframe - 144) * 0.0010));
         this.camera.position.set(x, y, z);
-      } else if (BEAN >= startBEAN + 78 && BEAN < startBEAN + 96) {
-        z = lerp(60, 280, Math.tan((frame - startframe) * 0.0010));
-        x = lerp(200, -220, Math.tan((frame - startframe) * 0.0010));
-        y = lerp(-40, -80, Math.tan((frame - startframe) * 0.0010));
+      } else if (BEAN < startBEAN + 120) {
+        z = lerp(60, 280, Math.tan((frame - startframe - 144) * 0.0010));
+        x = lerp(200, -220, Math.tan((frame - startframe - 144) * 0.0010));
+        y = lerp(-40, -80, Math.tan((frame - startframe - 144) * 0.0010));
         this.camera.position.set(x, y, z);
-      } else if (BEAN >= startBEAN + 96 && BEAN < startBEAN + 108) {
-        z = lerp(60, 280, Math.tan((frame - startframe) * 0.0010));
-        x = lerp(-220, 20, Math.tan((frame - startframe) * 0.0010));
-        y = lerp(0, 30, Math.tan((frame - startframe) * 0.0010));
+      } else if (BEAN < startBEAN + 144) {
+        z = lerp(60, 280, Math.tan((frame - startframe - 168) * 0.0010));
+        x = lerp(-220, 20, Math.tan((frame - startframe - 168) * 0.0010));
+        y = lerp(0, 30, Math.tan((frame - startframe - 168) * 0.0010));
         this.camera.position.set(x, y, z);
       } else {
-        z = lerp(150, 455, Math.tan((frame - startframe) * 0.0010));
+        z = lerp(150, 455, Math.tan((frame - startframe - 288) * 0.0010));
         this.camera.position.set(x, y - 20, z);
       }
 
@@ -390,7 +392,7 @@
           body.handsUp2.visible = true;
         }
       }
-      if (BEAN >= startBEAN + 48 && BEAN < startBEAN + 108) {
+      if (BEAN >= startBEAN + 48 && BEAN < startBEAN + 144) {
         for (const body of this.guys) {
           body.frontleft.visible = (BEAN % 36 < 6) || (BEAN % 36 >= 12 && BEAN % 36 < 18);
           body.backleft.visible = BEAN % 36 >= 6 && BEAN % 36 < 12;
@@ -399,7 +401,7 @@
           body.handsUp1.visible = false;
           body.handsUp2.visible = false;
         }
-      } else if (BEAN >= startBEAN + 108) {
+      } else if (BEAN >= startBEAN + 144) {
         for (const body of this.guys) {
           body.frontleft.visible = false;
           body.backleft.visible = false;
