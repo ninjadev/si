@@ -17,8 +17,11 @@
       this.emojiGeometry = new THREE.PlaneGeometry(128, 128, 1);
       this.wrappers = {};
       this.tiles = {};
+      this.mosaicKeyOrder = [
+        'hardware', 'dancingSkills', 'pixelArt', 'campingEquipment', 'goodMood', 'shades'
+      ];
 
-      for (let mosaicKey in window.emojiMosaics) {
+      for (let mosaicKey of this.mosaicKeyOrder) {
         if (window.emojiMosaics.hasOwnProperty(mosaicKey)) {
           let mosaic = window.emojiMosaics[mosaicKey];
           for (let emojiId in mosaic.emojies) {
@@ -64,7 +67,7 @@
         hardware: {start: beanOffset + 12 * 5, end: beanOffset + 12 * 5 + 12},
       };
 
-      for (let mosaicKey in window.emojiMosaics) {
+      for (let mosaicKey of this.mosaicKeyOrder) {
         if (window.emojiMosaics.hasOwnProperty(mosaicKey)) {
           let wrapper = this.wrappers[mosaicKey];
           let isActive = BEAN >= timing[mosaicKey].start && BEAN < timing[mosaicKey].end;
