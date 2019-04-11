@@ -14,7 +14,7 @@
       "A1": "patterns.render",
       "A2": "cubobbobob.render",
       "B1": "NorwayNode.render",
-      "B2": "emoji.render",
+      "B2": "bands.render",
       "A3": "trees.render",
       "A4": "trees.render",
       "B3": "HexFlightMainScene.render",
@@ -23,7 +23,7 @@
       "B5": "dancing.render",
       "B6": "dancing.render",
       "A5": "MommaBird.render",
-      "A6": "bands.render",
+      "A6": "emoji.render",
       "Outro": "end.render",
       "Scratches": "patterns.render"
     }
