@@ -18,6 +18,7 @@
           B5: new NIN.TextureInput(),
           B6: new NIN.TextureInput(),
           A5: new NIN.TextureInput(),
+          A52: new NIN.TextureInput(),
           A6: new NIN.TextureInput(),
           Outro: new NIN.TextureInput(),
         },
@@ -42,6 +43,7 @@
       this.inputs.B5.enabled = false;
       this.inputs.B6.enabled = false;
       this.inputs.A5.enabled = false;
+      this.inputs.A52.enabled = false;
       this.inputs.A6.enabled = false;
       this.inputs.Outro.enabled = false;
 
@@ -72,8 +74,10 @@
         selectedScene = this.inputs.B5;
       } else if (BEAN < 24 * 53) {
         selectedScene = this.inputs.B6;
-      } else if (BEAN < 24 * 57) {
+      } else if (BEAN < 1308) {
         selectedScene = this.inputs.A5;
+      } else if (BEAN < 24 * 57) {
+        selectedScene = this.inputs.A52;
       } else if (BEAN < 24 * 61) {
         selectedScene = this.inputs.A6;
       } else {

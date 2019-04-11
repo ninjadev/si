@@ -127,20 +127,37 @@
       const startOfEnd = 120;
       const speed = 240;
 
-      // Screen is ca 300 wide. 10 units a 30.
-      //this.logoWrapperRight.position.x = 600 - ((frame / 2) % 600);
-      //this.logoWrapperLeft.position.x = -600 + ((frame / 2) % 600);
+      const startBean = 1308;
+      const beanOffset = Math.floor((BEAN - startBean) / 3);
 
-      this.logoWrapperLeft.position.x = -600 + lerp(0, 600, (frame - startFrame) / 600);
-      this.logoWrapperRight.position.x = 600 - lerp(0, 600, (frame - startFrame) / 600);
+      //1308  1311 1314 1317
+      if (BEAN < 1311) {
+        this.logoWrapperRight.position.x = 600 - 90;
+        this.logoWrapperLeft.position.x = -600 + 90;
+      } else if (BEAN < 1314) {
+        this.logoWrapperRight.position.x = 600 - 120;
+        this.logoWrapperLeft.position.x = -600 + 120;
+      } else if (BEAN < 1317) {
+        this.logoWrapperRight.position.x = 600 - 150;
+        this.logoWrapperLeft.position.x = -600 + 150;
+      } else if (BEAN < 1320) {
+        this.logoWrapperRight.position.x = 600 - 180;
+        this.logoWrapperLeft.position.x = -600 + 180;
+
+      } else {
+        const this_frame_start = FRAME_FOR_BEAN(1320);
+        this.logoWrapperRight.position.x = 600 - 180 - (frame - this_frame_start) - easeOut(0, 30, (frame - this_frame_start) / 30);
+        this.logoWrapperLeft.position.x = -600 + 180 + (frame - this_frame_start) + easeOut(0, 30, (frame - this_frame_start) / 30);
+
+      }
 
       const openMouth = (BEAN + 1) % 12 < 6;
       for (let [i, logo] of this.commodoreLogos.entries()) {
         const openMyMyMouth = i % 2 == 0 ? openMouth : !openMouth;
         const rotation = openMyMyMouth ? Math.PI / 8 : 0;
 
-        logo.upperBeak.rotation.z = rotation;
-        logo.lowerBeak.rotation.z = -rotation;
+        //logo.upperBeak.rotation.z = rotation;
+        //logo.lowerBeak.rotation.z = -rotation;
       }
 
       for (let lines of this.commodoreLinesLeft) {

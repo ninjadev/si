@@ -19,10 +19,11 @@
       "A4": "trees.render",
       "B3": "HexFlightMainScene.render",
       "B4": "LineDepth.render",
-      "B5intro": "moose.render",
+      "B5intro": "dancing.render",
       "B5": "dancing.render",
       "B6": "dancing.render",
       "A5": "MommaBird.render",
+      "A52": "moose.render",
       "A6": "emoji.render",
       "Outro": "end.render",
       "Scratches": "patterns.render"

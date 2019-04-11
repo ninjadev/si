@@ -156,28 +156,30 @@
       this.chick3.upperBeak.rotation.z = openMouth ? Math.PI / 3 : 0;
       this.chick3.lowerBeak.rotation.z = openMouth ? -Math.PI / 3 : 0;
 
-      const start = 7631;
-      const mommaIsStationary = 180;
+      const start = 7601;
+      const mommaIsStationary = 50;
+      const mommaLeaves = 120;
+      const mommaLeavesDuration = 100;
       this.chick1.rotation.z = lerp(
         Math.PI / 2,
         lerp(
           Math.PI / 3,
           Math.PI / 2,
-          (frame - start - 510) / 20),
+          (frame - start - mommaIsStationary - mommaLeaves - 40) / 20),
         (frame - start - mommaIsStationary) / 20);
       this.chick2.rotation.z = lerp(
         Math.PI / 2,
         lerp(
           Math.PI / 4,
           Math.PI / 2,
-          (frame - start - 510) / 30),
+          (frame - start - mommaIsStationary - mommaLeaves - 40) / 30),
         (frame - start - mommaIsStationary) / 30);
       this.chick3.rotation.z = lerp(
         Math.PI / 2,
         lerp(
           Math.PI / 5,
           Math.PI / 2,
-          (frame - start - 510) / 10),
+          (frame - start - mommaIsStationary - mommaLeaves - 40) / 10),
         (frame - start - mommaIsStationary) / 10);
 
       this.mommaBird.scale.x = 1 + 0.1 * this.oomph;
@@ -185,19 +187,19 @@
       this.mommaBird.scale.z = 1 + 0.05 * this.oomph;
 
       let animationChainX;
-      animationChainX = smoothstep(25, -200, (frame - 450 - start) / 150);
-      animationChainX = smoothstep(35, animationChainX, (frame - 290 - start) / 120);
-      animationChainX = smoothstep(100, animationChainX, (frame - 140 - start) / 60);
-      animationChainX = smoothstep(-60, animationChainX, (frame - 90 - start) / 50);
-      animationChainX = smoothstep(180, animationChainX, (frame - start) / 90);
+      animationChainX = smoothstep(35, -200, (frame - mommaIsStationary - mommaLeaves - start) / mommaLeavesDuration);
+      //animationChainX = smoothstep(35, animationChainX, (frame - 90 - start) / 120);
+      //animationChainX = smoothstep(100, animationChainX, (frame - 140 - start) / 60);
+      //animationChainX = smoothstep(-60, animationChainX, (frame - 90 - start) / 50);
+      animationChainX = smoothstep(180, animationChainX, (frame - start) / 60);
       this.mommaBird.position.x = animationChainX;
 
       let animationChainY;
-      animationChainY = smoothstep(30, 50, (frame - 450 - start) / 120);
-      animationChainY = smoothstep(40, animationChainY, (frame - 290 - start) / 120);
-      animationChainY = smoothstep(20, animationChainY, (frame - 140 - start) / 60);
-      animationChainY = smoothstep(0, animationChainY, (frame - 100 - start) / 60);
-      animationChainY = smoothstep(40, animationChainY, (frame - start) / 100);
+      animationChainY = smoothstep(40, 50, (frame - mommaIsStationary - mommaLeaves - start) / mommaLeavesDuration);
+      //animationChainY = smoothstep(40, animationChainY, (frame - 90 - start) / 120);
+      //animationChainY = smoothstep(20, animationChainY, (frame - 140 - start) / 60);
+      //animationChainY = smoothstep(0, animationChainY, (frame - 100 - start) / 60);
+      animationChainY = smoothstep(40, animationChainY, (frame - start) / 60);
       this.mommaBird.position.y = animationChainY;
 
       openMouth = BEAN % 2 == 0;
@@ -205,10 +207,12 @@
       this.mommaBird.lowerBeak.rotation.z = openMouth ? -Math.PI / 32 : 0;
 
       let rotationChain;
-      rotationChain = smoothstep(Math.PI + Math.PI / 4, Math.PI - Math.PI / 6, (frame - 420 - start) / 120);
-      rotationChain = smoothstep(Math.PI - Math.PI / 6, rotationChain, (frame - start) / 180);
+      rotationChain = smoothstep(
+        Math.PI + Math.PI / 4,
+        Math.PI - Math.PI / 6,
+        (frame - mommaIsStationary - mommaLeaves - start) / mommaLeavesDuration);
+      rotationChain = smoothstep(Math.PI - Math.PI / 6, rotationChain, (frame - start) / 60);
       this.mommaBird.rotation.z = rotationChain;
-
 
       // NO SCROLLERS
       this.NoScroller.texture.needsUpdate = true;
@@ -219,7 +223,7 @@
       }
       this.NoScroller.scrollerMesh.geometry.verticesNeedUpdate = true;
       this.NoScroller.scrollerMesh.material.map.offset.x = lerp(
-        -1, 1, (frame - mommaIsStationary - 40 - start) / (this.NoScroller.text.length * 7)
+        -1, 1, (frame - mommaIsStationary - 40 - start) / (this.NoScroller.text.length * 3.5)
       );
 
       // LONGEST
@@ -231,7 +235,7 @@
       }
       this.LongestScroller.scrollerMesh.geometry.verticesNeedUpdate = true;
       this.LongestScroller.scrollerMesh.material.map.offset.x = lerp(
-        -1, 1, (frame - mommaIsStationary - 20 - start) / (this.LongestScroller.text.length * 7)
+        -1, 1, (frame - mommaIsStationary - 20 - start) / (this.LongestScroller.text.length * 3.5)
       );
 
 
@@ -244,7 +248,7 @@
       }
       this.AmigaScroller.scrollerMesh.geometry.verticesNeedUpdate = true;
       this.AmigaScroller.scrollerMesh.material.map.offset.x = lerp(
-        -1, 1, (frame - mommaIsStationary - start) / (this.AmigaScroller.text.length * 10));
+        -1, 1, (frame - mommaIsStationary - start) / (this.AmigaScroller.text.length * 4.5));
     }
   }
 
