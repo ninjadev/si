@@ -18,19 +18,19 @@
       let curve;
       let directionSize = 2;
       let fill = true;
-      let fillColor = "#ffffff";
+      let fillColor = "#7f7fff";
 
       const info = [
-        [0, 10, "xl", "#ff99e6", "julie"], 
-        [80, 50, "s", "#e1caa0", "stian"], 
-        [0, -100, "m", "#ff9933", "aleks"], 
-        [-80, 50, "s", "#b2997c", "iver"], 
-        [-100, -75, "m", "#86592d", "sigve"], 
-        [-160, 20, "m", "#53402d", "rune"], 
-        [100, -75, "m", "#8c735a", "cristea"], 
-        [160, 20, "l", "#b37700", "flory"], 
-        [-250, -90, "m", "#000000", ""], 
-        [250, 35, "m", "#000000", ""], 
+        [0, 10, "xl", "#ff99e6", "julie"],
+        [80, 50, "s", "#e1caa0", "stian"],
+        [0, -100, "m", "#ff9933", "aleks"],
+        [-80, 50, "s", "#b2997c", "iver"],
+        [-100, -75, "m", "#86592d", "sigve"],
+        [-160, 20, "m", "#53402d", "rune"],
+        [100, -75, "m", "#8c735a", "cristea"],
+        [160, 20, "l", "#b37700", "flory"],
+        [-250, -90, "m", "#000000", ""],
+        [250, 35, "m", "#000000", ""],
         [210, -90, "m", "#000000", ""]
       ];
 
@@ -39,7 +39,7 @@
         let size = i % 2 === 1 || i === 0 ? 0.4 : 0.5;
         let r = 20 * size;
         let x = info[i][0];
-        let y = info[i][1]; 
+        let y = info[i][1];
 
         let hair = makeHair(x, y + r * 2, size, info[i][2], info[i][3]);
         this.scene.add(hair);
@@ -204,9 +204,9 @@
           [x + 10 * size, y - 4 * size],
           [x + 16 * size, y - 10 * size]
         ] : [
-          [x - 16 * size, y - 16 * size], 
-          [x - 8 * size, y - 1 * size], 
-          [x + 10 * size, y - 3 * size], 
+          [x - 16 * size, y - 16 * size],
+          [x - 8 * size, y - 1 * size],
+          [x + 10 * size, y - 3 * size],
           [x + 16 * size, y - 13 * size]
         ];
         let directionSize = length = "s" ? 5 : 12;
@@ -331,7 +331,7 @@
       super.update(frame);
       const startframe = 6767
       const startBEAN = 1128;
-      
+
       let z = 22;
       let x = 0;
       let y = 0;
