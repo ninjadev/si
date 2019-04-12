@@ -12,6 +12,9 @@
         }
       });
 
+      this.ballyThrob = 0;
+      this.ballySize = 0;
+
       this.rotaterPosition = 0;
       this.rotaterSpeed = 0;
       this.scratcherPosition = 0;
@@ -294,11 +297,11 @@
 
       this.light1.target.position.y = 0.06;
       this.light1.penumbra = 1;
-      if(BEAN >= 888) {
+      if(BEAN >= 888 && BEAN < 1080) {
         this.light1.intensity = easeOut(1, 0, F(frame, 888, 12));
 
         if(BEAN >= 894) {
-          this.light1.intensity = 1;
+          this.light1.intensity = 0.25;
           this.light1.target.position.y = 0.0;
           this.light1.angle = 0.1;
           this.light1.penumbra = 0.1;
@@ -310,6 +313,7 @@
 
           this.light1.angle = easeOut(this.light1.angle, 0.5, F(frame, 930, 6));
         }
+
       }
 
 
@@ -359,6 +363,36 @@
         this.camera.rotation.z = (Math.random() - 0.5) * 0.02;
       }
       if(BEAN >= 1176 && BEAN < 1176 + 2) {
+        this.camera.rotation.x = (Math.random() - 0.5) * 0.02;
+        this.camera.rotation.y = (Math.random() - 0.5) * 0.02;
+        this.camera.rotation.z = (Math.random() - 0.5) * 0.02;
+      }
+      if(BEAN >= 1272 && BEAN < 1272 + 1) {
+        this.camera.rotation.x = (Math.random() - 0.5) * 0.01;
+        this.camera.rotation.y = (Math.random() - 0.5) * 0.01;
+        this.camera.rotation.z = (Math.random() - 0.5) * 0.01;
+      }
+      if(BEAN === 1308) {
+        this.camera.rotation.x = (Math.random() - 0.5) * 0.005;
+        this.camera.rotation.y = (Math.random() - 0.5) * 0.005;
+        this.camera.rotation.z = (Math.random() - 0.5) * 0.005;
+      }
+      if(BEAN === 1311) {
+        this.camera.rotation.x = (Math.random() - 0.5) * 0.005;
+        this.camera.rotation.y = (Math.random() - 0.5) * 0.005;
+        this.camera.rotation.z = (Math.random() - 0.5) * 0.005;
+      }
+      if(BEAN === 1314) {
+        this.camera.rotation.x = (Math.random() - 0.5) * 0.005;
+        this.camera.rotation.y = (Math.random() - 0.5) * 0.005;
+        this.camera.rotation.z = (Math.random() - 0.5) * 0.005;
+      }
+      if(BEAN === 1317) {
+        this.camera.rotation.x = (Math.random() - 0.5) * 0.005;
+        this.camera.rotation.y = (Math.random() - 0.5) * 0.005;
+        this.camera.rotation.z = (Math.random() - 0.5) * 0.005;
+      }
+      if(BEAN >= 1320 && BEAN < 1320 + 2) {
         this.camera.rotation.x = (Math.random() - 0.5) * 0.02;
         this.camera.rotation.y = (Math.random() - 0.5) * 0.02;
         this.camera.rotation.z = (Math.random() - 0.5) * 0.02;
@@ -478,6 +512,19 @@
         }
       }
 
+      u.yPosier.value = smoothstep(0, 0.25, F(frame, 972 - 6, 6));
+      u.cutSpacing.value = smoothstep(0, 0.25, F(frame, 972, 6));
+
+      if(BEAN >= 978 && BEAN < 984) {
+        this.rotaterPosition = BEAN / 2;
+      }
+      this.ballySize = 0;
+      u.ballBoom.value = 0;
+      if(BEAN >= 984) {
+        u.cutSpacing.value = smoothstep(u.cutSpacing.value, 1.5, F(frame, 984, 6));
+        this.ballySize = easeOut(0, 1, F(frame, 984 + 3, 1));
+      }
+
       if(BEAN >= 402 && BEAN < 408) {
         const s = F(frame, 402 +3, 3);
         this.camera.position.x = easeIn(this.camera.position.x, 0.13, s);
@@ -485,6 +532,30 @@
         this.camera.position.z = easeIn(this.camera.position.z, 0.28, s);
       }
 
+      this.ballyThrob *= 0.9;
+
+      if(BEAT) {
+        switch(BEAN) {
+          case 984 + 3:
+          case 984 + 9:
+          case 984 + 12 + 3:
+            this.ballyThrob = 1;
+        }
+      }
+
+      if(BEAN >= 984 +12 + 3 && BEAN < 984 + 12 +6) {
+        this.ballyThrob = 1;
+      }
+      if(BEAN == 984 + 12 + 6) {
+        this.ballyThrob = 0;
+      }
+
+      if(BEAN >= 984 && BEAN < 984 + 24 * 3) {
+        this.rotaterPosition = lerp(0, Math.PI / 2, F(frame, 984, 24 * 3));
+      }
+
+
+      u.ballBoom.value = this.ballySize + this.ballyThrob * 0.5;
 
 
       const RUNE_HEX_START_BEAN = 672 - 12;
