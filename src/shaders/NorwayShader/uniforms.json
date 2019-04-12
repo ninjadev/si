@@ -1,5 +1,7 @@
 {
     "tDiffuse": { "type": "t", "value": null },
+    "tBorder": { "type": "t", "value": null },
+    "tPlume": { "type": "t", "value": null },
     "z1": { "type": "t", "value": null },
     "z2": { "type": "t", "value": null },
     "z3": { "type": "t", "value": null },

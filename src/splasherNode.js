@@ -25,6 +25,11 @@
       this.uniforms.frame.value = frame;
       this.uniforms.tDiffuse.value = this.inputs.A.getValue();
       this.uniforms.paperContent.value = this.inputs.PaperContent.getValue();
+
+      if(BEAN >= 312 && BEAN < 408) {
+        this.uniforms.tDiffuse.value = this.inputs.PaperContent.getValue();
+      }
+
       this.uniforms.image.value = this.solMap;
       this.uniforms.overlayer.value = 0;
       this.inputs.A.enabled = true;
