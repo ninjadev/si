@@ -1,5 +1,9 @@
 #define AA 2
+#define PAI 3.14159265
+
 uniform float frame;
+uniform float ballBoom;
+uniform float yPosier;
 uniform float blobbiness;
 uniform float cutSpacing;
 uniform float xScale;
@@ -105,6 +109,12 @@ const float pi = 3.1415927;
 
 vec2 map(vec3 p) {
     p *= 0.5;
+    p.y += yPosier;
+
+    if(cutSpacing > 0.) {
+        p = rotateY(2. * floor(p.y * 4.) * rotater) * p;
+    }
+
     vec3 boxPoint = rotateY(rotater + -pi / 4. + scratcher * p.y) * (p + vec3(0., 0., 0.));
     float box = sdBox(boxPoint, vec3(1. * xScale, 1. * yScale, 1. * zScale) / 6.);
     float shapes = box;
@@ -114,6 +124,10 @@ vec2 map(vec3 p) {
     shapes = max(shapes, -sdBox(p, vec3(10., spacing / 4., 10.)));
     shapes = max(shapes, -sdBox(p + vec3(0., spacing, 0.), vec3(10., spacing / 4., 10.)));
     shapes = max(shapes, -sdBox(p + vec3(0., -spacing, 0.), vec3(10., spacing / 4., 10.)));
+
+    if(ballBoom > 0.01) {
+        shapes = min(shapes, sdSphere(boxPoint, vec4(0., 0., 0., .1 * ballBoom)));
+    }
 
 
     return vec2(shapes, 1.);
@@ -188,7 +202,7 @@ vec3 shade(in vec3 ro, in vec3 rd, in float t, in float m) {
     float fsha = 1.;
 
     vec3 green = vec3(56., 32., 43.) / 255.;
-    vec3 yellow = vec3(.2, .2, 1.);
+    vec3 yellow = vec3(0.5, 1.0, .5);
 
     if(m < 1.5) {
         float dis = 0.;
@@ -198,13 +212,13 @@ vec3 shade(in vec3 ro, in vec3 rd, in float t, in float m) {
 
         float ff = 0.2;
 
-        mateS = 6.0*mix( 0.7*vec3(2.0,1.2,0.2), vec3(2.5,1.8,0.9), ff );
+        mateS = vec3(1.);
         mateS += 2.0*dis;
         mateS *= 1.5;
         mateS *= 1.0 + 0.5*ff*ff;
         mateS *= 1.0-0.5*be;
 
-        mateD = vec3(1.0,1.0,0.5);
+        mateD = vec3(1.0,1.0,1.0);
         mateD *= dis;
         mateD *= 0.015;
         mateD += vec3(0.8,0.4,0.3)*0.15*be;
@@ -214,45 +228,11 @@ vec3 shade(in vec3 ro, in vec3 rd, in float t, in float m) {
         float f = clamp( dot( -rd, nor ), 0.0, 1.0 );
         f = 1.0-pow( f, 8.0 );
         f = 1.0 - (1.0-f)*(1.0-0.);
-        mateS *= vec3(0.5,0.1,1.0) + f*vec3(0.5,0.9,1.0);
+        mateS *= vec3(1.,1.,1.0) + f*vec3(1.0,1.0,1.0);
 
         float b = 1.0-smoothstep( 0.25,0.55,abs(pos.y));
         focc = 0.2 + 0.8*smoothstep( 0.0, 0.15, sdSphere(pos,vec4(0.05,0.52,0.0,0.13)) );
     } else if (m < 2.5) {
-        float dis = 0.;
-
-        float be = sdEllipsoid( pos, vec3(-0.3,-0.5,-0.1), vec3(0.2,1.0,0.5) );
-        be = 1.0-smoothstep( -0.01, 0.01, be );
-
-        float ff = 0.2;
-
-        mateS = 6.0*mix( 0.7*vec3(2.0,1.2,0.2), vec3(2.5,1.8,0.9), ff );
-        mateS += 2.0*dis;
-        mateS *= 1.5;
-        mateS *= 1.0 + 0.5*ff*ff;
-        mateS *= 1.0-0.5*be;
-
-        mateS = green;
-
-        mateD = vec3(1.0,0.8,0.4);
-        mateD *= dis;
-        mateD *= 0.015;
-        mateD += vec3(0.8,0.4,0.3)*0.15*be;
-
-        mateD = vec3(1.);
-
-        mateK = vec2( 60.0, 0.7 + 2.0*dis );
-
-        mateK = vec2(0.);
-
-        float f = clamp( dot( -rd, nor ), 0.0, 1.0 );
-        f = 1.0-pow( f, 8.0 );
-        f = 1.0 - (1.0-f)*(1.0-0.);
-        mateS *= vec3(0.5,0.1,0.0) + f*vec3(0.5,0.9,1.0);
-
-        float b = 1.0-smoothstep( 0.25,0.55,abs(pos.y));
-        focc = 0.2 + 0.8*smoothstep( 0.0, 0.15, sdSphere(pos,vec4(0.05,0.52,0.0,0.13)) );
-
     }
 
     vec3 hal = normalize( sunDir-rd );
@@ -277,37 +257,20 @@ vec3 shade(in vec3 ro, in vec3 rd, in float t, in float m) {
     col += 1.8*vec3(0.1,2.0,0.1)*bou*occ;                // bounce
 
     col *= mateD;
-
-
-    if(m > 1.5) {
-        col = dif1 * green;
-        col = vec3(0.);
-    } else if(m > 0.5) {
-        col = dif1 * yellow;
-    }
-
-
-    col += .4*sss*(vec3(0.15,0.1,0.05)+vec3(0.85,0.9,0.95)*dif1)*(0.05+0.95*occ)*mateS; // sss
-    col = pow(col,vec3(0.6,0.8,1.0));
-
-    col += vec3(1.0,1.0,1.0)*0.2*pow( spe1, 1.0+mateK.x )*dif1*(0.04+0.96*pow(fre,4.0))*mateK.x*mateK.y;   // sun lobe1
-    col += vec3(1.0,1.0,1.0)*0.1*pow( spe1, 1.0+mateK.x/3.0 )*dif1*(0.1+0.9*pow(fre,4.0))*mateK.x*mateK.y; // sun lobe2
-    col += 0.1*vec3(1.0,max(1.5-0.7*col.y,0.0),2.0)*occ*occ*smoothstep( 0.0, 0.3, reflect( rd, nor ).y )*mateK.x*mateK.y*(0.04+0.96*pow(fre,5.0)); // sky
-
-    col += mateE;
+    col = dif1 * yellow;
 
     return col;
 }
 
 
-vec2 intersect(in vec3 ro, in vec3 rd, const float mindist, const float maxdist) {
-    vec2 res = vec2(-1.0);
+vec3 intersect(in vec3 ro, in vec3 rd, const float mindist, const float maxdist) {
+    vec3 res = vec3(-1.0, -1, 99999.);
 
     float t = mindist;
     for(int i = 0; i < 256; i++) {
         vec3 p = ro + t*rd;
         vec2 h = map(p);
-        res = vec2(t,h.y);
+        res = vec3(t, h.y, min(h, res.z));
 
         if( h.x<(0.001*t) ||  t>maxdist ) break;
 
@@ -322,13 +285,15 @@ vec4 render(in vec3 ro, in vec3 rd, in vec2 q) {
     float mindist = 0.01;
     float maxdist = 40.0;
 
-    vec2 tm = intersect(ro, rd, mindist, maxdist);
+    vec3 tm = intersect(ro, rd, mindist, maxdist);
+
     if( tm.y>-0.5 && tm.x < maxdist ) {
         col.rgb = shade(ro, rd, tm.x, tm.y);
         col.a = 1.;
         maxdist = tm.x;
     } else {
-        col = vec4(0.);
+        col = vec4(vec3(1.), 1. - step(.040, tm.z));
+        col = mix(col, vec4(0., 0., 0., 1.), 1. - step(0.020, tm.z));
     }
 
     return clamp( col, 0.0, 1.0 );
