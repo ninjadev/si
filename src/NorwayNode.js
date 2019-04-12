@@ -18,6 +18,7 @@
         },
       });
 
+
       this.map_image = Loader.loadTexture('res/map/norge.png');
       //this.z1 = Loader.loadTexture('res/map/testpattern.jpg');
       this.z1 = Loader.loadTexture('res/map/t1.png');
@@ -102,7 +103,7 @@
         this.camera.lookAt(new THREE.Vector3(start_x , start_y , 0));
         this.camera.position.z = 4.9;
         this.camera.position.y = start_y-0.01 +
-                                 smoothstep(0, -54, (frame - FRAME_FOR_BEAN(336)) / (FRAME_FOR_BEAN(397) - FRAME_FOR_BEAN(336))) + 
+                                 smoothstep(0, -54, (frame - FRAME_FOR_BEAN(336)) / (FRAME_FOR_BEAN(397) - FRAME_FOR_BEAN(336))) +
                                  easeOut(0, 14.5, (frame - FRAME_FOR_BEAN(397)) / (FRAME_FOR_BEAN(398) - FRAME_FOR_BEAN(397)));
 
         this.camera.position.x = start_x +
@@ -112,11 +113,11 @@
                                  smoothstep(0, -25, (frame - FRAME_FOR_BEAN(336)) / (FRAME_FOR_BEAN(397) - FRAME_FOR_BEAN(336))) +
                                  easeOut(0, 10.5, (frame - FRAME_FOR_BEAN(397)) / (FRAME_FOR_BEAN(398) - FRAME_FOR_BEAN(397)));
 
-        this.camera.position.z = 6 + 
-                                easeOut(0, -4.6 , (frame - FRAME_FOR_BEAN(366)) / (FRAME_FOR_BEAN(369) - FRAME_FOR_BEAN(366))) + 
-                                easeOut(0, +4.6 , (frame - FRAME_FOR_BEAN(371)) / (FRAME_FOR_BEAN(374) - FRAME_FOR_BEAN(371))) + 
-                                easeOut(0, + 10 , (frame - FRAME_FOR_BEAN(377)) / (FRAME_FOR_BEAN(380) - FRAME_FOR_BEAN(377))) + 
-                                easeOut(0, - 10, (frame - FRAME_FOR_BEAN(383)) / (FRAME_FOR_BEAN(386) - FRAME_FOR_BEAN(383))) + 
+        this.camera.position.z = 6 +
+                                easeOut(0, -4.6 , (frame - FRAME_FOR_BEAN(366)) / (FRAME_FOR_BEAN(369) - FRAME_FOR_BEAN(366))) +
+                                easeOut(0, +4.6 , (frame - FRAME_FOR_BEAN(371)) / (FRAME_FOR_BEAN(374) - FRAME_FOR_BEAN(371))) +
+                                easeOut(0, + 10 , (frame - FRAME_FOR_BEAN(377)) / (FRAME_FOR_BEAN(380) - FRAME_FOR_BEAN(377))) +
+                                easeOut(0, - 10, (frame - FRAME_FOR_BEAN(383)) / (FRAME_FOR_BEAN(386) - FRAME_FOR_BEAN(383))) +
                                 easeOut(0, -4.6 , (frame - FRAME_FOR_BEAN(397)) / (FRAME_FOR_BEAN(398) - FRAME_FOR_BEAN(397)));
       }
 

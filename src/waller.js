@@ -353,6 +353,17 @@
         this.camera.rotation.z = (Math.random() - 0.5) * 0.02;
       }
 
+      if(BEAN >= 1080 && BEAN < 1080 + 2) {
+        this.camera.rotation.x = (Math.random() - 0.5) * 0.02;
+        this.camera.rotation.y = (Math.random() - 0.5) * 0.02;
+        this.camera.rotation.z = (Math.random() - 0.5) * 0.02;
+      }
+      if(BEAN >= 1176 && BEAN < 1176 + 2) {
+        this.camera.rotation.x = (Math.random() - 0.5) * 0.02;
+        this.camera.rotation.y = (Math.random() - 0.5) * 0.02;
+        this.camera.rotation.z = (Math.random() - 0.5) * 0.02;
+      }
+
       this.cameraRotationDD.add(this.cameraRotationDDD);
       this.cameraRotationDD.x -= this.camera.rotation.x * 0.1;
       this.cameraRotationDD.y -= this.camera.rotation.y * 0.1;
@@ -371,6 +382,9 @@
       }
       if(BEAN >= 216) {
         this.background.material.color.setRGB(0.5, 1.0, 0.5);
+      }
+      if(BEAN >= 408) {
+        this.background.material.color.setRGB(1, 1, 0.5);
       }
       if(BEAN >= 600) {
         this.background.material.color.setRGB(0.5, 0.5, 1.0);
@@ -462,6 +476,13 @@
             F(frame, 942 + i * 1.5, 1.5));
             */
         }
+      }
+
+      if(BEAN >= 402 && BEAN < 408) {
+        const s = F(frame, 402 +3, 3);
+        this.camera.position.x = easeIn(this.camera.position.x, 0.13, s);
+        this.camera.position.y = easeIn(this.camera.position.y, 0.08, s);
+        this.camera.position.z = easeIn(this.camera.position.z, 0.28, s);
       }
 
 

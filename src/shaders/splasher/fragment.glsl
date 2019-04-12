@@ -1,4 +1,5 @@
 uniform float frame;
+uniform float paperScale;
 uniform float radiuser;
 uniform float framiness;
 uniform float generalGrayScaler;
@@ -24,8 +25,10 @@ varying vec2 vUv;
 void main() {
 
     vec2 paperContentUv = vUv;
-    paperContentUv -= vec2(0.34 - xOffsetPaper, .22);
-    paperContentUv *= 1.5;
+    paperContentUv -= 0.5;
+    paperContentUv *= paperScale;
+    paperContentUv += 0.5;
+    paperContentUv -= vec2(0.24 - xOffsetPaper, .09);
     //paperContentUv *= vec2(16., 9.) / 16.;
     //paperContentUv /= vec2(11., 8.5) / 11.;
     vec3 paperContentColor = texture2D(paperContent, paperContentUv).rgb;
@@ -52,6 +55,7 @@ void main() {
 
     paperContentUv -= 0.5;
     paperContentUv *= uspaper;
+    paperContentUv *= paperScale,
     paperContentUv += 0.5;
     float borderSize = 0.02;
     vec3 framiColor = mix(sceneColor.rgb, vec3(0., 0., 0.), (
