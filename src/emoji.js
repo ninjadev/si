@@ -18,6 +18,7 @@
       this.emojiMaterials = [];
       this.emojiGeometry = new THREE.PlaneGeometry(128, 128, 1);
       this.wrappers = {};
+      this.backPlates = {};
       this.tiles = {};
       this.mosaicKeyOrder = [
         'hardware', 'dancingSkills', 'pixelArt', 'campingEquipment', 'goodMood', 'shades'
@@ -27,7 +28,8 @@
           key: 'dancingSkills',
           x: 1200,
           y: 1080,
-          scale: 16 / 400
+          scale: 16 / 400,
+          planeColor: '#333333'
         }
       };
 
@@ -76,6 +78,21 @@
           innerMosaicMesh.position.x = positionObj.x;
           innerMosaicMesh.position.y = positionObj.y;
           innerMosaicMesh.position.z = 50;
+
+          const backPlateMesh = new THREE.Mesh(
+            this.emojiGeometry,
+            new THREE.MeshBasicMaterial({
+              color: 0x333333,
+              transparent: true
+            })
+          );
+          backPlateMesh.position.x = positionObj.x + 58;
+          backPlateMesh.position.y = positionObj.y + 12;
+          backPlateMesh.position.z = 49;
+          backPlateMesh.scale.x = 1.5;
+          backPlateMesh.scale.y = 1.15;
+          outerMosaicMesh.add(backPlateMesh);
+          this.backPlates[positionObj.key] = backPlateMesh;
         }
       }
 
@@ -108,6 +125,7 @@
       this.camera.position.z = smoothstep(4000, 220, F(frame, 1368, 8));
       this.camera.position.x = smoothstep(1400, 1260, F(frame, 1368, 8));
       this.camera.position.y = smoothstep(400, 1090, F(frame, 1368, 8));
+      this.backPlates['dancingSkills'].material.opacity = smoothstep(0, 1, F(frame, 1368, 10))
     }
   }
 
