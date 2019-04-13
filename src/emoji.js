@@ -1,4 +1,6 @@
 (function(global) {
+  const F = (frame, from, delta) => (frame - FRAME_FOR_BEAN(from)) / (FRAME_FOR_BEAN(from + delta) - FRAME_FOR_BEAN(from));
+
   class emoji extends NIN.THREENode {
     constructor(id, options) {
       super(id, {
@@ -8,9 +10,9 @@
         }
       });
 
-      this.camera.position.z = 4000;
-      this.camera.position.x = 1400;
-      this.camera.position.y = 400;
+      this.camera.near = 100;
+      this.camera.far = 4000;
+      this.camera.updateProjectionMatrix();
 
       this.emojiTextures = [];
       this.emojiMaterials = [];
@@ -20,8 +22,17 @@
       this.mosaicKeyOrder = [
         'hardware', 'dancingSkills', 'pixelArt', 'campingEquipment', 'goodMood', 'shades'
       ];
+      this.recursiveRelativePositions = {
+        'hardware': {
+          key: 'dancingSkills',
+          x: 1200,
+          y: 1080,
+          scale: 16 / 400
+        }
+      };
 
-      for (let mosaicKey of this.mosaicKeyOrder) {
+      for (let j = 0; j < this.mosaicKeyOrder.length; j++) {
+        const mosaicKey = this.mosaicKeyOrder[j];
         if (window.emojiMosaics.hasOwnProperty(mosaicKey)) {
           let mosaic = window.emojiMosaics[mosaicKey];
           for (let emojiId in mosaic.emojies) {
@@ -50,37 +61,53 @@
           }
 
           this.wrappers[mosaicKey] = wrapper;
-          this.scene.add(wrapper);
         }
       }
+
+      for (let outerMosaicKey in this.recursiveRelativePositions) {
+        if (this.recursiveRelativePositions.hasOwnProperty(outerMosaicKey)) {
+          const positionObj = this.recursiveRelativePositions[outerMosaicKey];
+          const outerMosaicMesh = this.wrappers[outerMosaicKey];
+          const innerMosaicMesh = this.wrappers[positionObj.key];
+          outerMosaicMesh.add(innerMosaicMesh);
+          innerMosaicMesh.scale.x = positionObj.scale;
+          innerMosaicMesh.scale.y = positionObj.scale;
+          innerMosaicMesh.scale.z = positionObj.scale;
+          innerMosaicMesh.position.x = positionObj.x;
+          innerMosaicMesh.position.y = positionObj.y;
+          innerMosaicMesh.position.z = 50;
+        }
+      }
+
+      this.scene.add(this.wrappers.hardware);
     }
 
     update(frame) {
       super.update(frame);
       const beanOffset = 1368;
       const timing = {
-        goodMood: {start: beanOffset, end: beanOffset + 12},
-        shades: {start: beanOffset + 12, end: beanOffset + 12 + 12},
+        hardware: {start: beanOffset + 12 * 0, end: beanOffset + 12 * 0 + 12},
+        dancingSkills: {start: beanOffset + 12 * 1, end: beanOffset + 12 * 1 + 12},
         pixelArt: {start: beanOffset + 12 * 2, end: beanOffset + 12 * 2 + 12},
-        dancingSkills: {start: beanOffset + 12 * 3, end: beanOffset + 12 * 3 + 12},
-        campingEquipment: {start: beanOffset + 12 * 4, end: beanOffset + 12 * 4 + 12},
-        hardware: {start: beanOffset + 12 * 5, end: beanOffset + 12 * 5 + 12},
+        campingEquipment: {start: beanOffset + 12 * 3, end: beanOffset + 12 * 3 + 12},
+        goodMood: {start: beanOffset + 12 * 4, end: beanOffset + 12 * 4 + 12},
+        shades: {start: beanOffset + 12 * 5, end: beanOffset + 12 * 5 + 12},
       };
 
       for (let mosaicKey of this.mosaicKeyOrder) {
         if (window.emojiMosaics.hasOwnProperty(mosaicKey)) {
           let wrapper = this.wrappers[mosaicKey];
-          let isActive = BEAN >= timing[mosaicKey].start && BEAN < timing[mosaicKey].end;
-          if (isActive) {
-            this.scene.add(wrapper);
-          } else {
-            this.scene.remove(wrapper);
-          }
+          //wrapper.visible = BEAN >= timing[mosaicKey].start && BEAN < timing[mosaicKey].end;
           for (let tile of this.tiles[mosaicKey]) {
-            tile.rotation.z = frame / 120;
+            //tile.rotation.z = frame / 120;
           }
         }
       }
+
+      // zoom progress 1
+      this.camera.position.z = smoothstep(4000, 220, F(frame, 1368, 8));
+      this.camera.position.x = smoothstep(1400, 1260, F(frame, 1368, 8));
+      this.camera.position.y = smoothstep(400, 1090, F(frame, 1368, 8));
     }
   }
 
