@@ -21,7 +21,7 @@
       this.backPlates = {};
       this.tiles = {};
       this.mosaicKeyOrder = [
-        'hardware', 'dancingSkills', 'pixelArt', 'campingEquipment', 'goodMood', 'shades'
+        'hardware', 'dancingSkills', 'pixelArt', 'campingEquipment', 'goodMood', 'sunglasses'
       ];
       this.recursiveRelativePositions = {
         'hardware': {
@@ -30,7 +30,16 @@
           y: 1080,
           scale: 16 / 400,
           planeColor: '#333333'
+        },
+        /*
+        'dancingSkills': {
+          key: 'pixelArt',
+          x: 1200,
+          y: 1080,
+          scale: 16 / 400,
+          planeColor: '#333333'
         }
+        */
       };
 
       for (let j = 0; j < this.mosaicKeyOrder.length; j++) {
@@ -108,7 +117,7 @@
         pixelArt: {start: beanOffset + 12 * 2, end: beanOffset + 12 * 2 + 12},
         campingEquipment: {start: beanOffset + 12 * 3, end: beanOffset + 12 * 3 + 12},
         goodMood: {start: beanOffset + 12 * 4, end: beanOffset + 12 * 4 + 12},
-        shades: {start: beanOffset + 12 * 5, end: beanOffset + 12 * 5 + 12},
+        sunglasses: {start: beanOffset + 12 * 5, end: beanOffset + 12 * 5 + 12},
       };
 
       for (let mosaicKey of this.mosaicKeyOrder) {
@@ -125,7 +134,9 @@
       this.camera.position.z = smoothstep(4000, 220, F(frame, 1368, 8));
       this.camera.position.x = smoothstep(1400, 1260, F(frame, 1368, 8));
       this.camera.position.y = smoothstep(400, 1090, F(frame, 1368, 8));
-      this.backPlates['dancingSkills'].material.opacity = smoothstep(0, 1, F(frame, 1368, 10))
+      this.backPlates['dancingSkills'].material.opacity = smoothstep(0, .9, F(frame, 1368, 9));
+
+      // zoom progress 2
     }
   }
 
