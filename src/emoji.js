@@ -28,7 +28,7 @@
           key: 'dancingSkills',
           x: 1200,
           y: 1080,
-          scale: 16 / 400,
+          scale: 16 / 512,
           planeColor: '#333333'
         },
         /*
