@@ -10,6 +10,17 @@
         }
       });
 
+
+      // TODO: Update variables
+      const left = 10;
+      const right = 10;
+      const top = 10;
+      const bottom = 10;
+      const near = 100;
+      const far = 4000;
+
+      this.camera = new THREE.OrthographicCamera(-11 / 2, 11 / 2, 8.5 / 2, -8.5 / 2, 1, 1000);
+      this.camera.position.z = 100;
       this.camera.near = 100;
       this.camera.far = 4000;
       this.camera.updateProjectionMatrix();
