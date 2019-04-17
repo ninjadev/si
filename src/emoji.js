@@ -11,23 +11,18 @@
       });
 
 
-      // TODO: Update variables
-      const left = 10;
-      const right = 10;
-      const top = 10;
-      const bottom = 10;
+      const left = -1600 / 2;
+      const right = 1600 / 2;
+      const top = 900 / 2;
+      const bottom = -900 / 2;
       const near = 100;
       const far = 4000;
-
-      this.camera = new THREE.OrthographicCamera(-11 / 2, 11 / 2, 8.5 / 2, -8.5 / 2, 1, 1000);
-      this.camera.position.z = 100;
-      this.camera.near = 100;
-      this.camera.far = 4000;
-      this.camera.updateProjectionMatrix();
+      this.camera = new THREE.OrthographicCamera(left, right, top, bottom, near, far);
+      this.camera.position.z = 3000;
 
       this.emojiTextures = [];
       this.emojiMaterials = [];
-      this.emojiGeometry = new THREE.PlaneGeometry(128, 128, 1);
+      this.emojiGeometry = new THREE.PlaneGeometry(32, 32, 1);
       this.wrappers = {};
       this.backPlates = {};
       this.tiles = {};
@@ -37,8 +32,8 @@
       this.recursiveRelativePositions = {
         'hardware': {
           key: 'dancingSkills',
-          x: 1200,
-          y: 1080,
+          x: 497,
+          y: 1263,
           scale: 16 / 512,
           planeColor: '#333333'
         },
@@ -142,11 +137,12 @@
       }
 
       // zoom progress 1
-      this.camera.position.z = smoothstep(4000, 220, F(frame, 1368, 8));
-      this.camera.position.x = smoothstep(1400, 1260, F(frame, 1368, 8));
-      this.camera.position.y = smoothstep(400, 1090, F(frame, 1368, 8));
-      this.backPlates['dancingSkills'].material.opacity = smoothstep(0, .9, F(frame, 1368, 9));
-
+      const zoomProgress1 = F(frame, 1368 + 8, 8);
+      this.camera.position.x = smoothstep(512, 512, zoomProgress1);
+      this.camera.position.y = smoothstep(1200, 1303, zoomProgress1);
+      this.camera.zoom = smoothstep(1.0, 22, zoomProgress1);
+      this.camera.updateProjectionMatrix();
+      this.backPlates['dancingSkills'].material.opacity = 0//smoothstep(0, .9, F(frame, 1368, 9));
       // zoom progress 2
     }
   }
