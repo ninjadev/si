@@ -46,7 +46,13 @@
           x: 441,
           y: 1318,
           scale: 16 / 512,
-        }
+        },
+        'campingEquipment': {
+          key: 'goodMood',
+          x: 512.3,
+          y: 1247,
+          scale: 16 / 512,
+        },
       };
 
       for (let j = 0; j < this.mosaicKeyOrder.length; j++) {
@@ -148,6 +154,7 @@
       const prog1Start = 1380;
       const prog2Start = prog1Start + 12;
       const prog3Start = prog2Start + 12;
+      const prog4Start = prog3Start + 12;
 
       // zoom progress 1
       if (BEAN >= prog1Start && BEAN < prog1Start + beansBeforeZoom + zoomDuration) {
@@ -166,11 +173,19 @@
       }
 
       // zoom progress 3
-      else if (BEAN >= prog3Start + beansBeforeZoom /*&& BEAN < prog3Start + beansBeforeZoom + zoomDuration*/) {
+      else if (BEAN >= prog3Start + beansBeforeZoom && BEAN < prog3Start + beansBeforeZoom + zoomDuration) {
         const zoomProgress3 = F(frame, prog3Start + beansBeforeZoom, zoomDuration);
         this.camera.position.x = easeOut(513.4, 513.352, zoomProgress3);
         this.camera.position.y = easeOut(1311.1, 1311.201, zoomProgress3);
         this.camera.zoom = smoothstep(22 * 40, 22 * 40 * 30, zoomProgress3);
+      }
+
+      // zoom progress 4
+      else if (BEAN >= prog4Start + beansBeforeZoom && BEAN < prog4Start + beansBeforeZoom + zoomDuration) {
+        const zoomProgress4 = F(frame, prog4Start + beansBeforeZoom, zoomDuration);
+        this.camera.position.x = easeOut(513.352, 513.35303, zoomProgress4);
+        this.camera.position.y = easeOut(1311.201, 1311.2014, zoomProgress4);
+        this.camera.zoom = smoothstep(22 * 40 * 30, 22 * 40 * 30 * 30, zoomProgress4);
       }
 
       this.camera.updateProjectionMatrix();
