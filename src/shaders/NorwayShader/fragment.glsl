@@ -115,9 +115,9 @@ void main() {
 
     vec4 borderColor = texture2D(tBorder, vUv);
     vec4 plumeColor = texture2D(tPlume, vUv);
-    output_color = vec4(mix(output_color.rgb, borderColor.rgb, borderColor.a), max(output_color.a, borderColor.a));
+    output_color = vec4(mix(output_color.rgb, borderColor.rgb, borderColor.a*fade_in), max(output_color.a, borderColor.a));
 
-    output_color = vec4(mix(plumeColor.rgb, output_color.rgb, output_color.a), max(output_color.a, plumeColor.a));
+    output_color = vec4(mix(output_color.rgb, plumeColor.rgb, (1.-output_color.a)*fade_in), max(output_color.a, plumeColor.a));
 
     gl_FragColor = output_color;
 }
