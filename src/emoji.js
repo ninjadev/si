@@ -24,7 +24,7 @@
       this.emojiMaterials = [];
       this.emojiGeometry = new THREE.PlaneGeometry(32, 32, 1);
       this.wrappers = {};
-      this.backPlates = {};
+      //this.backPlates = {};
       this.tiles = {};
       this.mosaicKeyOrder = [
         'hardware', 'dancingSkills', 'pixelArt', 'campingEquipment', 'goodMood', 'sunglasses'
@@ -35,7 +35,7 @@
           x: 497,
           y: 1263,
           scale: 16 / 512,
-          planeColor: '#333333'
+          //planeColor: '#333333'
         },
         /*
         'dancingSkills': {
@@ -94,6 +94,7 @@
           innerMosaicMesh.position.y = positionObj.y;
           innerMosaicMesh.position.z = 50;
 
+          /*
           const backPlateMesh = new THREE.Mesh(
             this.emojiGeometry,
             new THREE.MeshBasicMaterial({
@@ -108,6 +109,7 @@
           backPlateMesh.scale.y = 1.15;
           outerMosaicMesh.add(backPlateMesh);
           this.backPlates[positionObj.key] = backPlateMesh;
+          */
         }
       }
 
@@ -136,14 +138,31 @@
         }
       }
 
+      this.wrappers['hardware'].visible = BEAN >= 1380;
+
+      const beansBeforeZoom = 10;
+      const zoomDuration = 6;
+      const prog1Start = 1380;
+      const prog2Start = prog1Start + 12;
+      const prog3Start = prog2Start + 24;
+
       // zoom progress 1
-      const zoomProgress1 = F(frame, 1368 + 8, 8);
-      this.camera.position.x = smoothstep(512, 512, zoomProgress1);
-      this.camera.position.y = smoothstep(1200, 1303, zoomProgress1);
-      this.camera.zoom = smoothstep(1.0, 22, zoomProgress1);
-      this.camera.updateProjectionMatrix();
-      this.backPlates['dancingSkills'].material.opacity = 0//smoothstep(0, .9, F(frame, 1368, 9));
+      if (BEAN >= prog1Start && BEAN < prog1Start + beansBeforeZoom + zoomDuration) {
+        const zoomProgress1 = F(frame, prog1Start + beansBeforeZoom, zoomDuration);
+        this.camera.position.x = easeOut(512, 512, zoomProgress1);
+        this.camera.position.y = easeOut(1200, 1303, zoomProgress1);
+        this.camera.zoom = smoothstep(1.0, 22, zoomProgress1);
+      }
+
       // zoom progress 2
+      if (BEAN >= prog2Start + beansBeforeZoom && BEAN < prog2Start + beansBeforeZoom + zoomDuration) {
+        const zoomProgress2 = F(frame, prog2Start + beansBeforeZoom, zoomDuration);
+        this.camera.position.x = easeOut(512, 512, zoomProgress2);
+        this.camera.position.y = easeOut(1303, 1303, zoomProgress2);
+        this.camera.zoom = smoothstep(22, 22 * 22, zoomProgress2);
+      }
+
+      this.camera.updateProjectionMatrix();
     }
   }
 
