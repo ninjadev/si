@@ -20,8 +20,9 @@
       this.camera = new THREE.OrthographicCamera(left, right, top, bottom, near, far);
       this.camera.position.z = 3000;
 
-      this.emojiTextures = [];
-      this.emojiMaterials = [];
+      this.emojiTextures = {};
+      this.emojiIdByKey = {};
+      this.emojiMaterials = {};
       this.emojiGeometry = new THREE.PlaneGeometry(32, 32, 1);
       this.wrappers = {};
       this.tiles = {};
@@ -69,6 +70,7 @@
             if (mosaic.emojies.hasOwnProperty(emojiId) && !this.emojiTextures.hasOwnProperty(emojiId)) {
               console.log(mosaic.emojies[emojiId]);
               this.emojiTextures[emojiId] = Loader.loadTexture(`res/emoji/${mosaic.emojies[emojiId]}`);
+              this.emojiIdByKey[mosaic.emojies[emojiId].replace('.png', '')] = emojiId;
               this.emojiMaterials[emojiId] = new THREE.MeshBasicMaterial({
                 map: this.emojiTextures[emojiId],
                 transparent: true
@@ -79,6 +81,7 @@
           const wrapper = new THREE.Object3D();
           this.tiles[mosaicKey] = [];
 
+          /*
           for (let i = 0; i < mosaic.tiles.length; i++) {
             const tile = mosaic.tiles[i];
             const material = this.emojiMaterials[tile.emoji_id];
@@ -89,6 +92,16 @@
             this.tiles[mosaicKey].push(tileMesh);
             wrapper.add(tileMesh);
           }
+           */
+
+          const innerTileMaterial = this.emojiMaterials[this.emojiIdByKey[mosaicKey]];
+          const tileMesh = new THREE.Mesh(this.emojiGeometry, innerTileMaterial);
+          tileMesh.scale.x = 32;
+          tileMesh.scale.y = 32;
+          tileMesh.position.x = 512 - 16;
+          tileMesh.position.y = 1800 - 512;
+          tileMesh.position.z = 1;
+          wrapper.add(tileMesh);
 
           this.wrappers[mosaicKey] = wrapper;
         }
