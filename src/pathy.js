@@ -16,6 +16,35 @@
       this.lines = [];
       const verticalCount = 22;
       const width = 15.5;
+
+      this.fillerz = [];
+
+      const horizontalAmount = 40;
+      const pod = new THREE.Shape();
+      pod.lineTo(0, 0);
+      pod.lineTo(width, 10);
+      pod.lineTo(width, 0);
+      pod.lineTo(0, -10);
+      const trigeometry = new THREE.ShapeGeometry(pod);
+      for(let i = 0; i < verticalCount; i++) {
+        this.fillerz[i] = [];
+        for(let j = 0; j < horizontalAmount; j++) {
+          this.fillerz[i][j] = new THREE.Mesh(
+            trigeometry,
+            new THREE.MeshBasicMaterial({
+              color: 0xff7f7f,
+            })
+          );
+          this.sceneWrapper.add(this.fillerz[i][j]);
+          const box = this.fillerz[i][j];
+          //box.rotation.z = Math.PI / 2;
+          box.position.x = width * (i - verticalCount / 2 | 0);
+          box.position.y = 10 * (j + 0 - horizontalAmount / 2 | 0);
+          box.scale.y = i % 2 == 0 ? -1 : 1;
+          box.visible = false;
+        }
+      }
+
       for(let i = 0; i < verticalCount; i++) {
         const path = new Path({directionSize: 1});
         path.lineTo(0, -200);
@@ -27,7 +56,6 @@
         line.path = path;
       }
 
-      const horizontalAmount = 40;
       for(let j = 0; j < horizontalAmount; j++) {
         const p2 = new Path({debug: false, directionSize: 2});
         for(let i = 0; i < verticalCount; i++) {
@@ -57,6 +85,32 @@
 
     update(frame) {
       super.update(frame);
+
+      for(let i = 0; i < this.fillerz.length; i++) {
+        for(let j = 0; j < this.fillerz[i].length; j++) {
+          this.fillerz[i][j].visible = false;
+        }
+      }
+
+      for(let i = 7; i <= 13; i++) {
+        const n = i % 2 == 0;
+        if(BEAN >= 186 - 3 && BEAN < 186 - 2) {
+          const j = n ? 17 : 25;
+          this.fillerz[i][j].visible = true;
+        } else if(BEAN >= 186 - 2 && BEAN < 186 - 1) {
+          const j = n ? 18 : 24;
+          this.fillerz[i][j].visible = true;
+        } else if(BEAN >= 186 - 1 && BEAN < 186) {
+          const j = n ? 19 : 23;
+          this.fillerz[i][j].visible = true;
+        } else if(BEAN >= 186 && BEAN < 186 + 3) {
+          const j = n ? 20 : 22;
+          this.fillerz[i][j].visible = true;
+        } else if(BEAN >= 186 + 3 && BEAN < 186 + 6 + 24) {
+          this.fillerz[i][21].visible = true;
+        }
+      }
+
       for(let i = 0; i < this.lines.length; i++) {
         const path = this.lines[i].path;
         path.material.uniforms.drawStart.value = 0;
@@ -71,13 +125,22 @@
         }
       }
 
-      this.camera.position.z = lerp(200, 50, F(frame, 174, 24));
+      if(BEAN <= 192 || BEAN  >= 192 + 3) {
+        this.camera.position.z = lerp(200, 50, F(frame, 174, 24 - 1));
+      }
       if(BEAN >= 174) {
         this.sceneWrapper.rotation.z = lerp(
           0, Math.PI / 2, F(frame, 174, 192 - 174));
 
       } else {
         this.sceneWrapper.rotation.z = 0;
+      }
+
+      this.camera.position.y = 0;
+      this.camera.position.x = 0;
+      if(BEAN >= 204) {
+        this.camera.position.y = BEAN % 6 < 3 ? 15.5 : 0;
+        this.camera.position.x = -((BEAN - 204) / 3 | 0) * 15.5 / 2;
       }
     }
   }

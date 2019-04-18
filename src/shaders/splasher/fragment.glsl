@@ -93,5 +93,20 @@ void main() {
     float radius = -1. + 2. * (ruv.x * ruv.x + ruv.y * ruv.y) + sin(3.15 + ruv.x * 13.);
     //gl_FragColor = vec4(color, 1.);
 
-    gl_FragColor = vec4(mix(color, originalSceneColor, step(radiuser, radius)), 1.);
+    vec3 prebanded = mix(color, originalSceneColor, step(radiuser, radius));
+
+    /*
+    float stepis = 16.;
+    prebanded *= stepis + 1.;
+    prebanded = floor(prebanded);
+    prebanded /= stepis;
+
+    prebanded = 0.1 + pow(prebanded, vec3(2.));
+    */
+
+    vec3 introFader = mix(vec3(0.), prebanded, min(1., max(0., (frame - 5.) / 10.)));
+
+    gl_FragColor = vec4(introFader, 1.);
+
+
 }
