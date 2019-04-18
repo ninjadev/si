@@ -26,6 +26,8 @@
       this.uniforms.depthmap.value = this.inputs.lines.getValue();
       this.uniforms.frame.value = frame;
       this.uniforms.blackfade.value = smoothstep(1, 0, (frame - 4737) / 50);
+
+      this.uniforms.sobel_power.value = 0.5 + 0.5 * Math.sin(frame/10);
     }
   }
 
