@@ -32,6 +32,7 @@
           map: new THREE.CanvasTexture(this.texture()),
         }),
       ]);
+      this.cube.scale.set(0.75, 0.75, 0.75);
       this.scene.add(this.cube);
       this.twistAmount = 7;
       this.twists = 0;
@@ -84,6 +85,11 @@
         if(this.camera.position.z > 0) {
           this.camera.position.z -= 50;
         }
+      }
+
+      this.cube.visible = true;
+      if(BEAN >= 300) {
+        this.cube.visible = false;
       }
 
       const rotate = lerp(0, 800, F(frame, 5*24*24));

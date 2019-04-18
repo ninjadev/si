@@ -9,12 +9,14 @@
         }
       });
 
-      this.cube = new THREE.Mesh(new THREE.BoxGeometry(50, 50, 50),
-                                 new THREE.MeshStandardMaterial());
+      this.cube = new THREE.Mesh(new THREE.BoxGeometry(30, 30, 30),
+        new THREE.MeshBasicMaterial({
+          color: 0x444400,
+        }));
       this.scene.add(this.cube);
 
       var geometry = new THREE.TorusKnotGeometry( 15, 4, 100, 16 );
-      var material = new THREE.MeshBasicMaterial( { color: 0xffff00 } );
+      var material = new THREE.MeshBasicMaterial( { color: 0x002211 } );
       this.torusKnot = new THREE.Mesh( geometry, material );
       this.scene.add( this.torusKnot );
 
@@ -102,7 +104,7 @@
         this.number2.position.z = 1000;
         this.number3.position.z = 1000;
 
-      
+
 
       if (BEAN < 826) {
         var df = frame - FRAME_FOR_BEAN(792);
@@ -123,12 +125,12 @@
         this.torusKnot.rotation.y = Math.sin(t_progress / 3);
       } else  if (BEAN < 879) {
         this.cube.position.z = 1000;
-        
+
         var df = frame - FRAME_FOR_BEAN(848)
         var t_progress = df / (FRAME_FOR_BEAN(900) - FRAME_FOR_BEAN(864)) * Math.PI * 2;
         this.torusKnot.position.z = 5 -40 * Math.cos(t_progress);
         this.torusKnot.rotation.x = Math.sin(t_progress / 3) * 3;
-        this.torusKnot.rotation.y = Math.sin(t_progress / 3) + 
+        this.torusKnot.rotation.y = Math.sin(t_progress / 3) +
                                     smoothstep(0, Math.PI / 2, (frame - FRAME_FOR_BEAN(865))/ FRAME_FOR_BEAN(2)) +
                                     smoothstep(0, Math.PI / 2, (frame - FRAME_FOR_BEAN(871))/ FRAME_FOR_BEAN(1.5));
       } else {

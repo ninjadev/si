@@ -55,6 +55,7 @@
         this.uniforms.backgroundiness.value = 0;
         this.uniforms.framiness.value = 0;
       }
+        /*
       if(BAR >= 9 && BAR < 10) {
         this.uniforms.overlayer.value = 1;
         this.uniforms.image.value = this.skogMap;
@@ -72,6 +73,7 @@
         this.uniforms.paperB.value = 0.5;
         this.uniforms.overlayer.value = lerp(1, 0, F(frame, 9 * 24 + 12 + 6, 6));
       }
+      */
       if(BAR >= 13 && BAR < 14) {
         this.uniforms.overlayer.value = 1;
         this.uniforms.image.value = this.enMap;
@@ -89,6 +91,7 @@
         this.uniforms.paperB.value = 0.5;
         this.uniforms.overlayer.value = lerp(1, 0, F(frame, 13 * 24 + 12 + 6, 6));
       }
+        /*
       if(BAR >= 29 && BAR < 30) {
         const bar = 29;
         this.uniforms.overlayer.value = 1;
@@ -107,6 +110,8 @@
         this.uniforms.paperB.value = 0.5;
         this.uniforms.overlayer.value = lerp(1, 0, F(frame, bar * 24 + 12 + 6, 6));
       }
+      */
+        /*
       if(BAR >= 17 && BAR < 21) {
         const animeur = lerp(0, 1, F(frame, 17 * 24, 24 * 2));
         this.uniforms.overlayer.value = 1;
@@ -127,6 +132,8 @@
         this.uniforms.radiuser.value = easeOut(0, 3.5, F(frame, 17 * 24, 24));
         this.uniforms.overlayer.value = 1;
       }
+      */
+        /*
       if(BAR >= 31 && BAR < 32) {
         const bar = 31;
         this.uniforms.overlayer.value = 1;
@@ -145,6 +152,8 @@
         this.uniforms.paperB.value = 0.5;
         this.uniforms.overlayer.value = lerp(1, 0, F(frame, bar * 24 + 12 + 6, 6));
       }
+      */
+        /*
       if(BAR >= 33 && BAR < 34) {
         const bar = 33;
         this.uniforms.overlayer.value = 1;
@@ -163,6 +172,7 @@
         this.uniforms.paperB.value = 1.0;
         this.uniforms.overlayer.value = lerp(1, 0, F(frame, bar * 24 + 12 + 6 + 12, 6));
       }
+      */
     }
   }
 

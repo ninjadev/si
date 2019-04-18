@@ -10,6 +10,7 @@
 
       this.map_image = Loader.loadTexture('res/map/norge.png');
       this.testpattern = Loader.loadTexture('res/map/testlines.jpg');
+      this.colorizer = Loader.loadTexture('res/graphics-graffiti.png');
     }
 
     update(frame) {
@@ -19,10 +20,10 @@
       this.uniforms.frame.value = frame;
       this.uniforms.blackfade.value = smoothstep(1, 0, (frame - 4737) / 50);
 
-      if((frame > FRAME_FOR_BEAN(865) && frame < FRAME_FOR_BEAN(867)) || 
+      if((frame > FRAME_FOR_BEAN(865) && frame < FRAME_FOR_BEAN(867)) ||
         frame > FRAME_FOR_BEAN(871) && frame < FRAME_FOR_BEAN(872.5) ||
         BEAN > 879
-        ) 
+        )
       {
         this.uniforms.sobel_power.value = 1.0;
       } else {

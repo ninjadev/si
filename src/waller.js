@@ -24,6 +24,21 @@
       this.camera.far = 50;
       this.camera.updateProjectionMatrix();
 
+      const splashoScale = 0.18;
+      this.splashoBillboard = new THREE.Mesh(
+        new THREE.PlaneGeometry(splashoScale * 2100 / 1500, splashoScale),
+        new THREE.MeshBasicMaterial({
+          transparent: true,
+        }));
+
+      this.scene.add(this.splashoBillboard);
+
+      this.skogTexture = Loader.loadTexture('res/skog-graffiti.png');
+      this.demoTexture = Loader.loadTexture('res/demo-graffiti.png');
+      this.musicTexture = Loader.loadTexture('res/music-graffiti.png');
+      this.graphicsTexture = Loader.loadTexture('res/graphics-graffiti.png');
+      this.flatebyTexture = Loader.loadTexture('res/flateby-marker-overlay-graffiti.png');
+
       this.twistoramaContainer = new THREE.Mesh(
         new THREE.PlaneGeometry(1, 1),
         new THREE.ShaderMaterial(SHADERS.twistorama).clone()
@@ -247,6 +262,11 @@
     update(frame) {
       super.update(frame);
 
+      this.splashoBillboard.visible = false;
+      this.light1.position.y = 0.2;
+      this.light1.target.position.y = 0.06;
+      this.light1.penumbra = 1;
+
       if(frame < 81) {
         this.light1.intensity = 0;
       } else if(frame < 84) {
@@ -325,6 +345,85 @@
           Math.pow(lerp(0, 1, F(frame, 324, 24 + 12)), 8.));
       }
 
+
+      /* splashers */
+
+      this.splashoBillboard.position.z = 0.1;
+      const BAR = BEAN / 24 | 0;
+      if(BAR >= 9 && BAR < 10) {
+        const t = F(frame,  9 * 24, 24);
+        const t2 = F(frame, 10 * 24 - 6, 6);
+        this.camera.position.x = lerp(-0.05, -0.12, t);
+        this.camera.position.y = -0.03;
+        this.camera.position.z = 0.38;
+
+        this.splashoBillboard.visible = true;
+        this.splashoBillboard.material.map = this.skogTexture;
+
+        this.splashoBillboard.position.x = this.camera.position.x - lerp(0.07, 0.09, t) - easeOut(0, 0.25, t2);
+        this.splashoBillboard.position.y = this.camera.position.y- 0.01;
+        this.splashoBillboard.position.z = 0.1;
+        this.light1.angle = 0.85;
+      } else if(BAR >= 17 && BAR < 19) {
+        const t = F(frame,  17 * 24, 24 * 2);
+        const t2 = F(frame, 19 * 24 - 6, 6);
+        this.camera.position.x = lerp(-0.05, -0.12, t);
+        this.camera.position.y = -0.03;
+        this.camera.position.z = 0.38;
+
+        this.splashoBillboard.visible = true;
+        this.splashoBillboard.material.map = this.flatebyTexture;
+
+        this.splashoBillboard.position.x = this.camera.position.x - lerp(0.07, 0.09, t) - easeOut(0, 0.25, t2) + 0.07;
+        this.splashoBillboard.position.y = this.camera.position.y + 0.000;
+        this.splashoBillboard.position.z = 0.163;
+        this.light1.angle = 0.85;
+      } else if(BAR >= 29 && BAR < 30) {
+        const t = F(frame,  29 * 24, 24);
+        const t2 = F(frame, 30 * 24 - 6, 6);
+        this.camera.position.x = lerp(-0.05, -0.12, t);
+        this.camera.position.y = -0.03;
+        this.camera.position.z = 0.38;
+
+        this.splashoBillboard.visible = true;
+        this.splashoBillboard.material.map = this.demoTexture;
+
+        this.splashoBillboard.position.x = this.camera.position.x - lerp(0.07, 0.09, t) - easeOut(0, 0.25, t2);
+        this.splashoBillboard.position.y = this.camera.position.y- 0.02;
+        this.splashoBillboard.position.z = 0.1;
+        this.light1.angle = 0.85;
+      } else if(BAR >= 31 && BAR < 32) {
+        const t = F(frame,  31 * 24, 24);
+        const t2 = F(frame, 32 * 24 - 6, 6);
+        this.camera.position.x = lerp(-0.05, -0.12, t);
+        this.camera.position.y = -0.03;
+        this.camera.position.z = 0.38;
+
+        this.splashoBillboard.visible = true;
+        this.splashoBillboard.material.map = this.musicTexture;
+
+        this.splashoBillboard.position.x = this.camera.position.x - lerp(0.07, 0.09, t) - easeOut(0, 0.25, t2);
+        this.splashoBillboard.position.y = this.camera.position.y- 0.02;
+        this.splashoBillboard.position.z = 0.1;
+        this.light1.angle = 0.85;
+      } else if(BAR >= 33 && BAR < 34) {
+        const t = F(frame,  33 * 24, 24);
+        const t2 = F(frame, 34 * 24 - 6, 6);
+
+        this.splashoBillboard.visible = true;
+        this.splashoBillboard.material.map = this.graphicsTexture;
+
+        this.splashoBillboard.position.x = 1;
+        this.splashoBillboard.position.y = 0;
+        this.splashoBillboard.position.z = 0.05;
+
+        this.light1.angle = 0.85;
+      }
+
+
+
+      /* camera shake */
+
       this.cameraRotationDDD.x += (Math.random() - 0.5) * 0.0002;
       this.cameraRotationDDD.y += (Math.random() - 0.5) * 0.0002;
       this.cameraRotationDDD.z += (Math.random() - 0.5) * 0.0002;
@@ -334,6 +433,12 @@
       this.cameraRotationDD.z += (Math.random() - 0.5) * 0.001;
 
       if(BEAN >= 120 && BEAN < 123) {
+        this.camera.rotation.x = (Math.random() - 0.5) * 0.02;
+        this.camera.rotation.y = (Math.random() - 0.5) * 0.02;
+        this.camera.rotation.z = (Math.random() - 0.5) * 0.02;
+      }
+
+      if(BEAN >= 216 && BEAN < 216 + 6) {
         this.camera.rotation.x = (Math.random() - 0.5) * 0.02;
         this.camera.rotation.y = (Math.random() - 0.5) * 0.02;
         this.camera.rotation.z = (Math.random() - 0.5) * 0.02;
@@ -415,10 +520,13 @@
         this.background.material.color.setRGB(0.35, 0.35, 1);
       }
       if(BEAN >= 216) {
-        this.background.material.color.setRGB(0.5, 1.0, 0.5);
+        this.background.material.color.setRGB(1.0, 0.5, 0.5);
       }
       if(BEAN >= 408) {
         this.background.material.color.setRGB(1, 1, 0.5);
+      }
+      if(BEAN >= 504) {
+        this.background.material.color.setRGB(0.5, 1., 1.);
       }
       if(BEAN >= 600) {
         this.background.material.color.setRGB(0.5, 0.5, 1.0);
@@ -429,6 +537,7 @@
       if(BEAN >= 1176) {
         this.background.material.color.setRGB(1.0, .5, 1.0);
       }
+
 
       /* twistorama */
       const u = this.twistoramaContainer.material.uniforms;
@@ -561,11 +670,13 @@
       const RUNE_HEX_START_BEAN = 672 - 12;
       const RUNE_SCANLINES_START_BEAN = 792 + 12;
       const ALEKS_BIRD_START_BEAN = 1080;
+      /*
       if (BEAN >= RUNE_HEX_START_BEAN && BEAN < RUNE_SCANLINES_START_BEAN) {
         this.camera.position.z = easeIn(.3, 0.16, F(frame, RUNE_HEX_START_BEAN, 12));
       } else if (BEAN >= RUNE_SCANLINES_START_BEAN && BEAN < RUNE_SCANLINES_START_BEAN + 24) {
         this.camera.position.z = easeIn(0.16, 0.3, F(frame, RUNE_SCANLINES_START_BEAN, 24));
       }
+      */
 
 
       this.paper.visible = true;

@@ -229,7 +229,7 @@
       "shader": "FXAA"
     },
     "connected": {
-        "A": "splasher.render"
+      "A": "splasher.render"
     }
   }
 ]

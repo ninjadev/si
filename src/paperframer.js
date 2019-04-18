@@ -105,7 +105,7 @@
           startFrame: 4900,
           endFrame: 5207,
           transition: 8,
-          text: XWrite('BEAUTIFUL SCANLINES'),
+          text: XWrite('LIVE COMPOS'),
         },
         {
           startFrame: 5307,

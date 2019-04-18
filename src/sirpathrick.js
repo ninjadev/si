@@ -1,4 +1,5 @@
 (function(global) {
+  const F = (frame, from, delta) => (frame - FRAME_FOR_BEAN(from)) / (FRAME_FOR_BEAN(from + delta) - FRAME_FOR_BEAN(from));
 
   class sirpathrick extends NIN.THREENode {
     constructor(id, options) {
@@ -8,6 +9,8 @@
           render: new NIN.TextureOutput()
         }
       });
+
+      const scaler = 0.3;
 
       const tracks = [
         {coords: [[-300,-169],[300,169]], offset: [0, 0]},
@@ -25,7 +28,7 @@
       for (const track of tracks) {
         const path = new Path({debug: false});
         for (const [x, y] of track.coords) {
-          path.lineTo(x, y);
+          path.lineTo(x * scaler, y * scaler);
         }
         const line = path.toObject3D();
         this.lines.push(line);
@@ -62,7 +65,13 @@
       for (let i = 0; i < this.lines.length; i++) {
         const path = this.lines[i].path;
         path.material.uniforms.drawStart.value = 0;
-        path.material.uniforms.drawEnd.value =  lerp(0, 1, (frame - startFrame) / 50);
+        if(i % 2 === 0) {
+          path.material.uniforms.drawEnd.value =  easeOut(0, 1, F(frame, 306 - 0, 2));
+
+        } else {
+          path.material.uniforms.drawEnd.value =  easeOut(0, 1, F(frame, 306 + 3, 2));
+
+        }
         path.material.uniforms.wobbliness.value = 1;
       }
     }
