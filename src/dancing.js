@@ -18,7 +18,7 @@
       let curve;
       let directionSize = 1;
       let fill = true;
-      let fillColor = "#7f7fff";
+      let fillColor = "#b3ffff";
 
       const info = [
         [0, 10, "xl", "#ff99e6", "julie"],
@@ -121,7 +121,11 @@
           [x + 100 * size, y - 100 * size],
           [x + 92 * size, y - 108 * size],
           [x + 25 * size, y - 30 * size],
-          [x + 22 * size, y - 74 * size]
+          [x + 22 * size, y - 74 * size],
+          [x - 30 * size, y - 12 * size],
+          [x - 10 * size, y - 10 * size],
+          [x - 10 * size, y],
+          [x, y]
         ], null, directionSize, fill, fillColor);
         front.add(line);
         line = makeLine([
@@ -135,17 +139,15 @@
           [x - 30 * size, y - 215 * size],
           [x - 35 * size, y - 130 * size],
           [x - 30 * size, y - 30 * size],
-          [x - 30 * size, y - 12 * size],
-          [x - 10 * size, y - 10 * size],
-          [x - 10 * size, y],
-          [x, y]
+          [x + 21 * size, y - 91 * size],
         ], null, directionSize, fill, fillColor);
         front.add(line);
         line = makeLine([
           [x - 30 * size, y - 30 * size],
           [x + 37 * size, y - 108 * size],
           [x + 45 * size, y - 100 * size],
-          [- 30 * size, y - 12 * size]
+          [x - 30 * size, y - 12 * size],
+          [x - 30 * size, y - 30 * size]
         ], null, directionSize, fill, fillColor);
         front.add(line);
         return front;
@@ -171,7 +173,8 @@
           [x + 30 * size, y - 30 * size],
           [x + 30 * size, y - 12 * size],
           [x + 10 * size, y - 10 * size],
-          [x + 10 * size, y]
+          [x + 10 * size, y],
+          [x, y]
         ], null, directionSize, fill, fillColor);
         back.add(line);
         line = makeLine([
@@ -211,7 +214,7 @@
           [x + 10 * size, y - 3 * size],
           [x + 16 * size, y - 13 * size]
         ];
-        let directionSize = length = "s" ? 1: 1;
+        let directionSize = length = "s" ? 5 : 12;
         line = makeLine(arr, color, directionSize)
         hair.add(line);
         hair.position.z = 2;
@@ -281,6 +284,7 @@
           [x + 15 * size, y - 10 * size],
           [x + 5 * size, y - 10 * size],
           [x + 5 * size, y],
+          [x - 5 * size, y],
         ], null, directionSize, fill, fillColor);
         front.add(line);
         return front;
@@ -309,6 +313,7 @@
           [x + 15 * size, y - 10 * size],
           [x + 5 * size, y - 10 * size],
           [x + 5 * size, y],
+          [x - 5 * size, y],
         ], null, directionSize, fill, fillColor);
         front.add(line);
         return front;
@@ -386,7 +391,7 @@
         path.material.uniforms.drawEnd.value = i == 2 ? lerp(0, 1, Math.tan((frame - startframe)/10)) : 1;
       }
 
-      if (BEAN < startBEAN + 48) {
+      if (BEAN < startBEAN + 60) {
         for (const body of this.guys) {
           body.frontleft.visible = false;
           body.backleft.visible = false;
@@ -396,7 +401,7 @@
           body.handsUp2.visible = true;
         }
       }
-      if (BEAN >= startBEAN + 48 && BEAN < startBEAN + 144) {
+      if (BEAN >= startBEAN + 60 && BEAN < startBEAN + 144) {
         for (const body of this.guys) {
           body.frontleft.visible = (BEAN % 36 < 6) || (BEAN % 36 >= 12 && BEAN % 36 < 18);
           body.backleft.visible = BEAN % 36 >= 6 && BEAN % 36 < 12;
