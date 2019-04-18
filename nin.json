@@ -7,7 +7,7 @@
   "previewImage": "https://raw.githubusercontent.com/ninjadev/nin/master/nin/frontend/app/images/nin-dark.png",
   "aspectRatio": "16:9",
   "music": {
-    "path": "res/music.ogg",
+    "path": "res/music.mp3",
     "bpm": 100,
     "subdivision": 6,
     "BEANOffset": 0
