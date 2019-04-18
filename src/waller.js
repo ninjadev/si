@@ -35,6 +35,7 @@
 
       this.skogTexture = Loader.loadTexture('res/skog-graffiti.png');
       this.demoTexture = Loader.loadTexture('res/demo-graffiti.png');
+      this.campingTexture = Loader.loadTexture('res/camping-graffiti.png');
       this.musicTexture = Loader.loadTexture('res/music-graffiti.png');
       this.graphicsTexture = Loader.loadTexture('res/graphics-graffiti.png');
       this.flatebyTexture = Loader.loadTexture('res/flateby-marker-overlay-graffiti.png');
@@ -377,6 +378,34 @@
         this.splashoBillboard.position.x = this.camera.position.x - lerp(0.07, 0.09, t) - easeOut(0, 0.25, t2) + 0.07;
         this.splashoBillboard.position.y = this.camera.position.y + 0.000;
         this.splashoBillboard.position.z = 0.163;
+        this.light1.angle = 0.85;
+      } else if(BAR >= 21 && BAR < 22) {
+        const t = F(frame,  21 * 24, 24);
+        const t2 = F(frame, 22 * 24 - 6, 6);
+        this.camera.position.x = lerp(-0.05, -0.12, t);
+        this.camera.position.y = -0.03;
+        this.camera.position.z = 0.38;
+
+        this.splashoBillboard.visible = true;
+        this.splashoBillboard.material.map = this.campingTexture;
+
+        this.splashoBillboard.position.x = this.camera.position.x - lerp(0.07, 0.09, t) - easeOut(0, 0.25, t2);
+        this.splashoBillboard.position.y = this.camera.position.y- 0.02;
+        this.splashoBillboard.position.z = 0.1;
+        this.light1.angle = 0.85;
+      } else if(BAR >= 25 && BAR < 26) {
+        const t = F(frame,  25 * 24, 24);
+        const t2 = F(frame, 26 * 24 - 6, 6);
+        this.camera.position.x = lerp(-0.05, -0.12, t);
+        this.camera.position.y = -0.03;
+        this.camera.position.z = 0.38;
+
+        this.splashoBillboard.visible = true;
+        this.splashoBillboard.material.map = this.campingTexture;
+
+        this.splashoBillboard.position.x = this.camera.position.x - lerp(0.07, 0.09, t) - easeOut(0, 0.25, t2);
+        this.splashoBillboard.position.y = this.camera.position.y- 0.02;
+        this.splashoBillboard.position.z = 0.1;
         this.light1.angle = 0.85;
       } else if(BAR >= 29 && BAR < 30) {
         const t = F(frame,  29 * 24, 24);
