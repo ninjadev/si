@@ -1,4 +1,5 @@
 (function(global) {
+  const F = (frame, from, delta) => (frame - FRAME_FOR_BEAN(from)) / (FRAME_FOR_BEAN(from + delta) - FRAME_FOR_BEAN(from));
   function easeInOutElastic(a, b, t) {
     t = (t -= .5) < 0 ? (.02 + .01 / t) * Math.sin(50 * t) : (.02 - .01 / t) * Math.sin(50 * t) + 1;
     return lerp(a, b, t);
@@ -18,7 +19,7 @@
       let curve;
       let directionSize = 1;
       let fill = true;
-      let fillColor = "#b3ffff";
+      let fillColor = "#7fffff";
 
       const info = [
         [0, 10, "xl", "#ff99e6", "julie"],
@@ -43,7 +44,7 @@
 
         let hair = makeHair(x, y + r * 2, size, info[i][2], info[i][3]);
         this.scene.add(hair);
-        let head = makeHead(x, y, size, r, fill, fillColor);
+        let head = makeHead(x, y, size, r, fill, 0x7fffff);
         this.scene.add(head);
         let frontleft = makeFront(0, 0, size, directionSize, fill, fillColor);
         frontleft.position.set(x, y, 0);
@@ -91,9 +92,11 @@
       function makeHead(x, y, size, r, fill, fillColor) {
         y = y + r;
         let hode = new THREE.Object3D();
+        hode.lines = [];
         curve = makeCurve(r, x, y);
         line = makeLine(curve, null, 1, fill, fillColor);
         hode.add(line);
+        hode.lines.push(line);
         line = makeLine([
           [x + 10 * size, y - 10 * size],
           [x, y - r + (r/4)],
@@ -103,12 +106,16 @@
           [x + 10 * size, y - 10 * size]
         ], null, 1);
         hode.add(line);
-        curve = makeCurve(1, x + (r/4), y + (r/4));
+        hode.lines.push(line);
+        const pupilDistance = r / 4 + (Math.random() - 0.2) * 2;
+        curve = makeCurve(1, x + pupilDistance, y + (r/4));
         line = makeLine(curve, null, 1);
         hode.add(line);
-        curve = makeCurve(1, x - (r/4), y + (r/4));
+        hode.lines.push(line);
+        curve = makeCurve(1, x - pupilDistance, y + (r/4));
         line = makeLine(curve, null, 1);
         hode.add(line);
+        hode.lines.push(line);
         return hode;
       }
 
@@ -190,6 +197,7 @@
       function makeHair(x, y, size, length, color) {
         let hair = new THREE.Object3D();
         color = new THREE.Color(color).multiplyScalar(0.8);
+        let oric = color;
         color = new THREE.Vector3(color.r, color.g, color.b);
         let arr = length === "xl" ? [
           [x - 24 * size, y - 100 * size],
@@ -214,8 +222,20 @@
           [x + 10 * size, y - 3 * size],
           [x + 16 * size, y - 13 * size]
         ];
-        let directionSize = length = "s" ? 5 : 12;
-        line = makeLine(arr, color, directionSize)
+
+        arr = [
+          [x - 18 * size, y - 16 * size],
+          [x - 8 * size, y - 7 * size],
+          [x + 10 * size, y - 7 * size],
+          [x + 18 * size, y - 13 * size],
+          [x + 19 * size, y - 12 * size],
+          [x + 10 * size, y - 2 * size],
+          [x - 2 * size, y + 0 * size],
+          [x - 12 * size, y - 3 * size],
+          [x - 19 * size, y - 15 * size],
+          [x - 18 * size, y - 16 * size],
+        ];
+        line = makeLine(arr, 0, 1, true, oric);
         hair.add(line);
         hair.position.z = 2;
         return hair;
@@ -316,6 +336,7 @@
           [x - 5 * size, y],
         ], null, directionSize, fill, fillColor);
         front.add(line);
+        front.line = line;
         return front;
       }
 
@@ -399,6 +420,16 @@
           body.backright.visible = false;
           body.handsUp1.visible = false;
           body.handsUp2.visible = true;
+
+          for(let k = 0; k < body.head.lines.length; k++) {
+            const path = body.head.lines[k].path;
+            //path.uniforms.drawEnd.value = lerp(0, 1, F(frame, (BEAN / 6 | 0) * 6 + 3 * k / body.head.lines.length, 1));
+            if(path.fillMesh) {
+              //path.fillMesh.visible = BEAN % 6 >= 3;
+              //path.fillMesh.visible = false;
+            }
+          }
+          body.handsUp2.line.path.uniforms.drawEnd.value = lerp(0, 1, F(frame, (BEAN / 6 | 0) * 6, 3));
         }
       }
       if (BEAN >= startBEAN + 60 && BEAN < startBEAN + 144) {
@@ -409,6 +440,7 @@
           body.backright.visible = BEAN % 36 >= 24 && BEAN % 36 < 30;
           body.handsUp1.visible = false;
           body.handsUp2.visible = false;
+
         }
       } else if (BEAN >= startBEAN + 144) {
         for (const body of this.guys) {
