@@ -74,6 +74,7 @@
         ...makeTree([-520, -4, 4]),
         ...makeTree([-420, -10, 60]),
         makeCurve(75, 25, [-420, -105, 60]),
+        ...makeTree([-560, 20, 280]),
       ];
 
       this.lines = [];
@@ -161,35 +162,28 @@
           fill: true,
           fillColor: track.fillColor,
           fillMap: track.fillMap,
+          directionSize: 2,
         };
         const path = new Path(options);
+        const shadowPath = new Path({
+          ...options,
+          fillColor: 0,
+        });
         for (const [x, y] of track.coords) {
           path.lineTo(x, y);
+          shadowPath.lineTo(x, y - 4);
         }
         const line = path.toObject3D();
+        const shadowline = shadowPath.toObject3D();
         this.mainTree.push(line);
+        this.mainTree.push(shadowline);
         this.scene.add(line);
+        this.scene.add(shadowline);
         line.position.set(...track.offset);
+        shadowline.position.set(...track.offset);
         line.path = path;
-      }
-
-      this.frontTree = [];
-      const frontTreeTracks = makeTree([-560, 20, 280]);
-      for (const track of frontTreeTracks) {
-        const options = ('fillColor' in track || 'fillMap' in track) && {
-          fill: true,
-          fillColor: track.fillColor,
-          fillMap: track.fillMap,
-        };
-        const path = new Path(options);
-        for (const [x, y] of track.coords) {
-          path.lineTo(x, y);
-        }
-        const line = path.toObject3D();
-        this.frontTree.push(line);
-        this.scene.add(line);
-        line.position.set(...track.offset);
-        line.path = path;
+        shadowline.path = shadowPath;
+        shadowline.position.z -= 1;
       }
 
       const tentPath = new Path({fill: true, fillColor: 0xef8f5f});
@@ -284,17 +278,6 @@
 
       for (let i = 0; i < this.mainTree.length; i++) {
         const path = this.mainTree[i].path;
-        path.material.uniforms.drawStart.value = 0;
-        path.material.uniforms.drawEnd.value = lerp(0, 1, (frame - wifiStartFrame - i * 10) / 100);
-        path.material.uniforms.wobbliness.value = 1;
-        //path.magicAnimationUpdater();
-        if(path.fillMesh) {
-          path.fillMesh.visible = path.material.uniforms.drawEnd.value > 0.999;
-        }
-      }
-
-      for (let i = 0; i < this.frontTree.length; i++) {
-        const path = this.frontTree[i].path;
         path.material.uniforms.drawStart.value = 0;
         path.material.uniforms.drawEnd.value = lerp(0, 1, (frame - wifiStartFrame - i * 10) / 100);
         path.material.uniforms.wobbliness.value = 1;
