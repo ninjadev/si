@@ -91,7 +91,7 @@
           let logo = CommodoreLogo(25, '#ffffff', row % 2 == 1);
           logo.position.set(
             -150 + col * (25 + 5),
-            80 - (25 + 15) * row,
+            79 - (25 + 15) * row,
             0
           );
           this.commodoreLogos.push(logo);
@@ -122,7 +122,7 @@
       const startOfStart = FRAME_FOR_BEAN(1320) - startFrame;
       const startOfEnd = FRAME_FOR_BEAN(1353) - startFrame;
       const speed = 60;
-      const baseOffset = 330;
+      const baseOffset = 333;
 
       if (BEAN < 1311) {
         this.logoWrapperRight.position.x = baseOffset - 90;
@@ -155,8 +155,10 @@
         openMyMyMouth = BEAN < 1320 ? 0 : openMouth;
         const rotation = openMyMyMouth ? Math.PI / 8 : 0;
 
-        logo.upperBeak.rotation.z = rotation;
-        logo.lowerBeak.rotation.z = -rotation;
+        logo.upperBeaks[0].rotation.z = rotation;
+        logo.upperBeaks[1].rotation.z = rotation;
+        logo.lowerBeaks[0].rotation.z = -rotation;
+        logo.lowerBeaks[1].rotation.z = -rotation;
       }
 
       for (let lines of this.commodoreLinesLeft) {

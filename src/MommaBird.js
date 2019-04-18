@@ -62,7 +62,7 @@
 
       function Scroller(text) {
         this.text = text;
-        const fontSize = 14;
+        const fontSize = GU * 2;
         const fontFamily = 'monospace';
         this.textCanvas = document.createElement('canvas');
         this.textCtx = this.textCanvas.getContext('2d');
@@ -73,7 +73,7 @@
         this.textCanvas.height = fontSize;
 
         this.textCtx.clearRect(0, 0, this.textCanvas.width, this.textCanvas.height);
-        this.textCtx.fillStyle = '#ff7fff';
+        this.textCtx.fillStyle = '#000000';
         this.textCtx.font = `bold ${fontSize}px ${fontFamily}`;
         this.textCtx.textAlign = 'center';
         this.textCtx.textBaseline = 'middle';
@@ -110,7 +110,7 @@
       this.LongestScroller = new Scroller('THIS IS THE LOOONGEST SCROLLER I COULD AFFORD');
       this.scene.add(this.LongestScroller.scrollerMesh);
 
-      this.AmigaScroller = new Scroller('AMIGAAAAAAAAAAAAAAAAAA');
+      this.AmigaScroller = new Scroller('AMIIIIGAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA');
       this.scene.add(this.AmigaScroller.scrollerMesh);
 
       this.NoScroller.scrollerMesh.position.set(-35, -5, 0);
@@ -153,16 +153,22 @@
       this.chick3.rotation.y = Math.sin(frame / 12) / 3;
 
       let openMouth = BEAN % 6 < 3;
-      this.chick1.upperBeak.rotation.z = openMouth ? Math.PI / 6 : 0;
-      this.chick1.lowerBeak.rotation.z = openMouth ? -Math.PI / 6 : 0;
+      this.chick1.upperBeaks[0].rotation.z = openMouth ? Math.PI / 6 : 0;
+      this.chick1.upperBeaks[1].rotation.z = openMouth ? Math.PI / 6 : 0;
+      this.chick1.lowerBeaks[0].rotation.z = openMouth ? -Math.PI / 6 : 0;
+      this.chick1.lowerBeaks[1].rotation.z = openMouth ? -Math.PI / 6 : 0;
 
       openMouth = BEAN % 12 < 6;
-      this.chick2.upperBeak.rotation.z = !openMouth ? Math.PI / 7 : 0;
-      this.chick2.lowerBeak.rotation.z = !openMouth ? -Math.PI / 7 : 0;
+      this.chick2.upperBeaks[0].rotation.z = !openMouth ? Math.PI / 7 : 0;
+      this.chick2.upperBeaks[1].rotation.z = !openMouth ? Math.PI / 7 : 0;
+      this.chick2.lowerBeaks[0].rotation.z = !openMouth ? -Math.PI / 7 : 0;
+      this.chick2.lowerBeaks[1].rotation.z = !openMouth ? -Math.PI / 7 : 0;
 
       openMouth = BEAN % 8 < 4;
-      this.chick3.upperBeak.rotation.z = openMouth ? Math.PI / 3 : 0;
-      this.chick3.lowerBeak.rotation.z = openMouth ? -Math.PI / 3 : 0;
+      this.chick3.upperBeaks[0].rotation.z = openMouth ? Math.PI / 3 : 0;
+      this.chick3.upperBeaks[1].rotation.z = openMouth ? Math.PI / 3 : 0;
+      this.chick3.lowerBeaks[0].rotation.z = openMouth ? -Math.PI / 3 : 0;
+      this.chick3.lowerBeaks[1].rotation.z = openMouth ? -Math.PI / 3 : 0;
 
       const start = 7601;
       const mommaIsStationary = 50;
@@ -211,8 +217,10 @@
       this.mommaBird.position.y = animationChainY;
 
       openMouth = BEAN % 2 == 0;
-      this.mommaBird.upperBeak.rotation.z = openMouth ? Math.PI / 16 : 0;
-      this.mommaBird.lowerBeak.rotation.z = openMouth ? -Math.PI / 32 : 0;
+      this.mommaBird.upperBeaks[0].rotation.z = openMouth ? Math.PI / 16 : 0;
+      this.mommaBird.upperBeaks[1].rotation.z = openMouth ? Math.PI / 16 : 0;
+      this.mommaBird.lowerBeaks[0].rotation.z = openMouth ? -Math.PI / 32 : 0;
+      this.mommaBird.lowerBeaks[1].rotation.z = openMouth ? -Math.PI / 32 : 0;
 
       let rotationChain;
       rotationChain = smoothstep(
@@ -232,7 +240,7 @@
       }
       this.NoScroller.scrollerMesh.geometry.verticesNeedUpdate = true;
       this.NoScroller.scrollerMesh.material.map.offset.x = lerp(
-        -1, 1, (frame - mommaIsStationary - 40 - start) / (this.NoScroller.text.length * 2.5));
+        -1, 1, (frame - mommaIsStationary - 40 - start) / (this.NoScroller.text.length * 3.));
 
       // LONGEST
       this.LongestScroller.texture.needsUpdate = true;
@@ -243,7 +251,7 @@
       }
       this.LongestScroller.scrollerMesh.geometry.verticesNeedUpdate = true;
       this.LongestScroller.scrollerMesh.material.map.offset.x = lerp(
-        -1, 1, (frame - mommaIsStationary - 20 - start) / (this.LongestScroller.text.length * 3.)
+        -1, 1, (frame - mommaIsStationary - 20 - start) / (this.LongestScroller.text.length * 3.5)
       );
 
 

@@ -418,8 +418,10 @@
 
 
       const openMouth = BEAN % 2 == 0;
-      this.mommaBird.upperBeak.rotation.z = openMouth ? Math.PI / 16 : 0;
-      this.mommaBird.lowerBeak.rotation.z = openMouth ? -Math.PI / 32 : 0;
+      this.mommaBird.upperBeaks[0].rotation.z = openMouth ? Math.PI / 16 : 0;
+      this.mommaBird.upperBeaks[1].rotation.z = openMouth ? Math.PI / 16 : 0;
+      this.mommaBird.lowerBeaks[0].rotation.z = openMouth ? -Math.PI / 32 : 0;
+      this.mommaBird.lowerBeaks[1].rotation.z = openMouth ? -Math.PI / 32 : 0;
 
       const birdBean = FRAME_FOR_BEAN(1242);
 
