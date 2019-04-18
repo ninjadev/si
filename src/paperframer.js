@@ -135,7 +135,7 @@
           startFrame: 8200,
           endFrame: 8670,
           transition: 6,
-          text: XWrite('BEAUTIFUL EMOJIS'),
+          text: XWrite('STUFF TO BRING'),
         },
         {
           startFrame: 8750,
