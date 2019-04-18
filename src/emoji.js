@@ -25,6 +25,7 @@
       this.emojiMaterials = {};
       this.emojiGeometry = new THREE.PlaneGeometry(32, 32, 1);
       this.wrappers = {};
+      this.tileWrappers = {};
       this.tiles = {};
       this.mosaicKeyOrder = [
         'hardware', 'dancingSkills', 'pixelArt', 'campingEquipment', 'goodMood', 'sunglasses'
@@ -81,7 +82,8 @@
           const wrapper = new THREE.Object3D();
           this.tiles[mosaicKey] = [];
 
-          /*
+          const tileWrapper = new THREE.Object3D();
+
           for (let i = 0; i < mosaic.tiles.length; i++) {
             const tile = mosaic.tiles[i];
             const material = this.emojiMaterials[tile.emoji_id];
@@ -90,12 +92,11 @@
             tileMesh.position.y = 1800 - tile.y;
             tileMesh.position.z = 0.01 * i;
             this.tiles[mosaicKey].push(tileMesh);
-            wrapper.add(tileMesh);
+            tileWrapper.add(tileMesh);
           }
-           */
 
-          const innerTileMaterial = this.emojiMaterials[this.emojiIdByKey[mosaicKey]];
-          const tileMesh = new THREE.Mesh(this.emojiGeometry, innerTileMaterial);
+          const lowResTileMaterial = this.emojiMaterials[this.emojiIdByKey[mosaicKey]];
+          const tileMesh = new THREE.Mesh(this.emojiGeometry, lowResTileMaterial);
           tileMesh.scale.x = 32;
           tileMesh.scale.y = 32;
           tileMesh.position.x = 512 - 16;
@@ -103,6 +104,7 @@
           tileMesh.position.z = 1;
           wrapper.add(tileMesh);
 
+          this.tileWrappers[mosaicKey] = tileWrapper;
           this.wrappers[mosaicKey] = wrapper;
         }
       }
@@ -157,6 +159,7 @@
       };
 
       this.wrappers['hardware'].visible = BEAN >= 1380;
+      this.wrappers['sunglasses'].visible = BEAN >= 1440;
 
       const beansBeforeZoom = 10;
       const zoomDuration = 6;
