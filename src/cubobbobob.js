@@ -2,8 +2,7 @@
   const F = (frame, from, delta) => (frame - FRAME_FOR_BEAN(from)) / (FRAME_FOR_BEAN(from + delta) - FRAME_FOR_BEAN(from));
   class cubobbobob extends NIN.THREENode {
     constructor(id, options) {
-      super(id, {
-        camera: options.camera,
+      super(id, { camera: options.camera,
         inputs: {
           background: new NIN.TextureInput(),
         },
@@ -18,6 +17,7 @@
         }),
       ]);
       this.torus.scale.set(0.75, 0.75, 0.75);
+      this.torus.position.set(0, 0, -100);
       this.scene.add(this.torus);
       this.twistAmount = 7;
       this.twists = 0;
@@ -33,7 +33,7 @@
       this.scene.add(this.background);
       this.background.position.z = -100;
 
-      this.camera.position.z = 200;
+      this.camera.position.z = 100;
 
       this.startFrame = 1295;
       this.startBEAN = 216;
@@ -44,7 +44,7 @@
 
       if(frame === this.startFrame) {
         // reset for development
-        this.camera.position.z = 200;
+        this.camera.position.z = 100;
         this.twists = 0;
       }
       if(BEAT && BEAN % 4 === 0) {
@@ -61,15 +61,18 @@
       }
 
       if(frame > 1455 && frame <= 1575) {
-        this.camera.position.z = smoothstep(250, 400, (frame - this.startFrame) / 400);
+        const amount = smoothstep(0.75, 0.45, (frame - this.startFrame) / 400);
+        this.torus.scale.set(amount, amount, amount);
       }
 
       if(frame > 1575 && frame <= 1663) {
-        this.camera.position.z = smoothstep(150, 300, (frame - this.startFrame) / 400);
+        const amount = smoothstep(0.45, 0.65, (frame - this.startFrame) / 400);
+        this.torus.scale.set(amount, amount, amount);
       }
 
       if(frame > 1663 && frame <= 1776) {
-        this.camera.position.z = smoothstep(200, 300, (frame - this.startFrame) / 400);
+        const amount = smoothstep(0.65, 1, (frame - this.startFrame) / 400);
+        this.torus.scale.set(amount, amount, amount);
       }
 
       if(frame > 1776) {
