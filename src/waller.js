@@ -785,6 +785,64 @@
         this.camera.position.y = 0;
         this.camera.position.z = easeIn(.15, 0.3, F(frame, ALEKS_BIRD_START_BEAN, 12));
       }
+
+      let fallFrame = 8999;
+      let fallBEAN = 1500;
+      if (BEAN >= fallBEAN && BEAN < fallBEAN + 6) {
+        let speed = F(frame, fallBEAN, 1);
+        this.paper.rotation.z = -easeIn(0, 1, speed);
+        this.paper.position.y = -easeIn(0, 0.066, speed);
+        this.paper.position.x = -easeIn(0, 0.144, speed);
+        this.shadowPaper.rotation.z = -easeIn(0, 1, speed);
+        this.shadowPaper.position.y = -easeIn(0, 0.066, speed);
+        this.shadowPaper.position.x = -easeIn(0, 0.144, speed);
+        // NEED HELP TO SHAKE IT BETTER --Julie
+       } else if (BEAN === fallBEAN + 6) {
+        let speed = F(frame, fallBEAN + 6, 1);
+        this.shadowPaper.visible = false;
+        this.paper.rotation.z = -smoothstep(1, 0.9, Math.sin(speed/10));
+        this.paper.position.x = -smoothstep(0.144, 0.136, Math.sin(speed/10));
+      } else if (BEAN >= fallBEAN + 7 && BEAN < fallBEAN + 9) {
+        let speed = F(frame, fallBEAN + 7, 1);
+        this.shadowPaper.visible = false;
+        this.paper.rotation.z = -smoothstep(0.9, 1.1, Math.sin(speed/10));
+        this.paper.position.x = -smoothstep(0.136, 0.152, Math.sin(speed/10));
+      } else if (BEAN >= fallBEAN + 9 && BEAN < fallBEAN + 11) {
+        let speed = F(frame, fallBEAN + 9, 1);
+        this.shadowPaper.visible = false;
+        this.paper.rotation.z = -smoothstep(1.1, 0.9, Math.sin(speed/10));
+        this.paper.position.x = -smoothstep(0.152, 0.136, Math.sin(speed/10));
+      } else if (BEAN === fallBEAN + 11) {
+        let speed = F(frame, fallBEAN + 11, 1);
+        this.shadowPaper.visible = false;
+        this.paper.rotation.z = -smoothstep(0.9, 1, Math.sin(speed/10));
+        this.paper.position.x = -smoothstep(0.136, 0.144, Math.sin(speed/10));
+      } else if (BEAN >= fallBEAN + 12) {
+        let speed = F(frame, fallBEAN + 12, 1)/10;
+        this.paper.position.y = -lerp(0.066, 1, speed);
+        this.shadowPaper.position.y = -lerp(0.066, 1, speed);
+        let lightFrame = 9071;
+        if(frame < lightFrame) {
+          this.light1.intensity = 1;
+        } else if(frame < lightFrame + 3) {
+          this.light1.intensity = 0.5;
+        } else if(frame < lightFrame + 9) {
+          this.light1.intensity = 1;
+        } else if(frame < lightFrame + 21) {
+          this.light1.intensity = 0.5;
+        } else if(frame < lightFrame + 25) {
+          this.light1.intensity =  1.0;
+        } else if(frame < lightFrame + 29) {
+          this.light1.intensity = 0.5;
+        } else if(frame < lightFrame + 49) {
+          this.light1.intensity = 1.0;
+        } else {
+          this.light1.intensity = easeOut(
+            1, 0, (frame - (lightFrame + 51)) / 150);
+        }
+        this.hemiLight.intensity = 0.1 + this.light1.intensity * 0.5;
+
+      }
     }
   }
 
