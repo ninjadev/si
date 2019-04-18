@@ -44,9 +44,9 @@
         });
       };
 
-      var flat_material_1 = new THREE.MeshBasicMaterial({color: 0x999999});
-      var flat_material_2 = new THREE.MeshBasicMaterial({color: 0xEEEEEE});
-      var flat_material_3 = new THREE.MeshBasicMaterial({color: 0x555555});
+      var flat_material_1 = new THREE.MeshBasicMaterial({color: 0xffffff});
+      var flat_material_2 = new THREE.MeshBasicMaterial({color: 0xffffff});
+      var flat_material_3 = new THREE.MeshBasicMaterial({color: 0xffffff});
 
       loadObject('res/3dsolskogen/1.obj', flat_material_1, this.number1_raw );
       loadObject('res/3dsolskogen/2.obj', flat_material_2, this.number2_raw );
@@ -64,14 +64,14 @@
       this.scene.add(this.number2);
       this.scene.add(this.number3);
 
-      this.number1_raw.position.x = 0.55 * GU;
-      this.number2_raw.position.x = -0.1 * GU;
-      this.number3_raw.position.x = -0.70 * GU;
-      this.number1_raw.position.y = -0.15 * GU;
-      this.number2_raw.position.y = -0.15 * GU;
-      this.number3_raw.position.y = -0.2 * GU;
+      this.number1_raw.position.x = 0;
+      this.number2_raw.position.x = 0;
+      this.number3_raw.position.x = 0;
+      this.number1_raw.position.y = -0.3;
+      this.number2_raw.position.y = -0.3;
+      this.number3_raw.position.y = -0.3;
 
-      var number_scale = 2;
+      var number_scale = 30;
       this.number1.scale.x = number_scale;
       this.number1.scale.y = number_scale;
       this.number1.scale.z = number_scale;
@@ -145,6 +145,10 @@
         this.number1.position.z =  5 - 40 * Math.cos(t1_progress);
         this.number2.position.z =  5 - 40 * Math.cos(t2_progress);
         this.number3.position.z =  5 - 40 * Math.cos(t3_progress);
+
+        this.number1.rotation.y = 0.6;
+        this.number2.rotation.y = 0.6;
+        this.number3.rotation.y = 0.6;
       }
     }
 
