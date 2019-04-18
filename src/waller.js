@@ -617,6 +617,25 @@
           //this.scratcherPosition = -1.5;
           this.scratcherSpeed = 0.5;
           break;
+        case FRAME_FOR_BEAN(924):
+          this.scratcherPosition = 5;
+          this.scratcherSpeed = 0;
+          break;
+        case FRAME_FOR_BEAN(924 + 1.5) | 0:
+          this.scratcherPosition = 4;
+          this.scratcherSpeed = 0;
+          break;
+        case FRAME_FOR_BEAN(924 + 3):
+          this.scratcherPosition = 3;
+          this.scratcherSpeed = 0;
+          break;
+        case FRAME_FOR_BEAN(924 + 4.5) | 0:
+          this.scratcherPosition = 2;
+          this.scratcherSpeed = 0;
+          break;
+        case FRAME_FOR_BEAN(924 + 6) | 0:
+          this.scratcherPosition = -2;
+          break;
         case FRAME_FOR_BEAN(942):
           //this.scratcherPosition = -1.5;
           this.scratcherSpeed = 0.5
@@ -624,7 +643,10 @@
       }
 
       if(BEAN >= 930 && BEAN < 936) {
-        this.scratcherPosition = easeOut(this.scratcherPosition, 0, F(frame, 930, 6));
+        this.scratcherPosition = easeOut(-3, 0, F(frame, 930, 3));
+        if(BEAN >= 933) {
+        this.scratcherPosition = easeOut(3, 0, F(frame, 930 + 3, 3));
+        }
       }
 
       if(BEAN >= 936 && BEAN <  942) {
@@ -648,6 +670,11 @@
             F(frame, 942 + i * 1.5, 1.5));
             */
         }
+      }
+
+      if(BEAN >= 956 && BEAN < 956 + 3) {
+        this.scratcherPosition = 0;
+        this.rotaterPosition = lerp(0, 2, F(frame, 956, 3));
       }
 
       u.yPosier.value = smoothstep(0, 0.25, F(frame, 972 - 6, 6));
@@ -715,6 +742,11 @@
         this.camera.position.y = 0;
 
         u.yScale.value = easeIn(u.yScale.value, 6, F(frame, 924 - 6, 6));
+
+        if(BEAN >= 954 && BEAN < 954 + 3 ) {
+          u.yScale.value = 1;
+          u.yPosier.value = 0.25;
+        }
 
         this.camera.position.y = easeIn(0, -0.03, F(frame, 924-5,2));
         this.camera.position.z = easeIn(.3, 0.15, F(frame, 924-5,2));
