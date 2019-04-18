@@ -4,6 +4,7 @@
       options.inputs = {
          depthmap: new NIN.TextureInput(),
          lines: new NIN.TextureInput(),
+         rendered_input: new NIN.TextureInput(),
       }
       super(id, options);
 
@@ -12,22 +13,21 @@
     }
 
     update(frame) {
-      /*this.uniforms.tDiffuse.value = this.inputs.three_scene.getValue();
-      this.uniforms.z1.value = this.inputs.bgpants.getValue();
-      this.uniforms.z2.value = this.inputs.squiggles.getValue();
-      this.uniforms.z3.value = this.inputs.bgblue.getValue();
-      this.uniforms.z4.value = this.inputs.bgrightarrow.getValue();
-      this.uniforms.z5.value = this.inputs.bgzigzag.getValue();
-      this.uniforms.z6.value = this.inputs.bgpink.getValue();*/
-      
-      //this.uniforms.tDiffuse.value = this.inputs.three_scene.getValue();
-      //this.uniforms.depthmap.value = this.map_image;
       this.uniforms.raw_bg.value = this.testpattern;
       this.uniforms.depthmap.value = this.inputs.lines.getValue();
+      this.uniforms.rendered_input.value = this.inputs.rendered_input.getValue();
       this.uniforms.frame.value = frame;
       this.uniforms.blackfade.value = smoothstep(1, 0, (frame - 4737) / 50);
 
-      this.uniforms.sobel_power.value = 0.5 + 0.5 * Math.sin(frame/10);
+      if((frame > FRAME_FOR_BEAN(865) && frame < FRAME_FOR_BEAN(867)) || 
+        frame > FRAME_FOR_BEAN(871) && frame < FRAME_FOR_BEAN(872.5) ||
+        BEAN > 879
+        ) 
+      {
+        this.uniforms.sobel_power.value = 1.0;
+      } else {
+        this.uniforms.sobel_power.value = 0.0;
+      }
     }
   }
 

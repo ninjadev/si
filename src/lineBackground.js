@@ -98,6 +98,9 @@
     update(frame) {
       super.update(frame);
 
+        this.number1.position.z = 1000;
+        this.number2.position.z = 1000;
+        this.number3.position.z = 1000;
 
       
 
@@ -129,6 +132,8 @@
                                     smoothstep(0, Math.PI / 2, (frame - FRAME_FOR_BEAN(865))/ FRAME_FOR_BEAN(2)) +
                                     smoothstep(0, Math.PI / 2, (frame - FRAME_FOR_BEAN(871))/ FRAME_FOR_BEAN(1.5));
       } else {
+        this.cube.position.z = 1000;
+        this.torusKnot.position.z = 1000;
         var t1_progress = (frame - FRAME_FOR_BEAN(879)) / (FRAME_FOR_BEAN(882) - FRAME_FOR_BEAN(879)) * Math.PI * 2;
         var t2_progress = (frame - FRAME_FOR_BEAN(882)) / (FRAME_FOR_BEAN(885) - FRAME_FOR_BEAN(882)) * Math.PI * 2;
         var t3_progress = (frame - FRAME_FOR_BEAN(885)) / (FRAME_FOR_BEAN(888) - FRAME_FOR_BEAN(885)) * Math.PI * 2;
