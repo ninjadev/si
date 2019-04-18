@@ -473,7 +473,7 @@
         this.camera.rotation.z = (Math.random() - 0.5) * 0.02;
       }
 
-      if(BEAN >= 912 && BEAN < 912 + 6) {
+      if(BEAN >= 912 && BEAN < 912 + 12) {
         this.camera.rotation.x = (Math.random() - 0.5) * 0.02;
         this.camera.rotation.y = (Math.random() - 0.5) * 0.02;
         this.camera.rotation.z = (Math.random() - 0.5) * 0.02;
@@ -485,7 +485,17 @@
         this.camera.rotation.z = (Math.random() - 0.5) * 0.02;
       }
 
-      if(BEAN >= 960 && BEAN < 960 + 6) {
+      if(BEAN >= 960 && BEAN < 960 + 9) {
+        this.camera.rotation.x = (Math.random() - 0.5) * 0.03;
+        this.camera.rotation.y = (Math.random() - 0.5) * 0.03;
+        this.camera.rotation.z = (Math.random() - 0.5) * 0.03;
+      }
+      if(BEAN >= 1032 && BEAN < 1032 + 6) {
+        this.camera.rotation.x = (Math.random() - 0.5) * 0.01;
+        this.camera.rotation.y = (Math.random() - 0.5) * 0.01;
+        this.camera.rotation.z = (Math.random() - 0.5) * 0.01;
+      }
+      if(BEAN >= 1056 && BEAN < 1056 + 12) {
         this.camera.rotation.x = (Math.random() - 0.5) * 0.02;
         this.camera.rotation.y = (Math.random() - 0.5) * 0.02;
         this.camera.rotation.z = (Math.random() - 0.5) * 0.02;
