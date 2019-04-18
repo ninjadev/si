@@ -1,6 +1,8 @@
 {
     "raw_bg": { "type": "t", "value": null },
     "depthmap": { "type": "t", "value": null },
-    "blackfade": { "type": "f", "value": 0.0 },
+    "rendered_input": { "type": "t", "value": null },
+    "blackfade": { "type": "f", "value": 0.0 },    
+    "sobel_power": { "type": "f", "value": 0.0 },
     "frame": { "type": "f", "value": 0.0 }
 }
