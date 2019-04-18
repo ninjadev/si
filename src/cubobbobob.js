@@ -48,9 +48,9 @@
         this.twists = 0;
       }
       if(BEAT && BEAN % 4 === 0) {
-        this.twistAmount = 50;
+        this.twistAmount = 60;
       } else {
-        this.twistAmount = 10;
+        this.twistAmount = 20;
       }
       this.twist(this.twistAmount * this.sign);
       this.twists++;
@@ -61,17 +61,22 @@
       }
 
       if(frame > 1455 && frame <= 1575) {
-        const amount = smoothstep(0.75, 0.45, (frame - this.startFrame) / 400);
+        const amount = smoothstep(0.75, 0.35, (frame - this.startFrame) / (1575-1455));
         this.torus.scale.set(amount, amount, amount);
       }
 
-      if(frame > 1575 && frame <= 1663) {
-        const amount = smoothstep(0.45, 0.65, (frame - this.startFrame) / 400);
+      if(frame > 1575 && frame <= 1623) {
+        const amount = smoothstep(0.35, 1, (frame - this.startFrame) / (1623-1575));
+        this.torus.scale.set(amount, amount, amount);
+      }
+
+      if(frame > 1623 && frame <= 1663) {
+        const amount = smoothstep(1, 0.65, (frame - this.startFrame) / (1663-1623));
         this.torus.scale.set(amount, amount, amount);
       }
 
       if(frame > 1663 && frame <= 1776) {
-        const amount = smoothstep(0.65, 1, (frame - this.startFrame) / 400);
+        const amount = smoothstep(0.65, 1, (frame - this.startFrame) / (1776-1663));
         this.torus.scale.set(amount, amount, amount);
       }
 
