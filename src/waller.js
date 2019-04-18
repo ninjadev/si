@@ -52,12 +52,21 @@
 
       this.forest = new THREE.Mesh(
         new THREE.PlaneGeometry(),
-        new THREE.MeshBasicMaterial({
-          map: Loader.loadTexture('res/placeholder.png'),
+        new THREE.MeshStandardMaterial({
+          roughness: 1,
+          metalness: 0,
+          map: Loader.loadTexture('res/forest.png'),
+          emissive: 0xffffff,
+          emissiveIntensity: 0.25,
+          side: THREE.DoubleSide,
         }));
+      this.forest.material.map.minFilter = THREE.LinearFilter;
+      this.forest.material.map.magFilter = THREE.LinearFilter;
       this.scene.add(this.forest);
-      const forestScale = 0.25;
-      this.forest.scale.set(forestScale, forestScale * 9659 / 1920, forestScale);
+      const forestScale = 0.23;
+      this.forest.scale.set(forestScale, forestScale * 7500 / 1920, forestScale);
+
+      this.forest.scale.x = -this.forest.scale.x;
 
 
 
@@ -438,14 +447,16 @@
       } else if(BAR >= 33 && BAR < 34) {
         const t = F(frame,  33 * 24, 24);
         const t2 = F(frame, 34 * 24 - 6, 6);
+        this.camera.position.x = lerp(-0.05, -0.12, t);
+        this.camera.position.y = -0.03;
+        this.camera.position.z = 0.38;
 
         this.splashoBillboard.visible = true;
         this.splashoBillboard.material.map = this.graphicsTexture;
 
-        this.splashoBillboard.position.x = 1;
-        this.splashoBillboard.position.y = 0;
-        this.splashoBillboard.position.z = 0.05;
-
+        this.splashoBillboard.position.x = this.camera.position.x - lerp(0.07, 0.09, t) - easeOut(0, 0.25, t2);
+        this.splashoBillboard.position.y = this.camera.position.y- 0.02;
+        this.splashoBillboard.position.z = 0.1;
         this.light1.angle = 0.85;
       }
 
@@ -774,7 +785,7 @@
         this.rotaterPosition += this.rotaterSpeed;
         u.rotater.value = this.rotaterPosition;
 
-        this.forest.position.y = easeIn(0.53, -0.53, F(frame, 984, 24 * 3));
+        this.forest.position.y = lerp(0.355, -0.185, F(frame, 984 + 3, 24 * 3 - 3));
 
         if(BEAN >= 984 && BEAN < 1080) {
           this.paper.visible = false;

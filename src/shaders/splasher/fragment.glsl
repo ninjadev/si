@@ -104,7 +104,7 @@ void main() {
     prebanded = 0.1 + pow(prebanded, vec3(2.));
     */
 
-    vec3 introFader = mix(vec3(0.), prebanded, min(1., max(0., (frame - 5.) / 10.)));
+    vec3 introFader = mix(vec3(0.), prebanded, min(1., max(0., (frame - 0.) / 50.)));
 
     gl_FragColor = vec4(introFader, 1.);
 
