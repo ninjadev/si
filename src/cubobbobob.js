@@ -12,13 +12,13 @@
         }
       });
       this.geometry = new THREE.TorusGeometry(50, 50, 50, 50, 50, 50);
-      this.cube = new THREE.Mesh(this.geometry, [
+      this.torus = new THREE.Mesh(this.geometry, [
         new THREE.MeshBasicMaterial({
           map: new THREE.CanvasTexture(this.texture()),
         }),
       ]);
-      this.cube.scale.set(0.75, 0.75, 0.75);
-      this.scene.add(this.cube);
+      this.torus.scale.set(0.75, 0.75, 0.75);
+      this.scene.add(this.torus);
       this.twistAmount = 7;
       this.twists = 0;
       this.sign = 1;
@@ -41,6 +41,12 @@
 
     update(frame) {
       super.update(frame);
+
+      if(frame === this.startFrame) {
+        // reset for development
+        this.camera.position.z = 200;
+        this.twists = 0;
+      }
       if(BEAT && BEAN % 4 === 0) {
         this.twistAmount = 50;
       } else {
@@ -54,19 +60,17 @@
         this.twists = 0;
       }
 
-      /*
       if(frame > 1455 && frame <= 1575) {
         this.camera.position.z = smoothstep(250, 400, (frame - this.startFrame) / 400);
       }
 
       if(frame > 1575 && frame <= 1663) {
-        this.camera.position.z = smoothstep(150, 800, (frame - this.startFrame) / 400);
+        this.camera.position.z = smoothstep(150, 300, (frame - this.startFrame) / 400);
       }
 
       if(frame > 1663 && frame <= 1776) {
-        this.camera.position.z = smoothstep(200, 800, (frame - this.startFrame) / 400);
+        this.camera.position.z = smoothstep(200, 300, (frame - this.startFrame) / 400);
       }
-      */
 
       if(frame > 1776) {
         if(this.camera.position.z > 0) {
@@ -74,13 +78,13 @@
         }
       }
 
-      this.cube.visible = true;
+      this.torus.visible = true;
       if(BEAN >= 300) {
-        this.cube.visible = false;
+        this.torus.visible = false;
       }
 
       const rotate = lerp(0, 800, F(frame, 5*24*24));
-      this.cube.rotation.y = rotate;
+      this.torus.rotation.y = rotate;
 
       this.background.material.map = this.inputs.background.getValue();
       this.background.material.needsUpdate = true;
