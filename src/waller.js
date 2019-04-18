@@ -438,14 +438,16 @@
       } else if(BAR >= 33 && BAR < 34) {
         const t = F(frame,  33 * 24, 24);
         const t2 = F(frame, 34 * 24 - 6, 6);
+        this.camera.position.x = lerp(-0.05, -0.12, t);
+        this.camera.position.y = -0.03;
+        this.camera.position.z = 0.38;
 
         this.splashoBillboard.visible = true;
         this.splashoBillboard.material.map = this.graphicsTexture;
 
-        this.splashoBillboard.position.x = 1;
-        this.splashoBillboard.position.y = 0;
-        this.splashoBillboard.position.z = 0.05;
-
+        this.splashoBillboard.position.x = this.camera.position.x - lerp(0.07, 0.09, t) - easeOut(0, 0.25, t2);
+        this.splashoBillboard.position.y = this.camera.position.y- 0.02;
+        this.splashoBillboard.position.z = 0.1;
         this.light1.angle = 0.85;
       }
 
