@@ -16,21 +16,6 @@
         new THREE.MeshBasicMaterial({
           map: new THREE.CanvasTexture(this.texture()),
         }),
-        new THREE.MeshBasicMaterial({
-          map: new THREE.CanvasTexture(this.texture()),
-        }),
-        new THREE.MeshBasicMaterial({
-          map: new THREE.CanvasTexture(this.texture()),
-        }),
-        new THREE.MeshBasicMaterial({
-          map: new THREE.CanvasTexture(this.texture()),
-        }),
-        new THREE.MeshBasicMaterial({
-          map: new THREE.CanvasTexture(this.texture()),
-        }),
-        new THREE.MeshBasicMaterial({
-          map: new THREE.CanvasTexture(this.texture()),
-        }),
       ]);
       this.cube.scale.set(0.75, 0.75, 0.75);
       this.scene.add(this.cube);
@@ -69,6 +54,7 @@
         this.twists = 0;
       }
 
+      /*
       if(frame > 1455 && frame <= 1575) {
         this.camera.position.z = smoothstep(250, 400, (frame - this.startFrame) / 400);
       }
@@ -80,6 +66,7 @@
       if(frame > 1663 && frame <= 1776) {
         this.camera.position.z = smoothstep(200, 800, (frame - this.startFrame) / 400);
       }
+      */
 
       if(frame > 1776) {
         if(this.camera.position.z > 0) {
