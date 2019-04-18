@@ -11,7 +11,7 @@
           render: new NIN.TextureOutput(),
         }
       });
-      this.geometry = new THREE.BoxGeometry(50, 50, 50, 50, 50, 50);
+      this.geometry = new THREE.TorusGeometry(50, 50, 50, 50, 50, 50);
       this.cube = new THREE.Mesh(this.geometry, [
         new THREE.MeshBasicMaterial({
           map: new THREE.CanvasTexture(this.texture()),
@@ -33,7 +33,7 @@
         }),
       ]);
       this.scene.add(this.cube);
-      this.twistAmount = 10;
+      this.twistAmount = 7;
       this.twists = 0;
       this.sign = 1;
 
@@ -47,7 +47,7 @@
       this.scene.add(this.background);
       this.background.position.z = -100;
 
-      this.camera.position.z = 100;
+      this.camera.position.z = 200;
 
       this.startFrame = 1295;
       this.startBEAN = 216;
@@ -66,6 +66,24 @@
       if(this.twists > 100) {
         this.sign *= -1;
         this.twists = 0;
+      }
+
+      if(frame > 1455 && frame <= 1575) {
+        this.camera.position.z = smoothstep(250, 400, (frame - this.startFrame) / 400);
+      }
+
+      if(frame > 1575 && frame <= 1663) {
+        this.camera.position.z = smoothstep(150, 800, (frame - this.startFrame) / 400);
+      }
+
+      if(frame > 1663 && frame <= 1776) {
+        this.camera.position.z = smoothstep(200, 800, (frame - this.startFrame) / 400);
+      }
+
+      if(frame > 1776) {
+        if(this.camera.position.z > 0) {
+          this.camera.position.z -= 50;
+        }
       }
 
       const rotate = lerp(0, 800, F(frame, 5*24*24));
@@ -94,15 +112,15 @@
 
     texture() {
       const canvas = document.createElement('canvas');
-      canvas.width = 100;
-      canvas.height = 100;
+      canvas.width = 1000;
+      canvas.height = 1000;
       const ctx = canvas.getContext('2d');
       ctx.fillStyle = '#00000';
-      ctx.fillRect(0, 0, 100, 100);
+      ctx.fillRect(0, 0, 1000, 1000);
       ctx.strokeStyle = '#ffffff';
       for(let i = 0; i < 10; i++) {
-        ctx.moveTo(0, i*10 + 10 /2);
-        ctx.lineTo(100, i*10 + 10 /2);
+        ctx.moveTo(0, i*100 + 10 /2);
+        ctx.lineTo(1000, i*100 + 10 /2);
         ctx.stroke();
       }
 
