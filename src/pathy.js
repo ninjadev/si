@@ -107,6 +107,9 @@
           const j = n ? 20 : 22;
           this.fillerz[i][j].visible = true;
         } else if(BEAN >= 186 + 3 && BEAN < 186 + 6 + 24) {
+          if(BEAN >= 204 && (i < 10 || i > 11)) {
+            continue;
+          }
           this.fillerz[i][21].visible = true;
         }
       }
@@ -139,7 +142,7 @@
       this.camera.position.y = 0;
       this.camera.position.x = 0;
       if(BEAN >= 204) {
-        this.camera.position.y = BEAN % 6 < 3 ? 15.5 : 0;
+        //this.camera.position.y = BEAN % 6 < 3 ? 15.5 : 0;
         this.camera.position.x = -((BEAN - 204) / 3 | 0) * 15.5 / 2;
       }
     }

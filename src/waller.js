@@ -40,6 +40,19 @@
       this.graphicsTexture = Loader.loadTexture('res/graphics-graffiti.png');
       this.flatebyTexture = Loader.loadTexture('res/flateby-marker-overlay-graffiti.png');
 
+      this.skogTexture.minFilter = THREE.LinearFilter;
+      this.skogTexture.magFilter = THREE.LinearFilter;
+      this.demoTexture.minFilter = THREE.LinearFilter;
+      this.demoTexture.magFilter = THREE.LinearFilter;
+      this.campingTexture.minFilter = THREE.LinearFilter;
+      this.campingTexture.magFilter = THREE.LinearFilter;
+      this.musicTexture.minFilter = THREE.LinearFilter;
+      this.musicTexture.magFilter = THREE.LinearFilter;
+      this.graphicsTexture.minFilter = THREE.LinearFilter;
+      this.graphicsTexture.magFilter = THREE.LinearFilter;
+      this.flatebyTexture.minFilter = THREE.LinearFilter;
+      this.flatebyTexture.magFilter = THREE.LinearFilter;
+
       this.twistoramaContainer = new THREE.Mesh(
         new THREE.PlaneGeometry(1, 1),
         new THREE.ShaderMaterial(SHADERS.twistorama).clone()
@@ -50,18 +63,19 @@
 
       this.scene.add(this.twistoramaContainer);
 
+      this.forestTexture = Loader.loadTexture('res/forest.png');
+      this.forestTexture.minFilter = THREE.LinearFilter;
+      this.forestTexture.magFilter = THREE.LinearFilter;
       this.forest = new THREE.Mesh(
         new THREE.PlaneGeometry(),
         new THREE.MeshStandardMaterial({
           roughness: 1,
           metalness: 0,
-          map: Loader.loadTexture('res/forest.png'),
+          map: this.forestTexture,
           emissive: 0xffffff,
-          emissiveIntensity: 0.25,
+          emissiveIntensity: 0.15,
           side: THREE.DoubleSide,
         }));
-      this.forest.material.map.minFilter = THREE.LinearFilter;
-      this.forest.material.map.magFilter = THREE.LinearFilter;
       this.scene.add(this.forest);
       const forestScale = 0.23;
       this.forest.scale.set(forestScale, forestScale * 7500 / 1920, forestScale);
@@ -271,6 +285,8 @@
 
     update(frame) {
       super.update(frame);
+
+      this.forest.material.emissiveIntensity = lerp(0.15, 0.25, F(frame, 984, 24 * 3));
 
       this.splashoBillboard.visible = false;
       this.light1.position.y = 0.2;
