@@ -80,22 +80,22 @@
       }
 
       if(frame > 1455 && frame <= 1575) {
-        const amount = smoothstep(0.75, 0.3, (frame - this.startFrame) / (1575-1455));
+        const amount = smoothstep(0.60, 0.3, (frame - this.startFrame) / (1575-1455));
         this.torus.scale.set(amount, amount, amount);
       }
 
       if(frame > 1575 && frame <= 1623) {
-        const amount = smoothstep(0.35, 1, (frame - this.startFrame) / (1623-1575));
+        const amount = smoothstep(0.35, 0.75, (frame - this.startFrame) / (1623-1575));
         this.torus.scale.set(amount, amount, amount);
       }
 
       if(frame > 1623 && frame <= 1663) {
-        const amount = smoothstep(1, 0.65, (frame - this.startFrame) / (1663-1623));
+        const amount = smoothstep(0.75, 0.25, (frame - this.startFrame) / (1663-1623));
         this.torus.scale.set(amount, amount, amount);
       }
 
       if(frame > 1663 && frame <= 1776) {
-        const amount = smoothstep(0.65, 1, (frame - this.startFrame) / (1776-1663));
+        const amount = smoothstep(0.25, 1, (frame - this.startFrame) / (1776-1663));
         this.torus.scale.set(amount, amount, amount);
       }
 
@@ -106,8 +106,12 @@
       }
 
       this.torus.visible = true;
+      this.plume.visible = true;
+      this.plume2.visible = true;
       if(BEAN >= 300) {
         this.torus.visible = false;
+        this.plume.visible = false;
+        this.plume2.visible = false;
       }
 
       const rotate = lerp(0, 800, F(frame, 5*24*24));
