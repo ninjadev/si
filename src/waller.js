@@ -9,6 +9,7 @@
         },
         inputs: {
           A: new NIN.TextureInput(),
+          B: new NIN.TextureInput(),
         }
       });
 
@@ -98,7 +99,7 @@
         11 * inchToCm / 100,
         8.5 * inchToCm / 100,
         11 * 3,
-        8.5 * 3,
+        8.5 * 3
       );
 
       for(let i = 0; i < paperGeometry.vertices.length; i++) {
@@ -187,6 +188,16 @@
       this.paper.position.z = 0.003;
       this.scene.add(this.paper);
 
+      this.packinglist = new THREE.Mesh(paperGeometry,
+        new THREE.MeshStandardMaterial({
+          roughness: 1,
+          metalness: 0,
+          side: THREE.DoubleSide,
+        }));
+      this.packinglist.position.set(-0.24, 0, 0.003);
+      this.packinglist.scale.x = .5;
+      this.scene.add(this.packinglist);
+
       this.background = new THREE.Mesh(new THREE.BoxGeometry(),
         new THREE.MeshStandardMaterial({
           //map: Loader.loadTexture('res/Cork_S.jpg'),
@@ -197,11 +208,17 @@
         }));
       this.background.receiveShadow = true;
       this.paper.receiveShadow = true;
+      this.packinglist.receiveShadow = true;
       this.shadowPaper = this.paper.clone();
       this.scene.add(this.shadowPaper);
+      this.shadowPackingList = this.packinglist.clone();
+      this.scene.add(this.shadowPackingList);
       this.shadowPaper.position.z -= 0.001;
       this.shadowPaper.castShadow = true;
       this.shadowPaper.receiveShadow = false;
+      this.shadowPackingList.position.z -= 0.001;
+      this.shadowPackingList.castShadow = true;
+      this.shadowPackingList.receiveShadow = false;
       /*
       this.background.material.map.repeat.set(20, 10);
       this.background.material.map.wrapS = THREE.RepeatWrapping;
@@ -325,6 +342,9 @@
 
       this.paper.material.map = this.inputs.A.getValue();
       this.paper.material.needsUpdate = true;
+
+      this.packinglist.material.map = this.inputs.B.getValue();
+      this.packinglist.material.needsUpdate = true;
 
       this.paper.rotation.x = 0;
       this.paper.rotation.y = 0;
@@ -846,6 +866,21 @@
       } else if(BEAN >= ALEKS_BIRD_START_BEAN) {
         this.camera.position.y = 0;
         this.camera.position.z = easeIn(.15, 0.3, F(frame, ALEKS_BIRD_START_BEAN, 12));
+      }
+      if(BEAN > 57 * 24 && BEAN < 61 * 24) {
+        this.camera.position.x = lerp(
+          0,
+          lerp(-.09, 0, F(frame, 60 * 24 + 18, 6)),
+          F(frame, 57 * 24, 12));
+        this.camera.position.z = lerp(
+          .3,
+          lerp(.35, .3, F(frame, 60 * 24 + 18, 6)),
+          F(frame, 57 * 24, 12));
+        this.packinglist.position.x = -0.24;
+        this.shadowPackingList.position.x = -0.24;
+      } else {
+        this.packinglist.position.x = -500;
+        this.shadowPackingList.position.x = -500;
       }
 
       let fallFrame = 8999;
