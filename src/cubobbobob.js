@@ -10,14 +10,33 @@
           render: new NIN.TextureOutput(),
         }
       });
+      this.plume = new THREE.Mesh(
+        new THREE.CircleGeometry( 5, 128 ),
+        new THREE.MeshBasicMaterial({
+          color: 0xffffff,
+        }));
+      this.plume2 = new THREE.Mesh(
+        new THREE.CircleGeometry( 5, 128 ),
+        new THREE.MeshBasicMaterial({
+          color: 0,
+        }));
+      const plumeScale = 9.5;
+      const plumeScale2 = 10.0;
+      this.plume.scale.set(plumeScale, plumeScale, 1);
+      this.plume2.scale.set(plumeScale2, plumeScale2, 1);
+      this.plume.position.z = -75;
+      this.plume2.position.z = -80;
+      this.scene.add(this.plume);
+      this.scene.add(this.plume2);
       this.geometry = new THREE.TorusGeometry(50, 50, 50, 50, 50, 50);
+
       this.torus = new THREE.Mesh(this.geometry, [
         new THREE.MeshBasicMaterial({
           map: new THREE.CanvasTexture(this.texture()),
         }),
       ]);
       this.torus.scale.set(0.75, 0.75, 0.75);
-      this.torus.position.set(0, 0, -100);
+      this.torus.position.set(0, 0, -50);
       this.scene.add(this.torus);
       this.twistAmount = 7;
       this.twists = 0;
@@ -61,7 +80,7 @@
       }
 
       if(frame > 1455 && frame <= 1575) {
-        const amount = smoothstep(0.75, 0.35, (frame - this.startFrame) / (1575-1455));
+        const amount = smoothstep(0.75, 0.3, (frame - this.startFrame) / (1575-1455));
         this.torus.scale.set(amount, amount, amount);
       }
 
@@ -120,9 +139,10 @@
       canvas.width = 1000;
       canvas.height = 1000;
       const ctx = canvas.getContext('2d');
-      ctx.fillStyle = '#00000';
+      ctx.fillStyle = '#ff7f7f';
       ctx.fillRect(0, 0, 1000, 1000);
-      ctx.strokeStyle = '#ffffff';
+      ctx.strokeStyle = '#000000';
+      ctx.lineWidth = 10;
       for(let i = 0; i < 10; i++) {
         ctx.moveTo(0, i*100 + 10 /2);
         ctx.lineTo(1000, i*100 + 10 /2);
