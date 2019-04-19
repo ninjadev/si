@@ -36,33 +36,62 @@
       ];
 
       this.guys = [];
+      this.shadows = [];
       for(let i = 0; i < info.length - 3; i++) {
         let size = i % 2 === 1 || i === 0 ? 0.4 : 0.5;
         let r = 20 * size;
         let x = info[i][0];
         let y = info[i][1];
-
-        let hair = makeHair(x, y + r * 2, size, info[i][2], info[i][3]);
+        let black = "#000000";
+        let z = -1;
+        
+        let hair = makeHair(x, y + r * 2, size, info[i][2], black);
         this.scene.add(hair);
-        let head = makeHead(x, y, size, r, fill, 0x7fffff);
+        let head = makeHead(x, y, size, r, fill, black);
         this.scene.add(head);
-        let frontleft = makeFront(0, 0, size, directionSize, fill, fillColor);
+        let frontleft = makeFront(0, 0, size, directionSize, fill, black);
         frontleft.position.set(x, y, 0);
         this.scene.add(frontleft);
         let frontright = frontleft.clone();
         frontright.scale.x = -1;
         this.scene.add(frontright);
-        let backleft = makeBack(0, 0, size, directionSize, fill, fillColor);
+        let backleft = makeBack(0, 0, size, directionSize, fill, black);
         backleft.position.set(x, y, 0);
         this.scene.add(backleft);
         let backright = backleft.clone();
         backright.scale.x = -1;
         this.scene.add(backright);
-        let handsUp1 = makeHandsUp1(x, y, size, directionSize, fill, fillColor);
+        let handsUp1 = makeHandsUp1(x, y, size, directionSize, fill, black);
         this.scene.add(handsUp1);
-        let handsUp2 = makeHandsUp2(x, y, size, directionSize, fill, fillColor);
+        let handsUp2 = makeHandsUp2(x, y, size, directionSize, fill, black);
         this.scene.add(handsUp2);
         let body = {pos: [x, y + r], head, hair, frontleft, frontright, backleft, backright, handsUp1, handsUp2}
+        this.shadows.push(body);
+
+        x = info[i][0];
+        y = info[i][1];
+
+        hair = makeHair(x, y + r * 2, size, info[i][2], info[i][3]);
+        this.scene.add(hair);
+        head = makeHead(x, y, size, r, fill, 0x7fffff);
+        this.scene.add(head);
+        frontleft = makeFront(0, 0, size, directionSize, fill, fillColor);
+        frontleft.position.set(x, y, 0);
+        this.scene.add(frontleft);
+        frontright = frontleft.clone();
+        frontright.scale.x = -1;
+        this.scene.add(frontright);
+        backleft = makeBack(0, 0, size, directionSize, fill, fillColor);
+        backleft.position.set(x, y, 0);
+        this.scene.add(backleft);
+        backright = backleft.clone();
+        backright.scale.x = -1;
+        this.scene.add(backright);
+        handsUp1 = makeHandsUp1(x, y, size, directionSize, fill, fillColor);
+        this.scene.add(handsUp1);
+        handsUp2 = makeHandsUp2(x, y, size, directionSize, fill, fillColor);
+        this.scene.add(handsUp2);
+        body = {pos: [x, y + r], head, hair, frontleft, frontright, backleft, backright, handsUp1, handsUp2}
         this.guys.push(body);
       }
 
@@ -197,33 +226,47 @@
       function makeHair(x, y, size, length, color) {
         let hair = new THREE.Object3D();
         color = new THREE.Color(color).multiplyScalar(0.8);
-        let oric = color;
-        color = new THREE.Vector3(color.r, color.g, color.b);
         let arr = length === "xl" ? [
-          [x - 24 * size, y - 100 * size],
-          [x - 16 * size, y - 8 * size],
-          [x, y - 1 * size],
-          [x + 16 * size, y - 8 * size],
-          [x + 24 * size, y - 100 * size]
+          [x - 18 * size, y - 5 * size],
+          [x - 12 * size, y - 1 * size],
+          [x - 1 * size, y + 1 * size],
+          [x + 12 * size, y - 1 * size],
+          [x + 17 * size, y - 5 * size],
+          [x + 27 * size, y - 100 * size],
+          [x + 22 * size, y - 102 * size],
+          [x + 17 * size, y - 97 * size],
+          [x + 13 * size, y - 10 * size],
+          [x + 6 * size, y - 7 * size],
+          [x + 1 * size, y - 6 * size],
+          [x - 8 * size, y - 7 * size],
+          [x - 11 * size, y - 8 * size],
+          [x - 17 * size, y - 23 * size],
+          [x - 17 * size, y - 97 * size],
+          [x - 22 * size, y - 102 * size],
+          [x - 27 * size, y - 100 * size],
+          [x - 22 * size, y - 10 * size],
+          [x - 18 * size, y - 5 * size],
         ] : length === "l" ? [
-          [x - 24 * size, y - 50 * size],
-          [x - 16 * size, y - 8 * size],
-          [x, y - 1 * size],
-          [x + 16 * size, y - 8 * size],
-          [x + 24 * size, y - 50 * size]
+          [x - 18 * size, y - 5 * size],
+          [x - 12 * size, y - 1 * size],
+          [x - 1 * size, y + 1 * size],
+          [x + 12 * size, y - 1 * size],
+          [x + 17 * size, y - 5 * size],
+          [x + 27 * size, y - 50 * size],
+          [x + 22 * size, y - 51 * size],
+          [x + 17 * size, y - 47 * size],
+          [x + 13 * size, y - 10 * size],
+          [x + 6 * size, y - 7 * size],
+          [x + 1 * size, y - 6 * size],
+          [x - 8 * size, y - 7 * size],
+          [x - 11 * size, y - 8 * size],
+          [x - 17 * size, y - 23 * size],
+          [x - 17 * size, y - 47 * size],
+          [x - 22 * size, y - 51 * size],
+          [x - 27 * size, y - 50 * size],
+          [x - 22 * size, y - 10 * size],
+          [x - 18 * size, y - 5 * size],
         ] : length === "s" ? [
-          [x - 16 * size, y - 12 * size],
-          [x - 8 * size, y - 2 * size],
-          [x + 10 * size, y - 4 * size],
-          [x + 16 * size, y - 10 * size]
-        ] : [
-          [x - 16 * size, y - 16 * size],
-          [x - 8 * size, y - 1 * size],
-          [x + 10 * size, y - 3 * size],
-          [x + 16 * size, y - 13 * size]
-        ];
-
-        arr = [
           [x - 18 * size, y - 16 * size],
           [x - 8 * size, y - 7 * size],
           [x + 10 * size, y - 7 * size],
@@ -234,8 +277,21 @@
           [x - 12 * size, y - 3 * size],
           [x - 19 * size, y - 15 * size],
           [x - 18 * size, y - 16 * size],
+        ] : [
+          [x - 18 * size, y - 19 * size],
+          [x - 10 * size, y - 7 * size],
+          [x + 9 * size, y - 7 * size],
+          [x + 18 * size, y - 19 * size],
+          [x + 22 * size, y - 20 * size],
+          [x + 23 * size, y - 18 * size],
+          [x + 12 * size, y - 0 * size],
+          [x - 4 * size, y + 1 * size],
+          [x - 16 * size, y - 3 * size],
+          [x - 23 * size, y - 18 * size],
+          [x - 22 * size, y - 20 * size],
+          [x - 18 * size, y - 19 * size],
         ];
-        line = makeLine(arr, 0, 1, true, oric);
+        line = makeLine(arr, 0, 1, true, color);
         hair.add(line);
         hair.position.z = 2;
         return hair;
@@ -413,6 +469,24 @@
       }
 
       if (BEAN < startBEAN + 60) {
+        for (const body of this.shadows) {
+          body.frontleft.visible = false;
+          body.backleft.visible = false;
+          body.frontright.visible = false;
+          body.backright.visible = false;
+          body.handsUp1.visible = false;
+          body.handsUp2.visible = true;
+
+          for(let k = 0; k < body.head.lines.length; k++) {
+            const path = body.head.lines[k].path;
+            //path.uniforms.drawEnd.value = lerp(0, 1, F(frame, (BEAN / 6 | 0) * 6 + 3 * k / body.head.lines.length, 1));
+            if(path.fillMesh) {
+              //path.fillMesh.visible = BEAN % 6 >= 3;
+              //path.fillMesh.visible = false;
+            }
+          }
+          body.handsUp2.line.path.uniforms.drawEnd.value = lerp(0, 1, F(frame, (BEAN / 6 | 0) * 6, 3));
+        }
         for (const body of this.guys) {
           body.frontleft.visible = false;
           body.backleft.visible = false;
@@ -433,6 +507,15 @@
         }
       }
       if (BEAN >= startBEAN + 60 && BEAN < startBEAN + 144) {
+        for (const body of this.shadows) {
+          body.frontleft.visible = (BEAN % 36 < 6) || (BEAN % 36 >= 12 && BEAN % 36 < 18);
+          body.backleft.visible = BEAN % 36 >= 6 && BEAN % 36 < 12;
+          body.frontright.visible = (BEAN % 36 >= 18 && BEAN % 36 < 24) || (BEAN % 36 >= 30);
+          body.backright.visible = BEAN % 36 >= 24 && BEAN % 36 < 30;
+          body.handsUp1.visible = false;
+          body.handsUp2.visible = false;
+        }
+
         for (const body of this.guys) {
           body.frontleft.visible = (BEAN % 36 < 6) || (BEAN % 36 >= 12 && BEAN % 36 < 18);
           body.backleft.visible = BEAN % 36 >= 6 && BEAN % 36 < 12;
@@ -443,6 +526,15 @@
 
         }
       } else if (BEAN >= startBEAN + 144) {
+        for (const body of this.shadows) {
+          body.frontleft.visible = false;
+          body.backleft.visible = false;
+          body.frontright.visible = false;
+          body.backright.visible = false;
+          body.handsUp1.visible = BEAN % 2 === 0;
+          body.handsUp2.visible = BEAN % 2 === 1;
+        }
+
         for (const body of this.guys) {
           body.frontleft.visible = false;
           body.backleft.visible = false;
