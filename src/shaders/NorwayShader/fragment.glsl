@@ -55,6 +55,8 @@ void main() {
     vec4 output_color;
     vec2 uv_t = vec2((1. - vUv.x) / 16. * 9., vUv.y);
     vec4 fade_in_color = texture2D(z1, ((uv_t - vec2(0.5, 0.5))* 5.) + vec2(2.076, -1.36));
+    vec2 uv = vUv - 0.5 * 2.;
+    uv = mod(uv, vec2(1.));
     if (intensity < THRESHOLD_01 / 256.)
     {
       // vec2(0.31, -0.38)
@@ -62,43 +64,61 @@ void main() {
     }
     else if (intensity < THRESHOLD_02 / 256.)
     {
-      output_color = texture2D(z2, vUv);
+      uv *= 2.;
+      uv = mod(uv, vec2(1.));
+      output_color = texture2D(z2, uv);
     }
     else if (intensity < THRESHOLD_03 / 256.)
     {
-      output_color = texture2D(z3, vUv);
+      uv *= 3.;
+      uv = mod(uv, vec2(1.));
+      output_color = texture2D(z3, uv);
     }
     else if (intensity < THRESHOLD_04 / 256.)
     {
-      output_color = texture2D(z4, vUv);
+      uv *= 2.;
+      uv = mod(uv, vec2(1.));
+      output_color = texture2D(z4, uv);
     }
     else if (intensity < THRESHOLD_05 / 256.)
     {
-      output_color = texture2D(z5, vUv * 2.);
+      uv *= 3.;
+      uv = mod(uv, vec2(1.));
+      output_color = texture2D(z5, uv);
     }
     else if (intensity < THRESHOLD_06 / 256.)
     {
-      output_color = texture2D(z6, vUv);
+      uv *= 2.;
+      uv = mod(uv, vec2(1.));
+      output_color = texture2D(z6, uv);
     }
     else if (intensity < THRESHOLD_07 / 256.)
     {
-      output_color = texture2D(z7, vUv);
+      uv *= 3.;
+      uv = mod(uv, vec2(1.));
+      output_color = texture2D(z7, uv);
     }
     else if (intensity < THRESHOLD_08 / 256.)
     {
-      output_color = texture2D(z8, vUv);
+      uv *= 2.;
+      uv = mod(uv, vec2(1.));
+      output_color = texture2D(z8, uv);
     }
     else if (intensity < THRESHOLD_09 / 256.)
     {
-      output_color = texture2D(z9, vUv);
+      uv *= 3.;
+      uv = mod(uv, vec2(1.));
+      output_color = texture2D(z9, uv);
     }
     else if (intensity < THRESHOLD_10 / 256.)
     {
-      output_color = texture2D(z10, vUv * 3.);
+      uv *= 2.;
+      uv = mod(uv, vec2(1.));
+      output_color = texture2D(z10, uv);
     }
     else
     {
-      output_color = texture2D(z11, vUv * 3.);
+      output_color = texture2D(z11, uv) * vec4(0.5, 0.5, 1.0, 1.);
     }
     /*output_color = vec4(output_color.r - red * 10.,
                             output_color.g - green * 10.,
