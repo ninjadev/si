@@ -8,6 +8,7 @@ uniform float xScale;
 uniform float yScale;
 uniform float xOffset;
 uniform float yOffset;
+uniform sampler2D spinnerImage;
 uniform float xOffsetPaper;
 uniform float backgroundiness;
 uniform float r;
@@ -79,6 +80,16 @@ void main() {
     vec3 color = mix(sceneColor.rgb, framiColor, framiness);
 
     color = mix(originalSceneColor, color, backgroundiness);
+
+    float spinAngle = 0.5;
+    vec2 translation = vec2(-0., -0.);
+    vec2 spinUv = uv + translation;
+    spinUv = vec2(
+        spinUv.x * cos(spinAngle) - spinUv.y * sin(spinAngle),
+        spinUv.y * cos(spinAngle) + spinUv.x * sin(spinAngle));
+    spinUv -= translation;
+    vec4 spinnerImageColor = texture2D(spinnerImage, spinUv);
+    color = mix(color, spinnerImageColor.rgb, spinnerImageColor.a);
 
     color = mix(color, imageColor.rgb, imageColor.a);
 

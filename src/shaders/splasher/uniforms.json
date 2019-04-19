@@ -2,6 +2,7 @@
     "tDiffuse": { "type": "t", "value": null },
     "paperContent": { "type": "t", "value": null },
     "image": { "type": "t", "value": null },
+    "spinnerImage": { "type": "t", "value": null },
     "frame": { "type": "f", "value": 0.0 },
     "paperScale": { "type": "f", "value": 1 },
     "backgroundiness": { "type": "f", "value": 1.0 },
