@@ -101,7 +101,7 @@
           tileMesh.scale.y = 32;
           tileMesh.position.x = 512 - 16;
           tileMesh.position.y = 1800 - 512;
-          tileMesh.position.z = 1;
+          tileMesh.position.z = 0;
           wrapper.add(tileMesh);
 
           this.tileWrappers[mosaicKey] = tileWrapper;
@@ -144,22 +144,22 @@
       }
 
       this.scene.add(this.wrappers.hardware);
+      this.scene.add(this.tileWrappers.hardware);
     }
 
     update(frame) {
       super.update(frame);
-      const beanOffset = 1368;
-      const timing = {
-        hardware: {start: beanOffset + 12 * 0, end: beanOffset + 12 * 0 + 12},
-        dancingSkills: {start: beanOffset + 12 * 1, end: beanOffset + 12 * 1 + 12},
-        pixelArt: {start: beanOffset + 12 * 2, end: beanOffset + 12 * 2 + 12},
-        campingEquipment: {start: beanOffset + 12 * 3, end: beanOffset + 12 * 3 + 12},
-        goodMood: {start: beanOffset + 12 * 4, end: beanOffset + 12 * 4 + 12},
-        sunglasses: {start: beanOffset + 12 * 5, end: beanOffset + 12 * 5 + 12},
-      };
 
-      this.wrappers['hardware'].visible = BEAN >= 1380;
-      this.wrappers['sunglasses'].visible = BEAN >= 1440;
+      this.wrappers.hardware.visible = BEAN >= 1380;
+      this.wrappers.sunglasses.visible = BEAN >= 1440;
+
+      this.tileWrappers.hardware.visible = BEAN >= 1392 && BEAN < 1420;
+
+      this.tileWrappers.dancingSkills.visible = false;
+      this.tileWrappers.pixelArt.visible = false;
+      this.tileWrappers.campingEquipment.visible = false;
+      this.tileWrappers.goodMood.visible = false;
+      this.tileWrappers.sunglasses.visible = false;
 
       const beansBeforeZoom = 10;
       const zoomDuration = 6;
