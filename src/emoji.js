@@ -194,8 +194,13 @@
       const prog4Start = prog3Start + 12;
       const prog5Start = prog4Start + 12;
 
+      if (BEAN < prog1Start) {
+        this.camera.position.x = 512;
+        this.camera.position.y = 1200;
+      }
+      
       // zoom progress 1
-      if (BEAN >= prog1Start && BEAN < prog1Start + beansBeforeZoom + zoomDuration) {
+      else if (BEAN >= prog1Start && BEAN < prog1Start + beansBeforeZoom + zoomDuration) {
         const zoomProgress1 = F(frame, prog1Start + beansBeforeZoom, zoomDuration);
         this.camera.position.x = easeOut(512, 512, zoomProgress1);
         this.camera.position.y = easeOut(1200, 1303, zoomProgress1);
