@@ -30,9 +30,17 @@
         new THREE.MeshBasicMaterial({
           transparent: true,
         }));
+      this.splashoBackBillboard = new THREE.Mesh(
+        new THREE.PlaneGeometry(splashoScale * 2100 / 1500, splashoScale),
+        new THREE.MeshBasicMaterial({
+          transparent: true,
+        }));
 
       this.scene.add(this.splashoBillboard);
+      this.scene.add(this.splashoBackBillboard);
 
+      this.flatShadeTexture = Loader.loadTexture('res/flatshadesociety-graffiti.png');
+      this.flatShadeSpinnerTexture = Loader.loadTexture('res/flatshadesociety-spinner-graffiti.png');
       this.skogTexture = Loader.loadTexture('res/skog-graffiti.png');
       this.demoTexture = Loader.loadTexture('res/demo-graffiti.png');
       this.campingTexture = Loader.loadTexture('res/camping-graffiti.png');
@@ -375,8 +383,35 @@
       /* splashers */
 
       this.splashoBillboard.position.z = 0.1;
+      this.splashoBackBillboard.visible = false;
+      this.splashoBackBillboard.position.z = 0.08;
+      this.splashoBillboard.material.opacity = 1;
+      this.splashoBackBillboard.material.opacity = 1;
+      this.splashoBillboard.scale.set(1, 1, 1);
+      this.splashoBackBillboard.scale.set(1, 1, 1);
       const BAR = BEAN / 24 | 0;
-      if(BAR >= 9 && BAR < 10) {
+      if(BAR >= 5 && BAR < 6) {
+        const t = F(frame,  5 * 24, 24);
+        const t2 = F(frame, 6 * 24 - 6, 6);
+        //this.camera.position.x = lerp(-0.05, -0.12, t);
+        //this.camera.position.y = -0.03;
+        //this.camera.position.z = 0.38;
+
+        this.splashoBillboard.visible = true;
+        this.splashoBillboard.position.x = 0;
+        this.splashoBillboard.position.y = 0;
+        this.splashoBillboard.material.map = this.flatShadeTexture;
+        this.splashoBackBillboard.visible = true;
+        this.splashoBackBillboard.material.map = this.flatShadeSpinnerTexture;
+        this.splashoBackBillboard.rotation.z = lerp(0, - Math.PI * 1.4, F(frame, 120, 24));
+        this.splashoBackBillboard.position.y = -0.005;
+        const scaler = easeOut(1, 0, F(frame, 138, 3));
+        this.light1.angle = easeOut(0.85, 0.65, F(frame, 138, 3));
+        this.splashoBillboard.scale.set(scaler, scaler, 1);
+        this.splashoBackBillboard.scale.set(scaler, scaler, 1);
+        this.splashoBillboard.material.opacity = scaler;
+        this.splashoBackBillboard.material.opacity = scaler;
+      } else if(BAR >= 9 && BAR < 10) {
         const t = F(frame,  9 * 24, 24);
         const t2 = F(frame, 10 * 24 - 6, 6);
         this.camera.position.x = lerp(-0.05, -0.12, t);
