@@ -186,7 +186,8 @@
     "id": "Waller",
     "type": "waller",
     "connected": {
-      "A": "paperframer.render"
+      "A": "paperframer.render",
+      "B": "packinglist.render"
     }
   },
   {
@@ -231,5 +232,9 @@
     "connected": {
       "A": "splasher.render"
     }
+  },
+  {
+    "id": "packinglist",
+    "type": "packinglist"
   }
 ]
