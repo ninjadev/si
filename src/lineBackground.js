@@ -16,7 +16,7 @@
       this.scene.add(this.cube);
 
       var geometry = new THREE.TorusKnotGeometry( 15, 4, 100, 16 );
-      var material = new THREE.MeshBasicMaterial( { color: 0x002211 } );
+      var material = new THREE.MeshBasicMaterial( { color: 0xffffff } );
       this.torusKnot = new THREE.Mesh( geometry, material );
       this.scene.add( this.torusKnot );
 

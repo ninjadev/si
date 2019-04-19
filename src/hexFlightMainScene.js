@@ -83,10 +83,15 @@
       this.camera.position.y = -camerapandist * (0.5 * Math.sin(frame/50) + 0.5);
       var dvy = -0.01 * camerapandist * Math.cos(frame / 50);
 
-
       //this.camera.rotation.x = -this.camera.position.y/ camerapandist / camerapanangler;
       this.camera.rotation.x = -Math.tan(dvy/dvz) / 1.5;
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        
+
+      // Final part should not have camera jiggling
+      if (BEAN >= 768) {
+        this.camera.rotation.x = 0;
+        this.camera.position.y = 0;
+      }
+
       for (var i = 0; i < this.planeCount; i++) {
         this.planes[i].material.uniforms.frame.value = 0.2 * frame + i * 100;
         var distance = this.planes[i].position.distanceTo(this.camera.position) - 3;

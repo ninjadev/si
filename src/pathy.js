@@ -86,6 +86,15 @@
     update(frame) {
       super.update(frame);
 
+      var manipulated_bean = BEAN;
+
+      // Time shift used only on the map scene
+      if (frame > FRAME_FOR_BEAN(330) && frame <= FRAME_FOR_BEAN(408)) {
+        // Tune this final number to get timing
+        frame = frame + FRAME_FOR_BEAN(172) - FRAME_FOR_BEAN(370);
+        manipulated_bean = BEAN_FOR_FRAME(frame);
+      }
+
       for(let i = 0; i < this.fillerz.length; i++) {
         for(let j = 0; j < this.fillerz[i].length; j++) {
           this.fillerz[i][j].visible = false;
@@ -94,19 +103,19 @@
 
       for(let i = 7; i <= 13; i++) {
         const n = i % 2 == 0;
-        if(BEAN >= 186 - 3 && BEAN < 186 - 2) {
+        if(manipulated_bean >= 186 - 3 && manipulated_bean < 186 - 2) {
           const j = n ? 17 : 25;
           this.fillerz[i][j].visible = true;
-        } else if(BEAN >= 186 - 2 && BEAN < 186 - 1) {
+        } else if(manipulated_bean >= 186 - 2 && manipulated_bean < 186 - 1) {
           const j = n ? 18 : 24;
           this.fillerz[i][j].visible = true;
-        } else if(BEAN >= 186 - 1 && BEAN < 186) {
+        } else if(manipulated_bean >= 186 - 1 && manipulated_bean < 186) {
           const j = n ? 19 : 23;
           this.fillerz[i][j].visible = true;
-        } else if(BEAN >= 186 && BEAN < 186 + 3) {
+        } else if(manipulated_bean >= 186 && manipulated_bean < 186 + 3) {
           const j = n ? 20 : 22;
           this.fillerz[i][j].visible = true;
-        } else if(BEAN >= 186 + 3 && BEAN < 186 + 6 + 24) {
+        } else if(manipulated_bean >= 186 + 3 && manipulated_bean < 186 + 6 + 24) {
           this.fillerz[i][21].visible = true;
         }
       }
@@ -120,15 +129,15 @@
         );
         path.material.uniforms.wobbliness.value = 1;
         path.material.uniforms.width.value = 1;
-        if(BEAN >= 198 - 3) {
+        if(manipulated_bean >= 198 - 3) {
           path.material.uniforms.width.value = easeIn(1, 0.5, F(frame, 198 - 3, 3));
         }
       }
 
-      if(BEAN <= 192 || BEAN  >= 192 + 3) {
+      if(manipulated_bean <= 192 || manipulated_bean  >= 192 + 3) {
         this.camera.position.z = lerp(200, 50, F(frame, 174, 24 - 1));
       }
-      if(BEAN >= 174) {
+      if(manipulated_bean >= 174) {
         this.sceneWrapper.rotation.z = lerp(
           0, Math.PI / 2, F(frame, 174, 192 - 174));
 
@@ -138,9 +147,9 @@
 
       this.camera.position.y = 0;
       this.camera.position.x = 0;
-      if(BEAN >= 204) {
-        this.camera.position.y = BEAN % 6 < 3 ? 15.5 : 0;
-        this.camera.position.x = -((BEAN - 204) / 3 | 0) * 15.5 / 2;
+      if(manipulated_bean >= 204) {
+        this.camera.position.y = manipulated_bean % 6 < 3 ? 15.5 : 0;
+        this.camera.position.x = -((manipulated_bean - 204) / 3 | 0) * 15.5 / 2;
       }
     }
   }
