@@ -60,13 +60,13 @@
     "type": "NorwayNode",
     "connected": {
       "sirpathrick": "sirpathrick.render",
-      "boxes": "boxes.render",
+      "boxes": "cross.render",
       "cross": "cross.render",
-      "moose": "moose.render",
-      "pathy": "pathy.render",
-      "diagonals": "diagonals.render",
-      "Yoga": "Yoga.render",
-      "ripple": "ripple.render"
+      "moose": "cross.render",
+      "pathy": "cross.render",
+      "diagonals": "cross.render",
+      "Yoga": "cross.render",
+      "ripple": "cross.render"
     }
   },
   {

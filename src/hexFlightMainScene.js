@@ -52,7 +52,7 @@
         }
       });
 
-      
+
       this.spawnPlanes();
 
 
@@ -75,6 +75,11 @@
       super.update(frame);
       var SHORTDIST = 20;
       var LONGDIST = 50;
+
+      this.wall.visible = true;
+      if(BEAN >= 744) {
+        this.wall.visible = false;
+      }
 
       this.camera.position.z = -(frame - 4035) / 5;
       var dvz = -1/5;
@@ -105,7 +110,7 @@
         }
         if (i%4 == 0) {
           // Controll for visibility on every 4 layers which should be the solid ones.
-          this.planes[i].material.uniforms.visibility.value = layer_visibility * 1;  
+          this.planes[i].material.uniforms.visibility.value = layer_visibility * 1;
         } else {
           this.planes[i].material.uniforms.visibility.value = layer_visibility;
         }

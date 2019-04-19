@@ -28,7 +28,7 @@
       this.uniforms.paperContent.value = this.inputs.PaperContent.getValue();
 
       if(BEAN >= 312 && BEAN < 408) {
-        this.uniforms.tDiffuse.value = this.inputs.PaperContent.getValue();
+        //this.uniforms.tDiffuse.value = this.inputs.PaperContent.getValue();
       }
 
       this.uniforms.image.value = this.solMap;
@@ -78,6 +78,7 @@
         this.uniforms.overlayer.value = lerp(1, 0, F(frame, 9 * 24 + 12 + 6, 6));
       }
       */
+        /*
       if(BAR >= 13 && BAR < 14) {
         this.uniforms.overlayer.value = 1;
         this.uniforms.image.value = this.enMap;
@@ -95,6 +96,7 @@
         this.uniforms.paperB.value = 0.5;
         this.uniforms.overlayer.value = lerp(1, 0, F(frame, 13 * 24 + 12 + 6, 6));
       }
+      */
         /*
       if(BAR >= 29 && BAR < 30) {
         const bar = 29;
