@@ -145,10 +145,35 @@
 
       this.scene.add(this.wrappers.hardware);
       this.scene.add(this.tileWrappers.hardware);
+
+      // LAPTOP POLYGON
+      const path = new Path();
+      path.lineTo(95, 1570);
+      path.lineTo(895, 1570);
+      path.lineTo(895, 1090);
+      path.lineTo(975, 820);
+      path.lineTo(825, 810);
+      path.lineTo(125, 810);
+      path.lineTo(14, 820);
+      path.lineTo(95, 1090);
+      path.lineTo(95, 1570);
+      this.laptopPolygonLine = path.toObject3D();
+      this.scene.add(this.laptopPolygonLine);
+      this.laptopPolygonLine.path = path;
     }
 
     update(frame) {
       super.update(frame);
+
+      this.laptopPolygonLine.visible = BEAN >= 1368 && BEAN < 1392;
+
+      this.laptopPolygonLine.path.material.uniforms.drawStart.value = 0;
+      this.laptopPolygonLine.path.material.uniforms.drawEnd.value = lerp(
+        0, 1, F(frame, 1368, 10)
+      );
+      this.laptopPolygonLine.path.material.uniforms.wobbliness.value = 1;
+      this.laptopPolygonLine.path.material.uniforms.width.value = 100;
+
 
       this.wrappers.hardware.visible = BEAN >= 1380;
       this.wrappers.sunglasses.visible = BEAN >= 1440;

@@ -1,5 +1,5 @@
 (function(global) {
-  class AddNode extends NIN.ShaderNode {
+  class EmojiBlendNode extends NIN.ShaderNode {
     constructor(id, options) {
       options.inputs = {
         A: new NIN.TextureInput(),
@@ -21,5 +21,5 @@
     }
   }
 
-  global.AddNode = AddNode;
+  global.EmojiBlendNode = EmojiBlendNode;
 })(this);
