@@ -30,15 +30,36 @@
         new THREE.MeshBasicMaterial({
           transparent: true,
         }));
+      this.splashoBackBillboard = new THREE.Mesh(
+        new THREE.PlaneGeometry(splashoScale * 2100 / 1500, splashoScale),
+        new THREE.MeshBasicMaterial({
+          transparent: true,
+        }));
 
       this.scene.add(this.splashoBillboard);
+      this.scene.add(this.splashoBackBillboard);
 
+      this.flatShadeTexture = Loader.loadTexture('res/flatshadesociety-graffiti.png');
+      this.flatShadeSpinnerTexture = Loader.loadTexture('res/flatshadesociety-spinner-graffiti.png');
       this.skogTexture = Loader.loadTexture('res/skog-graffiti.png');
       this.demoTexture = Loader.loadTexture('res/demo-graffiti.png');
       this.campingTexture = Loader.loadTexture('res/camping-graffiti.png');
       this.musicTexture = Loader.loadTexture('res/music-graffiti.png');
       this.graphicsTexture = Loader.loadTexture('res/graphics-graffiti.png');
       this.flatebyTexture = Loader.loadTexture('res/flateby-marker-overlay-graffiti.png');
+
+      this.skogTexture.minFilter = THREE.LinearFilter;
+      this.skogTexture.magFilter = THREE.LinearFilter;
+      this.demoTexture.minFilter = THREE.LinearFilter;
+      this.demoTexture.magFilter = THREE.LinearFilter;
+      this.campingTexture.minFilter = THREE.LinearFilter;
+      this.campingTexture.magFilter = THREE.LinearFilter;
+      this.musicTexture.minFilter = THREE.LinearFilter;
+      this.musicTexture.magFilter = THREE.LinearFilter;
+      this.graphicsTexture.minFilter = THREE.LinearFilter;
+      this.graphicsTexture.magFilter = THREE.LinearFilter;
+      this.flatebyTexture.minFilter = THREE.LinearFilter;
+      this.flatebyTexture.magFilter = THREE.LinearFilter;
 
       this.twistoramaContainer = new THREE.Mesh(
         new THREE.PlaneGeometry(1, 1),
@@ -50,14 +71,24 @@
 
       this.scene.add(this.twistoramaContainer);
 
+      this.forestTexture = Loader.loadTexture('res/forest.png');
+      this.forestTexture.minFilter = THREE.LinearFilter;
+      this.forestTexture.magFilter = THREE.LinearFilter;
       this.forest = new THREE.Mesh(
         new THREE.PlaneGeometry(),
-        new THREE.MeshBasicMaterial({
-          map: Loader.loadTexture('res/placeholder.png'),
+        new THREE.MeshStandardMaterial({
+          roughness: 1,
+          metalness: 0,
+          map: this.forestTexture,
+          emissive: 0xffffff,
+          emissiveIntensity: 0.15,
+          side: THREE.DoubleSide,
         }));
       this.scene.add(this.forest);
-      const forestScale = 0.25;
-      this.forest.scale.set(forestScale, forestScale * 9659 / 1920, forestScale);
+      const forestScale = 0.23;
+      this.forest.scale.set(forestScale, forestScale * 7500 / 1920, forestScale);
+
+      this.forest.scale.x = -this.forest.scale.x;
 
 
 
@@ -263,6 +294,8 @@
     update(frame) {
       super.update(frame);
 
+      this.forest.material.emissiveIntensity = lerp(0.15, 0.25, F(frame, 984, 24 * 3));
+
       this.splashoBillboard.visible = false;
       this.light1.position.y = 0.2;
       this.light1.target.position.y = 0.06;
@@ -350,8 +383,35 @@
       /* splashers */
 
       this.splashoBillboard.position.z = 0.1;
+      this.splashoBackBillboard.visible = false;
+      this.splashoBackBillboard.position.z = 0.08;
+      this.splashoBillboard.material.opacity = 1;
+      this.splashoBackBillboard.material.opacity = 1;
+      this.splashoBillboard.scale.set(1, 1, 1);
+      this.splashoBackBillboard.scale.set(1, 1, 1);
       const BAR = BEAN / 24 | 0;
-      if(BAR >= 9 && BAR < 10) {
+      if(BAR >= 5 && BAR < 6) {
+        const t = F(frame,  5 * 24, 24);
+        const t2 = F(frame, 6 * 24 - 6, 6);
+        //this.camera.position.x = lerp(-0.05, -0.12, t);
+        //this.camera.position.y = -0.03;
+        //this.camera.position.z = 0.38;
+
+        this.splashoBillboard.visible = true;
+        this.splashoBillboard.position.x = 0;
+        this.splashoBillboard.position.y = 0;
+        this.splashoBillboard.material.map = this.flatShadeTexture;
+        this.splashoBackBillboard.visible = true;
+        this.splashoBackBillboard.material.map = this.flatShadeSpinnerTexture;
+        this.splashoBackBillboard.rotation.z = lerp(0, - Math.PI * 1.4, F(frame, 120, 24));
+        this.splashoBackBillboard.position.y = -0.005;
+        const scaler = easeOut(1, 0, F(frame, 138, 3));
+        this.light1.angle = easeOut(0.85, 0.65, F(frame, 138, 3));
+        this.splashoBillboard.scale.set(scaler, scaler, 1);
+        this.splashoBackBillboard.scale.set(scaler, scaler, 1);
+        this.splashoBillboard.material.opacity = scaler;
+        this.splashoBackBillboard.material.opacity = scaler;
+      } else if(BAR >= 9 && BAR < 10) {
         const t = F(frame,  9 * 24, 24);
         const t2 = F(frame, 10 * 24 - 6, 6);
         this.camera.position.x = lerp(-0.05, -0.12, t);
@@ -438,14 +498,16 @@
       } else if(BAR >= 33 && BAR < 34) {
         const t = F(frame,  33 * 24, 24);
         const t2 = F(frame, 34 * 24 - 6, 6);
+        this.camera.position.x = lerp(-0.05, -0.12, t);
+        this.camera.position.y = -0.03;
+        this.camera.position.z = 0.38;
 
         this.splashoBillboard.visible = true;
         this.splashoBillboard.material.map = this.graphicsTexture;
 
-        this.splashoBillboard.position.x = 1;
-        this.splashoBillboard.position.y = 0;
-        this.splashoBillboard.position.z = 0.05;
-
+        this.splashoBillboard.position.x = this.camera.position.x - lerp(0.07, 0.09, t) - easeOut(0, 0.25, t2);
+        this.splashoBillboard.position.y = this.camera.position.y- 0.02;
+        this.splashoBillboard.position.z = 0.1;
         this.light1.angle = 0.85;
       }
 
@@ -774,7 +836,7 @@
         this.rotaterPosition += this.rotaterSpeed;
         u.rotater.value = this.rotaterPosition;
 
-        this.forest.position.y = easeIn(0.53, -0.53, F(frame, 984, 24 * 3));
+        this.forest.position.y = lerp(0.355, -0.185, F(frame, 984 + 3, 24 * 3 - 3));
 
         if(BEAN >= 984 && BEAN < 1080) {
           this.paper.visible = false;
@@ -784,6 +846,64 @@
       } else if(BEAN >= ALEKS_BIRD_START_BEAN) {
         this.camera.position.y = 0;
         this.camera.position.z = easeIn(.15, 0.3, F(frame, ALEKS_BIRD_START_BEAN, 12));
+      }
+
+      let fallFrame = 8999;
+      let fallBEAN = 1500;
+      if (BEAN >= fallBEAN && BEAN < fallBEAN + 6) {
+        let speed = F(frame, fallBEAN, 1);
+        this.paper.rotation.z = -easeIn(0, 1, speed);
+        this.paper.position.y = -easeIn(0, 0.066, speed);
+        this.paper.position.x = -easeIn(0, 0.144, speed);
+        this.shadowPaper.rotation.z = -easeIn(0, 1, speed);
+        this.shadowPaper.position.y = -easeIn(0, 0.066, speed);
+        this.shadowPaper.position.x = -easeIn(0, 0.144, speed);
+        // NEED HELP TO SHAKE IT BETTER --Julie
+       } else if (BEAN === fallBEAN + 6) {
+        let speed = F(frame, fallBEAN + 6, 1);
+        this.shadowPaper.visible = false;
+        this.paper.rotation.z = -smoothstep(1, 0.9, Math.sin(speed/10));
+        this.paper.position.x = -smoothstep(0.144, 0.136, Math.sin(speed/10));
+      } else if (BEAN >= fallBEAN + 7 && BEAN < fallBEAN + 9) {
+        let speed = F(frame, fallBEAN + 7, 1);
+        this.shadowPaper.visible = false;
+        this.paper.rotation.z = -smoothstep(0.9, 1.1, Math.sin(speed/10));
+        this.paper.position.x = -smoothstep(0.136, 0.152, Math.sin(speed/10));
+      } else if (BEAN >= fallBEAN + 9 && BEAN < fallBEAN + 11) {
+        let speed = F(frame, fallBEAN + 9, 1);
+        this.shadowPaper.visible = false;
+        this.paper.rotation.z = -smoothstep(1.1, 0.9, Math.sin(speed/10));
+        this.paper.position.x = -smoothstep(0.152, 0.136, Math.sin(speed/10));
+      } else if (BEAN === fallBEAN + 11) {
+        let speed = F(frame, fallBEAN + 11, 1);
+        this.shadowPaper.visible = false;
+        this.paper.rotation.z = -smoothstep(0.9, 1, Math.sin(speed/10));
+        this.paper.position.x = -smoothstep(0.136, 0.144, Math.sin(speed/10));
+      } else if (BEAN >= fallBEAN + 12) {
+        let speed = F(frame, fallBEAN + 12, 1)/10;
+        this.paper.position.y = -lerp(0.066, 1, speed);
+        this.shadowPaper.position.y = -lerp(0.066, 1, speed);
+        let lightFrame = 9071;
+        if(frame < lightFrame) {
+          this.light1.intensity = 1;
+        } else if(frame < lightFrame + 3) {
+          this.light1.intensity = 0.5;
+        } else if(frame < lightFrame + 9) {
+          this.light1.intensity = 1;
+        } else if(frame < lightFrame + 21) {
+          this.light1.intensity = 0.5;
+        } else if(frame < lightFrame + 25) {
+          this.light1.intensity =  1.0;
+        } else if(frame < lightFrame + 29) {
+          this.light1.intensity = 0.5;
+        } else if(frame < lightFrame + 49) {
+          this.light1.intensity = 1.0;
+        } else {
+          this.light1.intensity = easeOut(
+            1, 0, (frame - (lightFrame + 51)) / 150);
+        }
+        this.hemiLight.intensity = 0.1 + this.light1.intensity * 0.5;
+
       }
     }
   }

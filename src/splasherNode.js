@@ -9,6 +9,7 @@
       super(id, options);
 
       this.flatshadeMap = Loader.loadTexture('res/flatshadesociety-graffiti.png');
+      this.flatshadeSpinnerMap = Loader.loadTexture('res/flatshadesociety-spinner-graffiti.png');
       this.flatebyMap = Loader.loadTexture('res/flateby-marker-overlay-graffiti.png');
       this.solMap = Loader.loadTexture('res/sol-graffiti.png');
       this.skogMap = Loader.loadTexture('res/skog-graffiti.png');
@@ -37,8 +38,10 @@
       this.uniforms.framiness.value = 1;
       const BAR = BEAN / 24;
       if(BAR >= 5 && BAR < 6) {
+        /*
         this.uniforms.overlayer.value = 1;
         this.uniforms.image.value = this.flatshadeMap;
+        this.uniforms.spinnerImage.value = this.flatshadeSpinnerMap;
         const scaler = elasticOut(1.0, .1, 1, F(frame, 5 * 24, 3)) * 0.9;
         this.uniforms.xScale.value = 2100 / 1500 * scaler;
         this.uniforms.yScale.value = 1 * scaler * 1.2;
@@ -54,6 +57,7 @@
         this.uniforms.overlayer.value = lerp(1, 0, F(frame, 5 * 24 + 12 + 6, 6));
         this.uniforms.backgroundiness.value = 0;
         this.uniforms.framiness.value = 0;
+        */
       }
         /*
       if(BAR >= 9 && BAR < 10) {

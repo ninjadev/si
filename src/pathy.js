@@ -116,6 +116,9 @@
           const j = n ? 20 : 22;
           this.fillerz[i][j].visible = true;
         } else if(manipulated_bean >= 186 + 3 && manipulated_bean < 186 + 6 + 24) {
+          if(manipulated_bean >= 204 && (i < 10 || i > 11)) {
+            continue;
+        }
           this.fillerz[i][21].visible = true;
         }
       }
@@ -148,7 +151,7 @@
       this.camera.position.y = 0;
       this.camera.position.x = 0;
       if(manipulated_bean >= 204) {
-        this.camera.position.y = manipulated_bean % 6 < 3 ? 15.5 : 0;
+        //this.camera.position.y = manipulated_bean % 6 < 3 ? 15.5 : 0;
         this.camera.position.x = -((manipulated_bean - 204) / 3 | 0) * 15.5 / 2;
       }
     }
