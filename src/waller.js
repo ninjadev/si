@@ -107,78 +107,6 @@
         vertex.z += (Math.random() - 0.5) * 0.25 * 0.01;
       }
 
-      // RIP
-      //paperGeometry = new THREE.BoxGeometry(11 * 3, 8.5 * 3, 0.1);
-
-      const posterGeometry = new THREE.BoxGeometry(1, 1, 0.001);
-      this.poster1 = new THREE.Mesh(
-        posterGeometry,
-        new THREE.MeshStandardMaterial({
-          color: 0xff7f7f,
-          roughness: 0.9,
-          metalness: 0,
-          map: Loader.loadTexture('res/poster2.png'),
-        }));
-      this.poster2 = new THREE.Mesh(
-        posterGeometry,
-        new THREE.MeshStandardMaterial({
-          color: 0x7fff7f,
-          roughness: 0.9,
-          metalness: 0,
-          map: Loader.loadTexture('res/poster3.png'),
-        }));
-      this.poster3 = new THREE.Mesh(
-        posterGeometry,
-        new THREE.MeshStandardMaterial({
-          color: 0x7f7fff,
-          roughness: 0.9,
-          metalness: 0,
-          map: Loader.loadTexture('res/poster1.png'),
-        }));
-      this.poster4 = new THREE.Mesh(
-        posterGeometry,
-        new THREE.MeshStandardMaterial({
-          color: 0xffff7f,
-          roughness: 0.9,
-          metalness: 0,
-        }));
-
-      this.poster1.scale.x = 29.7 / 100;
-      this.poster1.scale.y = 21 / 100;
-      this.poster1.rotation.z = 1.56;
-      this.poster1.position.x = 36 / 100;
-      this.poster1.position.y = 5 / 100;
-
-      this.poster2.scale.x = 29.7 / 100;
-      this.poster2.scale.y = 21 / 100;
-      this.poster2.rotation.z = 1.59;
-      this.poster2.position.x = -36 / 100;
-      this.poster2.position.y = 10 / 100;
-
-      this.poster3.scale.x = 29.7 / 100;
-      this.poster3.scale.y = 21 / 100;
-      this.poster3.rotation.z = 3.16;
-      this.poster3.position.x = 0.18;
-      this.poster3.position.y = -0.27;
-
-      this.poster4.scale.x = inchToCm * 3 / 100;
-      this.poster4.scale.y = inchToCm * 3 / 100;
-      this.poster4.rotation.z = 0;
-      this.poster4.position.x = -0.08;
-      this.poster4.position.y = 0.22;
-
-      this.poster1.castShadow = true;
-      this.poster2.castShadow = true;
-      this.poster3.castShadow = true;
-      this.poster4.castShadow = true;
-
-      /*
-      this.scene.add(this.poster1);
-      this.scene.add(this.poster2);
-      this.scene.add(this.poster3);
-      this.scene.add(this.poster4);
-      */
-
       this.paper = new THREE.Mesh(paperGeometry,
         new THREE.MeshStandardMaterial({
           roughness: 1,
@@ -200,8 +128,6 @@
 
       this.background = new THREE.Mesh(new THREE.BoxGeometry(),
         new THREE.MeshStandardMaterial({
-          //map: Loader.loadTexture('res/Cork_S.jpg'),
-          //normalMap: Loader.loadTexture('res/Cork_N.jpg'),
           roughness: 0.95,
           metalness: 0,
           color: 0x7f7f7f,
