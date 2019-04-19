@@ -824,12 +824,21 @@
       this.ballyThrob *= 0.9;
 
       if(BEAT) {
-        switch(BEAN) {
-          case 984 + 3:
-          case 984 + 9:
-          case 984 + 12 + 3:
+        switch(frame) {
+          case FRAME_FOR_BEAN(984 + 3):
+          case FRAME_FOR_BEAN(984 + 9):
+          case FRAME_FOR_BEAN(984 + 12 + 3):
+          case FRAME_FOR_BEAN(1008):
+          case FRAME_FOR_BEAN(1014):
+          case FRAME_FOR_BEAN(1026):
             this.ballyThrob = 1;
         }
+      }
+      if(BEAN >= 1014 + 3 && BEAN < 1014 + 3 + 6) {
+        this.ballyThrob = 1;
+      }
+      if(BEAN === 1014 + 3 + 6) {
+        this.ballyThrob = 0;
       }
 
       if(BEAN >= 984 +12 + 3 && BEAN < 984 + 12 +6) {
@@ -845,6 +854,12 @@
 
 
       u.ballBoom.value = this.ballySize + this.ballyThrob * 0.5;
+
+      if(BEAN >= 1032) {
+        u.ballBoom.value = easeOut(u.ballBoom.value, 0, F(frame, 1032, 6));
+        u.cutSpacing.value = easeOut(u.cutSpacing.value, 2.5, F(frame, 1032, 6));
+      }
+
 
 
       const RUNE_HEX_START_BEAN = 672 - 12;
