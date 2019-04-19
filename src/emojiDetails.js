@@ -1,7 +1,7 @@
 (function(global) {
   const F = (frame, from, delta) => (frame - FRAME_FOR_BEAN(from)) / (FRAME_FOR_BEAN(from + delta) - FRAME_FOR_BEAN(from));
 
-  class emoji extends NIN.THREENode {
+  class emojiDetails extends NIN.THREENode {
     constructor(id, options) {
       super(id, {
         camera: options.camera,
@@ -95,15 +95,6 @@
             tileWrapper.add(tileMesh);
           }
 
-          const lowResTileMaterial = this.emojiMaterials[this.emojiIdByKey[mosaicKey]];
-          const tileMesh = new THREE.Mesh(this.emojiGeometry, lowResTileMaterial);
-          tileMesh.scale.x = 32;
-          tileMesh.scale.y = 32;
-          tileMesh.position.x = 512 - 16;
-          tileMesh.position.y = 1800 - 512;
-          tileMesh.position.z = 0;
-          wrapper.add(tileMesh);
-
           this.tileWrappers[mosaicKey] = tileWrapper;
           this.wrappers[mosaicKey] = wrapper;
         }
@@ -145,46 +136,14 @@
 
       this.scene.add(this.wrappers.hardware);
       this.scene.add(this.tileWrappers.hardware);
-
-      // LAPTOP POLYGON
-      const path = new Path();
-      path.lineTo(95, 1570);
-      path.lineTo(895, 1570);
-      path.lineTo(895, 1090);
-      path.lineTo(975, 820);
-      path.lineTo(825, 810);
-      path.lineTo(125, 810);
-      path.lineTo(14, 820);
-      path.lineTo(95, 1090);
-      path.lineTo(95, 1570);
-      this.laptopPolygonLine = path.toObject3D();
-      this.scene.add(this.laptopPolygonLine);
-      this.laptopPolygonLine.path = path;
     }
 
     update(frame) {
       super.update(frame);
 
-      this.laptopPolygonLine.visible = BEAN >= 1368 && BEAN < 1392;
+      this.wrappers.hardware.visible = false;
+      this.wrappers.sunglasses.visible = false;
 
-      this.laptopPolygonLine.path.material.uniforms.drawStart.value = 0;
-      this.laptopPolygonLine.path.material.uniforms.drawEnd.value = lerp(
-        0, 1, F(frame, 1368, 10)
-      );
-      this.laptopPolygonLine.path.material.uniforms.wobbliness.value = 1;
-      this.laptopPolygonLine.path.material.uniforms.width.value = 100;
-
-
-      this.wrappers.hardware.visible = BEAN >= 1380;
-      this.wrappers.sunglasses.visible = BEAN >= 1440;
-
-      this.tileWrappers.hardware.visible = BEAN >= 1392 && BEAN < 1420;
-
-      this.tileWrappers.dancingSkills.visible = false;
-      this.tileWrappers.pixelArt.visible = false;
-      this.tileWrappers.campingEquipment.visible = false;
-      this.tileWrappers.goodMood.visible = false;
-      this.tileWrappers.sunglasses.visible = false;
 
       const beansBeforeZoom = 10;
       const zoomDuration = 6;
@@ -193,6 +152,13 @@
       const prog3Start = prog2Start + 12;
       const prog4Start = prog3Start + 12;
       const prog5Start = prog4Start + 12;
+
+      this.tileWrappers.hardware.visible = BEAN >= prog1Start && BEAN < prog3Start;
+      this.tileWrappers.dancingSkills.visible = BEAN >= prog2Start && BEAN < prog4Start;
+      this.tileWrappers.pixelArt.visible = BEAN >= prog3Start && BEAN < prog5Start;
+      this.tileWrappers.campingEquipment.visible = BEAN >= prog4Start && BEAN < prog5Start + 12;
+      this.tileWrappers.goodMood.visible = false;
+      this.tileWrappers.sunglasses.visible = BEAN >= prog5Start;
 
       // zoom progress 1
       if (BEAN >= prog1Start && BEAN < prog1Start + beansBeforeZoom + zoomDuration) {
@@ -235,5 +201,5 @@
     }
   }
 
-  global.emoji = emoji;
+  global.emojiDetails = emojiDetails;
 })(this);
