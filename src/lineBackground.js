@@ -142,8 +142,8 @@
         this.torusKnot.position.z = 5 -40 * Math.cos(t_progress);
         this.torusKnot.rotation.x = Math.sin(t_progress / 3) * 3;
         this.torusKnot.rotation.y = Math.sin(t_progress / 3) +
-                                    smoothstep(0, Math.PI / 2, (frame - FRAME_FOR_BEAN(865))/ FRAME_FOR_BEAN(2)) +
-                                    smoothstep(0, Math.PI / 2, (frame - FRAME_FOR_BEAN(871))/ FRAME_FOR_BEAN(1.5));
+                                    smoothstep(0, Math.PI / 2, (frame - FRAME_FOR_BEAN(866))/ FRAME_FOR_BEAN(2)) +
+                                    smoothstep(0, Math.PI / 2, (frame - FRAME_FOR_BEAN(872))/ FRAME_FOR_BEAN(1.5));
       } else {
         this.cube.position.z = 1000;
         this.torusKnot.position.z = 1000;
