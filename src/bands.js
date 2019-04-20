@@ -153,19 +153,19 @@
           fontSize: 0.15,
         },
         {
-          coords: [-35, 10, 300],
+          coords: [-25, 20, 300],
           color: [.5, 1, .5],
           name: 'Pandacube',
           fontSize: 0.15,
         },
         {
-          coords: [-25, 50, 160],
+          coords: [-10, 50, 160],
           color: [1, 0.5, 1],
           name: 'Desire',
           fontSize: 0.15,
         },
         {
-          coords: [20, 10, 170],
+          coords: [5, 25, 170],
           color: [.75, 1, .5],
           name: 'altair',
           fontSize: 0.15,
