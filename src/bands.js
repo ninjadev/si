@@ -120,57 +120,56 @@
 
       this.clouds = [
         {
-          coords: [40, 30, 465],
+          coords: [32, 30, 500],
           color: [1, .6, .3],
-          image: 'cocoon',
+          name: 'cocoon',
+          fontSize: 30,
         },
         {
-          coords: [-50, 20, 420],
+          coords: [-40, 25, 480],
           color: [.5, .75, 1],
-          image: 'desire',
+          name: 'Desire',
+          fontSize: 30,
         },
         {
-          coords: [80, 0, 385],
+          coords: [40, -10, 450],
           color: [.5, 1, .5],
-          image: 'logicoma',
+          name: 'Logicoma',
+          fontSize: 22,
         },
         {
-          coords: [-60, -20, 325],
-          color: [0, 1, 1],
-          image: 'altair',
+          coords: [-55, -15, 400],
+          color: [0, 1, .75],
+          name: 'altair',
+          fontSize: 30,
         },
         {
-          coords: [-35, 25, 300],
+          coords: [-40, 25, 380],
           color: [1, 1, .5],
-          image: 'poobrain',
+          name: 'Poo Brain',
+          fontSize: 22,
         },
         {
-          coords: [60, 0, 220],
+          coords: [35, 5, 280],
           color: [.5, 1, .5],
-          image: 'pandacube',
+          name: 'Pandacube',
+          fontSize: 22,
         },
         {
-          coords: [-50, 55, 180],
+          coords: [-25, 50, 200],
           color: [1, 0.5, 1],
-          image: 'ephidrena',
+          name: 'Ephidrena',
+          fontSize: 20,
         },
         {
-          coords: [15, 25, 150],
+          coords: [0, 40, 50],
           color: [.75, 1, .5],
-          image: 'poobrain',
-        },
-        {
-          coords: [-50, 20, 120],
-          color: [.5, .75, 1],
-          image: 'schnappsgirls',
-        },
-        {
-          coords: [0, 40, 100],
-          color: [1, .5, .5],
-          image: 'schnappsgirls',
-          time: 950,
+          name: 'Schnappsgirls',
+          fontSize: 14,
         },
       ];
+
+      this.canvases = [];
 
       const positionRandom = new Random(123);
       for (const cloud of this.clouds) {
@@ -194,10 +193,31 @@
         cloud.mesh = mesh;
         this.scene.add(mesh);
 
+        const canvas = document.createElement('canvas');
+        canvas.width = 180;
+        canvas.height = 60;
+        this.canvases.push(canvas);
+        const ctx = canvas.getContext('2d');
+        const output = new THREE.VideoTexture(canvas);
+        output.minFilter = THREE.LinearFilter;
+        output.magFilter = THREE.LinearFilter;
+
+        const [r,g,b] = cloud.color;
+        ctx.fillStyle = `rgba(${r * 255 | 0},${g * 255 | 0},${b * 255 | 0},1)`;
+        ctx.fillRect(0, 0, 180, 60);
+        ctx.fillStyle = '#000';
+        document.fonts.ready.then(() => {
+          ctx.font = `${cloud.fontSize * 2}px juanalzada`;
+          ctx.textAlign = 'center';
+          ctx.fillText(cloud.name, 90, cloud.fontSize * 1.2 + 16);
+          output.needsUpdate = true;
+        });
+
         const image = new THREE.Mesh(
-          new THREE.PlaneGeometry(10, 10, 4),
-          new THREE.MeshBasicMaterial({map: Loader.loadTexture('res/greets/' + cloud.image + '.png')}));
+          new THREE.PlaneGeometry(30, 10, 4),
+          new THREE.MeshBasicMaterial({color: 0xffffff, map: output}));
         image.position.z = 1;
+        image.position.y = -1;
         cloud.image = image;
         mesh.add(image);
       }
@@ -209,6 +229,17 @@
         new THREE.MeshBasicMaterial({color: 0x7f7fff}));
       this.scene.add(this.wall);
       this.wall.position.z = -100;
+
+      this.resize();
+    }
+
+    resize() {
+      /*
+      for (const canvas of this.canvases) {
+        canvas.width = 8 * GU;
+        canvas.height = 2 * GU;
+      }
+      */
     }
 
     warmup(renderer) {

@@ -422,9 +422,9 @@
         this.splashoBillboard.position.y = this.camera.position.y- 0.02;
         this.splashoBillboard.position.z = 0.1;
         this.light1.angle = 0.85;
-      } else if(BAR >= 17 && BAR < 19) {
+      } else if(BAR >= 17 && BAR < 18) {
         const t = F(frame,  17 * 24, 24 * 2);
-        const t2 = F(frame, 19 * 24 - 6, 6);
+        const t2 = F(frame, 18 * 24 - 6, 6);
         this.camera.position.x = lerp(-0.05, -0.12, t);
         this.camera.position.y = -0.03;
         this.camera.position.z = 0.38;
