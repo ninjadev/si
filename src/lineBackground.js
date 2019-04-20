@@ -97,6 +97,17 @@
       this.renderTarget.depthTexture.type = THREE.UnsignedShortType;
     }
 
+    warmup(renderer) {
+      this.update(4811);
+      this.render(renderer);
+      this.update(5039);
+      this.render(renderer);
+      this.update(5299);
+      this.render(renderer);
+      this.update(3219);
+      this.render(renderer);
+    }
+
     update(frame) {
       super.update(frame);
 

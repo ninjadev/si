@@ -34,13 +34,6 @@
     "type": "hexFlightMainScene"
   },
   {
-    "id": "NorwayShader",
-    "type": "NorwayShaderNode",
-    "options": {
-      "shader": "NorwayShader"
-    }
-  },
-  {
     "id": "lineBackground",
     "type": "lineBackground"
   },
@@ -68,10 +61,6 @@
       "Yoga": "cross.render",
       "ripple": "cross.render"
     }
-  },
-  {
-    "id": "blobbobob",
-    "type": "blobbobob"
   },
   {
     "id": "cubobbobob",
@@ -112,16 +101,8 @@
     "type": "bands"
   },
   {
-    "id": "spirals",
-    "type": "spirals"
-  },
-  {
     "id": "tubes",
     "type": "tubes"
-  },
-  {
-    "id": "diamond",
-    "type": "diamond"
   },
   {
     "id": "didyousayess",
@@ -130,10 +111,6 @@
   {
     "id": "diagonals",
     "type": "diagonals"
-  },
-  {
-    "id": "floats",
-    "type": "floats"
   },
   {
     "id": "stairs",
@@ -164,23 +141,19 @@
       "C": "didyousayess.render",
       "D": "boxes.render",
       "E": "sirpathrick.render",
-      "F": "diamond.render",
-      "G": "spirals.render",
+      "F": "gems.render",
+      "G": "gems.render",
       "H": "diagonals.render",
       "I": "tubes.render",
       "J": "cross.render",
       "K": "stairs.render",
       "L": "Yoga.render",
-      "M": "ripple.render"
+      "M": "cross.render"
     }
   },
   {
     "id": "dancing",
     "type": "dancing"
-  },
-  {
-    "id": "ripple",
-    "type": "ripple"
   },
   {
     "id": "Waller",
@@ -210,13 +183,6 @@
     "connected": {
       "A": "Waller.render",
       "PaperContent": "sceneSwitcherNode.render"
-    }
-  },
-  {
-    "id": "twistorama",
-    "type": "twistoramaNode",
-    "options": {
-      "shader": "twistorama"
     }
   },
   {

@@ -239,6 +239,15 @@
       this.inputs.tent.enabled = true;
     }
 
+    warmup(renderer) {
+      this.update(3287);
+      this.render(renderer);
+      this.update(3743);
+      this.render(renderer);
+      this.update(4014);
+      this.render(renderer);
+    }
+
     update(frame) {
       super.update(frame);
 

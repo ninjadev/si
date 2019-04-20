@@ -62,6 +62,11 @@
       this.scene.add(this.wall);
     }
 
+    warmup(renderer) {
+      this.update(1697);
+      this.render(renderer);
+    }
+
     update(frame) {
       super.update(frame);
 

@@ -28,6 +28,11 @@
       });
     }
 
+    warmup(renderer) {
+      this.update(100);
+      this.render(renderer);
+    }
+
     beforeUpdate() {
       this.inputs.Startlogo.enabled = false;
       this.inputs.A1.enabled = false;

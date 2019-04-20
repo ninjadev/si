@@ -152,6 +152,11 @@
       }
     }
 
+    warmup(renderer) {
+      this.update(779);
+      this.render(renderer);
+    }
+
     update(frame) {
       this.paper.material.map = this.inputs.A.getValue();
       this.paper.material.needsUpdate = true;

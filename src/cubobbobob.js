@@ -58,6 +58,11 @@
       this.startBEAN = 216;
     }
 
+    warmup(renderer) {
+      this.update(1482);
+      this.render(renderer);
+    }
+
     update(frame) {
       super.update(frame);
 

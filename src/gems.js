@@ -55,6 +55,11 @@
       this.wall.position.z = -100;
     }
 
+    warmup(renderer) {
+      this.update(926);
+      this.render(renderer);
+    }
+
     update(frame) {
       super.update(frame);
 

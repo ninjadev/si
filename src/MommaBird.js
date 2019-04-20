@@ -123,6 +123,11 @@
       this.AmigaScroller.scrollerMesh.rotation.z = Math.PI / 5;
     }
 
+    warmup(renderer) {
+      this.update(7665);
+      this.render(renderer);
+    }
+
     update(frame) {
       super.update(frame);
 

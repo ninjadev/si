@@ -148,6 +148,11 @@
       }
     }
 
+    warmup(renderer) {
+      this.update(8307);
+      this.render(renderer);
+    }
+
     update(frame) {
       for (let { startFrame, endFrame, text, transition, } of this.titles) {
         for (let i = 0; i < text.paths.length; i++) {

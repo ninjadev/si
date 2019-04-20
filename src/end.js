@@ -18,11 +18,11 @@
       this.cameraDDX = 0;
       this.cameraDDY = 0;
 
-      this.flat = XWrite('FLAT'); 
+      this.flat = XWrite('FLAT');
       this.scene.add(this.flat);
-      this.shade = XWrite('SHADE'); 
+      this.shade = XWrite('SHADE');
       this.scene.add(this.shade);
-      this.society = XWrite('SOCIETY'); 
+      this.society = XWrite('SOCIETY');
       this.scene.add(this.society);
 
       this.camera.position.z = 300;
@@ -37,6 +37,11 @@
       this.wall.material.map.wrapS = THREE.RepeatWrapping;
       this.wall.material.map.wrapT = THREE.RepeatWrapping;
       this.scene.add(this.wall);
+    }
+
+    warmup(renderer) {
+      this.update(8924);
+      this.update(renderer);
     }
 
     update(frame) {

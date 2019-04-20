@@ -13,6 +13,11 @@
       this.colorizer = Loader.loadTexture('res/graphics-graffiti.png');
     }
 
+    warmup(renderer) {
+      this.update(4989);
+      this.render(renderer);
+    }
+
     update(frame) {
       this.uniforms.raw_bg.value = this.testpattern;
       this.uniforms.depthmap.value = this.inputs.lines.getValue();
