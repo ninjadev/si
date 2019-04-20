@@ -149,7 +149,7 @@
 
         const check = this.checks[index];
         check.path.material.uniforms.drawStart.value = 0;
-        check.path.material.uniforms.drawEnd.value = lerp(0, 1, (frame - startFrame - transition * 2) / transition);
+        check.path.material.uniforms.drawEnd.value = lerp(0, 1, (frame - startFrame - transition * 12) / transition);
       }
     }
 
