@@ -123,49 +123,49 @@
           coords: [32, 30, 500],
           color: [1, .6, .3],
           name: 'cocoon',
-          fontSize: 30,
+          fontSize: 0.3,
         },
         {
           coords: [-40, 25, 480],
           color: [.5, .75, 1],
           name: 'Desire',
-          fontSize: 30,
+          fontSize: 0.3,
         },
         {
           coords: [40, -10, 450],
           color: [.5, 1, .5],
           name: 'Logicoma',
-          fontSize: 22,
+          fontSize: 0.25,
         },
         {
           coords: [-55, -15, 400],
           color: [0, 1, .75],
           name: 'altair',
-          fontSize: 30,
+          fontSize: 0.3,
         },
         {
           coords: [-40, 25, 380],
           color: [1, 1, .5],
           name: 'Poo Brain',
-          fontSize: 22,
+          fontSize: 0.25,
         },
         {
           coords: [35, 5, 280],
           color: [.5, 1, .5],
           name: 'Pandacube',
-          fontSize: 22,
+          fontSize: 0.2,
         },
         {
           coords: [-25, 50, 200],
           color: [1, 0.5, 1],
           name: 'Ephidrena',
-          fontSize: 20,
+          fontSize: 0.28,
         },
         {
           coords: [0, 40, 50],
           color: [.75, 1, .5],
           name: 'Schnappsgirls',
-          fontSize: 14,
+          fontSize: 0.15,
         },
       ];
 
@@ -202,24 +202,10 @@
         output.minFilter = THREE.LinearFilter;
         output.magFilter = THREE.LinearFilter;
 
-        const [r,g,b] = cloud.color;
-        ctx.fillStyle = `rgba(${r * 255 | 0},${g * 255 | 0},${b * 255 | 0},1)`;
-        ctx.fillRect(0, 0, 180, 60);
-        ctx.fillStyle = '#000';
-        document.fonts.ready.then(() => {
-          ctx.font = `${cloud.fontSize * 2}px juanalzada`;
-          ctx.textAlign = 'center';
-          ctx.fillText(cloud.name, 90, cloud.fontSize * 1.2 + 16);
-          output.needsUpdate = true;
-        });
+        let text = XWrite(cloud.name.toUpperCase());
+        cloud.text = text;
+        mesh.add(text);
 
-        const image = new THREE.Mesh(
-          new THREE.PlaneGeometry(30, 10, 4),
-          new THREE.MeshBasicMaterial({color: 0xffffff, map: output}));
-        image.position.z = 1;
-        image.position.y = -1;
-        cloud.image = image;
-        mesh.add(image);
       }
 
       this.camera.position.z = 200;
@@ -293,6 +279,7 @@
               0
             );
           }
+            /*
           cloud.image.scale.setScalar(
             elasticOut(
               .01,
@@ -300,6 +287,16 @@
               1,
               (frame - cloudFrame) / 20)
           );
+          */
+          cloud.text.scale.setScalar(
+            Math.min(cloud.fontSize,
+            elasticOut(
+              .01,
+              easeIn(cloud.fontSize, .01, (frame - cloudFrame - 230) / 20),
+              cloud.fontSize,
+              (frame - cloudFrame) / 20)
+          ));
+          cloud.text.visible = true;
           cloud.mesh.position.set(...cloud.coords);
         } else {
           cloud.mesh.position.set(0, 0, 1000);
