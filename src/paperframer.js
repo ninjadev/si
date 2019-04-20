@@ -141,7 +141,7 @@
           startFrame: 8750,
           endFrame: 9800,
           transition: 6,
-          text: XWrite('BEAUTIFUL OUTRO'),
+          text: XWrite(' '),
         },
       ];
 
