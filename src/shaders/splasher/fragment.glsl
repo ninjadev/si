@@ -19,6 +19,7 @@ uniform float paperG;
 uniform float paperB;
 uniform sampler2D tDiffuse;
 uniform sampler2D paperContent;
+uniform sampler2D infoOutro;
 uniform sampler2D image;
 
 varying vec2 vUv;
@@ -126,7 +127,7 @@ void main() {
     vec3 noise = mix(noise1, noise2, 0.5);
     float noiseAmount = 0.05;
     noise = (1. - noiseAmount) + noise * noiseAmount;
-    gl_FragColor = vec4(introFader * noise, 1.);
+    gl_FragColor = vec4(introFader * noise + texture2D(infoOutro, vUv).rgb, 1.);
 
 
 }
