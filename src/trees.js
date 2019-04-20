@@ -217,14 +217,14 @@
 
       this.tentblack = new THREE.Mesh(
         new THREE.ParametricGeometry(tentTriangle, 10, 10),
-        new THREE.MeshBasicMaterial({color: 0x1f282f}));
+        new THREE.MeshBasicMaterial({color: 0x000000}));
       this.scene.add(this.tentblack);
       this.tentblack.position.set(-655, -32, 253);
 
       this.tentwall = new THREE.Mesh(
         new THREE.BoxGeometry(20, 11.25, 1),
         new THREE.MeshBasicMaterial({color: 0xffffff}));
-      this.scene.add(this.tentwall);
+      //this.scene.add(this.tentwall);
       this.tentwall.position.set(-651, -45, 254);
 
       this.camera.position.z = 220;
