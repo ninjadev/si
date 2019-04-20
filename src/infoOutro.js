@@ -11,14 +11,14 @@
       this.camera.position.z = 100;
 
       this.color = new THREE.Vector3(255, 255, 255);
-      const pathOptions = {color:this.color};
+      const pathOptions = {color: this.color};
 
       this.sceneWrapper = new THREE.Object3D();
 
       this.logo = new Path(pathOptions);
       const scale = 15;
       const steps = 128;
-      for(let i = 0; i <= steps; i++) {
+      for (let i = 0; i <= steps; i++) {
         const r = 35;
         const x = r * Math.cos(i / steps * Math.PI * 2 * 0.5);
         const y = r * Math.sin(i / steps * Math.PI * 2 * 0.5);
@@ -32,14 +32,24 @@
       this.shadeWord = XWrite('SHADE');
       this.societyWord = XWrite('SOCIETY');
 
+      this.solskogenWord = XWrite('SOLSKOGEN 2019');
+      this.dateRangeWord = XWrite('JULY 12TH to JULY 14TH');
+      this.flatebyWord = XWrite('FLATEBY, NORWAY');
+
       this.sceneWrapper.add(this.flatWord);
       this.sceneWrapper.add(this.shadeWord);
       this.sceneWrapper.add(this.societyWord);
+      this.sceneWrapper.add(this.solskogenWord);
+      this.sceneWrapper.add(this.dateRangeWord);
+      this.sceneWrapper.add(this.flatebyWord);
 
       const wordScale = 0.02;
       this.flatWord.scale.set(wordScale, wordScale, wordScale);
       this.shadeWord.scale.set(wordScale, wordScale, wordScale);
       this.societyWord.scale.set(wordScale, wordScale, wordScale);
+      this.solskogenWord.scale.set(wordScale, wordScale, wordScale);
+      this.dateRangeWord.scale.set(wordScale, wordScale, wordScale);
+      this.flatebyWord.scale.set(wordScale, wordScale, wordScale);
 
       this.flatWord.position.x = 0;
       this.flatWord.position.y = 1.6;
@@ -48,6 +58,12 @@
       this.shadeWord.position.y = 0.3 + (1.6 - .3) / 2;
 
       this.societyWord.position.y = 0.3;
+
+      this.solskogenWord.position.y = -2;
+
+      this.dateRangeWord.position.y = -2.75;
+
+      this.flatebyWord.position.y = -3.5;
 
       let path = new Path();
       path.lineTo(-3, 0);
@@ -81,39 +97,20 @@
       this.sceneWrapper.position.y = 10;
 
       this.sceneWrapper.scale.set(10, 10, 10)
-
-
-
-
-      /*
-      this.solskogen = XWrite('SOLSKOGEN 2019');
-      this.dateRange = XWrite('JULY 12TH to JULY 14TH');
-      this.flateby = XWrite('FLATEBY, NORWAY');
-
-      this.scene.add(this.solskogen);
-      this.scene.add(this.dateRange);
-      this.scene.add(this.flateby);
-       */
     }
 
     update(frame) {
       super.update(frame);
 
-      for(let i = 0; i < this.flatWord.paths.length; i++) {
-        const path = this.flatWord.paths[i];
-        path.material.uniforms.color.value = this.color;
+      const words = [
+        'flatWord', 'shadeWord', 'societyWord', 'solskogenWord', 'dateRangeWord', 'flatebyWord'
+      ];
+      for (let word of words) {
+        for (let i = 0; i < this[word].paths.length; i++) {
+          const path = this[word].paths[i];
+          path.material.uniforms.color.value = this.color;
+        }
       }
-
-      for(let i = 0; i < this.shadeWord.paths.length; i++) {
-        const path = this.shadeWord.paths[i];
-        path.material.uniforms.color.value = this.color;
-      }
-
-      for(let i = 0; i < this.societyWord.paths.length; i++) {
-        const path = this.societyWord.paths[i];
-        path.material.uniforms.color.value = this.color;
-      }
-
     }
   }
 
