@@ -167,6 +167,7 @@
         {
           coords: [0, 40, 100],
           color: [1, .5, .5],
+          image: 'schnappsgirls',
           time: 950,
         },
       ];

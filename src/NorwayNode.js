@@ -29,18 +29,6 @@
       this.map_borders.magFilter = THREE.LinearFilter;
       this.map_image.minFilter = THREE.LinearFilter;
       this.map_image.magFilter = THREE.LinearFilter;
-      //this.z1 = Loader.loadTexture('res/map/testpattern.jpg');
-      this.z1 = Loader.loadTexture('res/map/t1.png');
-      this.z2 = Loader.loadTexture('res/map/t2.png');
-      this.z3 = Loader.loadTexture('res/map/t3.png');
-      this.z4 = Loader.loadTexture('res/map/t4.png');
-      this.z5 = Loader.loadTexture('res/map/t5.png');
-      this.z6 = Loader.loadTexture('res/map/t6.png');
-      this.z7 = Loader.loadTexture('res/map/z7.png');
-      this.z8 = Loader.loadTexture('res/map/z8.png');
-      this.z9 = Loader.loadTexture('res/map/z9.png');
-      this.z10 = Loader.loadTexture('res/map/z10.png');
-      this.z11 = Loader.loadTexture('res/map/z11.png');
       this.paperTexture = Loader.loadTexture('res/paper.png');
 
       this.flateby_sign_container = new THREE.Object3D();

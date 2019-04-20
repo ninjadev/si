@@ -42,6 +42,7 @@
 
       this.flatShadeTexture = Loader.loadTexture('res/flatshadesociety-graffiti.png');
       this.flatShadeSpinnerTexture = Loader.loadTexture('res/flatshadesociety-spinner-graffiti.png');
+      this.bbqTexture = Loader.loadTexture('res/bbq3.png');
       this.skogTexture = Loader.loadTexture('res/skog-graffiti.png');
       this.demoTexture = Loader.loadTexture('res/demo-graffiti.png');
       this.campingTexture = Loader.loadTexture('res/camping-graffiti.png');
@@ -53,6 +54,8 @@
       this.skogTexture.magFilter = THREE.LinearFilter;
       this.demoTexture.minFilter = THREE.LinearFilter;
       this.demoTexture.magFilter = THREE.LinearFilter;
+      this.bbqTexture.minFilter = THREE.LinearFilter;
+      this.bbqTexture.magFilter = THREE.LinearFilter;
       this.campingTexture.minFilter = THREE.LinearFilter;
       this.campingTexture.magFilter = THREE.LinearFilter;
       this.musicTexture.minFilter = THREE.LinearFilter;
@@ -107,78 +110,6 @@
         vertex.z += (Math.random() - 0.5) * 0.25 * 0.01;
       }
 
-      // RIP
-      //paperGeometry = new THREE.BoxGeometry(11 * 3, 8.5 * 3, 0.1);
-
-      const posterGeometry = new THREE.BoxGeometry(1, 1, 0.001);
-      this.poster1 = new THREE.Mesh(
-        posterGeometry,
-        new THREE.MeshStandardMaterial({
-          color: 0xff7f7f,
-          roughness: 0.9,
-          metalness: 0,
-          map: Loader.loadTexture('res/poster2.png'),
-        }));
-      this.poster2 = new THREE.Mesh(
-        posterGeometry,
-        new THREE.MeshStandardMaterial({
-          color: 0x7fff7f,
-          roughness: 0.9,
-          metalness: 0,
-          map: Loader.loadTexture('res/poster3.png'),
-        }));
-      this.poster3 = new THREE.Mesh(
-        posterGeometry,
-        new THREE.MeshStandardMaterial({
-          color: 0x7f7fff,
-          roughness: 0.9,
-          metalness: 0,
-          map: Loader.loadTexture('res/poster1.png'),
-        }));
-      this.poster4 = new THREE.Mesh(
-        posterGeometry,
-        new THREE.MeshStandardMaterial({
-          color: 0xffff7f,
-          roughness: 0.9,
-          metalness: 0,
-        }));
-
-      this.poster1.scale.x = 29.7 / 100;
-      this.poster1.scale.y = 21 / 100;
-      this.poster1.rotation.z = 1.56;
-      this.poster1.position.x = 36 / 100;
-      this.poster1.position.y = 5 / 100;
-
-      this.poster2.scale.x = 29.7 / 100;
-      this.poster2.scale.y = 21 / 100;
-      this.poster2.rotation.z = 1.59;
-      this.poster2.position.x = -36 / 100;
-      this.poster2.position.y = 10 / 100;
-
-      this.poster3.scale.x = 29.7 / 100;
-      this.poster3.scale.y = 21 / 100;
-      this.poster3.rotation.z = 3.16;
-      this.poster3.position.x = 0.18;
-      this.poster3.position.y = -0.27;
-
-      this.poster4.scale.x = inchToCm * 3 / 100;
-      this.poster4.scale.y = inchToCm * 3 / 100;
-      this.poster4.rotation.z = 0;
-      this.poster4.position.x = -0.08;
-      this.poster4.position.y = 0.22;
-
-      this.poster1.castShadow = true;
-      this.poster2.castShadow = true;
-      this.poster3.castShadow = true;
-      this.poster4.castShadow = true;
-
-      /*
-      this.scene.add(this.poster1);
-      this.scene.add(this.poster2);
-      this.scene.add(this.poster3);
-      this.scene.add(this.poster4);
-      */
-
       this.paper = new THREE.Mesh(paperGeometry,
         new THREE.MeshStandardMaterial({
           roughness: 1,
@@ -200,8 +131,6 @@
 
       this.background = new THREE.Mesh(new THREE.BoxGeometry(),
         new THREE.MeshStandardMaterial({
-          //map: Loader.loadTexture('res/Cork_S.jpg'),
-          //normalMap: Loader.loadTexture('res/Cork_N.jpg'),
           roughness: 0.95,
           metalness: 0,
           color: 0x7f7f7f,
@@ -495,7 +424,7 @@
         this.camera.position.z = 0.38;
 
         this.splashoBillboard.visible = true;
-        this.splashoBillboard.material.map = this.campingTexture;
+        this.splashoBillboard.material.map = this.bbqTexture;
 
         this.splashoBillboard.position.x = this.camera.position.x - lerp(0.07, 0.09, t) - easeOut(0, 0.25, t2);
         this.splashoBillboard.position.y = this.camera.position.y- 0.02;
@@ -824,12 +753,21 @@
       this.ballyThrob *= 0.9;
 
       if(BEAT) {
-        switch(BEAN) {
-          case 984 + 3:
-          case 984 + 9:
-          case 984 + 12 + 3:
+        switch(frame) {
+          case FRAME_FOR_BEAN(984 + 3):
+          case FRAME_FOR_BEAN(984 + 9):
+          case FRAME_FOR_BEAN(984 + 12 + 3):
+          case FRAME_FOR_BEAN(1008):
+          case FRAME_FOR_BEAN(1014):
+          case FRAME_FOR_BEAN(1026):
             this.ballyThrob = 1;
         }
+      }
+      if(BEAN >= 1014 + 3 && BEAN < 1014 + 3 + 6) {
+        this.ballyThrob = 1;
+      }
+      if(BEAN === 1014 + 3 + 6) {
+        this.ballyThrob = 0;
       }
 
       if(BEAN >= 984 +12 + 3 && BEAN < 984 + 12 +6) {
@@ -845,6 +783,12 @@
 
 
       u.ballBoom.value = this.ballySize + this.ballyThrob * 0.5;
+
+      if(BEAN >= 1032) {
+        u.ballBoom.value = easeOut(u.ballBoom.value, 0, F(frame, 1032, 6));
+        u.cutSpacing.value = easeOut(u.cutSpacing.value, 2.5, F(frame, 1032, 6));
+      }
+
 
 
       const RUNE_HEX_START_BEAN = 672 - 12;
