@@ -123,50 +123,50 @@
 
       this.clouds = [
         {
-          coords: [30, 30, 500],
-          color: [1, .6, .3],
+          coords: [30, 35, 500],
+          color: [243/255, 114/255, 114/255],
           name: 'cocoon',
           fontSize: 0.15,
         },
         {
           coords: [-20, -5, 480],
-          color: [.5, .75, 1],
+          color: [146/255, 243/255, 114/255],
           name: 'Poo Brain',
           fontSize: 0.15,
         },
         {
           coords: [-30, 35, 450],
-          color: [.5, 1, .5],
+          color: [114/255, 211/255, 243/255],
           name: 'Logicoma',
           fontSize: 0.15,
         },
         {
           coords: [35, 10, 420],
-          color: [0, 1, .75],
+          color: [146/255, 114/255, 243/255],
           name: 'Schnappsgirls',
           fontSize: 0.15,
         },
         {
           coords: [20, 45, 380],
-          color: [1, 1, .5],
+          color: [243/255, 146/255, 114/255],
           name: 'Ephidrena',
           fontSize: 0.15,
         },
         {
           coords: [-25, 20, 300],
-          color: [.5, 1, .5],
+          color: [243/255, 238/255, 114/255],
           name: 'Pandacube',
           fontSize: 0.15,
         },
         {
           coords: [-10, 50, 160],
-          color: [1, 0.5, 1],
+          color: [243/255, 114/255, 243/255],
           name: 'Desire',
           fontSize: 0.15,
         },
         {
           coords: [5, 25, 170],
-          color: [.75, 1, .5],
+          color: [114/255, 243/255, 146/255],
           name: 'altair',
           fontSize: 0.15,
         },
@@ -258,7 +258,11 @@
       }
 
       for (const [index, cloud] of this.clouds.entries()) {
-        let bean = index < 7 ? 24 * 17 + 6 + index * 12 : 24 * 17 + 6 + 6 * 12;
+        let i = index;
+        if(i <= 1) i = 0;
+        if(i > 1 && i < 7) i -= 1;
+        if(i >= 7) i = 6;
+        let bean = 24 * 17 + 6 + i * 12;
         const cloudFrame = FRAME_FOR_BEAN(bean);
         if (frame >= cloudFrame && frame < cloudFrame + 200) {
           for (const circle of cloud.circles) {
