@@ -20,8 +20,57 @@
       this.camera = new THREE.OrthographicCamera(left, right, top, bottom, near, far);
       this.camera.position.z = 3000;
 
+      this.canvases = {
+        hardware: document.createElement('canvas'),
+        dancingSkills: document.createElement('canvas'),
+        pixelArt: document.createElement('canvas'),
+        campingEquipment: document.createElement('canvas'),
+        goodMood: document.createElement('canvas'),
+        sunglasses: document.createElement('canvas'),
+      };
+
+      this.images = {
+        hardware: document.createElement('img'),
+        dancingSkills: document.createElement('img'),
+        pixelArt: document.createElement('img'),
+        campingEquipment: document.createElement('img'),
+        goodMood: document.createElement('img'),
+        sunglasses: document.createElement('img'),
+      };
+      this.numImagesLoaded = 0;
+      this.imageLoadedCallback = () => {
+        this.numImagesLoaded++;
+        if (this.numImagesLoaded === 6) {
+          console.log('Boarding completed. Crew arm slides, cross check and report.');
+          this.drawMosaics();
+        }
+      };
+      Loader.load('res/emoji/plain/hardware.png', this.images.hardware, this.imageLoadedCallback);
+      Loader.load('res/emoji/plain/dancingSkills.png', this.images.dancingSkills, this.imageLoadedCallback);
+      Loader.load('res/emoji/plain/pixelArt.png', this.images.pixelArt, this.imageLoadedCallback);
+      Loader.load('res/emoji/plain/campingEquipment.png', this.images.campingEquipment, this.imageLoadedCallback);
+      Loader.load('res/emoji/plain/goodMood.png', this.images.goodMood, this.imageLoadedCallback);
+      Loader.load('res/emoji/plain/sunglasses.png', this.images.sunglasses, this.imageLoadedCallback);
+      this.generatedEmojiTextures = {};
+      this.generatedEmojiMaterials = {};
+
       this.emojiTextures = {};
-      this.emojiIdByKey = {};
+      this.emojiIdByKey = {
+        hardware: 3,
+        dancingSkills: 1,
+        pixelArt: 4,
+        campingEquipment: 0,
+        goodMood: 2,
+        sunglasses: 5,
+      };
+      this.emojiKeyById = {
+        3: 'hardware',
+        1: 'dancingSkills',
+        4: 'pixelArt',
+        0: 'campingEquipment',
+        2: 'goodMood',
+        5: 'sunglasses',
+      };
       this.emojiMaterials = {};
       this.emojiGeometry = new THREE.PlaneGeometry(32, 32, 1);
       this.wrappers = {};
@@ -63,15 +112,90 @@
         },
       };
 
+      // LAPTOP POLYGON
+      const pathOptions = {fill: true, fillColor: 0x556E7C};
+      const path = new Path(pathOptions);
+      path.lineTo(95, 1090);
+      path.lineTo(95, 1570);
+      path.lineTo(895, 1570);
+      path.lineTo(895, 1090);
+      path.lineTo(95, 1090);
+      this.laptopPolygonLine = path.toObject3D();
+      this.scene.add(this.laptopPolygonLine);
+      this.laptopPolygonLine.path = path;
+
+      const laptopKeyboardPath = new Path({fill: true, fillColor: 0xCFD7DD});
+      laptopKeyboardPath.lineTo(895, 1090);
+      laptopKeyboardPath.lineTo(975, 820);
+      laptopKeyboardPath.lineTo(825, 810);
+      laptopKeyboardPath.lineTo(125, 810);
+      laptopKeyboardPath.lineTo(14, 820);
+      laptopKeyboardPath.lineTo(95, 1090);
+      laptopKeyboardPath.lineTo(895, 1090);
+      this.laptopKeyboardPolygonLine = laptopKeyboardPath.toObject3D();
+      this.scene.add(this.laptopKeyboardPolygonLine);
+      this.laptopKeyboardPolygonLine.path = laptopKeyboardPath;
+    }
+
+    drawMosaics() {
+      const canvas = this.canvases.hardware;
+      canvas.width = 1024;
+      canvas.height = 1024;
+      const ctx = canvas.getContext('2d');
+
+      const mosaic = window.emojiMosaics.hardware;
+      for (let i = 0; i < mosaic.tiles.length; i++) {
+        const tile = mosaic.tiles[i];
+        const drawable = this.images[this.emojiKeyById[tile.emoji_id]];
+
+        ctx.drawImage(
+          drawable,  // drawable source
+          0,  // source offset x
+          0,  // source offset y
+          512,  // source width
+          512,  // source height
+          tile.x,  // destination offset x
+          tile.y,  // destination offset y
+          32,  // destination width
+          32  // destination height
+        );
+      }
+
+      this.generatedEmojiTextures[this.emojiIdByKey.hardware] = new THREE.CanvasTexture(canvas);
+
+      this.generatedEmojiMaterials[this.emojiIdByKey.hardware] = new THREE.MeshBasicMaterial({
+        map: this.generatedEmojiTextures[this.emojiIdByKey.hardware],
+        transparent: true
+      });
+
+      /*
+      const cube = new THREE.Mesh(
+        this.emojiGeometry,
+        this.emojiMaterials[this.emojiIdByKey.hardware]
+      );
+      cube.scale.x = 32;
+      cube.scale.y = 32;
+      cube.position.x = 512;
+      cube.position.y = 1200;
+      cube.position.z = 0;
+      this.scene.add(cube);
+      console.log('I have added my plane')
+       */
+
+      this.initTiles();
+    }
+
+    initTiles() {
+      console.log('hello from initTiles')
       for (let j = 0; j < this.mosaicKeyOrder.length; j++) {
         const mosaicKey = this.mosaicKeyOrder[j];
+
         if (window.emojiMosaics.hasOwnProperty(mosaicKey)) {
           let mosaic = window.emojiMosaics[mosaicKey];
+
           for (let emojiId in mosaic.emojies) {
             if (mosaic.emojies.hasOwnProperty(emojiId) && !this.emojiTextures.hasOwnProperty(emojiId)) {
-              console.log(mosaic.emojies[emojiId]);
               this.emojiTextures[emojiId] = Loader.loadTexture(`res/emoji/${mosaic.emojies[emojiId]}`);
-              this.emojiIdByKey[mosaic.emojies[emojiId].replace('.png', '')] = emojiId;
               this.emojiMaterials[emojiId] = new THREE.MeshBasicMaterial({
                 map: this.emojiTextures[emojiId],
                 transparent: true
@@ -216,22 +340,24 @@
       this.laptopKeyboardPolygonLine.path.material.uniforms.wobbliness.value = 1;
       this.laptopKeyboardPolygonLine.path.material.uniforms.width.value = 100;
 
-      this.wrappers.hardware.visible = BEAN >= 1380;
-      this.wrappers.sunglasses.visible = BEAN >= 1440;
-      this.wrappers.goodMood.tileMesh.visible = BEAN < 1456;
-      this.wrappers.sunglasses.tileMesh.visible = false;//BEAN < 1456;
-      this.wrappers.campingEquipment.tileMesh.visible = BEAN < 1456;
-      this.wrappers.pixelArt.tileMesh.visible = BEAN < 1456;
-      this.wrappers.dancingSkills.tileMesh.visible = BEAN < 1456;
-      this.wrappers.hardware.tileMesh.visible = BEAN < 1456;
+      if (this.wrappers.hardware) {
+	      this.wrappers.hardware.visible = BEAN >= 1380;
+	      this.wrappers.sunglasses.visible = BEAN >= 1440;
+	      this.wrappers.goodMood.tileMesh.visible = BEAN < 1456;
+	      this.wrappers.sunglasses.tileMesh.visible = false;//BEAN < 1456;
+	      this.wrappers.campingEquipment.tileMesh.visible = BEAN < 1456;
+	      this.wrappers.pixelArt.tileMesh.visible = BEAN < 1456;
+	      this.wrappers.dancingSkills.tileMesh.visible = BEAN < 1456;
+	      this.wrappers.hardware.tileMesh.visible = BEAN < 1456;
 
-      this.tileWrappers.hardware.visible = BEAN >= 1392 && BEAN < 1420;
+	      this.tileWrappers.hardware.visible = BEAN >= 1392 && BEAN < 1420;
 
-      this.tileWrappers.dancingSkills.visible = false;
-      this.tileWrappers.pixelArt.visible = false;
-      this.tileWrappers.campingEquipment.visible = false;
-      this.tileWrappers.goodMood.visible = false;
-      this.tileWrappers.sunglasses.visible = BEAN >= 1434 && BEAN < 1456;
+	      this.tileWrappers.dancingSkills.visible = false;
+	      this.tileWrappers.pixelArt.visible = false;
+	      this.tileWrappers.campingEquipment.visible = false;
+	      this.tileWrappers.goodMood.visible = false;
+	      this.tileWrappers.sunglasses.visible = BEAN >= 1434 && BEAN < 1456;
+      }
 
       const beansBeforeZoom = 10;
       const zoomDuration = 6;
