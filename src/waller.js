@@ -928,10 +928,9 @@
         this.light1.target.position.x = 0;
       }
 
-      let fallFrame = 8999;
       let fallBEAN = 1500;
       if (BEAN >= fallBEAN && BEAN < fallBEAN + 6) {
-        let speed = F(frame, fallBEAN, 1);
+        let speed = F(frame, fallBEAN, 6);
         this.paper.rotation.z = -easeIn(0, 1, speed);
         this.paper.position.y = -easeIn(0, 0.066, speed);
         this.paper.position.x = -easeIn(0, 0.144, speed);
@@ -939,7 +938,7 @@
         this.shadowPaper.position.y = -easeIn(0, 0.066, speed);
         this.shadowPaper.position.x = -easeIn(0, 0.144, speed);
         // NEED HELP TO SHAKE IT BETTER --Julie
-       } else if (BEAN === fallBEAN + 6) {
+      } else if (BEAN === fallBEAN + 6) {
         let speed = F(frame, fallBEAN + 6, 1);
         this.shadowPaper.visible = false;
         this.paper.rotation.z = -smoothstep(1, 0.9, Math.sin(speed/10));
@@ -984,7 +983,16 @@
           this.light1.intensity = 1;
         }
         this.hemiLight.intensity = 0.1 + this.light1.intensity * 0.5;
-
+      } else {
+        this.paper.position.x = 0;
+        this.paper.position.y = 0;
+        this.paper.rotation.z = 0;
+        this.shadowPaper.position.x = 0;
+        this.shadowPaper.position.y = 0;
+        this.shadowPaper.rotation.z = 0;
+        this.shadowPaper.visible = true;
+        this.light1.intensity = 1;
+        this.hemiLight.intensity = 0.6;
       }
     }
   }
