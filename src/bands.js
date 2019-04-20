@@ -1,4 +1,5 @@
 (function(global) {
+  const F = (frame, from, delta) => (frame - FRAME_FOR_BEAN(from)) / (FRAME_FOR_BEAN(from + delta) - FRAME_FOR_BEAN(from));
   class bands extends NIN.THREENode {
     constructor(id, options) {
       super(id, {
@@ -10,6 +11,8 @@
 
       this.bands = [];
       this.drapes = [];
+
+      this.paper = Loader.loadTexture('res/paper.png');
 
       this.positions = [
         {rotation: 0, x: -90, y: 0},
@@ -123,43 +126,43 @@
           coords: [32, 30, 500],
           color: [1, .6, .3],
           name: 'cocoon',
-          fontSize: 0.3,
+          fontSize: 0.15,
         },
         {
           coords: [-40, 25, 480],
           color: [.5, .75, 1],
           name: 'Desire',
-          fontSize: 0.3,
+          fontSize: 0.15,
         },
         {
           coords: [40, -10, 450],
           color: [.5, 1, .5],
           name: 'Logicoma',
-          fontSize: 0.25,
+          fontSize: 0.15,
         },
         {
           coords: [-55, -15, 400],
           color: [0, 1, .75],
           name: 'altair',
-          fontSize: 0.3,
+          fontSize: 0.15,
         },
         {
           coords: [-40, 25, 380],
           color: [1, 1, .5],
           name: 'Poo Brain',
-          fontSize: 0.25,
+          fontSize: 0.15,
         },
         {
           coords: [35, 5, 280],
           color: [.5, 1, .5],
           name: 'Pandacube',
-          fontSize: 0.2,
+          fontSize: 0.15,
         },
         {
           coords: [-25, 50, 200],
           color: [1, 0.5, 1],
           name: 'Ephidrena',
-          fontSize: 0.28,
+          fontSize: 0.15,
         },
         {
           coords: [0, 40, 50],
@@ -169,20 +172,30 @@
         },
       ];
 
-      this.canvases = [];
-
       const positionRandom = new Random(123);
       for (const cloud of this.clouds) {
         const mesh = new THREE.Object3D();
         cloud.circles = [];
         for (let i=0; i < 10; i++) {
+          const geo = new THREE.CircleGeometry(7 + localRandom() * 4, 32);
           const circle = new THREE.Mesh(
-            new THREE.CircleGeometry(7 + localRandom() * 4, 20),
-            new THREE.MeshBasicMaterial({color: new THREE.Color(...cloud.color)})
+            geo,
+            new THREE.MeshBasicMaterial({
+              color: new THREE.Color(...cloud.color),
+              map: this.paper,
+            })
           );
           const position = new THREE.Vector3(positionRandom() * 30 - 15, positionRandom() * 6 - 3, 0);
           circle.position.copy(position);
           mesh.add(circle);
+          const shadowC = circle.clone();
+          shadowC.material = circle.material.clone();
+          shadowC.material.color.setRGB(0.2, 0.2, 0.2);
+          shadowC.material.map = this.paper;
+          mesh.add(shadowC);
+          shadowC.position.z -= 0.5;
+          shadowC.position.y += 0.5;
+          circle.shadow = shadowC;
           cloud.circles.push({
             speed: localRandom() * 3,
             mesh: circle,
@@ -192,15 +205,6 @@
         mesh.position.set(...cloud.coords);
         cloud.mesh = mesh;
         this.scene.add(mesh);
-
-        const canvas = document.createElement('canvas');
-        canvas.width = 180;
-        canvas.height = 60;
-        this.canvases.push(canvas);
-        const ctx = canvas.getContext('2d');
-        const output = new THREE.VideoTexture(canvas);
-        output.minFilter = THREE.LinearFilter;
-        output.magFilter = THREE.LinearFilter;
 
         let text = XWrite(cloud.name.toUpperCase());
         cloud.text = text;
@@ -217,15 +221,6 @@
       this.wall.position.z = -100;
 
       this.resize();
-    }
-
-    resize() {
-      /*
-      for (const canvas of this.canvases) {
-        canvas.width = 8 * GU;
-        canvas.height = 2 * GU;
-      }
-      */
     }
 
     warmup(renderer) {
@@ -278,6 +273,13 @@
               circle.position.y - Math.sin((frame - cloudFrame) * circle.speed / 60) * 2,
               0
             );
+            circle.mesh.shadow.scale.copy(circle.mesh.scale);
+            circle.mesh.shadow.scale.x *= 1.06;
+            circle.mesh.shadow.scale.y *= 1.06;
+            circle.mesh.shadow.scale.z *= 1.06;
+            circle.mesh.shadow.position.copy(circle.mesh.position);
+            circle.mesh.shadow.position.z -= 0.5;
+            circle.mesh.shadow.position.y -= 0;
           }
             /*
           cloud.image.scale.setScalar(
@@ -297,6 +299,12 @@
               (frame - cloudFrame) / 20)
           ));
           cloud.text.visible = true;
+          for(let i = 0; i < cloud.text.paths.length; i++) {
+            const path = cloud.text.paths[i];
+            path.uniforms.drawEnd.value = smoothstep(
+              0, 1,
+              F(frame, 24 * 17 + 6 + index * 12 + i / 2, 3 - Math.min(3, i / 6)));
+          }
           cloud.mesh.position.set(...cloud.coords);
         } else {
           cloud.mesh.position.set(0, 0, 1000);
