@@ -854,9 +854,16 @@
           F(frame, 57 * 24, 12));
         this.packinglist.position.x = -0.24;
         this.shadowPackingList.position.x = -0.24;
+
+        this.light1.target.position.x = lerp(
+          0,
+          lerp(-.1, 0, F(frame, 60 * 24 + 18, 6)),
+          F(frame, 57 * 24, 12));
       } else {
         this.packinglist.position.x = -500;
         this.shadowPackingList.position.x = -500;
+
+        this.light1.target.position.x = 0;
       }
 
       let fallFrame = 8999;
