@@ -1,4 +1,48 @@
 (function(global) {
+  function Scroller(text) {
+    this.text = text;
+    const fontSize = GU * 2;
+    const fontFamily = 'monospace';
+    this.textCanvas = document.createElement('canvas');
+    this.textCtx = this.textCanvas.getContext('2d');
+    this.textCtx.font = `bold ${fontSize}px ${fontFamily}`;
+
+    const measure = this.textCtx.measureText(this.text);
+    this.textCanvas.width = measure.width + 2;
+    this.textCanvas.height = fontSize;
+
+    this.textCtx.clearRect(0, 0, this.textCanvas.width, this.textCanvas.height);
+    this.textCtx.fillStyle = '#000000';
+    this.textCtx.font = `bold ${fontSize}px ${fontFamily}`;
+    this.textCtx.textAlign = 'center';
+    this.textCtx.textBaseline = 'middle';
+    this.textCtx.fillText(this.text, this.textCanvas.width / 2, this.textCanvas.height / 2);
+
+    this.textCtx.clearRect(0, 0, 1, this.textCanvas.height);
+    this.textCtx.clearRect(this.textCanvas.width - 1, 0, 1, this.textCanvas.height);
+
+    this.canvas = document.createElement('canvas');
+    this.canvas.width = this.textCanvas.width;
+    this.canvas.height = this.textCanvas.height;
+    this.ctx = this.canvas.getContext('2d');
+
+    this.ctx.drawImage(this.textCanvas, 0, 0);
+
+    this.texture = new THREE.VideoTexture(this.canvas);
+    this.texture.minFilter = THREE.LinearFilter;
+    this.texture.magFilter = THREE.LinearFilter;
+    const planeAspect = 100 / 10;
+    const canvasAspect = this.canvas.width / this.canvas.height;
+    this.texture.repeat.set(planeAspect / canvasAspect, 1);
+    const material = new THREE.MeshBasicMaterial({ color: 0xffffff, map: this.texture, transparent: true, });
+    const geometry = new THREE.PlaneGeometry(100, 10, 256, 1);
+    for (let i = 0; i < geometry.vertices.length; i++) {
+      const vertex = geometry.vertices[i];
+      vertex.originalY = vertex.y;
+    }
+    this.scrollerMesh = new THREE.Mesh(geometry, material);
+  }
+
   class MommaBird extends NIN.THREENode {
     constructor(id, options) {
       super(id, {
@@ -60,50 +104,14 @@
 
       this.chickNest.position.set(-70, -50, 0);
 
-      function Scroller(text) {
-        this.text = text;
-        const fontSize = GU * 2;
-        const fontFamily = 'monospace';
-        this.textCanvas = document.createElement('canvas');
-        this.textCtx = this.textCanvas.getContext('2d');
-        this.textCtx.font = `bold ${fontSize}px ${fontFamily}`;
+      this.buildSCrollers();
+    }
 
-        const measure = this.textCtx.measureText(this.text);
-        this.textCanvas.width = measure.width + 2;
-        this.textCanvas.height = fontSize;
-
-        this.textCtx.clearRect(0, 0, this.textCanvas.width, this.textCanvas.height);
-        this.textCtx.fillStyle = '#000000';
-        this.textCtx.font = `bold ${fontSize}px ${fontFamily}`;
-        this.textCtx.textAlign = 'center';
-        this.textCtx.textBaseline = 'middle';
-        this.textCtx.fillText(this.text, this.textCanvas.width / 2, this.textCanvas.height / 2);
-
-        this.textCtx.clearRect(0, 0, 1, this.textCanvas.height);
-        this.textCtx.clearRect(this.textCanvas.width - 1, 0, 1, this.textCanvas.height);
-
-        this.canvas = document.createElement('canvas');
-        this.canvas.width = this.textCanvas.width;
-        this.canvas.height = this.textCanvas.height;
-        this.ctx = this.canvas.getContext('2d');
-
-        this.ctx.drawImage(this.textCanvas, 0, 0);
-
-        this.texture = new THREE.VideoTexture(this.canvas);
-        this.texture.minFilter = THREE.LinearFilter;
-        this.texture.magFilter = THREE.LinearFilter;
-        const planeAspect = 100 / 10;
-        const canvasAspect = this.canvas.width / this.canvas.height;
-        this.texture.repeat.set(planeAspect / canvasAspect, 1);
-        const material = new THREE.MeshBasicMaterial({ color: 0xffffff, map: this.texture, transparent: true, });
-        const geometry = new THREE.PlaneGeometry(100, 10, 256, 1);
-        for(let i = 0; i < geometry.vertices.length; i++) {
-          const vertex = geometry.vertices[i];
-          vertex.originalY = vertex.y;
-        }
-        this.scrollerMesh = new THREE.Mesh(geometry, material);
-      }
-
+    buildSCrollers() {
+      if (this.NoScroller) this.scene.remove(this.NoScroller.scrollerMesh);
+      if (this.LongestScroller) this.scene.remove(this.LongestScroller.scrollerMesh);
+      if (this.AmigaScroller) this.scene.remove(this.AmigaScroller.scrollerMesh);
+      
       this.NoScroller = new Scroller('NO SCROLLERS                JUST SOLSKOGEN');
       this.scene.add(this.NoScroller.scrollerMesh);
 
@@ -121,6 +129,10 @@
 
       this.AmigaScroller.scrollerMesh.position.set(-25, -10, -5);
       this.AmigaScroller.scrollerMesh.rotation.z = Math.PI / 5;
+    }
+
+    resize() {
+      this.buildSCrollers();
     }
 
     warmup(renderer) {
