@@ -33,7 +33,7 @@
       this.render(renderer);
     }
 
-    beforeUpdate() {
+    beforeUpdate(frame) {
       this.inputs.Startlogo.enabled = false;
       this.inputs.A1.enabled = false;
       this.inputs.A2.enabled = false;
@@ -65,7 +65,7 @@
         selectedScene = this.inputs.B2;
       } else if (BEAN < 24 * 25) {
         selectedScene = this.inputs.A3;
-      } else if (BEAN < 24 * 28) { // One beat early ;)
+      } else if (frame < 4026) { // The specific frame in which none of the tent fabric is visible
         selectedScene = this.inputs.A4;
       } else if (BEAN < 24 * 33) {
         selectedScene = this.inputs.B3;

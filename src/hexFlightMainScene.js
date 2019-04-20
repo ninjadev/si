@@ -37,7 +37,7 @@
         var tmp = new THREE.Mesh(new THREE.BoxGeometry(100, 100, 1),
           this.planeShaders[i]);
         tmp.material.transparent = true;
-        tmp.position.z = - (10 + i * this.planeDistance);
+        tmp.position.z = - (450 + i * this.planeDistance);
         tmp.material.uniforms.planeID.value = i;
         this.planes.push(tmp);
         this.scene.add(tmp);
@@ -81,7 +81,7 @@
     update(frame) {
       super.update(frame);
       var SHORTDIST = 20;
-      var LONGDIST = 50;
+      var LONGDIST = 45.4;
 
       this.wall.visible = true;
       if(BEAN >= 744) {
@@ -129,7 +129,11 @@
         this.planes[i].material.uniforms.seed2.value = (frame / 200);
 
         this.planes[i].position.z = -(((this.camera.position.z + i * this.planeDistance) % (this.planeDistance * this.planeCount)) + 1  * this.planeDistance);
+        //this.planes[i].position.x = 1000;
       }
+      this.planes[0].position.x = 1000;
+      this.planes[1].position.x = 1000;
+      this.planes[2].position.x = 1000;
     }
   }
 
