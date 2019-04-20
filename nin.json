@@ -1,9 +1,16 @@
 {
-  "title": "My project",
+  "title": "Flat Shade Society",
   "authors": [
-    "Your demoscene handle"
+    "capitalism",
+    "cristea",
+    "flowie",
+    "iverjo",
+    "lulle",
+    "run",
+    "sigveseb",
+    "stiaje"
   ],
-  "description": "This is my project",
+  "description": "Solskogen 2019 invitation",
   "previewImage": "https://raw.githubusercontent.com/ninjadev/nin/master/nin/frontend/app/images/nin-dark.png",
   "aspectRatio": "16:9",
   "music": {
