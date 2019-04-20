@@ -69,18 +69,18 @@
       this.cameraX *= 0.5;
       this.cameraY *= 0.5;
 
-      if (BEAN >= startBEAN + 10) {
-        let s = easeIn(0, 1, F(frame, startBEAN + 10, 3));
+      if (BEAN >= startBEAN + 7) {
+        let s = easeIn(0, 1, F(frame, startBEAN + 7, 3));
         this.flat.scale.set(s, s, s);
         this.flat.position.set(this.cameraX, 30 + this.cameraY, 0);
       }
-      if (BEAN >= startBEAN + 14) {
-        let s = easeIn(0, 1, F(frame, startBEAN + 14, 3));
+      if (BEAN >= startBEAN + 10) {
+        let s = easeIn(0, 1, F(frame, startBEAN + 10, 3));
         this.shade.scale.set(s, s, s);
         this.shade.position.set(this.cameraX, this.cameraY, 0);
       }
-      if (BEAN >= startBEAN + 18) {
-        let s = easeIn(0, 1, F(frame, startBEAN + 18, 3));
+      if (BEAN >= startBEAN + 14) {
+        let s = easeIn(0, 1, F(frame, startBEAN + 14, 3));
         this.society.scale.set(s, s, s);
         this.society.position.set(this.cameraX, -30 + this.cameraY, 0);
       }
