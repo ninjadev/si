@@ -123,51 +123,51 @@
 
       this.clouds = [
         {
-          coords: [32, 30, 500],
+          coords: [30, 30, 500],
           color: [1, .6, .3],
           name: 'cocoon',
           fontSize: 0.15,
         },
         {
-          coords: [-40, 25, 480],
+          coords: [-20, -5, 480],
           color: [.5, .75, 1],
-          name: 'Desire',
+          name: 'Poo Brain',
           fontSize: 0.15,
         },
         {
-          coords: [40, -10, 450],
+          coords: [-30, 35, 450],
           color: [.5, 1, .5],
           name: 'Logicoma',
           fontSize: 0.15,
         },
         {
-          coords: [-55, -15, 400],
+          coords: [35, 10, 420],
           color: [0, 1, .75],
-          name: 'altair',
+          name: 'Schnappsgirls',
           fontSize: 0.15,
         },
         {
-          coords: [-40, 25, 380],
+          coords: [20, 45, 380],
           color: [1, 1, .5],
-          name: 'Poo Brain',
+          name: 'Ephidrena',
           fontSize: 0.15,
         },
         {
-          coords: [35, 5, 280],
+          coords: [-35, 10, 300],
           color: [.5, 1, .5],
           name: 'Pandacube',
           fontSize: 0.15,
         },
         {
-          coords: [-25, 50, 200],
+          coords: [-25, 50, 160],
           color: [1, 0.5, 1],
-          name: 'Ephidrena',
+          name: 'Desire',
           fontSize: 0.15,
         },
         {
-          coords: [0, 40, 50],
+          coords: [20, 10, 170],
           color: [.75, 1, .5],
-          name: 'Schnappsgirls',
+          name: 'altair',
           fontSize: 0.15,
         },
       ];
@@ -258,7 +258,8 @@
       }
 
       for (const [index, cloud] of this.clouds.entries()) {
-        const cloudFrame = FRAME_FOR_BEAN(24 * 17 + 6 + index * 12);
+        let bean = index < 7 ? 24 * 17 + 6 + index * 12 : 24 * 17 + 6 + 6 * 12;
+        const cloudFrame = FRAME_FOR_BEAN(bean);
         if (frame >= cloudFrame && frame < cloudFrame + 200) {
           for (const circle of cloud.circles) {
             circle.mesh.scale.setScalar(
@@ -303,7 +304,7 @@
             const path = cloud.text.paths[i];
             path.uniforms.drawEnd.value = smoothstep(
               0, 1,
-              F(frame, 24 * 17 + 6 + index * 12 + i / 2, 3 - Math.min(3, i / 6)));
+              F(frame, bean + i / 2, 3 - Math.min(3, i / 6)));
           }
           cloud.mesh.position.set(...cloud.coords);
         } else {
