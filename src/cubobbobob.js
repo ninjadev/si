@@ -30,13 +30,13 @@
       this.plume2.position.z = -80;
       this.scene.add(this.plume);
       this.scene.add(this.plume2);
-      this.geometry = new THREE.TorusGeometry(50, 50, 50, 50, 50, 50);
+      this.geometry = new THREE.TorusGeometry(50, 50, 50, 50, 50);
 
       this.torus = new THREE.Mesh(this.geometry,
         new THREE.MeshBasicMaterial({
           map: new THREE.CanvasTexture(this.texture()),
           color: 0xffffff,
-        }),
+        })
       );
       this.torus.scale.set(0.75, 0.75, 0.75);
       this.torus.position.set(0, 0, -50);
@@ -90,7 +90,7 @@
         this.twistAmount = 20;
       }
 
-      const slowifier = (BEAN >= 234 && BEAN < 240) ? 20 : 3.5;
+      const slowifier = (BEAN >= 234 && BEAN < 240) ? 2.5 : 1.3;
       this.twist(this.twistAmount * this.sign * slowifier);
       this.twists++;
 
@@ -102,14 +102,12 @@
       this.torus.scale.set(0.5, 0.5, 0.5);
 
       if(BEAN >= 240 && BEAN < 264) {
-        //const amount = smoothstep(0.60, 0.3, (frame - this.startFrame) / (1575-1455));
-        const amount = 0.3;
+        const amount = smoothstep(0.35, 0.3, (frame - this.startFrame) / (1575-1455));
         this.torus.scale.set(amount, amount, amount);
       }
 
       if(BEAN >= 264 && BEAN < 264 + 5) {
-        //const amount = smoothstep(0.35, 0.75, (frame - this.startFrame) / (1623-1575));
-        const amount = 0.2;
+        const amount = smoothstep(0.2, 0.25, (frame - this.startFrame) / (1623-1575));
         this.torus.scale.set(amount, amount, amount);
       }
 
@@ -118,8 +116,7 @@
       this.plume2.scale.set(this.plumeScale2, this.plumeScale2, this.plumeScale2);
       this.plume.material.color.setRGB(1, 1, 1);
       if(BEAN >= 264 + 5) {
-        //const amount = smoothstep(0.75, 0.25, (frame - this.startFrame) / (1663-1623));
-        const amount = 0.35;
+        const amount = smoothstep(0.35, 0.45, (frame - this.startFrame) / (1663-1623));
         this.plume.scale.set(1.15, 1.15, 1.15);
         this.plume2.scale.set(1.15, 1.15, 1.15);
         this.torus.scale.set(amount, amount, amount);
@@ -128,10 +125,14 @@
         this.plume.scale.set(s1, s1, s1);
         this.plume2.scale.set(s2, s2, s2);
         this.torus.material.color.setRGB(0.5, 1.0, .5);
-      this.plume.material.color.setRGB(0.7, 0.7, 0.7);
+        this.plume.material.color.setRGB(0.7, 0.7, 0.7);
       }
 
       this.torus.visible = true;
+      if(BEAN >= 290) {
+        const scale = lerp(0.45, 0.01, F(frame, 290,  10));
+        this.torus.scale.set(scale, scale, scale);
+      }
       if(BEAN >= 300) {
         this.torus.visible = false;
         this.plume.visible = false;
@@ -147,7 +148,7 @@
 
       }
 
-      const rotate = lerp(0, 800, F(frame, 5*24*24  * 5));
+      const rotate = lerp(0, 800, F(frame, 5*24*24 * 5));
       this.torus.rotation.y = rotate;
 
       this.background.material.map = this.inputs.background.getValue();
@@ -181,8 +182,8 @@
       ctx.strokeStyle = '#000000';
       ctx.lineWidth = 10;
       for(let i = 0; i < 10; i++) {
-        ctx.moveTo(0, i*100 + 10 /2);
-        ctx.lineTo(1000, i*100 + 10 /2);
+        ctx.moveTo(0, i*100 + 10 / 2);
+        ctx.lineTo(1000, i*100 + 10 / 2);
         ctx.stroke();
       }
 
