@@ -22,48 +22,49 @@
       let fillColor = "#7fffff";
 
       const info = [
-        [0, 10, "xl", "#ff99e6", "julie"],
-        [80, 50, "s", "#e1caa0", "stian"],
-        [0, -100, "m", "#ff9933", "aleks"],
-        [-80, 50, "s", "#b2997c", "iver"],
-        [-100, -75, "m", "#86592d", "sigve"],
-        [-160, 20, "m", "#53402d", "rune"],
-        [100, -75, "m", "#8c735a", "cristea"],
-        [160, 20, "l", "#b37700", "flory"],
-        [-250, -90, "m", "#000000", ""],
-        [250, 35, "m", "#000000", ""],
-        [210, -90, "m", "#000000", ""]
+        [0, 10, "xl", "#ff99e6", "julie", false],
+        [80, 50, "s", "#e1caa0", "stian", false],
+        [0, -100, "m", "#ff9933", "aleks", true],
+        [-80, 50, "s", "#b2997c", "iver", false],
+        [-100, -75, "m", "#86592d", "sigve", false],
+        [-160, 20, "m", "#53402d", "rune", true],
+        [100, -75, "m", "#8c735a", "cristea", false],
+        [160, 20, "l", "#b37700", "flory", false],
       ];
 
       this.guys = [];
       this.shadows = [];
-      for(let i = 0; i < info.length - 3; i++) {
+      for(let i = 0; i < info.length; i++) {
         let size = i % 2 === 1 || i === 0 ? 0.4 : 0.5;
         let r = 20 * size;
-        let x = info[i][0];
-        let y = info[i][1];
-        let black = "#000000";
+        let x = info[i][0] + 0.5;
+        let y = info[i][1] - 1.5;
         let z = -1;
+        let black = "#000000";
 
         let hair = makeHair(x, y + r * 2, size, info[i][2], black);
+        hair.position.z = z;
         this.scene.add(hair);
-        let head = makeHead(x, y, size, r, fill, black);
+        let head = makeHead(x, y, size, r, fill, black, info[i][5]);
+        head.position.z = z;
         this.scene.add(head);
         let frontleft = makeFront(0, 0, size, directionSize, fill, black);
-        frontleft.position.set(x, y, 0);
+        frontleft.position.set(x, y, z);
         this.scene.add(frontleft);
         let frontright = frontleft.clone();
         frontright.scale.x = -1;
         this.scene.add(frontright);
         let backleft = makeBack(0, 0, size, directionSize, fill, black);
-        backleft.position.set(x, y, 0);
+        backleft.position.set(x, y, z);
         this.scene.add(backleft);
         let backright = backleft.clone();
         backright.scale.x = -1;
         this.scene.add(backright);
         let handsUp1 = makeHandsUp1(x, y, size, directionSize, fill, black);
+        handsUp1.position.z = z;
         this.scene.add(handsUp1);
         let handsUp2 = makeHandsUp2(x, y, size, directionSize, fill, black);
+        handsUp2.position.z = z;
         this.scene.add(handsUp2);
         let body = {pos: [x, y + r], head, hair, frontleft, frontright, backleft, backright, handsUp1, handsUp2}
         this.shadows.push(body);
@@ -73,7 +74,7 @@
 
         hair = makeHair(x, y + r * 2, size, info[i][2], info[i][3]);
         this.scene.add(hair);
-        head = makeHead(x, y, size, r, fill, 0x7fffff);
+        head = makeHead(x, y, size, r, fill, fillColor, info[i][5]);
         this.scene.add(head);
         frontleft = makeFront(0, 0, size, directionSize, fill, fillColor);
         frontleft.position.set(x, y, 0);
@@ -118,7 +119,7 @@
         this.scene.add(line);
       }
 
-      function makeHead(x, y, size, r, fill, fillColor) {
+      function makeHead(x, y, size, r, fill, fillColor, glasses) {
         y = y + r;
         let hode = new THREE.Object3D();
         hode.lines = [];
@@ -145,6 +146,44 @@
         line = makeLine(curve, null, 1);
         hode.add(line);
         hode.lines.push(line);
+        if(glasses) {
+          line = makeLine([
+            [x - 12 * size, y + 1 * size],
+            [x - 1 * size, y + 1 * size],
+            [x - 1 * size, y + 9 * size],
+            [x - 12 * size, y + 9 * size],
+            [x - 12 * size, y + 1 * size],
+          ], null, 1);
+          hode.add(line);
+          hode.lines.push(line);
+          line = makeLine([
+            [x + 12 * size, y + 1 * size],
+            [x + 1 * size, y + 1 * size],
+            [x + 1 * size, y + 9 * size],
+            [x + 12 * size, y + 9 * size],
+            [x + 12 * size, y + 1 * size],
+          ], null, 1);
+          hode.add(line);
+          hode.lines.push(line);
+          line = makeLine([
+            [x + 20 * size, y + 5 * size],
+            [x + 12 * size, y + 5 * size],
+          ], null, 1);
+          hode.add(line);
+          hode.lines.push(line);
+          line = makeLine([
+            [x - 20 * size, y + 5 * size],
+            [x - 12 * size, y + 5 * size],
+          ], null, 1);
+          hode.add(line);
+          hode.lines.push(line);
+          line = makeLine([
+            [x - 1 * size, y + 5 * size],
+            [x + 1 * size, y + 5 * size],
+          ], null, 1);
+          hode.add(line);
+          hode.lines.push(line);
+        }
         return hode;
       }
 
