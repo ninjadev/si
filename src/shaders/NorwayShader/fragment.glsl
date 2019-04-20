@@ -118,7 +118,7 @@ void main() {
     }
     else
     {
-      output_color = texture2D(z11, uv) * vec4(0.5, 0.5, 1.0, 1.);
+      output_color = texture2D(z11, uv);
     }
     /*output_color = vec4(output_color.r - red * 10.,
                             output_color.g - green * 10.,

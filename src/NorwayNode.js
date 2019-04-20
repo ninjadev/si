@@ -8,14 +8,7 @@
           render: new NIN.TextureOutput()
         },
         inputs: {
-          sirpathrick: new NIN.TextureInput(),
-          boxes: new NIN.TextureInput(),
-          cross: new NIN.TextureInput(),
-          pathy: new NIN.TextureInput(),
-          moose: new NIN.TextureInput(),
-          diagonals: new NIN.TextureInput(),
-          Yoga: new NIN.TextureInput(),
-          ripple: new NIN.TextureInput(),
+          input_scene: new NIN.TextureInput(),
         },
       });
 
@@ -167,29 +160,36 @@
       this.map_object.material.uniforms.z11.value = this.paperTexture;
 
       if(BEAN >= 312 + 12 && BEAN < 312 + 12 * 2) {
-        this.map_object.material.uniforms.z1.value = this.inputs.sirpathrick.getValue();
+        this.map_object.material.uniforms.z1.value = this.inputs.input_scene.getValue();
       } else if(BEAN >= 312 + 2 * 12 && BEAN < 312 + 12 * 3) {
-        this.map_object.material.uniforms.z8.value = this.inputs.boxes.getValue();
+        this.map_object.material.uniforms.z8.value = this.inputs.input_scene.getValue();
       } else if(BEAN >= 312 + 2 * 12 && BEAN < 312 + 12 * 3) {
-        this.map_object.material.uniforms.z8.value = this.inputs.boxes.getValue();
+        this.map_object.material.uniforms.z8.value = this.inputs.input_scene.getValue();
       } else if(BEAN >= 312 + 3 * 12 && BEAN < 312 + 12 * 4) {
-        this.map_object.material.uniforms.z9.value = this.inputs.pathy.getValue();
+        this.map_object.material.uniforms.z9.value = this.inputs.input_scene.getValue();
       } else if(BEAN >= 312 + 4 * 12 && BEAN < 312 + 12 * 5) {
-        this.map_object.material.uniforms.z5.value = this.inputs.diagonals.getValue();
+        this.map_object.material.uniforms.z5.value = this.inputs.input_scene.getValue();
       } else if(BEAN >= 312 + 5 * 12 && BEAN < 312 + 12 * 5.5) {
-        this.map_object.material.uniforms.z6.value = this.inputs.cross.getValue();
+        this.map_object.material.uniforms.z6.value = this.inputs.input_scene.getValue();
+      } else if(BEAN >= 312 + 5.5 * 12 && BEAN < 312 + 12 * 6) {
+        this.map_object.material.uniforms.z4.value = this.inputs.input_scene.getValue();
+        this.map_object.material.uniforms.z3.value = this.inputs.input_scene.getValue();
       } else if(BEAN >= 312 + 6 * 12 && BEAN < 312 + 12 * 7) {
-        this.map_object.material.uniforms.z4.value = this.inputs.boxes.getValue();
+        this.map_object.material.uniforms.z7.value = this.inputs.input_scene.getValue();
       } else if(BEAN >= 312 + 7 * 12 && BEAN < 312 + 12 * 7.5) {
-        this.map_object.material.uniforms.z7.value = this.inputs.diagonals.getValue();
+        this.map_object.material.uniforms.z2.value = this.inputs.input_scene.getValue();
+        this.map_object.material.uniforms.z10.value = this.inputs.input_scene.getValue();
+        this.map_object.material.uniforms.z11.value = this.inputs.input_scene.getValue();
       } else if(BEAN >= 312 + 7.5 * 12 && BEAN < 312 + 12 * 8) {
-        this.map_object.material.uniforms.z3.value = this.inputs.Yoga.getValue();
-      } else if(BEAN >= 312 + 8 * 12 && BEAN < 312 + 12 * 8.5) {
-        this.map_object.material.uniforms.z2.value = this.inputs.ripple.getValue();
-      } else if(BEAN >= 312 + 8.5 * 12 && BEAN < 312 + 12 * 9) {
-        this.map_object.material.uniforms.z10.value = this.inputs.moose.getValue();
-      } else if(BEAN >= 312 + 9 * 12 && BEAN < 312 + 12 * 8.5) {
-        this.map_object.material.uniforms.z11.value = this.inputs.Yoga.getValue();
+        this.map_object.material.uniforms.z9.value = this.inputs.input_scene.getValue();
+        this.map_object.material.uniforms.z5.value = this.inputs.input_scene.getValue();
+        this.map_object.material.uniforms.z6.value = this.inputs.input_scene.getValue();
+        this.map_object.material.uniforms.z4.value = this.inputs.input_scene.getValue();
+        this.map_object.material.uniforms.z7.value = this.inputs.input_scene.getValue();
+        this.map_object.material.uniforms.z3.value = this.inputs.input_scene.getValue();
+        this.map_object.material.uniforms.z2.value = this.inputs.input_scene.getValue();
+        this.map_object.material.uniforms.z10.value = this.inputs.input_scene.getValue();
+        this.map_object.material.uniforms.z11.value = this.inputs.input_scene.getValue();
       }
 
       this.flateby_sign.quaternion.copy(this.camera.quaternion);
