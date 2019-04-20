@@ -66,12 +66,12 @@
       this.scene.add(this.number2);
       this.scene.add(this.number3);
 
-      this.number1_raw.position.x = 0;
-      this.number2_raw.position.x = 0;
-      this.number3_raw.position.x = 0;
-      this.number1_raw.position.y = -0.3;
-      this.number2_raw.position.y = -0.3;
-      this.number3_raw.position.y = -0.3;
+      this.number1_raw.position.x = -0.2;
+      this.number2_raw.position.x = -0.1;
+      this.number3_raw.position.x = .4;
+      this.number1_raw.position.y = -0.24;
+      this.number2_raw.position.y = -0.24;
+      this.number3_raw.position.y = -0.24;
 
       var number_scale = 30;
       this.number1.scale.x = number_scale;

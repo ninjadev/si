@@ -124,7 +124,8 @@
           if(manipulated_bean >= 204 && (i < 10 || i > 11)) {
             continue;
         }
-          this.fillerz[i][21].visible = true;
+          let placy = 21 - Math.max(0,  (BEAN - 204) / 3 | 0);
+          this.fillerz[i][placy].visible = true;
         }
       }
 
@@ -137,8 +138,8 @@
         );
         path.material.uniforms.wobbliness.value = 1;
         path.material.uniforms.width.value = 1;
-        if(manipulated_bean >= 198 - 3) {
-          path.material.uniforms.width.value = easeIn(1, 0.5, F(frame, 198 - 3, 3));
+        if(manipulated_bean >= 192 - 3) {
+          path.material.uniforms.width.value = easeIn(1, 0.5, F(frame, 192 - 3, 3));
         }
       }
 
@@ -157,7 +158,7 @@
       this.camera.position.x = 0;
       if(manipulated_bean >= 204) {
         //this.camera.position.y = manipulated_bean % 6 < 3 ? 15.5 : 0;
-        this.camera.position.x = -((manipulated_bean - 204) / 3 | 0) * 15.5 / 2;
+        //this.camera.position.x = -((manipulated_bean - 204) / 3 | 0) * 15.5 / 2;
       }
     }
   }
