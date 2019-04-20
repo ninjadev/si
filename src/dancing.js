@@ -528,16 +528,6 @@
           body.backright.visible = false;
           body.handsUp1.visible = false;
           body.handsUp2.visible = true;
-
-          for(let k = 0; k < body.head.lines.length; k++) {
-            const path = body.head.lines[k].path;
-            //path.uniforms.drawEnd.value = lerp(0, 1, F(frame, (BEAN / 6 | 0) * 6 + 3 * k / body.head.lines.length, 1));
-            if(path.fillMesh) {
-              //path.fillMesh.visible = BEAN % 6 >= 3;
-              //path.fillMesh.visible = false;
-            }
-          }
-          body.handsUp2.line.path.uniforms.drawEnd.value = lerp(0, 1, F(frame, (BEAN / 6 | 0) * 6, 3));
         }
         for (const body of this.guys) {
           body.frontleft.visible = false;
@@ -555,7 +545,7 @@
               //path.fillMesh.visible = false;
             }
           }
-          body.handsUp2.line.path.uniforms.drawEnd.value = lerp(0, 1, F(frame, (BEAN / 6 | 0) * 6, 3));
+          //body.handsUp2.line.path.uniforms.drawEnd.value = lerp(0, 1, F(frame, (BEAN / 6 | 0) * 6, 3));
         }
       }
       if (BEAN >= startBEAN + 60 && BEAN < startBEAN + 144) {
@@ -567,7 +557,6 @@
           body.handsUp1.visible = false;
           body.handsUp2.visible = false;
         }
-
         for (const body of this.guys) {
           body.frontleft.visible = (BEAN % 36 < 6) || (BEAN % 36 >= 12 && BEAN % 36 < 18);
           body.backleft.visible = BEAN % 36 >= 6 && BEAN % 36 < 12;
@@ -586,7 +575,6 @@
           body.handsUp1.visible = BEAN % 2 === 0;
           body.handsUp2.visible = BEAN % 2 === 1;
         }
-
         for (const body of this.guys) {
           body.frontleft.visible = false;
           body.backleft.visible = false;
