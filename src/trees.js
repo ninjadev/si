@@ -26,12 +26,14 @@
 
       function makeCurve(xRadius, yRadius, offset) {
         const coords = [];
+        coords.push([0, 0]);
         for (let i = 0; i <= 20; i++) {
           const x = xRadius * Math.cos(i*Math.PI/20);
           const y = yRadius * Math.sin(i*Math.PI/20);
           coords.push([x, y]);
         }
-        return {coords, offset};
+        coords.push([0, 0]);
+        return {coords, offset, fillColor: 0x7f7f7f};
       }
 
       function makeTree(offset) {
@@ -187,13 +189,19 @@
       }
 
       const tentPath = new Path({fill: true, fillColor: 0xef8f5f});
-      tentPath.lineTo(0, 0);
-      tentPath.lineTo(30, 60);
-      tentPath.lineTo(60, 0);
+      tentPath.lineTo(0, 2);
+      tentPath.lineTo(3, 11);
+      tentPath.lineTo(28, 58);
+      tentPath.lineTo(33, 60);
+      tentPath.lineTo(57, 11);
+      tentPath.lineTo(59, 2);
+      tentPath.lineTo(58, 0);
       tentPath.lineTo(42.5, 0);
-      tentPath.lineTo(30, 25);
+      tentPath.lineTo(32, 24);
+      tentPath.lineTo(28, 23);
       tentPath.lineTo(17.5, 0);
-      tentPath.lineTo(0, 0);
+      tentPath.lineTo(1, 0);
+      tentPath.lineTo(0, 2);
       this.tent = tentPath.toObject3D();
       this.scene.add(this.tent);
       this.tent.position.set(-680, -50, 260);
@@ -223,7 +231,7 @@
       this.wall = new THREE.Mesh(
         new THREE.BoxGeometry(2000, 1000, 10),
         new THREE.MeshBasicMaterial({
-          color: 0xffffff,
+          color: 0xff7fff,
           map: Loader.loadTexture('res/paper.png'),
           side: THREE.DoubleSide,
         }));
@@ -250,6 +258,11 @@
 
     update(frame) {
       super.update(frame);
+
+      this.wall.material.color.setRGB(1, 1, 1);
+      if(BEAN >= 600) {
+        this.wall.material.color.setRGB(1, 0.5, 1);
+      }
 
       const startFrame = FRAME_FOR_BEAN(24 * 21);
       const wifiStartFrame = FRAME_FOR_BEAN(24 * 23);

@@ -64,6 +64,10 @@
       this.graphicsTexture.magFilter = THREE.LinearFilter;
       this.flatebyTexture.minFilter = THREE.LinearFilter;
       this.flatebyTexture.magFilter = THREE.LinearFilter;
+      this.flatShadeTexture.minFilter = THREE.LinearFilter;
+      this.flatShadeTexture.magFilter = THREE.LinearFilter;
+      this.flatShadeSpinnerTexture.minFilter = THREE.LinearFilter;
+      this.flatShadeSpinnerTexture.magFilter = THREE.LinearFilter;
 
       this.twistoramaContainer = new THREE.Mesh(
         new THREE.PlaneGeometry(1, 1),
@@ -385,8 +389,8 @@
         this.light1.angle = easeOut(0.85, 0.65, F(frame, 138, 3));
         this.splashoBillboard.scale.set(scaler, scaler, 1);
         this.splashoBackBillboard.scale.set(scaler, scaler, 1);
-        this.splashoBillboard.material.opacity = scaler;
-        this.splashoBackBillboard.material.opacity = scaler;
+        this.splashoBillboard.material.opacity = easeOut(1, 0, F(frame, 138, 1.2)) ;
+        this.splashoBackBillboard.material.opacity = easeOut(1, 0, F(frame, 138, 1.2));
       } else if(BAR >= 9 && BAR < 10) {
         const t = F(frame,  9 * 24, 24);
         const t2 = F(frame, 10 * 24 - 6, 6);

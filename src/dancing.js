@@ -571,7 +571,7 @@
       this.mommaBird.rotation.z = rotationChain;
       this.mommaBird.position.y = easeIn(-100, 100, (frame - birdBean - FRAME_FOR_BEAN(18)) / 60) + Math.sin(frame / 20) * 10;
       this.mommaBird.position.x = smoothstep(280, -350, (frame - birdBean) / 240);
-      this.mommaBird.position.z = 5;
+      this.mommaBird.position.z = 10;
     }
   }
 
