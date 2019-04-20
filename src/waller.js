@@ -938,7 +938,7 @@
         let speed = F(frame, fallBEAN + 12, 1)/10;
         this.paper.position.y = -lerp(0.066, 1, speed);
         this.shadowPaper.position.y = -lerp(0.066, 1, speed);
-        let lightFrame = 9071;
+        let lightFrame = 9647;
         if(frame < lightFrame) {
           this.light1.intensity = 1;
         } else if(frame < lightFrame + 3) {
