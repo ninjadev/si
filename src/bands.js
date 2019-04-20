@@ -170,6 +170,12 @@
           name: 'altair',
           fontSize: 0.15,
         },
+        {
+          coords: [-40, 0, 380],
+          color: [243/255, 114/255, 179/255],
+          name: 'FEE1DEAD',
+          fontSize: 0.15,
+        },
       ];
 
       const positionRandom = new Random(123);
@@ -261,7 +267,8 @@
         let i = index;
         if(i <= 1) i = 0;
         if(i > 1 && i < 7) i -= 1;
-        if(i >= 7) i = 6;
+        if(i === 7) i = 6;
+        if(i === 8) i = 3;
         let bean = 24 * 17 + 6 + i * 12;
         const cloudFrame = FRAME_FOR_BEAN(bean);
         if (frame >= cloudFrame && frame < cloudFrame + 200) {
