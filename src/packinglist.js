@@ -64,6 +64,10 @@
         },
       ];
 
+      this.ticks = [];
+      this.boxes = [];
+      this.checks = [];
+
       for (let [index, title] of this.titles.entries()) {
         title.text.scale.set(0.20 / scale, 0.20 / scale, 0.20 / scale);
         title.text.position.set(-1.4 + title.text.totalWidth / 150, 3.5 - index * .5, 0);
@@ -73,8 +77,10 @@
         tickpath.lineTo(-33, 52.5 - index * 7.5);
         tickpath.lineTo(-30, 52.5 - index * 7.5);
         const tick = tickpath.toObject3D();
+        tick.path = tickpath;
         tick.scale.set(1 / scale, 1 / scale, 1 / scale);
         this.scene.add(tick);
+        this.ticks.push(tick);
 
         const boxpath = new Path();
         boxpath.lineTo(-27, 54.5 - index * 7.5);
@@ -83,16 +89,20 @@
         boxpath.lineTo(-27, 50.5 - index * 7.5);
         boxpath.lineTo(-27, 54.5 - index * 7.5);
         const box = boxpath.toObject3D();
+        box.path = boxpath;
         box.scale.set(1 / scale, 1 / scale, 1 / scale);
         this.scene.add(box);
+        this.boxes.push(box);
 
         const checkpath = new Path();
         checkpath.lineTo(-27.5, 53 - index * 7.5);
         checkpath.lineTo(-25.5, 51 - index * 7.5);
         checkpath.lineTo(-22, 55.5 - index * 7.5);
         const check = checkpath.toObject3D();
+        check.path = checkpath;
         check.scale.set(1 / scale, 1 / scale, 1 / scale);
         this.scene.add(check);
+        this.checks.push(check);
       }
     }
 
@@ -102,13 +112,26 @@
     }
 
     update(frame) {
-      for (let { startFrame, endFrame, text, transition, } of this.titles) {
+      for (let [index, { startFrame, endFrame, text, transition }] of this.titles.entries()) {
         for (let i = 0; i < text.paths.length; i++) {
           const path = text.paths[i];
           const offset = i * transition;
           path.material.uniforms.drawStart.value = lerp(0, 1, (frame - endFrame + transition - offset) / transition);
           path.material.uniforms.drawEnd.value = lerp(0, 1, (frame - startFrame - offset) / transition);
         }
+
+        const tick = this.ticks[index];
+
+        tick.path.material.uniforms.drawStart.value = 0;
+        tick.path.material.uniforms.drawEnd.value = lerp(0, 1, (frame - startFrame) / transition);
+
+        const box = this.boxes[index];
+        box.path.material.uniforms.drawStart.value = 0;
+        box.path.material.uniforms.drawEnd.value = lerp(0, 1, (frame - startFrame - transition) / transition);
+
+        const check = this.checks[index];
+        check.path.material.uniforms.drawStart.value = 0;
+        check.path.material.uniforms.drawEnd.value = lerp(0, 1, (frame - startFrame - transition * 2) / transition);
       }
     }
 

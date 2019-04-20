@@ -870,7 +870,7 @@
         this.camera.position.y = 0;
         this.camera.position.z = easeIn(.15, 0.3, F(frame, ALEKS_BIRD_START_BEAN, 12));
       }
-      if(BEAN > 57 * 24 && BEAN < 61 * 24) {
+      if(BEAN >= 57 * 24 && BEAN < 61 * 24) {
         this.camera.position.x = lerp(
           0,
           lerp(-.09, 0, F(frame, 60 * 24 + 18, 6)),
@@ -884,7 +884,7 @@
 
         this.light1.target.position.x = lerp(
           0,
-          lerp(-.1, 0, F(frame, 60 * 24 + 18, 6)),
+          lerp(-.075, 0, F(frame, 60 * 24 + 18, 6)),
           F(frame, 57 * 24, 12));
       } else {
         this.packinglist.position.x = -500;
