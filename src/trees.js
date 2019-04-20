@@ -90,10 +90,9 @@
           directionSize: 2,
         };
         const path = new Path(options);
-        const shadowPath = new Path({
-          ...options,
+        const shadowPath = new Path(Object.assign({}, options, {
           fillColor: 0,
-        });
+        }));
         for (const [x, y] of track.coords) {
           path.lineTo(x, y);
           shadowPath.lineTo(x, y -4);
@@ -168,10 +167,9 @@
           directionSize: 2,
         };
         const path = new Path(options);
-        const shadowPath = new Path({
-          ...options,
+        const shadowPath = new Path(Object.assign({}, options, {
           fillColor: 0,
-        });
+        }));
         for (const [x, y] of track.coords) {
           path.lineTo(x, y);
           shadowPath.lineTo(x, y - 4);
