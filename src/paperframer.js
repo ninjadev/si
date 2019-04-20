@@ -161,13 +161,6 @@
       this.paper.material.map = this.inputs.A.getValue();
       this.paper.material.needsUpdate = true;
 
-      const aspectFixer = (16 / 9) / (11 / 8.5);
-
-      if (this.paper.material.map) {
-        this.paper.material.map.repeat.set(1 / aspectFixer, 1);
-        this.paper.material.map.offset.set((1 - 1 / aspectFixer) / 2, 0);
-      }
-
       for (let { startFrame, endFrame, text, transition, } of this.titles) {
         for (let i = 0; i < text.paths.length; i++) {
           const path = text.paths[i];
@@ -183,6 +176,13 @@
     }
 
     render(renderer) {
+
+      const aspectFixer = (16 / 9) / (11 / 8.5);
+      if (this.paper.material.map) {
+        this.paper.material.map.repeat.set(1 / aspectFixer, 1);
+        this.paper.material.map.offset.set((1 - 1 / aspectFixer) / 2, 0);
+      }
+
       renderer.render(this.scene, this.camera, this.renderTarget, true);
       this.outputs.render.setValue(this.renderTarget.texture);
     }

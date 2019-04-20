@@ -50,6 +50,8 @@
           let obj = path.toObject3D();
           obj.path = path;
 
+          path.uniforms.width.value = 1.5;
+
           wrapper.add(obj);
           lines.push(obj);
         }
