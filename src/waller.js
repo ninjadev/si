@@ -875,8 +875,7 @@
       */
 
 
-      this.paper.visible = true;
-      this.shadowPaper.visible = true;
+      this.paperWrapper.visible = true;
       this.forest.visible = false;
       if (BEAN >= 888 && BEAN < ALEKS_BIRD_START_BEAN) {
         this.camera.position.y = 0;
@@ -907,8 +906,7 @@
         this.forest.position.y = lerp(0.355, -0.243, F(frame, 984 + 3, 24 * 3 - 3));
 
         if(BEAN >= 984 && BEAN < 1080) {
-          this.paper.visible = false;
-          this.shadowPaper.visible = false;
+          this.paperWrapper.visible = false;
           this.forest.visible = true;
         }
       } else if(BEAN >= ALEKS_BIRD_START_BEAN) {
@@ -970,11 +968,8 @@
         }
         this.hemiLight.intensity = 0.1 + this.light1.intensity * 0.5;
       } else {
-        this.paperWrapper.position.x = -this.paperWidth / 2 + .005;
         this.paperWrapper.position.y = this.paperHeight / 2 - .008;
         this.paperWrapper.rotation.z = 0;
-        this.shadowPaper.visible = true;
-        this.light1.intensity = 1;
         this.hemiLight.intensity = 0.6;
       }
     }
