@@ -127,6 +127,8 @@
         }
       }
 
+      this.wrappers.goodMood.add(this.tileWrappers.sunglasses);
+
       this.scene.add(this.wrappers.hardware);
       this.scene.add(this.tileWrappers.hardware);
 
@@ -217,7 +219,7 @@
       this.wrappers.hardware.visible = BEAN >= 1380;
       this.wrappers.sunglasses.visible = BEAN >= 1440;
       this.wrappers.goodMood.tileMesh.visible = BEAN < 1456;
-      this.wrappers.sunglasses.tileMesh.visible = BEAN < 1456;
+      this.wrappers.sunglasses.tileMesh.visible = false;//BEAN < 1456;
       this.wrappers.campingEquipment.tileMesh.visible = BEAN < 1456;
       this.wrappers.pixelArt.tileMesh.visible = BEAN < 1456;
       this.wrappers.dancingSkills.tileMesh.visible = BEAN < 1456;
@@ -229,7 +231,7 @@
       this.tileWrappers.pixelArt.visible = false;
       this.tileWrappers.campingEquipment.visible = false;
       this.tileWrappers.goodMood.visible = false;
-      this.tileWrappers.sunglasses.visible = false;
+      this.tileWrappers.sunglasses.visible = BEAN >= 1434 && BEAN < 1456;
 
       const beansBeforeZoom = 10;
       const zoomDuration = 6;
