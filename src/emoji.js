@@ -103,6 +103,7 @@
           tileMesh.position.y = 1800 - 512;
           tileMesh.position.z = 0;
           wrapper.add(tileMesh);
+          wrapper.tileMesh = tileMesh;
 
           this.tileWrappers[mosaicKey] = tileWrapper;
           this.wrappers[mosaicKey] = wrapper;
@@ -169,6 +170,8 @@
       this.laptopKeyboardPolygonLine = laptopKeyboardPath.toObject3D();
       this.scene.add(this.laptopKeyboardPolygonLine);
       this.laptopKeyboardPolygonLine.path = laptopKeyboardPath;
+
+      this.wrappers.campingEquipment.tileMesh.material.opacity = 0;
     }
 
     warmup(renderer) {
@@ -255,6 +258,8 @@
         this.camera.position.x = easeOut(513.4, 513.352, zoomProgress3);
         this.camera.position.y = easeOut(1311.1, 1311.201, zoomProgress3);
         this.camera.zoom = smoothstep(22 * 40, 22 * 40 * 30, zoomProgress3);
+
+        this.wrappers.campingEquipment.tileMesh.material.opacity = lerp(0, 1, F(frame, prog3Start + beansBeforeZoom, zoomDuration * 0.4));
       }
 
       // zoom progress 4 & 5
