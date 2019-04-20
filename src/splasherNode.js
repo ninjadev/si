@@ -17,6 +17,7 @@
 
     beforeUpdate() {
       this.inputs.B.enabled = BEAN >= 1518;
+      this.inputs.A.enabled = true;
     }
 
     update(frame) {
@@ -29,7 +30,6 @@
       this.uniforms.infoOutro.value = this.inputs.B.getValue();
 
       this.uniforms.overlayer.value = 0;
-      this.inputs.A.enabled = true;
       this.uniforms.backgroundiness.value = 1;
       this.uniforms.framiness.value = 1;
     }
