@@ -52,14 +52,7 @@
     "id": "NorwayNode",
     "type": "NorwayNode",
     "connected": {
-      "sirpathrick": "sirpathrick.render",
-      "boxes": "cross.render",
-      "cross": "cross.render",
-      "moose": "cross.render",
-      "pathy": "cross.render",
-      "diagonals": "cross.render",
-      "Yoga": "cross.render",
-      "ripple": "cross.render"
+      "input_scene": "cross.render"
     }
   },
   {
