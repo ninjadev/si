@@ -65,7 +65,7 @@
 
       this.flatebyWord.position.y = -3.5;
 
-      let path = new Path();
+      let path = new Path(pathOptions);
       path.lineTo(-3, 0);
       path.lineTo(3, 0);
       this.line1 = path.line = path.toObject3D();
