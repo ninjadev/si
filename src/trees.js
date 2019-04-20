@@ -1,4 +1,5 @@
 (function(global) {
+  const F = (frame, from, delta) => (frame - FRAME_FOR_BEAN(from)) / (FRAME_FOR_BEAN(from + delta) - FRAME_FOR_BEAN(from));
   function easeInOutSin(a, b, t) {
     t = (1 + Math.sin(Math.PI * t - Math.PI / 2)) / 2;
     return lerp(a, b, t);
@@ -273,7 +274,7 @@
       for (let i = 0; i < this.lines.length; i++) {
         const path = this.lines[i].path;
         path.material.uniforms.drawStart.value = 0;
-        path.material.uniforms.drawEnd.value = lerp(0, 1, (frame - startFrame - i * 8) / 100);
+        path.material.uniforms.drawEnd.value = lerp(0, 1, F(frame, 24 * 21 + (i / 2 | 0) * 3, 12 + 3));
         path.material.uniforms.wobbliness.value = 1;
 
         if(path.fill) {
@@ -301,7 +302,7 @@
       for (let i = 0; i < this.mainTree.length; i++) {
         const path = this.mainTree[i].path;
         path.material.uniforms.drawStart.value = 0;
-        path.material.uniforms.drawEnd.value = lerp(0, 1, (frame - wifiStartFrame - i * 10) / 100);
+        path.material.uniforms.drawEnd.value = lerp(0, 1, F(frame, 24 * 3 + (i / 2 | 0) * 3, 12 + 3));
         path.material.uniforms.wobbliness.value = 1;
         //path.magicAnimationUpdater();
         if(path.fillMesh) {
