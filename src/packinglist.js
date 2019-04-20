@@ -45,22 +45,40 @@
 
       this.titles = [
         {
-          startFrame: 8200,
-          endFrame: 8670,
-          transition: 6,
-          text: XWrite('TENT'),
+          startFrame: 8243,
+          endFrame: 9999,
+          transition: 4,
+          text: XWrite('HARDWARE'),
         },
         {
-          startFrame: 8300,
-          endFrame: 8770,
-          transition: 6,
-          text: XWrite('YER MUM'),
+          startFrame: 8351,
+          endFrame: 9999,
+          transition: 3,
+          text: XWrite('DANCING SKILLS'),
         },
         {
-          startFrame: 8400,
-          endFrame: 8870,
-          transition: 6,
-          text: XWrite('STUFF'),
+          startFrame: 8423,
+          endFrame: 9999,
+          transition: 3,
+          text: XWrite('PIXEL ART'),
+        },
+        {
+          startFrame: 8495,
+          endFrame: 9999,
+          transition: 3,
+          text: XWrite('CAMPING EQUIPMENT'),
+        },
+        {
+          startFrame: 8567,
+          endFrame: 9999,
+          transition: 3,
+          text: XWrite('GOOD MOOD'),
+        },
+        {
+          startFrame: 8639,
+          endFrame: 9999,
+          transition: 3,
+          text: XWrite('SHADES'),
         },
       ];
 
