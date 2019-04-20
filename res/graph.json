@@ -182,7 +182,8 @@
     },
     "connected": {
       "A": "Waller.render",
-      "PaperContent": "sceneSwitcherNode.render"
+      "PaperContent": "sceneSwitcherNode.render",
+      "B": "infoOutro.render"
     }
   },
   {
@@ -202,5 +203,9 @@
   {
     "id": "packinglist",
     "type": "packinglist"
+  },
+  {
+    "id": "infoOutro",
+    "type": "infoOutro"
   }
 ]
