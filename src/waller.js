@@ -101,13 +101,13 @@
 
       //this.forest.scale.x = -this.forest.scale.x;
 
-
-
       const inchToCm = 2.54;
 
+      this.paperWidth = 11 * inchToCm / 100;
+      this.paperHeight = 8.5 * inchToCm / 100;
       let paperGeometry = new THREE.PlaneGeometry(
-        11 * inchToCm / 100,
-        8.5 * inchToCm / 100,
+        this.paperWidth,
+        this.paperHeight,
         11 * 3,
         8.5 * 3
       );
@@ -117,14 +117,24 @@
         vertex.z += (Math.random() - 0.5) * 0.25 * 0.01;
       }
 
+      this.paperWrapper = new THREE.Object3D();
+      this.paperWrapper.position.set(
+        -this.paperWidth / 2 + .005,
+        this.paperHeight / 2 - .008,
+        0);
+      this.scene.add(this.paperWrapper);
+
       this.paper = new THREE.Mesh(paperGeometry,
         new THREE.MeshStandardMaterial({
           roughness: 1,
           metalness: 0,
           side: THREE.DoubleSide,
         }));
-      this.paper.position.z = 0.003;
-      this.scene.add(this.paper);
+      this.paper.position.set(
+        this.paperWidth / 2 - .005,
+        -this.paperHeight / 2 + .008,
+        0.003);
+      this.paperWrapper.add(this.paper);
 
       this.packinglist = new THREE.Mesh(paperGeometry,
         new THREE.MeshStandardMaterial({
@@ -146,7 +156,7 @@
       this.paper.receiveShadow = true;
       this.packinglist.receiveShadow = true;
       this.shadowPaper = this.paper.clone();
-      this.scene.add(this.shadowPaper);
+      this.paperWrapper.add(this.shadowPaper);
       this.shadowPackingList = this.packinglist.clone();
       this.scene.add(this.shadowPackingList);
       this.shadowPaper.position.z -= 0.001;
@@ -928,40 +938,16 @@
         this.light1.target.position.x = 0;
       }
 
-      let fallBEAN = 1500;
-      if (BEAN >= fallBEAN && BEAN < fallBEAN + 6) {
-        let speed = F(frame, fallBEAN, 6);
-        this.paper.rotation.z = -easeIn(0, 1, speed);
-        this.paper.position.y = -easeIn(0, 0.066, speed);
-        this.paper.position.x = -easeIn(0, 0.144, speed);
-        this.shadowPaper.rotation.z = -easeIn(0, 1, speed);
-        this.shadowPaper.position.y = -easeIn(0, 0.066, speed);
-        this.shadowPaper.position.x = -easeIn(0, 0.144, speed);
-        // NEED HELP TO SHAKE IT BETTER --Julie
-      } else if (BEAN === fallBEAN + 6) {
-        let speed = F(frame, fallBEAN + 6, 1);
-        this.shadowPaper.visible = false;
-        this.paper.rotation.z = -smoothstep(1, 0.9, Math.sin(speed/10));
-        this.paper.position.x = -smoothstep(0.144, 0.136, Math.sin(speed/10));
-      } else if (BEAN >= fallBEAN + 7 && BEAN < fallBEAN + 9) {
-        let speed = F(frame, fallBEAN + 7, 1);
-        this.shadowPaper.visible = false;
-        this.paper.rotation.z = -smoothstep(0.9, 1.1, Math.sin(speed/10));
-        this.paper.position.x = -smoothstep(0.136, 0.152, Math.sin(speed/10));
-      } else if (BEAN >= fallBEAN + 9 && BEAN < fallBEAN + 11) {
-        let speed = F(frame, fallBEAN + 9, 1);
-        this.shadowPaper.visible = false;
-        this.paper.rotation.z = -smoothstep(1.1, 0.9, Math.sin(speed/10));
-        this.paper.position.x = -smoothstep(0.152, 0.136, Math.sin(speed/10));
-      } else if (BEAN === fallBEAN + 11) {
-        let speed = F(frame, fallBEAN + 11, 1);
-        this.shadowPaper.visible = false;
-        this.paper.rotation.z = -smoothstep(0.9, 1, Math.sin(speed/10));
-        this.paper.position.x = -smoothstep(0.136, 0.144, Math.sin(speed/10));
-      } else if (BEAN >= fallBEAN + 12) {
-        let speed = F(frame, fallBEAN + 12, 1)/10;
-        this.paper.position.y = -lerp(0.066, 1, speed);
-        this.shadowPaper.position.y = -lerp(0.066, 1, speed);
+      const fallBEAN = 1500;
+      if (BEAN >= fallBEAN) {
+        const speed = F(frame, fallBEAN, 20);
+        this.paperWrapper.rotation.z = elasticOut(0, -1, 1, speed);
+
+        this.paperWrapper.position.y = easeIn(
+          this.paperHeight / 2 - .008,
+          -1.5,
+          F(frame, fallBEAN + 12, 5));
+
         let lightFrame = 9051;
         if(frame < lightFrame) {
           this.light1.intensity = 1;
@@ -984,12 +970,9 @@
         }
         this.hemiLight.intensity = 0.1 + this.light1.intensity * 0.5;
       } else {
-        this.paper.position.x = 0;
-        this.paper.position.y = 0;
-        this.paper.rotation.z = 0;
-        this.shadowPaper.position.x = 0;
-        this.shadowPaper.position.y = 0;
-        this.shadowPaper.rotation.z = 0;
+        this.paperWrapper.position.x = -this.paperWidth / 2 + .005;
+        this.paperWrapper.position.y = this.paperHeight / 2 - .008;
+        this.paperWrapper.rotation.z = 0;
         this.shadowPaper.visible = true;
         this.light1.intensity = 1;
         this.hemiLight.intensity = 0.6;
