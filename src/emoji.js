@@ -123,23 +123,6 @@
           innerMosaicMesh.position.x = positionObj.x;
           innerMosaicMesh.position.y = positionObj.y;
           innerMosaicMesh.position.z = 50 + i;
-
-          /*
-          const backPlateMesh = new THREE.Mesh(
-            this.emojiGeometry,
-            new THREE.MeshBasicMaterial({
-              color: 0x333333,
-              transparent: true
-            })
-          );
-          backPlateMesh.position.x = positionObj.x + 58;
-          backPlateMesh.position.y = positionObj.y + 12;
-          backPlateMesh.position.z = 49;
-          backPlateMesh.scale.x = 1.5;
-          backPlateMesh.scale.y = 1.15;
-          outerMosaicMesh.add(backPlateMesh);
-          this.backPlates[positionObj.key] = backPlateMesh;
-          */
           i++;
         }
       }
@@ -159,7 +142,7 @@
       this.scene.add(this.laptopPolygonLine);
       this.laptopPolygonLine.path = path;
 
-      const laptopKeyboardPath = new Path({fill:true, fillColor: 0xCFD7DD});
+      const laptopKeyboardPath = new Path({fill: true, fillColor: 0xCFD7DD});
       laptopKeyboardPath.lineTo(895, 1090);
       laptopKeyboardPath.lineTo(975, 820);
       laptopKeyboardPath.lineTo(825, 810);
@@ -172,6 +155,25 @@
       this.laptopKeyboardPolygonLine.path = laptopKeyboardPath;
 
       this.wrappers.campingEquipment.tileMesh.material.opacity = 0;
+
+      this.random = new Random(0x80d);
+      this.shades = [];
+      this.shadeMaterial = new THREE.MeshBasicMaterial({
+        map: Loader.loadTexture(`res/emoji/shades.png`),
+        transparent: true
+      });
+      for (let i = 0; i < 90; i++) {
+        const tileMesh = new THREE.Mesh(this.emojiGeometry, this.shadeMaterial);
+        tileMesh.scale.x = 32;
+        tileMesh.scale.y = 32;
+        tileMesh.position.x = -290 + 1299 * this.random();
+        tileMesh.position.y = 740 + 1090 * this.random();
+        tileMesh.rotation.z = this.random() - 0.5;
+        tileMesh.position.z = 99;
+        tileMesh.visible = false;
+        this.wrappers.sunglasses.add(tileMesh);
+        this.shades.push(tileMesh);
+      }
     }
 
     warmup(renderer) {
@@ -214,6 +216,12 @@
 
       this.wrappers.hardware.visible = BEAN >= 1380;
       this.wrappers.sunglasses.visible = BEAN >= 1440;
+      this.wrappers.goodMood.tileMesh.visible = BEAN < 1456;
+      this.wrappers.sunglasses.tileMesh.visible = BEAN < 1456;
+      this.wrappers.campingEquipment.tileMesh.visible = BEAN < 1456;
+      this.wrappers.pixelArt.tileMesh.visible = BEAN < 1456;
+      this.wrappers.dancingSkills.tileMesh.visible = BEAN < 1456;
+      this.wrappers.hardware.tileMesh.visible = BEAN < 1456;
 
       this.tileWrappers.hardware.visible = BEAN >= 1392 && BEAN < 1420;
 
@@ -272,6 +280,17 @@
         const zoomProgress5 = F(frame, prog5Start + beansBeforeZoom, zoomDuration);
         for (let tile of this.tiles.sunglasses) {
           tile.rotation.y = smoothstep(-Math.PI / 2, 0, zoomProgress5 - tile.position.x / 1600 + tile.position.y / 2000);
+        }
+      }
+
+      if (BEAN >= 1452) {
+        const numVisibleShades = (
+          BEAN < 1458
+            ? lerp(0, this.shades.length, F(frame, 1452, 3))
+            : lerp(this.shades.length, 0, F(frame, 1458, 3))
+        );
+        for (let i = 0; i < this.shades.length; i++) {
+          this.shades[i].visible = i < numVisibleShades;
         }
       }
 
