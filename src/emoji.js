@@ -147,33 +147,50 @@
       this.scene.add(this.tileWrappers.hardware);
 
       // LAPTOP POLYGON
-      const path = new Path();
+      const pathOptions = {fill: true, fillColor: 0x556E7C};
+      const path = new Path(pathOptions);
+      path.lineTo(95, 1090);
       path.lineTo(95, 1570);
       path.lineTo(895, 1570);
       path.lineTo(895, 1090);
-      path.lineTo(975, 820);
-      path.lineTo(825, 810);
-      path.lineTo(125, 810);
-      path.lineTo(14, 820);
       path.lineTo(95, 1090);
-      path.lineTo(95, 1570);
       this.laptopPolygonLine = path.toObject3D();
       this.scene.add(this.laptopPolygonLine);
       this.laptopPolygonLine.path = path;
+
+      const laptopKeyboardPath = new Path({fill:true, fillColor: 0xCFD7DD});
+      laptopKeyboardPath.lineTo(895, 1090);
+      laptopKeyboardPath.lineTo(975, 820);
+      laptopKeyboardPath.lineTo(825, 810);
+      laptopKeyboardPath.lineTo(125, 810);
+      laptopKeyboardPath.lineTo(14, 820);
+      laptopKeyboardPath.lineTo(95, 1090);
+      laptopKeyboardPath.lineTo(895, 1090);
+      this.laptopKeyboardPolygonLine = laptopKeyboardPath.toObject3D();
+      this.scene.add(this.laptopKeyboardPolygonLine);
+      this.laptopKeyboardPolygonLine.path = laptopKeyboardPath;
     }
 
     update(frame) {
       super.update(frame);
 
       this.laptopPolygonLine.visible = BEAN >= 1368 && BEAN < 1392;
-
       this.laptopPolygonLine.path.material.uniforms.drawStart.value = 0;
       this.laptopPolygonLine.path.material.uniforms.drawEnd.value = lerp(
-        0, 1, F(frame, 1368, 10)
+        0, 1, F(frame, 1368, 6)
       );
+      this.laptopPolygonLine.fillMesh.visible = this.laptopPolygonLine.path.material.uniforms.drawEnd.value > 0.999;
       this.laptopPolygonLine.path.material.uniforms.wobbliness.value = 1;
       this.laptopPolygonLine.path.material.uniforms.width.value = 100;
 
+      this.laptopKeyboardPolygonLine.visible = BEAN >= 1368 && BEAN < 1392;
+      this.laptopKeyboardPolygonLine.path.material.uniforms.drawStart.value = 0;
+      this.laptopKeyboardPolygonLine.path.material.uniforms.drawEnd.value = lerp(
+        0, 1, F(frame, 1368, 6)
+      );
+      this.laptopKeyboardPolygonLine.fillMesh.visible = this.laptopKeyboardPolygonLine.path.material.uniforms.drawEnd.value > 0.999;
+      this.laptopKeyboardPolygonLine.path.material.uniforms.wobbliness.value = 1;
+      this.laptopKeyboardPolygonLine.path.material.uniforms.width.value = 100;
 
       this.wrappers.hardware.visible = BEAN >= 1380;
       this.wrappers.sunglasses.visible = BEAN >= 1440;
