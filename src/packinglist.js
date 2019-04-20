@@ -9,46 +9,27 @@
         }
       });
 
-      this.renderTarget = new THREE.WebGLRenderTarget(1920, 1080, {
+      this.renderTarget = new THREE.WebGLRenderTarget(960, 1080, {
         minFilter: THREE.LinearFilter,
         magFilter: THREE.LinearFilter,
         format: THREE.RGBAFormat,
       });
 
-      this.camera = new THREE.OrthographicCamera(-11 / 2, 11 / 2, 8.5 / 2, -8.5 / 2, 1, 1000);
+      this.camera = new THREE.OrthographicCamera(-11 / 4, 11 / 4, 8.5 / 2, -8.5 / 2, 1, 1000);
 
       this.camera.position.z = 100;
 
-      this.paper = new THREE.Mesh(
-        new THREE.PlaneGeometry(19 / 2, 14 / 2),
-        new THREE.MeshBasicMaterial({transparent: true}));
-      this.scene.add(this.paper);
-
       const scale = 15;
-      /*
-      this.innerPath = new Path();
-      this.innerPath.lineTo(-2 * scale, 7.5 / 2 * scale);
-      this.innerPath.lineTo(-5 * scale, 7.5 / 2 * scale);
-      this.innerPath.lineTo(-5 * scale, -7.5 / 2 * scale);
-      this.innerPath.lineTo(5 * scale, -7.5 / 2 * scale);
-      this.innerPath.lineTo(5 * scale, 7.5 / 2 * scale);
-      this.innerPath.lineTo(2 * scale, 7.5 / 2 * scale);
-      let mesh = this.innerPath.toObject3D();
-      mesh.scale.set(1 / scale, 1 / scale, 1 / scale);
-      this.scene.add(mesh);
-      */
 
       this.outerPath = new Path();
-      this.outerPath.lineTo(-2 * scale, 7.9 / 2 * scale);
-      this.outerPath.lineTo(-5.2 * scale, 7.9 / 2 * scale);
-      this.outerPath.lineTo(-5.2 * scale, -7.9 / 2 * scale);
-      this.outerPath.lineTo(5.2 * scale, -7.9 / 2 * scale);
-      this.outerPath.lineTo(5.2 * scale, 7.9 / 2 * scale);
-      this.outerPath.lineTo(2 * scale, 7.9 / 2 * scale);
+      this.outerPath.lineTo(-2.5 * scale, 7.9 / 2 * scale);
+      this.outerPath.lineTo(-2.5 * scale, -7.9 / 2 * scale);
+      this.outerPath.lineTo(2.5 * scale, -7.9 / 2 * scale);
+      this.outerPath.lineTo(2.5 * scale, 7.9 / 2 * scale);
+      this.outerPath.lineTo(-2.5 * scale, 7.9 / 2 * scale);
       const mesh = this.outerPath.toObject3D();
       mesh.scale.set(1 / scale, 1 / scale, 1 / scale);
       this.scene.add(mesh);
-
 
       this.wall = new THREE.Mesh(
         new THREE.BoxGeometry(1000, 1000, 1000),
@@ -64,87 +45,54 @@
 
       this.titles = [
         {
-          startFrame: 240,
-          endFrame: 857 - 50,
-          transition: 5,
-          text: XWrite('NINJADEV'),
-        },
-        { startFrame: 857,
-          endFrame: 1100,
-          transition: 10,
-          text: XWrite('INVITES YOU'),
-        },
-        { startFrame: 1190,
-          endFrame: 1290,
-          transition: 5,
-          text: XWrite('TO COME TO'),
-        },
-        {
-          startFrame: 1295,
-          endFrame: 2330,
-          transition: 8,
-          text: XWrite('SOLSKOGEN'),
-        },
-        {
-          startFrame: 2448,
-          endFrame: 2870,
-          transition: 10,
-          text: XWrite('BEAUTIFUL TUNNELS'),
-        },
-        {
-          startFrame: 3024,
-          endFrame: 4100,
-          transition: 10,
-          text: XWrite('BEAUTIFUL TREES'),
-        },
-        {
-          startFrame: 4900,
-          endFrame: 5207,
-          transition: 8,
-          text: XWrite('LIVE COMPOS'),
-        },
-        {
-          startFrame: 5307,
-          endFrame: 6337,
-          transition: 8,
-          text: XWrite('BEAUTIFUL TWISTERS'),
-        },
-        {
-          startFrame: 6479,
-          endFrame: 7501,
-          transition: 10,
-          text: XWrite('BEAUTIFUL NINJADEV'),
-        },
-        {
-          startFrame: 7631,
-          endFrame: 7800,
-          transition: 5,
-          text: XWrite('BEAUTIFUL MOMMA'),
-        },
-        {
-          startFrame: 7810,
-          endFrame: 8100,
-          transition: 5,
-          text: XWrite('BEAUTIFUL COMMOS'),
-        },
-        {
           startFrame: 8200,
           endFrame: 8670,
           transition: 6,
-          text: XWrite('STUFF TO BRING'),
+          text: XWrite('TENT'),
         },
         {
-          startFrame: 8750,
-          endFrame: 9800,
+          startFrame: 8300,
+          endFrame: 8770,
           transition: 6,
-          text: XWrite('BEAUTIFUL OUTRO'),
+          text: XWrite('YER MUM'),
+        },
+        {
+          startFrame: 8400,
+          endFrame: 8870,
+          transition: 6,
+          text: XWrite('STUFF'),
         },
       ];
 
-      for (let title of this.titles) {
+      for (let [index, title] of this.titles.entries()) {
         title.text.scale.set(0.20 / scale, 0.20 / scale, 0.20 / scale);
-        title.text.position.set(0 * scale, 7.7 / 2, 0);
+        title.text.position.set(-1.4 + title.text.totalWidth / 150, 3.5 - index * .5, 0);
         this.scene.add(title.text);
+
+        const tickpath = new Path();
+        tickpath.lineTo(-33, 52.5 - index * 7.5);
+        tickpath.lineTo(-30, 52.5 - index * 7.5);
+        const tick = tickpath.toObject3D();
+        tick.scale.set(1 / scale, 1 / scale, 1 / scale);
+        this.scene.add(tick);
+
+        const boxpath = new Path();
+        boxpath.lineTo(-27, 54.5 - index * 7.5);
+        boxpath.lineTo(-23, 54.5 - index * 7.5);
+        boxpath.lineTo(-23, 50.5 - index * 7.5);
+        boxpath.lineTo(-27, 50.5 - index * 7.5);
+        boxpath.lineTo(-27, 54.5 - index * 7.5);
+        const box = boxpath.toObject3D();
+        box.scale.set(1 / scale, 1 / scale, 1 / scale);
+        this.scene.add(box);
+
+        const checkpath = new Path();
+        checkpath.lineTo(-27.5, 53 - index * 7.5);
+        checkpath.lineTo(-25.5, 51 - index * 7.5);
+        checkpath.lineTo(-22, 55.5 - index * 7.5);
+        const check = checkpath.toObject3D();
+        check.scale.set(1 / scale, 1 / scale, 1 / scale);
+        this.scene.add(check);
       }
     }
 
