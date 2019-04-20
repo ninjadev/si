@@ -629,6 +629,9 @@
       if(BEAN >= 216) {
         this.background.material.color.setRGB(1.0, 0.5, 0.5);
       }
+      if(BEAN >= 264 + 5) {
+        this.background.material.color.setRGB(0.5, 0.5, 1.0);
+      }
       if(BEAN >= 312) {
         this.background.material.color.setRGB(0.5, 1.0, 1.0);
       }
