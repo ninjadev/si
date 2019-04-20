@@ -135,6 +135,8 @@
       this.laptopKeyboardPolygonLine = laptopKeyboardPath.toObject3D();
       this.scene.add(this.laptopKeyboardPolygonLine);
       this.laptopKeyboardPolygonLine.path = laptopKeyboardPath;
+
+      this.initTiles();
     }
 
     drawMosaics() {
@@ -167,22 +169,6 @@
         map: this.generatedEmojiTextures[this.emojiIdByKey.hardware],
         transparent: true
       });
-
-      /*
-      const cube = new THREE.Mesh(
-        this.emojiGeometry,
-        this.emojiMaterials[this.emojiIdByKey.hardware]
-      );
-      cube.scale.x = 32;
-      cube.scale.y = 32;
-      cube.position.x = 512;
-      cube.position.y = 1200;
-      cube.position.z = 0;
-      this.scene.add(cube);
-      console.log('I have added my plane')
-       */
-
-      this.initTiles();
     }
 
     initTiles() {
