@@ -376,7 +376,7 @@
       if(BAR >= 5 && BAR < 6) {
         const t = F(frame,  5 * 24, 24);
         const t2 = F(frame, 6 * 24 - 6, 6);
-        //this.camera.position.x = lerp(-0.05, -0.12, t);
+        //this.camera.position.x = lerp(-0.05, -0.10, t);
         //this.camera.position.y = -0.03;
         //this.camera.position.z = 0.38;
 
@@ -397,9 +397,12 @@
       } else if(BAR >= 9 && BAR < 10) {
         const t = F(frame,  9 * 24, 24);
         const t2 = F(frame, 10 * 24 - 6, 6);
-        this.camera.position.x = lerp(-0.05, -0.12, t);
+        this.camera.position.x = lerp(-0.05, -0.10, t);
         this.camera.position.y = -0.03;
         this.camera.position.z = 0.38;
+        this.camera.position.x = easeIn(this.camera.position.x, 0, t2);
+        this.camera.position.y = easeIn(this.camera.position.y, 0, t2);
+        this.camera.position.z = easeIn(this.camera.position.z, 0.3, t2);
 
         this.splashoBillboard.visible = true;
         this.splashoBillboard.material.map = this.skogTexture;
@@ -411,23 +414,30 @@
       } else if(BAR >= 13 && BAR < 14) {
         const t = F(frame,  13 * 24, 24);
         const t2 = F(frame, 14 * 24 - 6, 6);
-        this.camera.position.x = lerp(-0.05, -0.12, t);
+        this.camera.position.x = lerp(-0.05, -0.10, t);
         this.camera.position.y = -0.03;
         this.camera.position.z = 0.38;
+
+        this.camera.position.x = easeIn(this.camera.position.x, 0, t2);
+        this.camera.position.y = easeIn(this.camera.position.y, 0, t2);
+        this.camera.position.z = easeIn(this.camera.position.z, 0.3, t2);
 
         this.splashoBillboard.visible = true;
         this.splashoBillboard.material.map = this.norwayTexture;
 
         this.splashoBillboard.position.x = this.camera.position.x - lerp(0.07, 0.09, t) - easeOut(0, 0.25, t2);
-        this.splashoBillboard.position.y = this.camera.position.y- 0.02;
+        this.splashoBillboard.position.y = this.camera.position.y- 0.04;
         this.splashoBillboard.position.z = 0.1;
         this.light1.angle = 0.85;
       } else if(BAR >= 17 && BAR < 18) {
         const t = F(frame,  17 * 24, 24 * 2);
         const t2 = F(frame, 18 * 24 - 6, 6);
-        this.camera.position.x = lerp(-0.05, -0.12, t);
+        this.camera.position.x = lerp(-0.05, -0.10, t);
         this.camera.position.y = -0.03;
         this.camera.position.z = 0.38;
+        this.camera.position.x = easeIn(this.camera.position.x, 0, t2);
+        this.camera.position.y = easeIn(this.camera.position.y, 0, t2);
+        this.camera.position.z = easeIn(this.camera.position.z, 0.3, t2);
 
         this.splashoBillboard.visible = true;
         this.splashoBillboard.material.map = this.flatebyTexture;
@@ -439,9 +449,12 @@
       } else if(BAR >= 21 && BAR < 22) {
         const t = F(frame,  21 * 24, 24);
         const t2 = F(frame, 22 * 24 - 6, 6);
-        this.camera.position.x = lerp(-0.05, -0.12, t);
+        this.camera.position.x = lerp(-0.05, -0.10, t);
         this.camera.position.y = -0.03;
         this.camera.position.z = 0.38;
+        this.camera.position.x = easeIn(this.camera.position.x, 0, t2);
+        this.camera.position.y = easeIn(this.camera.position.y, 0, t2);
+        this.camera.position.z = easeIn(this.camera.position.z, 0.3, t2);
 
         this.splashoBillboard.visible = true;
         this.splashoBillboard.material.map = this.campingTexture;
@@ -453,9 +466,12 @@
       } else if(BAR >= 25 && BAR < 26) {
         const t = F(frame,  25 * 24, 24);
         const t2 = F(frame, 26 * 24 - 6, 6);
-        this.camera.position.x = lerp(-0.05, -0.12, t);
+        this.camera.position.x = lerp(-0.05, -0.10, t);
         this.camera.position.y = -0.03;
         this.camera.position.z = 0.38;
+        this.camera.position.x = easeIn(this.camera.position.x, 0, t2);
+        this.camera.position.y = easeIn(this.camera.position.y, 0, t2);
+        this.camera.position.z = easeIn(this.camera.position.z, 0.3, t2);
 
         this.splashoBillboard.visible = true;
         this.splashoBillboard.material.map = this.bbqTexture;
@@ -467,9 +483,12 @@
       } else if(BAR >= 29 && BAR < 30) {
         const t = F(frame,  29 * 24, 24);
         const t2 = F(frame, 30 * 24 - 6, 6);
-        this.camera.position.x = lerp(-0.05, -0.12, t);
+        this.camera.position.x = lerp(-0.05, -0.10, t);
         this.camera.position.y = -0.03;
         this.camera.position.z = 0.38;
+        this.camera.position.x = easeIn(this.camera.position.x, 0, t2);
+        this.camera.position.y = easeIn(this.camera.position.y, 0, t2);
+        this.camera.position.z = easeIn(this.camera.position.z, 0.3, t2);
 
         this.splashoBillboard.visible = true;
         this.splashoBillboard.material.map = this.demoTexture;
@@ -481,9 +500,12 @@
       } else if(BAR >= 31 && BAR < 32) {
         const t = F(frame,  31 * 24, 24);
         const t2 = F(frame, 32 * 24 - 6, 6);
-        this.camera.position.x = lerp(-0.05, -0.12, t);
+        this.camera.position.x = lerp(-0.05, -0.10, t);
         this.camera.position.y = -0.03;
         this.camera.position.z = 0.38;
+        this.camera.position.x = easeIn(this.camera.position.x, 0, t2);
+        this.camera.position.y = easeIn(this.camera.position.y, 0, t2);
+        this.camera.position.z = easeIn(this.camera.position.z, 0.3, t2);
 
         this.splashoBillboard.visible = true;
         this.splashoBillboard.material.map = this.musicTexture;
@@ -495,9 +517,12 @@
       } else if(BAR >= 33 && BAR < 34) {
         const t = F(frame,  33 * 24, 24);
         const t2 = F(frame, 34 * 24 - 6, 6);
-        this.camera.position.x = lerp(-0.05, -0.12, t);
+        this.camera.position.x = lerp(-0.05, -0.10, t);
         this.camera.position.y = -0.03;
         this.camera.position.z = 0.38;
+        this.camera.position.x = easeIn(this.camera.position.x, 0, t2);
+        this.camera.position.y = easeIn(this.camera.position.y, 0, t2);
+        this.camera.position.z = easeIn(this.camera.position.z, 0.3, t2);
 
         this.splashoBillboard.visible = true;
         this.splashoBillboard.material.map = this.graphicsTexture;
