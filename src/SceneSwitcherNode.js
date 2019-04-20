@@ -90,6 +90,7 @@
       }
       selectedScene.enabled = true;
       this.selectedScene = selectedScene;
+      this.outputs.render.setValue(this.selectedScene.getValue());
     }
 
     render(renderer) {
