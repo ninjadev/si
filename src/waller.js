@@ -42,6 +42,7 @@
 
       this.flatShadeTexture = Loader.loadTexture('res/flatshadesociety-graffiti.png');
       this.flatShadeSpinnerTexture = Loader.loadTexture('res/flatshadesociety-spinner-graffiti.png');
+      this.bbqTexture = Loader.loadTexture('res/bbq3.png');
       this.skogTexture = Loader.loadTexture('res/skog-graffiti.png');
       this.demoTexture = Loader.loadTexture('res/demo-graffiti.png');
       this.campingTexture = Loader.loadTexture('res/camping-graffiti.png');
@@ -53,6 +54,8 @@
       this.skogTexture.magFilter = THREE.LinearFilter;
       this.demoTexture.minFilter = THREE.LinearFilter;
       this.demoTexture.magFilter = THREE.LinearFilter;
+      this.bbqTexture.minFilter = THREE.LinearFilter;
+      this.bbqTexture.magFilter = THREE.LinearFilter;
       this.campingTexture.minFilter = THREE.LinearFilter;
       this.campingTexture.magFilter = THREE.LinearFilter;
       this.musicTexture.minFilter = THREE.LinearFilter;
@@ -421,7 +424,7 @@
         this.camera.position.z = 0.38;
 
         this.splashoBillboard.visible = true;
-        this.splashoBillboard.material.map = this.campingTexture;
+        this.splashoBillboard.material.map = this.bbqTexture;
 
         this.splashoBillboard.position.x = this.camera.position.x - lerp(0.07, 0.09, t) - easeOut(0, 0.25, t2);
         this.splashoBillboard.position.y = this.camera.position.y- 0.02;
