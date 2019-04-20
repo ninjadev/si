@@ -46,6 +46,7 @@
       this.skogTexture = Loader.loadTexture('res/skog-graffiti.png');
       this.demoTexture = Loader.loadTexture('res/demo-graffiti.png');
       this.campingTexture = Loader.loadTexture('res/camping-graffiti.png');
+      this.norwayTexture = Loader.loadTexture('res/norway-graffiti.png');
       this.musicTexture = Loader.loadTexture('res/music-graffiti.png');
       this.graphicsTexture = Loader.loadTexture('res/graphics-graffiti.png');
       this.flatebyTexture = Loader.loadTexture('res/flateby-marker-overlay-graffiti.png');
@@ -58,6 +59,8 @@
       this.bbqTexture.magFilter = THREE.LinearFilter;
       this.campingTexture.minFilter = THREE.LinearFilter;
       this.campingTexture.magFilter = THREE.LinearFilter;
+      this.norwayTexture.minFilter = THREE.LinearFilter;
+      this.norwayTexture.magFilter = THREE.LinearFilter;
       this.musicTexture.minFilter = THREE.LinearFilter;
       this.musicTexture.magFilter = THREE.LinearFilter;
       this.graphicsTexture.minFilter = THREE.LinearFilter;
@@ -413,7 +416,7 @@
         this.camera.position.z = 0.38;
 
         this.splashoBillboard.visible = true;
-        this.splashoBillboard.material.map = this.campingTexture;
+        this.splashoBillboard.material.map = this.norwayTexture;
 
         this.splashoBillboard.position.x = this.camera.position.x - lerp(0.07, 0.09, t) - easeOut(0, 0.25, t2);
         this.splashoBillboard.position.y = this.camera.position.y- 0.02;
