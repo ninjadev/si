@@ -93,7 +93,7 @@
           startFrame: 2448,
           endFrame: 2870,
           transition: 10,
-          text: XWrite('II. JULY ISH'),
+          text: XWrite('IN SUNNY JULY'),
         },
         {
           startFrame: 3024,
