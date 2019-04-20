@@ -211,6 +211,17 @@
       this.wall.position.z = -100;
     }
 
+    warmup(renderer) {
+      this.update(2603);
+      this.render(renderer);
+      this.update(2843);
+      this.render(renderer);
+      this.update(2915);
+      this.render(renderer);
+      this.update(2939);
+      this.render(renderer);
+    }
+
     update(frame) {
       super.update(frame);
 

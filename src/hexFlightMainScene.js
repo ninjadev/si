@@ -71,6 +71,13 @@
       this.scene.add(this.wall);
     }
 
+    warmup(renderer) {
+      this.update(4127);
+      this.render(renderer);
+      this.update(4499);
+      this.render(renderer);
+    }
+
     update(frame) {
       super.update(frame);
       var SHORTDIST = 20;

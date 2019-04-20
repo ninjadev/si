@@ -171,6 +171,23 @@
       this.laptopKeyboardPolygonLine.path = laptopKeyboardPath;
     }
 
+    warmup(renderer) {
+      this.update(8207);
+      this.render(renderer);
+      this.update(8243);
+      this.render(renderer);
+      this.update(8351);
+      this.render(renderer);
+      this.update(8423);
+      this.render(renderer);
+      this.update(8531);
+      this.render(renderer);
+      this.update(8631);
+      this.render(renderer);
+      this.update(8747);
+      this.render(renderer);
+    }
+
     update(frame) {
       super.update(frame);
 
@@ -215,7 +232,7 @@
         this.camera.position.x = 512;
         this.camera.position.y = 1200;
       }
-      
+
       // zoom progress 1
       else if (BEAN >= prog1Start && BEAN < prog1Start + beansBeforeZoom + zoomDuration) {
         const zoomProgress1 = F(frame, prog1Start + beansBeforeZoom, zoomDuration);

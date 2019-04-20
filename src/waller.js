@@ -237,6 +237,33 @@
       this.cameraRotationD = new THREE.Vector3(0, 0, 0);
     }
 
+    warmup(renderer) {
+      const frames = [
+        96,
+        814,
+        1348,
+        1936,
+        2591,
+        3131,
+        3671,
+        4247,
+        4526,
+        4788,
+        5482,
+        5666,
+        5993,
+        6398,
+        6571,
+        7203,
+        7745,
+        8496,
+      ];
+      for(let i = 0; i < frames.length; i++) {
+        this.update(frames[i]);
+        this.render(renderer);
+      }
+    }
+
     update(frame) {
       super.update(frame);
 

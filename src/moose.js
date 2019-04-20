@@ -107,6 +107,11 @@
       this.scene.add(this.logoWrapperRight);
     }
 
+    warmup(renderer) {
+      this.update(7991);
+      this.render(renderer);
+    }
+
     update(frame) {
       super.update(frame);
 

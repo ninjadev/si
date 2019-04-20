@@ -44,7 +44,7 @@
         let y = info[i][1];
         let black = "#000000";
         let z = -1;
-        
+
         let hair = makeHair(x, y + r * 2, size, info[i][2], black);
         this.scene.add(hair);
         let head = makeHead(x, y, size, r, fill, black);
@@ -411,6 +411,19 @@
 
       this.mommaBird = CommodoreLogo(100, '#ffffff');
       this.scene.add(this.mommaBird);
+    }
+
+    warmup(renderer) {
+      this.update(6894);
+      this.render(renderer);
+      this.update(7025);
+      this.render(renderer);
+      this.update(7149);
+      this.render(renderer);
+      this.update(7267);
+      this.render(renderer);
+      this.update(7390);
+      this.render(renderer);
     }
 
     update(frame) {

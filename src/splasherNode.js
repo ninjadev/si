@@ -9,6 +9,11 @@
       super(id, options);
     }
 
+    warmup(renderer) {
+      this.update(593);
+      this.render(renderer);
+    }
+
     update(frame) {
       this.uniforms.generalGrayScaler.value = easeIn(1, 0, F(frame, 96, 24));
       this.uniforms.radiuser.value = 4;

@@ -80,6 +80,11 @@
 
     }
 
+    warmup(renderer) {
+      this.update(599);
+      this.render(renderer);
+    }
+
     update(frame) {
       super.update(frame);
 

@@ -91,6 +91,13 @@
       this.camera.position.y = -30;
     }
 
+    warmup(renderer) {
+      this.update(1942);
+      this.render(renderer);
+      this.update(2325);
+      this.render(renderer);
+    }
+
     update(frame) {
       super.update(frame);
 
