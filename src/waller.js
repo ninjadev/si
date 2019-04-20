@@ -963,7 +963,7 @@
         let speed = F(frame, fallBEAN + 12, 1)/10;
         this.paper.position.y = -lerp(0.066, 1, speed);
         this.shadowPaper.position.y = -lerp(0.066, 1, speed);
-        let lightFrame = 9647;
+        let lightFrame = 9051;
         if(frame < lightFrame) {
           this.light1.intensity = 1;
         } else if(frame < lightFrame + 3) {
@@ -978,9 +978,10 @@
           this.light1.intensity = 0.5;
         } else if(frame < lightFrame + 49) {
           this.light1.intensity = 1.0;
+        } else if(frame >= lightFrame + 49) {
+          this.light1.intensity = 0;
         } else {
-          this.light1.intensity = easeOut(
-            1, 0, (frame - (lightFrame + 51)) / 150);
+          this.light1.intensity = 1;
         }
         this.hemiLight.intensity = 0.1 + this.light1.intensity * 0.5;
 

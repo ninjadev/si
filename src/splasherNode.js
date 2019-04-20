@@ -16,7 +16,7 @@
     }
 
     beforeUpdate() {
-      this.inputs.B.enabled = BEAN >= 1530;
+      this.inputs.B.enabled = BEAN >= 1518;
     }
 
     update(frame) {
