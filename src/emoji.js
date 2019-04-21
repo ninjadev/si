@@ -140,35 +140,48 @@
     }
 
     drawMosaics() {
-      const canvas = this.canvases.hardware;
-      canvas.width = 1024;
-      canvas.height = 1024;
-      const ctx = canvas.getContext('2d');
+      for (let emojiKey of this.mosaicKeyOrder) {
+        const canvas = this.canvases[emojiKey];
+        canvas.width = 1024;
+        canvas.height = 1024;
+        const ctx = canvas.getContext('2d');
 
-      const mosaic = window.emojiMosaics.hardware;
-      for (let i = 0; i < mosaic.tiles.length; i++) {
-        const tile = mosaic.tiles[i];
-        const drawable = this.images[this.emojiKeyById[tile.emoji_id]];
+        const mosaic = window.emojiMosaics[emojiKey];
+        for (let i = 0; i < mosaic.tiles.length; i++) {
+          const tile = mosaic.tiles[i];
+          const drawable = this.images[this.emojiKeyById[tile.emoji_id]];
 
+          ctx.drawImage(
+            drawable,  // drawable source
+            0,  // source offset x
+            0,  // source offset y
+            512,  // source width
+            512,  // source height
+            tile.x,  // destination offset x
+            tile.y,  // destination offset y
+            32,  // destination width
+            32  // destination height
+          );
+        }
+
+        ctx.globalCompositeOperation = 'overlay';
         ctx.drawImage(
-          drawable,  // drawable source
+          this.images[emojiKey],  // drawable source
           0,  // source offset x
           0,  // source offset y
           512,  // source width
           512,  // source height
-          tile.x,  // destination offset x
-          tile.y,  // destination offset y
-          32,  // destination width
-          32  // destination height
+          0,  // destination offset x
+          0,  // destination offset y
+          canvas.width,  // destination width
+          canvas.height  // destination height
         );
+
+        this.generatedEmojiTextures[this.emojiIdByKey[emojiKey]] = new THREE.CanvasTexture(canvas);
+
+        this.emojiMaterials[this.emojiIdByKey[emojiKey]].map = this.generatedEmojiTextures[this.emojiIdByKey[emojiKey]];
+        this.emojiMaterials[this.emojiIdByKey[emojiKey]].needsUpdate = true;
       }
-
-      this.generatedEmojiTextures[this.emojiIdByKey.hardware] = new THREE.CanvasTexture(canvas);
-
-      this.generatedEmojiMaterials[this.emojiIdByKey.hardware] = new THREE.MeshBasicMaterial({
-        map: this.generatedEmojiTextures[this.emojiIdByKey.hardware],
-        transparent: true
-      });
     }
 
     initTiles() {
@@ -181,7 +194,7 @@
 
           for (let emojiId in mosaic.emojies) {
             if (mosaic.emojies.hasOwnProperty(emojiId) && !this.emojiTextures.hasOwnProperty(emojiId)) {
-              this.emojiTextures[emojiId] = Loader.loadTexture(`res/emoji/${mosaic.emojies[emojiId]}`);
+              this.emojiTextures[emojiId] = Loader.loadTexture(`res/emoji/plain/${mosaic.emojies[emojiId]}`);
               this.emojiMaterials[emojiId] = new THREE.MeshBasicMaterial({
                 map: this.emojiTextures[emojiId],
                 transparent: true
