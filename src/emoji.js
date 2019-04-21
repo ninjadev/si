@@ -259,30 +259,6 @@
       this.scene.add(this.wrappers.hardware);
       this.scene.add(this.tileWrappers.hardware);
 
-      // LAPTOP POLYGON
-      const pathOptions = {fill: true, fillColor: 0x556E7C};
-      const path = new Path(pathOptions);
-      path.lineTo(95, 1090);
-      path.lineTo(95, 1570);
-      path.lineTo(895, 1570);
-      path.lineTo(895, 1090);
-      path.lineTo(95, 1090);
-      this.laptopPolygonLine = path.toObject3D();
-      this.scene.add(this.laptopPolygonLine);
-      this.laptopPolygonLine.path = path;
-
-      const laptopKeyboardPath = new Path({fill: true, fillColor: 0xCFD7DD});
-      laptopKeyboardPath.lineTo(895, 1090);
-      laptopKeyboardPath.lineTo(975, 820);
-      laptopKeyboardPath.lineTo(825, 810);
-      laptopKeyboardPath.lineTo(125, 810);
-      laptopKeyboardPath.lineTo(14, 820);
-      laptopKeyboardPath.lineTo(95, 1090);
-      laptopKeyboardPath.lineTo(895, 1090);
-      this.laptopKeyboardPolygonLine = laptopKeyboardPath.toObject3D();
-      this.scene.add(this.laptopKeyboardPolygonLine);
-      this.laptopKeyboardPolygonLine.path = laptopKeyboardPath;
-
       this.wrappers.campingEquipment.tileMesh.material.opacity = 0;
 
       this.random = new Random(0x80d);
