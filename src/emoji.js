@@ -138,7 +138,13 @@
     }
 
     drawMosaics() {
+      const tmpCanvas = document.createElement('canvas');
+      const tmpCtx = tmpCanvas.getContext('2d');
+
       for (let emojiKey of this.mosaicKeyOrder) {
+        tmpCanvas.width = 1024;
+        tmpCanvas.height = 1024;
+
         const canvas = this.canvases[emojiKey];
         canvas.width = 1024;
         canvas.height = 1024;
@@ -149,7 +155,7 @@
           const tile = mosaic.tiles[i];
           const drawable = this.images[this.emojiKeyById[tile.emoji_id]];
 
-          ctx.drawImage(
+          tmpCtx.drawImage(
             drawable,  // drawable source
             0,  // source offset x
             0,  // source offset y
@@ -162,7 +168,6 @@
           );
         }
 
-        ctx.globalCompositeOperation = 'overlay';
         ctx.drawImage(
           this.images[emojiKey],  // drawable source
           0,  // source offset x
@@ -174,10 +179,14 @@
           canvas.width,  // destination width
           canvas.height  // destination height
         );
+        ctx.globalCompositeOperation = 'overlay';
+        ctx.drawImage(
+          tmpCanvas,  // drawable source
+          0,  // source offset x
+          0,  // source offset y
+        );
 
-        const texture = new THREE.CanvasTexture(canvas);
-
-        this.emojiMaterials[this.emojiIdByKey[emojiKey]].map = texture;
+        this.emojiMaterials[this.emojiIdByKey[emojiKey]].map = new THREE.CanvasTexture(canvas);
         this.emojiMaterials[this.emojiIdByKey[emojiKey]].needsUpdate = true;
       }
     }
