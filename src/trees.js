@@ -41,13 +41,13 @@
         return [
           {
             coords: [[25,12], [24, 10], [-24, 10], [-25,12], [-1.5, 50], [1.5,50], [25,12]],
-            offset,
+            offset: [offset[0], offset[1], offset[2] + 0.05],
             fillColor: 0x7fff7f,
             fillMap: constructionPaper,
           },
           {
             coords: [[10,10], [30,-17.5], [29, -20], [-27,-20], [-28, -17.5], [-10,10]],
-            offset,
+            offset: [offset[0], offset[1], offset[2] + 0.1],
             fillColor: 0x7fff7f,
             fillMap: constructionPaper,
           },
