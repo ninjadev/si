@@ -581,13 +581,37 @@
         this.camera.rotation.z = (Math.random() - 0.5) * 0.02;
       }
 
+      if(BEAN >= 504 && BEAN < 504 + 6) {
+        this.camera.rotation.x = (Math.random() - 0.5) * 0.02;
+        this.camera.rotation.y = (Math.random() - 0.5) * 0.02;
+        this.camera.rotation.z = (Math.random() - 0.5) * 0.02;
+      }
+
+      if(BEAN >= 600 && BEAN < 600 + 3) {
+        this.camera.rotation.x = (Math.random() - 0.5) * 0.02;
+        this.camera.rotation.y = (Math.random() - 0.5) * 0.02;
+        this.camera.rotation.z = (Math.random() - 0.5) * 0.02;
+      }
+
+      if(BEAN >= 696 && BEAN < 696 + 3) {
+        this.camera.rotation.x = (Math.random() - 0.5) * 0.02;
+        this.camera.rotation.y = (Math.random() - 0.5) * 0.02;
+        this.camera.rotation.z = (Math.random() - 0.5) * 0.02;
+      }
+
+      if(BEAN >= 792 && BEAN < 792 + 3) {
+        this.camera.rotation.x = (Math.random() - 0.5) * 0.02;
+        this.camera.rotation.y = (Math.random() - 0.5) * 0.02;
+        this.camera.rotation.z = (Math.random() - 0.5) * 0.02;
+      }
+
       if(BEAN >= 912 && BEAN < 912 + 12) {
         this.camera.rotation.x = (Math.random() - 0.5) * 0.02;
         this.camera.rotation.y = (Math.random() - 0.5) * 0.02;
         this.camera.rotation.z = (Math.random() - 0.5) * 0.02;
       }
 
-      if(BEAN >= 888 && BEAN < 888 + 3) {
+      if(BEAN >= 888 && BEAN < 888 + 6) {
         this.camera.rotation.x = (Math.random() - 0.5) * 0.02;
         this.camera.rotation.y = (Math.random() - 0.5) * 0.02;
         this.camera.rotation.z = (Math.random() - 0.5) * 0.02;
@@ -620,6 +644,16 @@
         this.camera.rotation.z = (Math.random() - 0.5) * 0.02;
       }
       if(BEAN >= 1272 && BEAN < 1272 + 1) {
+        this.camera.rotation.x = (Math.random() - 0.5) * 0.01;
+        this.camera.rotation.y = (Math.random() - 0.5) * 0.01;
+        this.camera.rotation.z = (Math.random() - 0.5) * 0.01;
+      }
+      if(BEAN >= 1368 && BEAN < 1368 + 3) {
+        this.camera.rotation.x = (Math.random() - 0.5) * 0.01;
+        this.camera.rotation.y = (Math.random() - 0.5) * 0.01;
+        this.camera.rotation.z = (Math.random() - 0.5) * 0.01;
+      }
+      if(BEAN >= 1464 && BEAN < 1464 + 3) {
         this.camera.rotation.x = (Math.random() - 0.5) * 0.01;
         this.camera.rotation.y = (Math.random() - 0.5) * 0.01;
         this.camera.rotation.z = (Math.random() - 0.5) * 0.01;

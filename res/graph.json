@@ -15,6 +15,7 @@
       "A2": "cubobbobob.render",
       "B1": "NorwayNode.render",
       "B2": "bands.render",
+      "B2Exit": "tubes.render",
       "A3": "trees.render",
       "A4": "trees.render",
       "B3": "HexFlightMainScene.render",
