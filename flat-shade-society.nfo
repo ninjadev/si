@@ -6,14 +6,15 @@ Flat Shade Society  is  Ninjadev's invite
 to Solskogen 2019.  The demo  is compiled
 down to  a single  .png.html  file.  Open
 this  in  your  favorite   Chromium-based
-browser.
+browser (make sure to use
+--allow-file-access-from-files).
 
 This  demo  is made  with our  in-browser
 demo tool called  nin.  The tool is fully
 open source along with  the demo. You can
-find  it  at  http://github.com/ninjadev.
+find  it  at https://github.com/ninjadev.
 
-It's greating seeing everyone at Revision
+It's great seeing everyone at Revision
 again!
 
 Made  by   capitalism,  cristea,  flowie,
