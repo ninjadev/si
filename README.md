@@ -6,7 +6,7 @@ Youtube: TBA
 
 Pouët: TBA
 
-flatshadesociety.nfo:
+flat-shade-society.nfo:
 ```
         --- Flat Shade Society ---
 
