@@ -97,12 +97,18 @@
         },
         {
           startFrame: 3024,
-          endFrame: 4100,
+          endFrame: 3950,
           transition: 10,
           text: XWrite('BIG FOREST'),
         },
         {
-          startFrame: 4900,
+          startFrame: 4000,
+          endFrame: 4580,
+          transition: 10,
+          text: XWrite('BIG SCREEN'),
+        },
+        {
+          startFrame: 4750,
           endFrame: 5207,
           transition: 8,
           text: XWrite('MANY COMPOS'),
@@ -115,21 +121,15 @@
         },
         {
           startFrame: 6479,
-          endFrame: 7501,
+          endFrame: 7301,
           transition: 10,
           text: XWrite('MEET NEW FRIENDS'),
         },
         {
           startFrame: 7631,
-          endFrame: 7800,
-          transition: 5,
-          text: XWrite(' '),
-        },
-        {
-          startFrame: 7810,
           endFrame: 8100,
-          transition: 5,
-          text: XWrite(' '),
+          transition: 3,
+          text: XWrite('FEED COMMODORES'),
         },
         {
           startFrame: 8200,
