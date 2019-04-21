@@ -26,6 +26,9 @@ find  it  at  http://github.com/ninjadev.
 It's great  seeing  everyone  at Revision
 again!
 
-Made  by   capitalism,  cristea,  flowie,
-iverjo,  lulle,  run,  sigveseb &  stiaje
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+Made by:
+capitalism,   cristea,  flowie,   iverjo,
+lug00ber, lulle, run, sigveseb  &  stiaje
 ```
