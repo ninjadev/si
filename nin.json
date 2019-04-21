@@ -5,13 +5,14 @@
     "cristea",
     "flowie",
     "iverjo",
+    "lug00ber",
     "lulle",
     "run",
     "sigveseb",
     "stiaje"
   ],
   "description": "Solskogen 2019 invitation",
-  "previewImage": "https://raw.githubusercontent.com/ninjadev/nin/master/nin/frontend/app/images/nin-dark.png",
+  "previewImage": "https://raw.githubusercontent.com/ninjadev/si/master/screenshot.png",
   "aspectRatio": "16:9",
   "music": {
     "path": "res/music.mp3",
@@ -19,7 +20,7 @@
     "subdivision": 6,
     "BEANOffset": 0
   },
-  "googleAnalyticsID": "Your GA ID",
+  "googleAnalyticsID": "UA-97441881-6",
   "labels": [
     {
       "name": "Preroll",
