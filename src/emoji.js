@@ -41,18 +41,16 @@
       this.imageLoadedCallback = () => {
         this.numImagesLoaded++;
         if (this.numImagesLoaded === 6) {
-          console.log('Boarding completed. Crew arm slides, cross check and report.');
           this.drawMosaics();
         }
       };
-      Loader.load('res/emoji/plain/hardware.png', this.images.hardware, this.imageLoadedCallback);
-      Loader.load('res/emoji/plain/dancingSkills.png', this.images.dancingSkills, this.imageLoadedCallback);
-      Loader.load('res/emoji/plain/pixelArt.png', this.images.pixelArt, this.imageLoadedCallback);
-      Loader.load('res/emoji/plain/campingEquipment.png', this.images.campingEquipment, this.imageLoadedCallback);
-      Loader.load('res/emoji/plain/goodMood.png', this.images.goodMood, this.imageLoadedCallback);
-      Loader.load('res/emoji/plain/sunglasses.png', this.images.sunglasses, this.imageLoadedCallback);
+      Loader.load('res/emoji/hardware.png', this.images.hardware, this.imageLoadedCallback);
+      Loader.load('res/emoji/dancingSkills.png', this.images.dancingSkills, this.imageLoadedCallback);
+      Loader.load('res/emoji/pixelArt.png', this.images.pixelArt, this.imageLoadedCallback);
+      Loader.load('res/emoji/campingEquipment.png', this.images.campingEquipment, this.imageLoadedCallback);
+      Loader.load('res/emoji/goodMood.png', this.images.goodMood, this.imageLoadedCallback);
+      Loader.load('res/emoji/sunglasses.png', this.images.sunglasses, this.imageLoadedCallback);
       this.generatedEmojiTextures = {};
-      this.generatedEmojiMaterials = {};
 
       this.emojiTextures = {};
       this.emojiIdByKey = {
@@ -177,15 +175,14 @@
           canvas.height  // destination height
         );
 
-        this.generatedEmojiTextures[this.emojiIdByKey[emojiKey]] = new THREE.CanvasTexture(canvas);
+        const texture = new THREE.CanvasTexture(canvas);
 
-        this.emojiMaterials[this.emojiIdByKey[emojiKey]].map = this.generatedEmojiTextures[this.emojiIdByKey[emojiKey]];
+        this.emojiMaterials[this.emojiIdByKey[emojiKey]].map = texture;
         this.emojiMaterials[this.emojiIdByKey[emojiKey]].needsUpdate = true;
       }
     }
 
     initTiles() {
-      console.log('hello from initTiles')
       for (let j = 0; j < this.mosaicKeyOrder.length; j++) {
         const mosaicKey = this.mosaicKeyOrder[j];
 
@@ -194,7 +191,7 @@
 
           for (let emojiId in mosaic.emojies) {
             if (mosaic.emojies.hasOwnProperty(emojiId) && !this.emojiTextures.hasOwnProperty(emojiId)) {
-              this.emojiTextures[emojiId] = Loader.loadTexture(`res/emoji/plain/${mosaic.emojies[emojiId]}`);
+              this.emojiTextures[emojiId] = Loader.loadTexture(`res/emoji/${mosaic.emojies[emojiId]}`);
               this.emojiMaterials[emojiId] = new THREE.MeshBasicMaterial({
                 map: this.emojiTextures[emojiId],
                 transparent: true
