@@ -23,7 +23,7 @@ demo tool called  nin.  The tool is fully
 open source along with  the demo. You can
 find  it  at  http://github.com/ninjadev.
 
-It's greating seeing everyone at Revision
+It's great  seeing  everyone  at Revision
 again!
 
 Made  by   capitalism,  cristea,  flowie,
