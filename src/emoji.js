@@ -10,7 +10,6 @@
         }
       });
 
-
       const left = -1600 / 2;
       const right = 1600 / 2;
       const top = 900 / 2;
@@ -50,7 +49,6 @@
       Loader.load('res/emoji/campingEquipment.png', this.images.campingEquipment, this.imageLoadedCallback);
       Loader.load('res/emoji/goodMood.png', this.images.goodMood, this.imageLoadedCallback);
       Loader.load('res/emoji/sunglasses.png', this.images.sunglasses, this.imageLoadedCallback);
-      this.generatedEmojiTextures = {};
 
       this.emojiTextures = {};
       this.emojiIdByKey = {
@@ -332,7 +330,7 @@
       this.laptopPolygonLine.path.material.uniforms.drawEnd.value = lerp(
         0, 1, F(frame, 1368, 6)
       );
-      this.laptopPolygonLine.fillMesh.visible = this.laptopPolygonLine.path.material.uniforms.drawEnd.value > 0.999;
+      this.laptopPolygonLine.fillMesh.visible = this.laptopPolygonLine.path.material.uniforms.drawEnd.value > 0.999 && BEAN < 1456;
       this.laptopPolygonLine.path.material.uniforms.wobbliness.value = 1;
       this.laptopPolygonLine.path.material.uniforms.width.value = 100;
 
@@ -341,28 +339,25 @@
       this.laptopKeyboardPolygonLine.path.material.uniforms.drawEnd.value = lerp(
         0, 1, F(frame, 1368, 6)
       );
-      this.laptopKeyboardPolygonLine.fillMesh.visible = this.laptopKeyboardPolygonLine.path.material.uniforms.drawEnd.value > 0.999;
+      this.laptopKeyboardPolygonLine.fillMesh.visible = this.laptopKeyboardPolygonLine.path.material.uniforms.drawEnd.value > 0.999 && BEAN < 1456;
       this.laptopKeyboardPolygonLine.path.material.uniforms.wobbliness.value = 1;
       this.laptopKeyboardPolygonLine.path.material.uniforms.width.value = 100;
 
-      if (this.wrappers.hardware) {
-	      this.wrappers.hardware.visible = BEAN >= 1380;
-	      this.wrappers.sunglasses.visible = BEAN >= 1440;
-	      this.wrappers.goodMood.tileMesh.visible = BEAN < 1456;
-	      this.wrappers.sunglasses.tileMesh.visible = false;//BEAN < 1456;
-	      this.wrappers.campingEquipment.tileMesh.visible = BEAN < 1456;
-	      this.wrappers.pixelArt.tileMesh.visible = BEAN < 1456;
-	      this.wrappers.dancingSkills.tileMesh.visible = BEAN < 1456;
-	      this.wrappers.hardware.tileMesh.visible = BEAN < 1456;
+      this.wrappers.hardware.visible = BEAN >= 1380;
+      this.wrappers.sunglasses.visible = BEAN >= 1440;
+      this.wrappers.goodMood.tileMesh.visible = BEAN < 1456;
+      this.wrappers.sunglasses.tileMesh.visible = false;
+      this.wrappers.campingEquipment.tileMesh.visible = BEAN < 1456;
+      this.wrappers.pixelArt.tileMesh.visible = BEAN < 1456;
+      this.wrappers.dancingSkills.tileMesh.visible = BEAN < 1456;
+      this.wrappers.hardware.tileMesh.visible = BEAN < 1456;
 
-	      this.tileWrappers.hardware.visible = BEAN >= 1392 && BEAN < 1420;
-
-	      this.tileWrappers.dancingSkills.visible = false;
-	      this.tileWrappers.pixelArt.visible = false;
-	      this.tileWrappers.campingEquipment.visible = false;
-	      this.tileWrappers.goodMood.visible = false;
-	      this.tileWrappers.sunglasses.visible = BEAN >= 1434 && BEAN < 1456;
-      }
+      this.tileWrappers.hardware.visible = BEAN >= 1392 && BEAN < 1420;
+      this.tileWrappers.dancingSkills.visible = false;
+      this.tileWrappers.pixelArt.visible = false;
+      this.tileWrappers.campingEquipment.visible = false;
+      this.tileWrappers.goodMood.visible = false;
+      this.tileWrappers.sunglasses.visible = BEAN >= 1434 && BEAN < 1456;
 
       const beansBeforeZoom = 10;
       const zoomDuration = 6;
