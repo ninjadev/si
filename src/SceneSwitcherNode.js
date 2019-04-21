@@ -9,6 +9,7 @@
           A2: new NIN.TextureInput(),
           B1: new NIN.TextureInput(),
           B2: new NIN.TextureInput(),
+          B2Exit: new NIN.TextureInput(),
           A3: new NIN.TextureInput(),
           A4: new NIN.TextureInput(),
           B3: new NIN.TextureInput(),
@@ -39,6 +40,7 @@
       this.inputs.A2.enabled = false;
       this.inputs.B1.enabled = false;
       this.inputs.B2.enabled = false;
+      this.inputs.B2Exit.enabled = false;
       this.inputs.A3.enabled = false;
       this.inputs.A4.enabled = false;
       this.inputs.B3.enabled = false;
@@ -61,8 +63,10 @@
         selectedScene = this.inputs.A2;
       } else if (BEAN < 24 * 17) {
         selectedScene = this.inputs.B1;
-      } else if (BEAN < 24 * 21) {
+      } else if (BEAN < 498) {
         selectedScene = this.inputs.B2;
+      } else if (BEAN < 24 * 21) {
+        selectedScene = this.inputs.B2Exit;
       } else if (BEAN < 24 * 25) {
         selectedScene = this.inputs.A3;
       } else if (frame < 4026) { // The specific frame in which none of the tent fabric is visible

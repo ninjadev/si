@@ -1,4 +1,5 @@
 (function(global) {
+  const F = (frame, from, delta) => (frame - FRAME_FOR_BEAN(from)) / (FRAME_FOR_BEAN(from + delta) - FRAME_FOR_BEAN(from));
   class tubes extends NIN.THREENode {
     constructor(id, options) {
       super(id, {
@@ -64,20 +65,26 @@
       this.scene.add(this.wall);
     }
 
+    warmup(renderer) {
+      this.update(3002);
+      this.render(renderer);
+    }
+
     update(frame) {
       super.update(frame);
 
-      const startFrame = FRAME_FOR_BEAN(24 * 40) - 75;
+      const startFrame = FRAME_FOR_BEAN(498);
 
       for (let i = 0; i < this.dots.length; i++) {
         const dot = this.dots[i];
-        dot.scale.setScalar(easeOut(0, 1, (frame - startFrame + i * 3) / 100));
+        dot.scale.setScalar(easeOut(0, 1, F(frame, 498, 1)));
+        //dot.scale.setScalar(easeOut(0, 1, (frame - startFrame + i * 3) / 10));
       }
 
       for (let i = 0; i < this.lines.length; i++) {
         const path = this.lines[i].path;
-        path.material.uniforms.drawStart.value = lerp(0.5, 0, (frame - startFrame - i) / 40);
-        path.material.uniforms.drawEnd.value = lerp(0.5, 1, (frame - startFrame - i) / 60);
+        path.material.uniforms.drawStart.value = lerp(0.5, 0, F(frame, 498, 1));
+        path.material.uniforms.drawEnd.value = lerp(0.5, 1, F(frame, 498, 1));
         path.material.uniforms.wobbliness.value = 1;
       }
     }
