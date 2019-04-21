@@ -19,7 +19,7 @@
 
       this.constructionPaper = Loader.loadTexture('res/constructionpaper.jpg');
       const constructionPaper = this.constructionPaper;
-      const mapScale = 0.01;
+      const mapScale = 0.01 / 0.27777777777777777777777777777778;
       constructionPaper.repeat.set(mapScale, mapScale);
       constructionPaper.wrapS = THREE.RepeatWrapping;
       constructionPaper.wrapT = THREE.RepeatWrapping;
