@@ -2,9 +2,9 @@
 
 ![](https://i.imgur.com/JUZwEM9.jpg)
 
-Youtube: TBA
+Youtube: https://www.youtube.com/watch?v=gr7ueMPRNDs
 
-Pouët: TBA
+Pouët: http://www.pouet.net/prod.php?which=81092
 
 flat-shade-society.nfo:
 ```
