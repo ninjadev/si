@@ -28,7 +28,7 @@
       this.paper = new THREE.Mesh(
         new THREE.PlaneGeometry(19 / 2, 14 / 2),
         new THREE.MeshBasicMaterial({transparent: true}));
-      this.scene.add(this.paper);
+      //this.scene.add(this.paper);
 
       this.innerPath = new Path();
       const scale = 15;
@@ -40,7 +40,7 @@
       this.innerPath.lineTo(2 * scale, 7.5 / 2 * scale);
       let mesh = this.innerPath.toObject3D();
       mesh.scale.set(1 / scale, 1 / scale, 1 / scale);
-      this.scene.add(mesh);
+      //this.scene.add(mesh);
 
       this.outerPath = new Path();
       this.outerPath.lineTo(-2 * scale, 7.9 / 2 * scale);
@@ -51,7 +51,7 @@
       this.outerPath.lineTo(2 * scale, 7.9 / 2 * scale);
       mesh = this.outerPath.toObject3D();
       mesh.scale.set(1 / scale, 1 / scale, 1 / scale);
-      this.scene.add(mesh);
+      //this.scene.add(mesh);
 
 
       this.wall = new THREE.Mesh(
@@ -71,17 +71,17 @@
           startFrame: 240,
           endFrame: 857 - 50,
           transition: 5,
-          text: XWrite('NINJADEV'),
+          text: XWrite('SOLSKOGEN'),
         },
         { startFrame: 857,
           endFrame: 1100,
           transition: 10,
-          text: XWrite('INVITES YOU'),
+          text: XWrite(''),
         },
         { startFrame: 1190,
-          endFrame: 1290,
+          endFrame: 1390,
           transition: 5,
-          text: XWrite('TO COME TO'),
+          text: XWrite('SOLSKOGEN'),
         },
         {
           startFrame: 1295,
@@ -148,7 +148,7 @@
       for (let title of this.titles) {
         title.text.scale.set(0.20 / scale, 0.20 / scale, 0.20 / scale);
         title.text.position.set(0 * scale, 7.7 / 2, 0);
-        this.scene.add(title.text);
+        //this.scene.add(title.text);
       }
     }
 
@@ -158,8 +158,11 @@
     }
 
     update(frame) {
-      this.paper.material.map = this.inputs.A.getValue();
-      this.paper.material.needsUpdate = true;
+      this.outputs.render.value = this.inputs.A.getValue();
+      return;
+      if(this.paper) {
+        this.paper.material.opacity = 0.4;
+      }
 
       for (let { startFrame, endFrame, text, transition, } of this.titles) {
         for (let i = 0; i < text.paths.length; i++) {
@@ -176,6 +179,7 @@
     }
 
     render(renderer) {
+      return;
 
       const aspectFixer = (16 / 9) / (11 / 8.5);
       if (this.paper.material.map) {

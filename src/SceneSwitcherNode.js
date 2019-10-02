@@ -92,6 +92,7 @@
       } else {
         selectedScene = this.inputs.Outro;
       }
+      selectedScene = this.inputs.B2;
       selectedScene.enabled = true;
       this.selectedScene = selectedScene;
       this.outputs.render.setValue(this.selectedScene.getValue());

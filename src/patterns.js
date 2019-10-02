@@ -67,6 +67,7 @@
       } else {
         selectedScene = this.inputs.M;
       }
+      selectedScene = this.inputs.I;
       selectedScene.enabled = true;
       this.selectedScene = selectedScene;
     }

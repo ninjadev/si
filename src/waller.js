@@ -37,8 +37,8 @@
           transparent: true,
         }));
 
-      this.scene.add(this.splashoBillboard);
-      this.scene.add(this.splashoBackBillboard);
+      //this.scene.add(this.splashoBillboard);
+      //this.scene.add(this.splashoBackBillboard);
 
       this.flatShadeTexture = Loader.loadTexture('res/flatshadesociety-graffiti.png');
       this.flatShadeSpinnerTexture = Loader.loadTexture('res/flatshadesociety-spinner-graffiti.png');
@@ -77,10 +77,10 @@
         new THREE.ShaderMaterial(SHADERS.twistorama).clone()
       );
       this.twistoramaContainer.material.transparent = true,
-        this.twistoramaContainer.position.z = 0.01;
+      this.twistoramaContainer.position.z = 0.01;
       this.twistoramaContainer.scale.set(16 / 100 * 2, 9 / 100 * 2, 1);
 
-      this.scene.add(this.twistoramaContainer);
+      //this.scene.add(this.twistoramaContainer);
 
       this.forestTexture = Loader.loadTexture('res/forest.png');
       this.forestTexture.minFilter = THREE.LinearFilter;
@@ -129,6 +129,7 @@
           roughness: 1,
           metalness: 0,
           side: THREE.DoubleSide,
+          color: 0x02060f,
         }));
       this.paper.position.set(
         this.paperWidth / 2 - .005,
@@ -174,7 +175,7 @@
       this.background.material.normalMap.wrapT = THREE.RepeatWrapping;
       */
       this.scene.add(this.background);
-      const scale = 0.1;
+      const scale = 0.029;
       this.background.scale.set(16 * scale, 9 * scale, 0.001);
 
       this.background.position.z = -0.004;
@@ -202,7 +203,7 @@
         new THREE.MeshStandardMaterial({
           roughness: 0.9,
           metalness: 0.1,
-          color: 0xff7f7f,
+          color: 0x222222,
           shading: THREE.FlatShading,
         }));
       this.leftPin.rotation.x = Math.PI / 2;
@@ -219,15 +220,15 @@
       this.rightPin.castShadow = true;
       this.leftPin.receiveShadow = true;
 
-      this.scene.add(this.leftPin);
-      this.scene.add(this.rightPin);
+      //this.scene.add(this.leftPin);
+      //this.scene.add(this.rightPin);
 
-      var light = new THREE.SpotLight(0xffee88, 1, 0, 2);
+      var light = new THREE.SpotLight(0xffffff, 1, 0, 2);
       light.position.set(0, 0.2, 0.5);
       light.castShadow = true;
       light.angle = 1.2;
-      light.shadow.mapSize.width = 4096;  // default
-      light.shadow.mapSize.height = 4096; // default
+      light.shadow.mapSize.width = 4096 * 2;  // default
+      light.shadow.mapSize.height = 4096 * 2; // default
       light.shadow.camera.near = 0.5;       // default
       light.shadow.camera.far = 0.9;
       light.target.position.y = 0.06;
@@ -239,8 +240,8 @@
       //this.scene.add(helper);
 
       const hemiLight = new THREE.HemisphereLight( 0xffffff, 0xffffff, 0.6 );
-      hemiLight.color.setHSL( 0.6, 1, 0.6 );
-      hemiLight.groundColor.setHSL( 0.095, 1, 0.75 );
+      //hemiLight.color.setHSL( 0.6, 1, 0.6 );
+      //hemiLight.groundColor.setHSL( 0.095, 1, 0.75 );
       hemiLight.position.set( 0, 0, 0 );
       this.scene.add( hemiLight );
 
@@ -293,19 +294,19 @@
       this.light1.target.position.y = 0.06;
       this.light1.penumbra = 1;
 
-      if(frame < 81) {
+      if (frame < 81) {
         this.light1.intensity = 0;
-      } else if(frame < 84) {
+      } else if (frame < 84) {
         this.light1.intensity = 0.5;
-      } else if(frame < 90) {
+      } else if (frame < 90) {
         this.light1.intensity = 0;
-      } else if(frame < 102) {
+      } else if (frame < 102) {
         this.light1.intensity = 0.5;
-      } else if(frame < 106) {
-        this.light1.intensity =  0.0;
-      } else if(frame < 110) {
+      } else if (frame < 106) {
+        this.light1.intensity = 0.0;
+      } else if (frame < 110) {
         this.light1.intensity = 0.5;
-      } else if(frame < 130) {
+      } else if (frame < 130) {
         this.light1.intensity = 0.0;
       } else {
         this.light1.intensity = easeOut(
@@ -315,7 +316,7 @@
       this.hemiLight.intensity = 0.1 + this.light1.intensity * 0.5;
 
 
-      this.paper.material.map = this.inputs.A.getValue();
+      //this.paper.material.map = this.inputs.A.getValue();
       this.paper.material.needsUpdate = true;
 
       this.packinglist.material.map = this.inputs.B.getValue();
@@ -328,9 +329,9 @@
 
 
       const shockZoom = Math.pow(easeIn(
-          0,
-          1,
-          F(frame, 114 - 6, 12)), 2);
+        0,
+        1,
+        F(frame, 114 - 6, 12)), 2);
       this.camera.position.z = cameraGlider + lerp(0, 30 / 100 - cameraGlider, shockZoom);
       this.camera.position.x = 0;
       this.camera.position.y = 0;
@@ -346,10 +347,11 @@
 
       this.light1.target.position.y = 0.06;
       this.light1.penumbra = 1;
-      if(BEAN >= 888 && BEAN < 1080) {
+      /*
+      if (BEAN >= 888 && BEAN < 1080) {
         this.light1.intensity = easeOut(1, 0, F(frame, 888, 12));
 
-        if(BEAN >= 894) {
+        if (BEAN >= 894) {
           this.light1.intensity = 0.25;
           this.light1.target.position.y = 0.0;
           this.light1.angle = 0.1;
@@ -358,7 +360,7 @@
 
           this.light1.angle = smoothstep(this.light1.angle, 0.15, F(frame, 918 - 1, 1));
           this.light1.target.position.x = easeOut(0, 0.04, F(frame, 918 + 2, 1));
-          this.light1.target.position.y = lerp(0, 0.03, F(frame, 918 + 3, 24 -3));
+          this.light1.target.position.y = lerp(0, 0.03, F(frame, 918 + 3, 24 - 3));
 
           this.light1.angle = easeOut(this.light1.angle, 0.5, F(frame, 930, 6));
         }
@@ -367,12 +369,13 @@
 
 
 
-      if(BEAN >= 324) {
+      if (BEAN >= 324) {
         this.camera.position.z = easeIn(
           0.16,
           0.3,
           Math.pow(lerp(0, 1, F(frame, 324, 24 + 12)), 8.));
       }
+      */
 
 
       /* splashers */
@@ -385,7 +388,7 @@
       this.splashoBillboard.scale.set(1, 1, 1);
       this.splashoBackBillboard.scale.set(1, 1, 1);
       const BAR = BEAN / 24 | 0;
-      if(BAR >= 5 && BAR < 6) {
+      if (true) {1;} else if (BAR >= 5 && BAR < 6) {
         const t = F(frame,  5 * 24, 24);
         const t2 = F(frame, 6 * 24 - 6, 6);
         //this.camera.position.x = lerp(-0.05, -0.10, t);
@@ -406,8 +409,8 @@
         this.splashoBackBillboard.scale.set(scaler, scaler, 1);
         this.splashoBillboard.material.opacity = easeOut(1, 0, F(frame, 138, 1.2)) ;
         this.splashoBackBillboard.material.opacity = easeOut(1, 0, F(frame, 138, 1.2));
-      } else if(BAR >= 9 && BAR < 10) {
-        const t = F(frame,  9 * 24, 24);
+      } else if(false && BAR >= 9 && BAR < 10) {
+        const t = F(frame, 9 * 24, 24);
         const t2 = F(frame, 10 * 24 - 6, 6);
         this.camera.position.x = lerp(-0.05, -0.10, t);
         this.camera.position.y = -0.03;
@@ -558,11 +561,11 @@
       this.cameraRotationDD.z += (Math.random() - 0.5) * 0.001;
 
       if(BEAN >= 120 && BEAN < 123) {
-        this.camera.rotation.x = (Math.random() - 0.5) * 0.02;
-        this.camera.rotation.y = (Math.random() - 0.5) * 0.02;
-        this.camera.rotation.z = (Math.random() - 0.5) * 0.02;
+        //this.camera.rotation.x = (Math.random() - 0.5) * 0.02;
+        //this.camera.rotation.y = (Math.random() - 0.5) * 0.02;
+        //this.camera.rotation.z = (Math.random() - 0.5) * 0.02;
       }
-
+      /*
       if(BEAN >= 216 && BEAN < 216 + 6) {
         this.camera.rotation.x = (Math.random() - 0.5) * 0.02;
         this.camera.rotation.y = (Math.random() - 0.5) * 0.02;
@@ -683,6 +686,7 @@
         this.camera.rotation.y = (Math.random() - 0.5) * 0.02;
         this.camera.rotation.z = (Math.random() - 0.5) * 0.02;
       }
+      */
 
       this.cameraRotationDD.add(this.cameraRotationDDD);
       this.cameraRotationDD.x -= this.camera.rotation.x * 0.1;
@@ -696,7 +700,9 @@
       this.camera.rotation.y += this.cameraRotationD.y;
       this.camera.rotation.z += this.cameraRotationD.z;
 
-      this.background.material.color.setRGB(0.5, 0.5, 0.5);
+      this.background.material.color.setHex(0xffffff);
+      //this.background.material.map = this.inputs.A.getValue();
+      /*
       if(BEAN >= 120) {
         this.background.material.color.setRGB(0.35, 0.35, 1);
       }
@@ -724,6 +730,7 @@
       if(BEAN >= 1176) {
         this.background.material.color.setRGB(1.0, .5, 1.0);
       }
+      */
 
 
       /* twistorama */
@@ -750,60 +757,60 @@
       }
 
       switch(frame) {
-        case FRAME_FOR_BEAN(888):
-          this.rotaterPosition = 0;
-          this.rotaterSpeed = 0.34;
-          this.scratcherPosition = 0;
-          this.scratcherSpeed = 0;
-          break;
-        case FRAME_FOR_BEAN(912):
-          this.scratcherPosition = 0.1;
-          this.scratcherSpeed = 1.2;
-          break;
-        case FRAME_FOR_BEAN(912) + 9:
-          this.scratcherSpeed = -1.5;
-          break;
-        case FRAME_FOR_BEAN(912) + 26:
-          //this.scratcherPosition = 1.5;
-          //this.scratcherSpeed = 0;
-          break;
-        case FRAME_FOR_BEAN(918) + 0:
-          //this.scratcherPosition = -1.5;
-          this.scratcherSpeed = -0.2;
-          break;
-        case FRAME_FOR_BEAN(918 + 3) + 0:
-          //this.scratcherPosition = -1.5;
-          this.scratcherSpeed = 0.5;
-          break;
-        case FRAME_FOR_BEAN(924):
-          this.scratcherPosition = 5;
-          this.scratcherSpeed = 0;
-          break;
-        case FRAME_FOR_BEAN(924 + 1.5) | 0:
-          this.scratcherPosition = 4;
-          this.scratcherSpeed = 0;
-          break;
-        case FRAME_FOR_BEAN(924 + 3):
-          this.scratcherPosition = 3;
-          this.scratcherSpeed = 0;
-          break;
-        case FRAME_FOR_BEAN(924 + 4.5) | 0:
-          this.scratcherPosition = 2;
-          this.scratcherSpeed = 0;
-          break;
-        case FRAME_FOR_BEAN(924 + 6) | 0:
-          this.scratcherPosition = -2;
-          break;
-        case FRAME_FOR_BEAN(942):
-          //this.scratcherPosition = -1.5;
-          this.scratcherSpeed = 0.5
-          break;
+      case FRAME_FOR_BEAN(888):
+        this.rotaterPosition = 0;
+        this.rotaterSpeed = 0.34;
+        this.scratcherPosition = 0;
+        this.scratcherSpeed = 0;
+        break;
+      case FRAME_FOR_BEAN(912):
+        this.scratcherPosition = 0.1;
+        this.scratcherSpeed = 1.2;
+        break;
+      case FRAME_FOR_BEAN(912) + 9:
+        this.scratcherSpeed = -1.5;
+        break;
+      case FRAME_FOR_BEAN(912) + 26:
+        //this.scratcherPosition = 1.5;
+        //this.scratcherSpeed = 0;
+        break;
+      case FRAME_FOR_BEAN(918) + 0:
+        //this.scratcherPosition = -1.5;
+        this.scratcherSpeed = -0.2;
+        break;
+      case FRAME_FOR_BEAN(918 + 3) + 0:
+        //this.scratcherPosition = -1.5;
+        this.scratcherSpeed = 0.5;
+        break;
+      case FRAME_FOR_BEAN(924):
+        this.scratcherPosition = 5;
+        this.scratcherSpeed = 0;
+        break;
+      case FRAME_FOR_BEAN(924 + 1.5) | 0:
+        this.scratcherPosition = 4;
+        this.scratcherSpeed = 0;
+        break;
+      case FRAME_FOR_BEAN(924 + 3):
+        this.scratcherPosition = 3;
+        this.scratcherSpeed = 0;
+        break;
+      case FRAME_FOR_BEAN(924 + 4.5) | 0:
+        this.scratcherPosition = 2;
+        this.scratcherSpeed = 0;
+        break;
+      case FRAME_FOR_BEAN(924 + 6) | 0:
+        this.scratcherPosition = -2;
+        break;
+      case FRAME_FOR_BEAN(942):
+        //this.scratcherPosition = -1.5;
+        this.scratcherSpeed = 0.5;
+        break;
       }
 
       if(BEAN >= 930 && BEAN < 936) {
         this.scratcherPosition = easeOut(-3, 0, F(frame, 930, 3));
         if(BEAN >= 933) {
-        this.scratcherPosition = easeOut(3, 0, F(frame, 930 + 3, 3));
+          this.scratcherPosition = easeOut(3, 0, F(frame, 930 + 3, 3));
         }
       }
 
@@ -848,6 +855,7 @@
         this.ballySize = easeOut(0, 1, F(frame, 984 + 3, 1));
       }
 
+      /*
       if(BEAN >= 402 && BEAN < 408) {
         const s = F(frame, 402 +3, 3);
         this.camera.position.x = easeIn(this.camera.position.x, 0.13, s);
@@ -857,18 +865,19 @@
         this.camera.position.y = 0.095;
         this.camera.position.z = 0.28;
       }
+      */
 
       this.ballyThrob *= 0.9;
 
       if(BEAT) {
         switch(frame) {
-          case FRAME_FOR_BEAN(984 + 3):
-          case FRAME_FOR_BEAN(984 + 9):
-          case FRAME_FOR_BEAN(984 + 12 + 3):
-          case FRAME_FOR_BEAN(1008):
-          case FRAME_FOR_BEAN(1014):
-          case FRAME_FOR_BEAN(1026):
-            this.ballyThrob = 1;
+        case FRAME_FOR_BEAN(984 + 3):
+        case FRAME_FOR_BEAN(984 + 9):
+        case FRAME_FOR_BEAN(984 + 12 + 3):
+        case FRAME_FOR_BEAN(1008):
+        case FRAME_FOR_BEAN(1014):
+        case FRAME_FOR_BEAN(1026):
+          this.ballyThrob = 1;
         }
       }
       if(BEAN >= 1014 + 3 && BEAN < 1014 + 3 + 6) {
@@ -884,6 +893,8 @@
       if(BEAN == 984 + 12 + 6) {
         this.ballyThrob = 0;
       }
+
+      this.ballyThrob = 0;
 
       if(BEAN >= 984 && BEAN < 984 + 24 * 3) {
         this.rotaterPosition = lerp(0, Math.PI / 2, F(frame, 984, 24 * 3));
@@ -910,9 +921,12 @@
       }
       */
 
-
       this.paperWrapper.visible = true;
+      this.packinglist.visible = false;
+      this.shadowPackingList.visible = false;
       this.forest.visible = false;
+
+      /*
       if (BEAN >= 888 && BEAN < ALEKS_BIRD_START_BEAN) {
         this.camera.position.y = 0;
 
@@ -949,6 +963,8 @@
         this.camera.position.y = 0;
         this.camera.position.z = easeIn(.15, 0.3, F(frame, ALEKS_BIRD_START_BEAN, 12));
       }
+      */
+      /*
       if(BEAN >= 57 * 24 && BEAN < 61 * 24) {
         this.camera.position.x = lerp(
           0,
@@ -971,6 +987,7 @@
 
         this.light1.target.position.x = 0;
       }
+      */
 
       const fallBEAN = 1500;
       if (BEAN >= fallBEAN) {

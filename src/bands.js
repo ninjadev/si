@@ -1,4 +1,4 @@
-(function(global) {
+(function (global) {
   const F = (frame, from, delta) => (frame - FRAME_FOR_BEAN(from)) / (FRAME_FOR_BEAN(from + delta) - FRAME_FOR_BEAN(from));
   class bands extends NIN.THREENode {
     constructor(id, options) {
@@ -104,6 +104,7 @@
         const drape = new THREE.Mesh(
           new THREE.BoxGeometry(width - 1, 600, 2),
           new THREE.MeshBasicMaterial({
+            color: 0x336d91,
             map: Loader.loadTexture('res/paper.png'),
           }));
         drape.material.map.repeat.set(1, 16);
@@ -193,7 +194,7 @@
           );
           const position = new THREE.Vector3(positionRandom() * 30 - 15, positionRandom() * 6 - 3, 0);
           circle.position.copy(position);
-          mesh.add(circle);
+          //mesh.add(circle);
           const shadowC = circle.clone();
           shadowC.material = circle.material.clone();
           shadowC.material.color.setRGB(0.2, 0.2, 0.2);
@@ -210,7 +211,7 @@
         }
         mesh.position.set(...cloud.coords);
         cloud.mesh = mesh;
-        this.scene.add(mesh);
+        //this.scene.add(mesh);
 
         let text = XWrite(cloud.name.toUpperCase());
         cloud.text = text;
@@ -222,7 +223,7 @@
 
       this.wall = new THREE.Mesh(
         new THREE.BoxGeometry(1000, 1000, 100),
-        new THREE.MeshBasicMaterial({color: 0x7f7fff}));
+        new THREE.MeshBasicMaterial({color: 0x111122}));
       this.scene.add(this.wall);
       this.wall.position.z = -100;
 
@@ -243,9 +244,10 @@
     update(frame) {
       super.update(frame);
 
-      const startFrame = FRAME_FOR_BEAN(24 * 17);
-      const endFrame = FRAME_FOR_BEAN(24 * 21);
-      const duration = endFrame - startFrame;
+      frame /= 8;
+      const startFrame = FRAME_FOR_BEAN(24 * 17) / 8;
+      const endFrame = FRAME_FOR_BEAN(24 * 21) / 8;
+      const duration = (endFrame - startFrame) * 8;
 
       for (let i = 0; i < this.bands.length; i++) {
         for (const line of this.bands[i]) {
@@ -260,66 +262,6 @@
           drape.position.y = -1000;
         } else {
           drape.position.y = lerp(-600, 0, (frame - startFrame - this.bands.length * 15 + i * 15 + 100) / 300);
-        }
-      }
-
-      for (const [index, cloud] of this.clouds.entries()) {
-        let i = index;
-        if(i <= 1) i = 0;
-        if(i > 1 && i < 7) i -= 1;
-        if(i === 7) i = 6;
-        if(i === 8) i = 3;
-        let bean = 24 * 17 + 6 + i * 12;
-        const cloudFrame = FRAME_FOR_BEAN(bean);
-        if (frame >= cloudFrame && frame < cloudFrame + 200) {
-          for (const circle of cloud.circles) {
-            circle.mesh.scale.setScalar(
-              elasticOut(
-                .01,
-                easeIn(1, .01, (frame - cloudFrame - 180) / 20),
-                1,
-                (frame - cloudFrame) / 20)
-            );
-            circle.mesh.position.set(
-              circle.position.x + Math.sin((frame - cloudFrame) * circle.speed / 60) * 2,
-              circle.position.y - Math.sin((frame - cloudFrame) * circle.speed / 60) * 2,
-              0
-            );
-            circle.mesh.shadow.scale.copy(circle.mesh.scale);
-            circle.mesh.shadow.scale.x *= 1.06;
-            circle.mesh.shadow.scale.y *= 1.06;
-            circle.mesh.shadow.scale.z *= 1.06;
-            circle.mesh.shadow.position.copy(circle.mesh.position);
-            circle.mesh.shadow.position.z -= 0.5;
-            circle.mesh.shadow.position.y -= 0;
-          }
-            /*
-          cloud.image.scale.setScalar(
-            elasticOut(
-              .01,
-              easeIn(1, .01, (frame - cloudFrame - 230) / 20),
-              1,
-              (frame - cloudFrame) / 20)
-          );
-          */
-          cloud.text.scale.setScalar(
-            Math.min(cloud.fontSize,
-            elasticOut(
-              .01,
-              easeIn(cloud.fontSize, .01, (frame - cloudFrame - 230) / 20),
-              cloud.fontSize,
-              (frame - cloudFrame) / 20)
-          ));
-          cloud.text.visible = true;
-          for(let i = 0; i < cloud.text.paths.length; i++) {
-            const path = cloud.text.paths[i];
-            path.uniforms.drawEnd.value = smoothstep(
-              0, 1,
-              F(frame, bean + i / 2, 3 - Math.min(3, i / 6)));
-          }
-          cloud.mesh.position.set(...cloud.coords);
-        } else {
-          cloud.mesh.position.set(0, 0, 1000);
         }
       }
 

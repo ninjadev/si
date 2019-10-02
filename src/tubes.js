@@ -11,9 +11,11 @@
 
       this.dots = [];
       this.lines = [];
+      this.sceneWrapper = new THREE.Object3D();
+      this.scene.add(this.sceneWrapper);
 
-      for (let i=0; i < 10; i++) {
-        for (let j=0; j < 10; j++) {
+      for (let i=0; i < 40; i++) {
+        for (let j=0; j < 40; j++) {
           const x = -160 + i * 35;
           const y = -160 + j * 35;
 
@@ -22,7 +24,7 @@
             new THREE.MeshBasicMaterial({color: 0x000000}));
           dot.position.x = x;
           dot.position.y = y;
-          this.scene.add(dot);
+          this.sceneWrapper.add(dot);
           this.dots.push(dot);
 
           (() => {
@@ -32,7 +34,7 @@
             path.lineTo(-120 + i * 35, y + offset);
             const line = path.toObject3D();
             this.lines.push(line);
-            this.scene.add(line);
+            this.sceneWrapper.add(line);
             line.path = path;
           })();
 
@@ -43,13 +45,13 @@
             path.lineTo(x + offset, -120 + j * 35);
             const line = path.toObject3D();
             this.lines.push(line);
-            this.scene.add(line);
+            this.sceneWrapper.add(line);
             line.path = path;
           })();
         }
       }
 
-      this.camera.position.z = 200;
+      this.camera.position.z = 400;
       this.camera.rotation.z = -Math.PI / 4;
 
       this.wall = new THREE.Mesh(
@@ -78,13 +80,16 @@
       for (let i = 0; i < this.dots.length; i++) {
         const dot = this.dots[i];
         dot.scale.setScalar(easeOut(0, 1, F(frame, 498, 1)));
+        dot.scale.setScalar(1);
         //dot.scale.setScalar(easeOut(0, 1, (frame - startFrame + i * 3) / 10));
       }
 
+      this.sceneWrapper.rotation.z = lerp(0, Math.PI / 2, F(frame, 120, 216));
+
       for (let i = 0; i < this.lines.length; i++) {
         const path = this.lines[i].path;
-        path.material.uniforms.drawStart.value = lerp(0.5, 0, F(frame, 498, 1));
-        path.material.uniforms.drawEnd.value = lerp(0.5, 1, F(frame, 498, 1));
+        path.material.uniforms.drawStart.value = 0;
+        path.material.uniforms.drawEnd.value = 1;
         path.material.uniforms.wobbliness.value = 1;
       }
     }

@@ -35,7 +35,7 @@
               color: 0xff7f7f,
             })
           );
-          this.sceneWrapper.add(this.fillerz[i][j]);
+          //this.sceneWrapper.add(this.fillerz[i][j]);
           const box = this.fillerz[i][j];
           //box.rotation.z = Math.PI / 2;
           box.position.x = width * (i - verticalCount / 2 | 0);
@@ -123,7 +123,7 @@
         } else if(manipulated_bean >= 186 + 3 && manipulated_bean < 186 + 6 + 24) {
           if(manipulated_bean >= 204 && (i < 10 || i > 11)) {
             continue;
-        }
+          }
           let placy = 21 - Math.max(0,  (BEAN - 204) / 3 | 0);
           this.fillerz[i][placy].visible = true;
         }
@@ -136,26 +136,29 @@
         path.material.uniforms.drawEnd.value = easeIn(0, 1,
           F(frame - (Math.sin(i) - 1) * 4, 174 - 12, 12)
         );
+        path.material.uniforms.drawEnd.value = 1;
         path.material.uniforms.wobbliness.value = 1;
         path.material.uniforms.width.value = 1;
         if(manipulated_bean >= 192 - 3) {
-          path.material.uniforms.width.value = easeIn(1, 0.5, F(frame, 192 - 3, 3));
+          //path.material.uniforms.width.value = easeIn(1, 0.5, F(frame, 192 - 3, 3));
         }
       }
 
       if(manipulated_bean <= 192 || manipulated_bean  >= 192 + 3) {
-        this.camera.position.z = lerp(200, 50, F(frame, 174, 24 - 1));
+        //this.camera.position.z = lerp(200, 50, F(frame, 174, 24 - 1));
       }
-      if(manipulated_bean >= 174) {
+      if (manipulated_bean >= 174) {
+        /*
         this.sceneWrapper.rotation.z = lerp(
           0, Math.PI / 2, F(frame, 174, 192 - 174));
+          */
 
       } else {
-        this.sceneWrapper.rotation.z = 0;
       }
 
+      //this.sceneWrapper.rotation.z = 2 * Math.PI * (frame / (1295 - 719)) / 4;
       this.camera.position.y = 0;
-      this.camera.position.x = 0;
+      this.camera.position.x = lerp(-100, 0, F(frame, 120, 216));
       if(manipulated_bean >= 204) {
         //this.camera.position.y = manipulated_bean % 6 < 3 ? 15.5 : 0;
         //this.camera.position.x = -((manipulated_bean - 204) / 3 | 0) * 15.5 / 2;
